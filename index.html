@@ -1,396 +1,1246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyFoodCraving — Eat smarter. Cook guided.</title>
-  <meta name="description" content="Personalized meal suggestions based on your health metrics. Complete recipes with a step-by-step guided cooking interface. Eat what your body actually needs.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="MyFoodCraving — Eat smarter. Cook guided.">
-  <meta property="og:description" content="Personalized nutrition from your health data. Guided cooking for every meal.">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MyFoodCraving — Eat smarter. Cook guided.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230B0D10'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='central' fill='%23FF6D2E' font-family='ui-monospace,monospace' font-weight='700' font-size='11'>mfc</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MyFoodCraving — eat what you're actually craving</title>
+<meta name="description" content="Personalized meals from your health data, with guided cooking that walks you through every step." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="MyFoodCraving — eat what you're actually craving" />
+<meta property="og:description" content="Personalized nutrition from your health data. Guided cooking for every meal." />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FF6D2E'/><text x='50%25' y='62%25' text-anchor='middle' fill='%23FFFCF3' font-family='Georgia,serif' font-style='italic' font-weight='400' font-size='22'>m</text></svg>" />
+
+<style>
+:root {
+  --cream: #F7F1E3;
+  --cream-deep: #EFE6CF;
+  --cream-soft: #FBF7EC;
+  --paper: #FFFCF3;
+  --kraft: #E8DCC0;
+  --ink: #1F1A14;
+  --ink-soft: #3A332A;
+  --ink-muted: #6B6253;
+  --ink-faint: #9A8F7C;
+  --rule: rgba(31, 26, 20, 0.14);
+  --rule-strong: rgba(31, 26, 20, 0.28);
+  --orange: #FF6D2E;
+  --orange-deep: #E2531A;
+  --orange-soft: rgba(255, 109, 46, 0.14);
+  --matcha: #7A9C5A;
+  --matcha-deep: #5E7E40;
+  --matcha-soft: rgba(122, 156, 90, 0.18);
+  --berry: #C84B5A;
+  --butter: #F4D67A;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --hand: "Caveat", "Reenie Beanie", cursive;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 32px;
+  --container: 1240px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+::selection { background: var(--orange); color: var(--paper); }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity: 0.22;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 64px;
+  display: flex; align-items: center;
+  transition: background 250ms, border-color 250ms, backdrop-filter 250ms;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(247, 241, 227, 0.86);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-bottom-color: var(--rule);
+}
+.nav-inner {
+  width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
+.brand-mark {
+  display: inline-grid; place-items: center; width: 32px; height: 32px;
+  background: var(--orange); color: var(--paper);
+  font-family: var(--serif); font-style: italic; font-size: 22px;
+  border-radius: 50%; transform: rotate(-6deg);
+}
+.brand-name { font-size: 17px; }
+.brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 14px; color: var(--ink-soft); transition: color 200ms; }
+.nav-links a:hover { color: var(--orange); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: none; font-weight: 500; cursor: pointer;
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms, background 200ms;
+}
+.btn-primary {
+  background: var(--ink); color: var(--paper);
+  padding: 12px 22px; border-radius: 999px; font-size: 14px;
+}
+.btn-primary:hover { background: var(--orange); transform: translateY(-1px); }
+.btn-orange {
+  background: var(--orange); color: var(--paper);
+  padding: 14px 28px; border-radius: 999px; font-size: 15px;
+  box-shadow: 0 6px 0 var(--orange-deep);
+}
+.btn-orange:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--orange-deep); }
+.btn-orange:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--orange-deep); }
+
+/* LAYOUT */
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+.label-mono {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted);
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 999px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft);
+}
+.scribble {
+  font-family: var(--hand); font-weight: 400; font-size: 28px;
+  color: var(--orange); line-height: 1; display: inline-block;
+}
+
+/* HERO */
+.hero { position: relative; padding: 140px 0 80px; overflow: visible; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.hero-copy { position: relative; }
+.hero-eyebrow-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.hero-headline {
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(48px, 6.4vw, 88px); line-height: 0.96; letter-spacing: -0.035em; color: var(--ink);
+}
+.hero-headline em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  letter-spacing: -0.02em; color: var(--orange); position: relative;
+}
+.hero-headline em .underline-scribble {
+  position: absolute; left: -4px; right: -4px; bottom: -6px; height: 14px; pointer-events: none;
+}
+.hero-sub { margin-top: 28px; font-size: 19px; line-height: 1.5; color: var(--ink-soft); max-width: 520px; }
+
+.hero-craving {
+  margin-top: 40px; padding: 20px 22px; background: var(--paper);
+  border: 1.5px solid var(--ink); border-radius: 28px; box-shadow: 0 6px 0 var(--ink); position: relative;
+}
+.hero-craving::before {
+  content: "I'm craving…"; position: absolute; top: -12px; left: 18px;
+  background: var(--cream); padding: 0 8px; font-family: var(--hand); font-size: 22px;
+  color: var(--orange); transform: rotate(-2deg);
+}
+.craving-input-row { display: flex; align-items: center; gap: 12px; }
+.craving-input {
+  flex: 1; min-width: 0; border: none; background: transparent;
+  font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--ink); outline: none; padding: 4px 0;
+}
+.craving-input::placeholder { color: var(--ink-faint); }
+.craving-go {
+  flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%;
+  background: var(--orange); color: var(--paper); border: none;
+  display: grid; place-items: center; font-size: 22px;
+  box-shadow: 0 4px 0 var(--orange-deep); transition: transform 150ms;
+}
+.craving-go:hover { transform: rotate(15deg); }
+.craving-chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 6px 12px; border-radius: 999px; background: var(--cream-deep);
+  border: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft);
+  cursor: pointer; transition: all 180ms; white-space: nowrap;
+}
+.chip:hover { background: var(--orange); color: var(--paper); border-color: var(--orange); }
+.chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.hero-mini { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 22px; font-family: var(--mono); font-size: 12px; color: var(--ink-muted); }
+.hero-mini b { color: var(--matcha-deep); font-weight: 600; }
+
+/* PLATE */
+.plate-stage { position: relative; width: 100%; aspect-ratio: 1 / 1.05; display: grid; place-items: center; }
+.plate {
+  position: relative; width: 86%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--paper) 0%, var(--cream-soft) 60%, var(--cream-deep) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(31, 26, 20, 0.1),
+    inset 0 0 0 14px var(--paper),
+    inset 0 0 0 15px rgba(31, 26, 20, 0.08),
+    0 30px 50px -20px rgba(31, 26, 20, 0.25);
+  display: grid; place-items: center; transition: transform 600ms cubic-bezier(.2,.8,.2,1);
+}
+.plate-content {
+  width: 70%; height: 70%; border-radius: 50%; background: var(--orange-soft);
+  display: grid; place-items: center; text-align: center; padding: 24px; position: relative; overflow: hidden;
+}
+.plate-photo {
+  width: 70%; height: 70%; border-radius: 50%;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,109,46,.18) 0 12px, transparent 12px 24px),
+    radial-gradient(circle at 50% 50%, var(--butter) 0%, var(--orange) 70%);
+  display: grid; place-items: center; font-family: var(--mono); font-size: 11px;
+  color: var(--ink); letter-spacing: 0.08em; text-transform: uppercase; text-align: center;
+  position: relative; overflow: hidden;
+}
+.plate-photo::after {
+  content: "[ food shot ]"; position: absolute; bottom: 14%; left: 50%; transform: translateX(-50%);
+  background: rgba(255, 252, 243, 0.85); padding: 4px 10px; border-radius: 999px; font-size: 10px;
+}
+
+.sticker {
+  position: absolute; background: var(--paper); border: 1.5px solid var(--ink);
+  padding: 10px 14px; border-radius: 14px; box-shadow: 0 4px 0 var(--ink);
+  font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; white-space: nowrap; z-index: 4;
+}
+.sticker .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--matcha-deep); box-shadow: 0 0 0 3px var(--matcha-soft);
+}
+.sticker.sticker-orange .dot { background: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
+.sticker.tilt-l { transform: rotate(-4deg); }
+.sticker.tilt-r { transform: rotate(4deg); }
+.sticker-1 { top: 6%; right: -2%; }
+.sticker-2 { bottom: 14%; left: -4%; }
+.sticker-3 { bottom: -2%; right: 8%; }
+
+.sticker-macros {
+  position: absolute; bottom: -6%; left: 8%; background: var(--ink); color: var(--paper);
+  padding: 14px 18px; border-radius: 18px; display: flex; gap: 18px; z-index: 5;
+  transform: rotate(-3deg); box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+}
+.sticker-macros .m { display: flex; flex-direction: column; align-items: center; }
+.sticker-macros .v { font-family: var(--mono); font-weight: 600; font-size: 16px; color: var(--orange); }
+.sticker-macros .u { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-deep); margin-top: 2px; }
+
+.scribble-arrow { position: absolute; font-family: var(--hand); color: var(--orange); font-size: 22px; line-height: 1.1; z-index: 6; }
+.deco { position: absolute; font-size: 32px; pointer-events: none; z-index: 1; opacity: 0.85; }
+
+/* MARQUEE */
+.marquee {
+  margin-top: 40px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  background: var(--cream-deep); overflow: hidden; position: relative; z-index: 2;
+}
+.marquee-track {
+  display: flex; gap: 48px; padding: 18px 0;
+  animation: scroll 40s linear infinite; white-space: nowrap; width: max-content;
+}
+.marquee-item {
+  font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--ink-soft);
+  display: flex; align-items: center; gap: 48px;
+}
+.marquee-item::after { content: "✷"; color: var(--orange); font-size: 16px; font-style: normal; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* SECTIONS */
+section.block { padding: 100px 0; position: relative; z-index: 2; }
+.section-head {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 56px; align-items: end; margin-bottom: 56px;
+}
+.section-head h2 {
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(36px, 4.6vw, 64px); line-height: 1.0; letter-spacing: -0.03em;
+}
+.section-head h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--orange); }
+.section-head .lede { font-size: 18px; color: var(--ink-soft); line-height: 1.55; }
+
+/* MANIFESTO */
+.manifesto {
+  background: var(--ink); color: var(--paper); padding: 80px 0;
+  position: relative; z-index: 2; overflow: hidden;
+}
+.manifesto::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.3'/></svg>");
+  opacity: 0.5; mix-blend-mode: screen; pointer-events: none;
+}
+.manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; position: relative; }
+.manifesto-headline {
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(40px, 5vw, 76px); line-height: 0.98; letter-spacing: -0.035em;
+}
+.manifesto-headline .strike {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--orange); text-decoration: line-through;
+  text-decoration-color: var(--orange); text-decoration-thickness: 4px;
+}
+.manifesto-headline em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--butter); }
+.manifesto-side { padding-top: 12px; }
+.lies-list { display: flex; flex-direction: column; gap: 18px; }
+.lie {
+  display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+  padding-bottom: 18px; border-bottom: 1px solid rgba(247, 241, 227, 0.12);
+}
+.lie-num { font-family: var(--serif); font-style: italic; font-size: 32px; color: var(--orange); line-height: 0.9; }
+.lie-text { font-size: 17px; color: var(--cream); line-height: 1.4; }
+.lie-text b { color: var(--paper); font-weight: 600; }
+.lie-text .strike { text-decoration: line-through; text-decoration-color: var(--orange); color: var(--ink-faint); }
+.quote-card {
+  margin-top: 32px; padding: 24px; background: rgba(247, 241, 227, 0.08);
+  border-left: 3px solid var(--orange); border-radius: 0 var(--r-md) var(--r-md) 0;
+  font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.4; color: var(--cream);
+}
+.quote-attrib {
+  margin-top: 14px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); font-style: normal;
+}
+
+/* PERSONALIZE */
+.personalize { background: var(--cream-soft); padding: 100px 0; position: relative; z-index: 2; }
+.personalize-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+.metric-stack { display: flex; flex-direction: column; gap: 14px; }
+.metric-card {
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-md);
+  padding: 16px 20px; display: grid; grid-template-columns: 1fr auto auto;
+  gap: 16px; align-items: center; transition: transform 200ms, box-shadow 200ms; cursor: pointer; user-select: none;
+}
+.metric-card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+.metric-card.active { background: var(--ink); color: var(--paper); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--orange); }
+.metric-card .name { font-weight: 600; font-size: 15px; }
+.metric-card .sub { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+.metric-card.active .sub { color: var(--cream-deep); }
+.metric-card .val {
+  font-family: var(--mono); font-size: 14px; font-weight: 600;
+  padding: 4px 10px; border-radius: 999px; background: var(--cream-deep); color: var(--ink);
+}
+.metric-card.active .val { background: var(--orange); color: var(--paper); }
+.metric-card .toggle {
+  width: 36px; height: 22px; border-radius: 999px; background: var(--rule-strong); position: relative; transition: background 200ms;
+}
+.metric-card .toggle::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--paper); transition: transform 200ms;
+}
+.metric-card.active .toggle { background: var(--matcha); }
+.metric-card.active .toggle::after { transform: translateX(14px); }
+
+.rec-panel {
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-lg);
+  padding: 28px; box-shadow: 8px 8px 0 var(--ink); position: relative;
+}
+.rec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.rec-head .label-mono { color: var(--orange); }
+.rec-meal {
+  display: grid; grid-template-columns: 100px 1fr; gap: 18px; align-items: center;
+  padding-bottom: 18px; border-bottom: 1px dashed var(--rule-strong);
+}
+.rec-meal-img {
+  width: 100px; height: 100px; border-radius: 16px;
+  background: repeating-linear-gradient(135deg, rgba(31,26,20,0.06) 0 8px, transparent 8px 16px), var(--matcha-soft);
+  display: grid; place-items: center; font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--matcha-deep);
+}
+.rec-meal-name { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.05; color: var(--ink); }
+.rec-meal-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.rec-tag {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 8px; border-radius: 6px; background: var(--matcha-soft); color: var(--matcha-deep);
+}
+.rec-tag.orange { background: var(--orange-soft); color: var(--orange-deep); }
+
+.ring-grid { margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.ring-cell { text-align: center; }
+.ring-svg { width: 64px; height: 64px; margin: 0 auto; transform: rotate(-90deg); }
+.ring-track { stroke: var(--cream-deep); }
+.ring-fill { stroke: var(--orange); stroke-linecap: round; transition: stroke-dashoffset 700ms cubic-bezier(.2,.8,.2,1); }
+.ring-fill.matcha { stroke: var(--matcha); }
+.ring-fill.berry { stroke: var(--berry); }
+.ring-fill.butter { stroke: var(--butter); }
+.ring-label { margin-top: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.ring-pct { font-family: var(--mono); font-weight: 600; font-size: 13px; color: var(--ink); }
+
+.rec-why {
+  margin-top: 18px; padding: 14px 16px; background: var(--matcha-soft); border-radius: var(--r-md);
+  font-size: 13px; color: var(--matcha-deep); line-height: 1.45; border-left: 3px solid var(--matcha);
+}
+.rec-why b { font-weight: 600; }
+.rec-scribble { position: absolute; font-family: var(--hand); color: var(--orange); font-size: 26px; z-index: 10; }
+
+/* COOKING */
+.cooking { padding: 100px 0; position: relative; z-index: 2; }
+.cook-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: stretch; }
+.cook-board {
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-lg);
+  padding: 28px; box-shadow: 8px 8px 0 var(--matcha); position: relative;
+}
+.cook-progress { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.cook-pip { flex: 1; height: 6px; border-radius: 3px; background: var(--cream-deep); position: relative; overflow: hidden; }
+.cook-pip.done { background: var(--matcha); }
+.cook-pip.now { background: var(--cream-deep); }
+.cook-pip.now::after {
+  content: ""; position: absolute; inset: 0; background: var(--orange);
+  width: var(--p, 0%); transition: width 1s linear;
+}
+.cook-step-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+.cook-step-title { font-family: var(--serif); font-style: italic; font-size: 36px; line-height: 1.05; color: var(--ink); }
+.cook-step-detail { margin-top: 14px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
+.cook-timer-box {
+  margin-top: 24px; display: flex; align-items: center; gap: 18px;
+  padding: 18px 22px; background: var(--ink); color: var(--paper); border-radius: var(--r-md);
+}
+.cook-timer-clock {
+  font-family: var(--mono); font-size: 38px; font-weight: 600;
+  font-variant-numeric: tabular-nums; color: var(--orange); letter-spacing: -0.02em;
+}
+.cook-timer-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream-deep); }
+.cook-controls { margin-left: auto; display: flex; gap: 8px; }
+.cook-ctrl {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(247, 241, 227, 0.12); border: 1px solid rgba(247, 241, 227, 0.2);
+  color: var(--paper); display: grid; place-items: center; font-size: 14px;
+}
+.cook-ctrl:hover { background: var(--orange); border-color: var(--orange); }
+
+.cook-ingredients {
+  background: var(--cream-deep); border-radius: var(--r-lg); padding: 28px;
+  position: relative; border: 1.5px solid var(--ink);
+}
+.cook-ingredients h4 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 24px; margin-bottom: 18px; }
+.ing-list { display: flex; flex-direction: column; gap: 10px; }
+.ing-row {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  background: var(--paper); border-radius: var(--r-sm); font-size: 14px;
+  transition: all 200ms; cursor: pointer;
+}
+.ing-row.checked { color: var(--ink-faint); text-decoration: line-through; }
+.ing-check {
+  width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--ink);
+  flex-shrink: 0; display: grid; place-items: center; background: var(--paper);
+}
+.ing-row.checked .ing-check { background: var(--matcha); border-color: var(--matcha); color: var(--paper); }
+.ing-amount { font-family: var(--mono); font-size: 12px; color: var(--orange); margin-left: auto; }
+.ing-row.checked .ing-amount { color: var(--ink-faint); }
+
+.cook-step-tabs { margin-top: 20px; display: flex; gap: 6px; flex-wrap: wrap; }
+.cook-tab {
+  padding: 6px 12px; border-radius: 999px; background: var(--paper); border: 1px solid var(--rule);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); cursor: pointer;
+}
+.cook-tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.cook-tab.done { color: var(--matcha-deep); border-color: var(--matcha); }
+
+/* CTA */
+.cta { padding: 120px 0; position: relative; z-index: 2; }
+.cta-box {
+  background: var(--orange); color: var(--ink); border-radius: var(--r-xl);
+  padding: 72px 48px; text-align: center; position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 252, 243, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 10% 80%, rgba(31, 26, 20, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cta-headline {
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(40px, 5vw, 72px); line-height: 0.98; letter-spacing: -0.03em; position: relative;
+}
+.cta-headline em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.cta-sub { margin-top: 20px; font-size: 19px; color: var(--ink-soft); position: relative; }
+.cta-form {
+  margin-top: 36px; display: flex; gap: 10px; justify-content: center;
+  flex-wrap: wrap; position: relative; z-index: 2;
+}
+.cta-form input {
+  padding: 14px 22px; border-radius: 999px; border: 1.5px solid var(--ink);
+  background: var(--paper); font-size: 15px; width: 320px; outline: none; font-family: inherit;
+}
+.cta-fineprint {
+  margin-top: 18px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); position: relative;
+}
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--rule); padding: 36px 0; position: relative; z-index: 2; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.footer-inner .label-mono { font-size: 11px; }
+
+/* ANIMATIONS */
+.reveal {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(.2,.8,.2,1), transform 700ms cubic-bezier(.2,.8,.2,1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+.float-bob { animation: bob 5s ease-in-out infinite; }
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+.float-bob-2 { animation: bob2 6s ease-in-out infinite; }
+@keyframes bob2 {
+  0%, 100% { transform: translateY(0) rotate(4deg); }
+  50% { transform: translateY(-6px) rotate(-2deg); }
+}
+
+/* TWEAKS */
+.twk-panel {
+  position: fixed; right: 16px; bottom: 16px; z-index: 2147483646; width: 280px;
+  max-height: calc(100vh - 32px); display: flex; flex-direction: column;
+  background: rgba(250,249,247,.78); color: #29261b;
+  -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%);
+  border: .5px solid rgba(255,255,255,.6); border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 12px 40px rgba(0,0,0,.18);
+  font: 11.5px/1.4 ui-sans-serif, system-ui, -apple-system, sans-serif; overflow: hidden;
+}
+.twk-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 8px 10px 14px; cursor: move; user-select: none;
+}
+.twk-hd b { font-size: 12px; font-weight: 600; letter-spacing: .01em; }
+.twk-x {
+  appearance: none; border: 0; background: transparent; color: rgba(41,38,27,.55);
+  width: 22px; height: 22px; border-radius: 6px; cursor: default; font-size: 13px; line-height: 1;
+}
+.twk-x:hover { background: rgba(0,0,0,.06); color: #29261b; }
+.twk-body {
+  padding: 2px 14px 14px; display: flex; flex-direction: column; gap: 10px;
+  overflow-y: auto; overflow-x: hidden; min-height: 0;
+}
+.twk-row { display: flex; flex-direction: column; gap: 5px; }
+.twk-row-h { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
+.twk-lbl { display: flex; justify-content: space-between; align-items: baseline; color: rgba(41,38,27,.72); }
+.twk-lbl > span:first-child { font-weight: 500; }
+.twk-sect {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: rgba(41,38,27,.45); padding: 10px 0 0;
+}
+.twk-sect:first-child { padding-top: 0; }
+.twk-seg {
+  position: relative; display: flex; padding: 2px; border-radius: 8px;
+  background: rgba(0,0,0,.06); user-select: none;
+}
+.twk-seg-thumb {
+  position: absolute; top: 2px; bottom: 2px; border-radius: 6px;
+  background: rgba(255,255,255,.9); box-shadow: 0 1px 2px rgba(0,0,0,.12);
+  transition: left .15s cubic-bezier(.3,.7,.4,1), width .15s;
+}
+.twk-seg button {
+  appearance: none; position: relative; z-index: 1; flex: 1; border: 0;
+  background: transparent; color: inherit; font: inherit; font-weight: 500; min-height: 22px;
+  border-radius: 6px; cursor: default; padding: 4px 6px; line-height: 1.2;
+}
+.twk-toggle {
+  position: relative; width: 32px; height: 18px; border: 0; border-radius: 999px;
+  background: rgba(0,0,0,.15); transition: background .15s; cursor: default; padding: 0;
+}
+.twk-toggle[data-on="1"] { background: #34c759; }
+.twk-toggle i {
+  position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .15s;
+}
+.twk-toggle[data-on="1"] i { transform: translateX(14px); }
+.twk-swatch {
+  appearance: none; -webkit-appearance: none; width: 56px; height: 22px;
+  border: .5px solid rgba(0,0,0,.1); border-radius: 6px; padding: 0; cursor: default;
+  background: transparent; flex-shrink: 0;
+}
+.twk-swatch::-webkit-color-swatch-wrapper { padding: 0; }
+.twk-swatch::-webkit-color-swatch { border: 0; border-radius: 5.5px; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hero { padding-top: 110px; padding-bottom: 60px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+  .plate-stage { width: 100%; max-width: 480px; margin: 0 auto; }
+  .section-head { grid-template-columns: 1fr; gap: 18px; }
+  .manifesto-grid { grid-template-columns: 1fr; gap: 40px; }
+  .personalize-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cook-stage { grid-template-columns: 1fr; }
+  section.block, .personalize, .cooking, .cta { padding: 64px 0; }
+}
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  .hero-headline { font-size: clamp(40px, 11vw, 56px); }
+  .ring-grid { grid-template-columns: repeat(2, 1fr); }
+  .cta-box { padding: 48px 24px; }
+  .cta-form input { width: 100%; }
+}
+</style>
 </head>
+
 <body>
 
-  <nav class="nav" id="nav" aria-label="Primary">
-    <div class="nav-inner">
-      <a href="/" class="logo" aria-label="MyFoodCraving home">
-        <span class="logo-mark">mfc</span>
-        <span>MyFoodCraving</span>
-      </a>
-      <div class="nav-links">
-        <a href="#problem">Why MFC</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#features">Features</a>
-        <a href="#cooking">Guided cooking</a>
-        <a href="#faq">FAQ</a>
-        <a href="#auth" class="btn btn-primary btn-sm" data-auth-trigger>Get started</a>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback } = React;
+
+/* ── DATA ── */
+const CRAVINGS = {
+  pasta: { name: "Lemon Ricotta Spaghetti", blurb: "carb · cozy · 30 min", kcal: 520, p: 22, c: 68, f: 18, tags: ["high B12", "low sodium", "gluten-flexible"] },
+  bowl:  { name: "Mediterranean Quinoa Bowl", blurb: "fresh · proteins · 30 min", kcal: 480, p: 32, c: 48, f: 18, tags: ["+47% iron", "high fiber", "vegan-able"] },
+  spicy: { name: "Gochujang Salmon Rice", blurb: "spicy · omega-3 · 25 min", kcal: 590, p: 38, c: 52, f: 24, tags: ["omega-3", "high B12", "spicy"] },
+  sweet: { name: "Greek Yogurt Berry Cup", blurb: "sweet · light · 5 min", kcal: 310, p: 24, c: 38, f: 6, tags: ["high protein", "antioxidants", "low cal"] },
+  cozy:  { name: "Miso Mushroom Soup", blurb: "warm · umami · 20 min", kcal: 340, p: 18, c: 32, f: 12, tags: ["gut-friendly", "low cal", "vegetarian"] },
+  fresh: { name: "Citrus Avocado Salad", blurb: "fresh · crisp · 10 min", kcal: 380, p: 12, c: 24, f: 28, tags: ["healthy fats", "vitamin C", "fiber"] }
+};
+
+const HEALTH_METRICS = [
+  { id: "iron",   name: "Iron",         sub: "Below range",   val: "9.2 g/dL",  default: true },
+  { id: "b12",    name: "B12",          sub: "Within range",  val: "412 pg/mL", default: true },
+  { id: "sodium", name: "Sodium watch", sub: "Reduce intake", val: "−15%",      default: true },
+  { id: "fiber",  name: "Fiber goal",   sub: "Increase daily",val: "+25g",      default: false }
+];
+
+const COOKING_STEPS = [
+  { id: 1, title: "Prep & rinse",      detail: "Rinse 1 cup quinoa under cold water until it runs clear. Drain well — this kills the bitter coating.", duration: 90 },
+  { id: 2, title: "Dice the crew",     detail: "Cucumber, cherry tomatoes, red onion — small dice, roughly the size of the quinoa.", duration: 240 },
+  { id: 3, title: "Simmer the grain",  detail: "Bring 2 cups water to a boil. Add quinoa, cover, reduce to low. Simmer 15 min until water is gone.", duration: 900 },
+  { id: 4, title: "Whisk the dressing",detail: "Tahini, lemon juice, olive oil, garlic, salt. Whisk until creamy — add water if too thick.", duration: 180 },
+  { id: 5, title: "Toss & taste",      detail: "Combine fluffed quinoa with veg, dressing, parsley, and a handful of crumbled feta. Adjust salt.", duration: 120 }
+];
+
+const INGREDIENTS = [
+  { name: "Quinoa",          amt: "1 cup" },
+  { name: "Cucumber",        amt: "1 small" },
+  { name: "Cherry tomatoes", amt: "1.5 cups" },
+  { name: "Red onion",       amt: "½ small" },
+  { name: "Tahini",          amt: "3 tbsp" },
+  { name: "Lemon",           amt: "1 large" },
+  { name: "Feta",            amt: "⅓ cup" },
+  { name: "Parsley",         amt: "1 bunch" }
+];
+
+const PERSONA_MEALS = {
+  "iron,b12,sodium": { name: "Mediterranean Quinoa Bowl",   tags: ["+47% iron", "low sodium", "B12 boost"] },
+  "iron,b12":        { name: "Gochujang Salmon Rice",        tags: ["B12 +60%", "iron-rich", "spicy"] },
+  "iron,sodium":     { name: "Spinach & Lentil Stew",        tags: ["iron-rich", "low sodium", "high fiber"] },
+  "b12,sodium":      { name: "Miso Salmon & Greens",         tags: ["B12 +50%", "low sodium", "omega-3"] },
+  "iron":            { name: "Spinach & Chickpea Curry",      tags: ["iron +60%", "vegetarian"] },
+  "b12":             { name: "Salmon Poke Bowl",              tags: ["B12 boost", "omega-3"] },
+  "sodium":          { name: "Herb-Roasted Chicken Bowl",    tags: ["low sodium", "high protein"] },
+  "fiber":           { name: "Three-Bean Buddha Bowl",       tags: ["fiber +80%", "plant-based"] },
+  "default":         { name: "Chef's Mixed Grain Bowl",      tags: ["balanced", "well-rounded"] }
+};
+
+const CRAVING_PRESETS = [
+  { id: "pasta", label: "pasta" },
+  { id: "bowl",  label: "something fresh" },
+  { id: "spicy", label: "spicy" },
+  { id: "sweet", label: "sweet" },
+  { id: "cozy",  label: "cozy" },
+  { id: "fresh", label: "light" }
+];
+
+/* ── HELPERS ── */
+function mapCraving(text) {
+  const t = text.toLowerCase().trim();
+  if (!t) return "bowl";
+  if (/(pasta|noodle|spaghetti|ramen|carb)/.test(t)) return "pasta";
+  if (/(spicy|hot|chili|chilli|sriracha)/.test(t)) return "spicy";
+  if (/(sweet|dessert|yogurt|berry|fruit|sugar)/.test(t)) return "sweet";
+  if (/(cozy|warm|soup|stew|comfort)/.test(t)) return "cozy";
+  if (/(fresh|salad|crisp|light|cold)/.test(t)) return "fresh";
+  return "bowl";
+}
+
+function pickMeal(activeIds) {
+  const key = activeIds.slice().sort().join(",");
+  if (PERSONA_MEALS[key]) return PERSONA_MEALS[key];
+  for (const k of Object.keys(PERSONA_MEALS)) {
+    const ks = k.split(",");
+    if (ks.length && ks.every(x => activeIds.includes(x))) return PERSONA_MEALS[k];
+  }
+  return PERSONA_MEALS.default;
+}
+
+function microTargets(activeIds) {
+  const has = id => activeIds.includes(id);
+  return [
+    { label: "Iron",   pct: has("iron")   ? 84 : 42, color: "berry",  v: has("iron")   ? "4.2mg"  : "2.1mg" },
+    { label: "B12",    pct: has("b12")    ? 76 : 38, color: "matcha", v: has("b12")    ? "3.1µg"  : "1.5µg" },
+    { label: "Fiber",  pct: has("fiber")  ? 72 : 48, color: "butter", v: has("fiber")  ? "12g"    : "8g" },
+    { label: "Sodium", pct: has("sodium") ? 28 : 64, color: "orange", v: has("sodium") ? "380mg"  : "920mg", inverted: true }
+  ];
+}
+
+/* ── HOOKS ── */
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) { els.forEach(el => el.classList.add("visible")); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+function useScrolled() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return scrolled;
+}
+
+function useTweaks(defaults) {
+  const [values, setValues] = useState(defaults);
+  const setTweak = useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === "object" && keyOrEdits !== null ? keyOrEdits : { [keyOrEdits]: val };
+    setValues(prev => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: "__edit_mode_set_keys", edits }, "*");
+  }, []);
+  return [values, setTweak];
+}
+
+/* ── TWEAKS PANEL ── */
+function TweaksPanel({ title = "Tweaks", children }) {
+  const [open, setOpen] = useState(false);
+  const dragRef = useRef(null);
+  const offsetRef = useRef({ x: 16, y: 16 });
+
+  const clamp = useCallback(() => {
+    const p = dragRef.current; if (!p) return;
+    const maxR = Math.max(16, window.innerWidth - p.offsetWidth - 16);
+    const maxB = Math.max(16, window.innerHeight - p.offsetHeight - 16);
+    offsetRef.current = { x: Math.min(maxR, Math.max(16, offsetRef.current.x)), y: Math.min(maxB, Math.max(16, offsetRef.current.y)) };
+    p.style.right = offsetRef.current.x + "px";
+    p.style.bottom = offsetRef.current.y + "px";
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    clamp();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(clamp) : null;
+    if (ro) { ro.observe(document.documentElement); return () => ro.disconnect(); }
+    window.addEventListener("resize", clamp);
+    return () => window.removeEventListener("resize", clamp);
+  }, [open, clamp]);
+
+  useEffect(() => {
+    const onMsg = e => {
+      const t = e?.data?.type;
+      if (t === "__activate_edit_mode") setOpen(true);
+      else if (t === "__deactivate_edit_mode") setOpen(false);
+    };
+    window.addEventListener("message", onMsg);
+    window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+  const onDragStart = e => {
+    const p = dragRef.current; if (!p) return;
+    const r = p.getBoundingClientRect();
+    const startR = window.innerWidth - r.right, startB = window.innerHeight - r.bottom;
+    const sx = e.clientX;
+    const move = ev => { offsetRef.current = { x: startR - (ev.clientX - sx), y: startB - (ev.clientY - e.clientY) }; clamp(); };
+    const up = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  };
+
+  if (!open) return null;
+  return (
+    <div ref={dragRef} className="twk-panel" style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+      <div className="twk-hd" onMouseDown={onDragStart}>
+        <b>{title}</b>
+        <button className="twk-x" onMouseDown={e => e.stopPropagation()} onClick={() => { setOpen(false); window.parent.postMessage({ type: "__edit_mode_dismissed" }, "*"); }}>✕</button>
       </div>
-      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
-        <span></span><span></span>
-      </button>
+      <div className="twk-body">{children}</div>
     </div>
-  </nav>
-
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="#problem">Why MFC</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="#features">Features</a>
-    <a href="#cooking">Guided cooking</a>
-    <a href="#faq">FAQ</a>
-    <a href="#auth" class="btn btn-primary btn-lg" data-auth-trigger>Get started free</a>
-  </div>
-
-  <main id="main">
-
-  <section class="hero" id="hero">
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <div class="hero-eyebrow reveal">
-          <span></span>Personalized nutrition · guided cooking
-        </div>
-        <h1 class="reveal">
-          Eat what your body <span class="accent-text">actually needs.</span>
-        </h1>
-        <p class="hero-sub reveal">
-          MyFoodCraving reads your health metrics, suggests meals tailored to you, tracks every bite, and walks you through cooking — step by step.
-        </p>
-        <div class="hero-cta reveal">
-          <a href="#auth" class="btn btn-primary btn-lg" data-auth-trigger>
-            Get started free <span class="arrow" aria-hidden="true">→</span>
-          </a>
-          <a href="#how-it-works" class="btn btn-ghost btn-lg">
-            See how it works
-          </a>
-        </div>
-        <div class="hero-mini reveal" aria-hidden="true">
-          <span><span class="ok">✓</span> 12k+ meals personalized</span>
-          <span><span class="ok">✓</span> Works with any health tracker</span>
-        </div>
+  );
+}
+function TweakSection({ label }) { return <div className="twk-sect">{label}</div>; }
+function TweakColor({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <input type="color" className="twk-swatch" value={value} onChange={e => onChange(e.target.value)} />
+    </div>
+  );
+}
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? "1" : "0"} role="switch" aria-checked={!!value} onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = useRef(null);
+  const [dragging, setDragging] = useState(false);
+  const opts = options.map(o => typeof o === "object" ? o : { value: o, label: o });
+  const idx = Math.max(0, opts.findIndex(o => o.value === value));
+  const n = opts.length;
+  const vRef = useRef(value); vRef.current = value;
+  const segAt = x => { const r = trackRef.current.getBoundingClientRect(); return opts[Math.max(0, Math.min(n - 1, Math.floor(((x - r.left - 2) / (r.width - 4)) * n)))].value; };
+  const onPointerDown = e => {
+    setDragging(true);
+    const v0 = segAt(e.clientX); if (v0 !== vRef.current) onChange(v0);
+    const move = ev => { if (!trackRef.current) return; const v = segAt(ev.clientX); if (v !== vRef.current) onChange(v); };
+    const up = () => { setDragging(false); window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); };
+    window.addEventListener("pointermove", move); window.addEventListener("pointerup", up);
+  };
+  return (
+    <div className="twk-row">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown} className={dragging ? "twk-seg dragging" : "twk-seg"}>
+        <div className="twk-seg-thumb" style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`, width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map(o => <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>{o.label}</button>)}
       </div>
+    </div>
+  );
+}
 
-      <div class="app-preview reveal" aria-hidden="true">
-        <div class="app-chrome">
-          <span class="app-dot r"></span><span class="app-dot y"></span><span class="app-dot g"></span>
-          <span class="app-title">MyFoodCraving — Today's plan</span>
+/* ── NAV ── */
+function Nav() {
+  const scrolled = useScrolled();
+  return (
+    <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
+      <div className="nav-inner">
+        <a href="#" className="brand">
+          <span className="brand-mark">m</span>
+          <span className="brand-name">MyFood<em>Craving</em></span>
+        </a>
+        <div className="nav-links">
+          <a href="#why">Why MFC</a>
+          <a href="#personalize">Personalized</a>
+          <a href="#cooking">Guided cooking</a>
+          <a href="#cta">Get started</a>
         </div>
-        <div class="app-body">
-          <div class="meal-card">
-            <div class="label">Lunch · recommended</div>
-            <div class="name">Mediterranean Quinoa Bowl</div>
-            <div class="meta">Prep 12 min · Cook 18 min · 480 kcal</div>
-            <div class="macro-row">
-              <div class="macro"><div class="val">32g</div><div class="unit">Protein</div></div>
-              <div class="macro"><div class="val">48g</div><div class="unit">Carbs</div></div>
-              <div class="macro"><div class="val">18g</div><div class="unit">Fat</div></div>
+        <a href="#cta" className="btn btn-primary">Try it free →</a>
+      </div>
+    </nav>
+  );
+}
+
+/* ── HERO ── */
+function Hero() {
+  const [cravingId, setCravingId] = useState("bowl");
+  const [text, setText] = useState("");
+  const meal = CRAVINGS[cravingId];
+
+  const submit = e => { e?.preventDefault?.(); setCravingId(mapCraving(text)); };
+
+  return (
+    <section className="hero">
+      <div className="wrap">
+        <div className="hero-grid">
+          <div className="hero-copy reveal">
+            <div className="hero-eyebrow-row">
+              <span className="eyebrow"><span className="eyebrow-dot" />personalized · guided · delicious</span>
+              <span className="scribble" style={{ transform: "rotate(-4deg)" }}>for real bodies ✦</span>
+            </div>
+            <h1 className="hero-headline">
+              Eat what your body's<br />
+              <em>actually craving
+                <svg className="underline-scribble" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M2 8 Q 60 2 120 7 T 238 6" stroke="#FF6D2E" strokeWidth="3" fill="none" strokeLinecap="round" />
+                </svg>
+              </em>.
+            </h1>
+            <p className="hero-sub">
+              Tell us what sounds good. We read your health data, fix the gaps, and walk you through cooking it — like a friend who actually went to culinary school.
+            </p>
+
+            <form className="hero-craving" onSubmit={submit}>
+              <div className="craving-input-row">
+                <input className="craving-input" placeholder="something with pasta, but make it healthy…" value={text} onChange={e => setText(e.target.value)} />
+                <button className="craving-go" type="submit" aria-label="Find meals">→</button>
+              </div>
+              <div className="craving-chips">
+                {CRAVING_PRESETS.map(c => (
+                  <button type="button" key={c.id} className={`chip ${cravingId === c.id ? "active" : ""}`}
+                    onClick={() => { setCravingId(c.id); setText(""); }}>{c.label}</button>
+                ))}
+              </div>
+            </form>
+
+            <div className="hero-mini">
+              <span>✓ <b>12k+</b> meals personalized</span>
+              <span>✓ syncs with <b>Apple Health</b> + <b>Google Fit</b></span>
+              <span>✓ <b>4.8★</b> avg rating</span>
             </div>
           </div>
-          <div class="health-row">
-            <span class="dot-ok"></span>
-            <span>Aligned with your iron & B12 goals</span>
-          </div>
-          <div class="health-row">
-            <span class="dot-ok"></span>
-            <span>Under your daily sodium limit</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <div class="divider"><div class="divider-line"></div></div>
+          <div className="plate-stage reveal">
+            <span className="deco" style={{ top: "-2%", left: "-4%", fontSize: 44 }}>🌿</span>
+            <span className="deco float-bob" style={{ top: "10%", right: "-2%", fontSize: 38 }}>🍅</span>
+            <span className="deco float-bob-2" style={{ bottom: "8%", right: "-4%", fontSize: 40 }}>🍋</span>
 
-  <section class="section" id="problem">
-    <div class="split">
-      <div class="reveal">
-        <div class="section-label"><span class="dot"></span> The problem</div>
-        <h2 class="section-title">Generic diets<br>don't know you.<br>They never did.</h2>
-        <p class="section-desc">Your body, your metrics, your deficiencies — every person is different. Cookie-cutter meal plans ignore what actually matters.</p>
-      </div>
-      <div class="reveal">
-        <p class="pullquote"><span class="pullquote-mark">"</span>I tried three apps. They all gave me the same 1800-calorie plan. None of them knew I was iron-deficient.<span class="pullquote-mark">"</span></p>
-        <p class="pullquote-caption">— a real user, before MFC</p>
-        <div class="pain-list" aria-label="Common pain points">
-          <div class="pain-row"><span class="x">×</span> <span>Calorie-only tracking misses micronutrients</span></div>
-          <div class="pain-row"><span class="x">×</span> <span>Recipe apps ignore your health data</span></div>
-          <div class="pain-row"><span class="x">×</span> <span>Generic plans don't adapt to your body</span></div>
-          <div class="pain-row"><span class="x">×</span> <span>No guidance on how to actually cook it</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <section class="section" id="how-it-works">
-    <div class="reveal section-head">
-      <div class="section-label"><span class="dot"></span> How it works</div>
-      <h2 class="section-title">From your health data<br>to your plate — in four steps</h2>
-      <p class="section-desc">Connect once. MFC learns, adapts, and cooks alongside you.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01 · CONNECT</div>
-        <h3>Link your health data</h3>
-        <p>Sync with Apple Health, Google Fit, or enter your metrics manually. MFC reads what matters — blood work, vitals, deficiencies.</p>
-        <div class="step-visual" aria-hidden="true">
-          <span class="ok">✓</span> Apple Health synced<br>
-          <span class="ok">✓</span> Iron: low · B12: normal
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02 · PERSONALIZE</div>
-        <h3>Get meals built for you</h3>
-        <p>MFC factors in your goals, allergies, taste preferences, and nutritional gaps to suggest meals that actually make sense for your body.</p>
-        <div class="step-visual" aria-hidden="true">
-          <span class="hi">→</span> 3 meals suggested<br>
-          <span class="hi">→</span> optimized for iron intake
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03 · COOK</div>
-        <h3>Follow the guided recipe</h3>
-        <p>Every recipe has step-by-step instructions, timers, and visual cues. No guesswork — just follow along at your own pace.</p>
-        <div class="step-visual" aria-hidden="true">
-          Step 3/7 · <span class="hi">Sauté onions 4 min</span><br>
-          <span class="ok">⏱ Timer running</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">04 · TRACK</div>
-        <h3>Watch your health improve</h3>
-        <p>MFC logs what you ate and maps it against your goals. Over time, suggestions get sharper and your nutrition gaps close.</p>
-        <div class="step-visual" aria-hidden="true">
-          Iron intake <span class="ok">↑ 34%</span> this week<br>
-          Sodium <span class="ok">↓ within limit</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <section class="section" id="features">
-    <div class="section-center reveal">
-      <div class="section-label"><span class="dot"></span> Features</div>
-      <h2 class="section-title">More than a recipe app.</h2>
-      <p class="section-desc">Six things that make personalized nutrition actually work.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-item">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <h3>Health-metric driven</h3>
-        <p>Meals are shaped by your blood work, BMI, deficiencies, and daily vitals — not just calories.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3>Personalized suggestions</h3>
-        <p>Every recommendation factors in taste, allergies, cultural preference, and nutritional gaps unique to you.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3>Guided cooking</h3>
-        <p>Step-by-step instructions with built-in timers, portion guides, and visual cues. Cook with confidence.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3>Complete nutrition tracking</h3>
-        <p>Macros, micros, vitamins, minerals — tracked automatically from recipes you cook and log.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        </div>
-        <h3>Adaptive learning</h3>
-        <p>The more you use MFC, the sharper it gets. Suggestions improve as your data and feedback build up.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h3>Your data stays yours</h3>
-        <p>Health data is encrypted and never shared. We don't sell insights. Your metrics are used only to help you eat better.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <section class="section section-center" id="cooking">
-    <div class="reveal">
-      <div class="section-label"><span class="dot"></span> Guided cooking</div>
-      <h2 class="section-title">Every recipe, <span class="accent-text">step by step.</span></h2>
-      <p class="section-desc">No more guessing. MFC walks you through each recipe with timers, portions, and clear instructions — like having a chef beside you.</p>
-    </div>
-    <div class="cook-preview reveal">
-      <div class="cook-chrome">
-        <span class="app-dot r"></span><span class="app-dot y"></span><span class="app-dot g"></span>
-        <span class="app-title">Guided cooking — Mediterranean Quinoa Bowl</span>
-      </div>
-      <div class="cook-body">
-        <div>
-          <div class="cook-step-card">
-            <div class="cook-step-num">Step 1 · done</div>
-            <div class="cook-step-text">Rinse 1 cup quinoa under cold water. Drain well.</div>
-          </div>
-          <div class="cook-step-card">
-            <div class="cook-step-num">Step 2 · done</div>
-            <div class="cook-step-text">Dice cucumber, tomatoes, and red onion into small cubes.</div>
-          </div>
-          <div class="cook-step-card active">
-            <div class="cook-step-num">Step 3 · in progress</div>
-            <div class="cook-step-text">Cook quinoa in 2 cups water. Bring to boil, then simmer covered for 15 min.</div>
-            <div class="cook-timer">⏱ 11:24 remaining</div>
-          </div>
-          <div class="cook-step-card">
-            <div class="cook-step-num">Step 4 · next</div>
-            <div class="cook-step-text">Toss vegetables with lemon-tahini dressing. Season to taste.</div>
-          </div>
-        </div>
-        <div class="cook-nutrition">
-          <div class="title">Nutrition breakdown</div>
-          <div class="cook-bar"><span>Protein</span><div class="track"><div class="fill" style="width:65%"></div></div><span class="pct">32g</span></div>
-          <div class="cook-bar"><span>Carbs</span><div class="track"><div class="fill" style="width:72%"></div></div><span class="pct">48g</span></div>
-          <div class="cook-bar"><span>Fat</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="pct">18g</span></div>
-          <div class="cook-bar"><span>Fiber</span><div class="track"><div class="fill" style="width:55%"></div></div><span class="pct">8g</span></div>
-          <div class="cook-bar"><span>Iron</span><div class="track"><div class="fill" style="width:82%"></div></div><span class="pct">4.2mg</span></div>
-          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
-            <div class="health-row" style="border:0;padding:4px 0">
-              <span class="dot-ok"></span>
-              <span>Covers 47% daily iron goal</span>
+            <div className="plate" key={cravingId}>
+              <div className="plate-content">
+                <div className="plate-photo" />
+              </div>
             </div>
+
+            <div className="sticker sticker-orange tilt-l sticker-1">
+              <span className="dot" />
+              <div>
+                <div style={{ fontSize: 11, color: "var(--ink-muted)", fontFamily: "var(--mono)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Lunch · suggested</div>
+                <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 18, lineHeight: 1.1, marginTop: 2 }}>{meal.name}</div>
+              </div>
+            </div>
+            <div className="sticker tilt-r sticker-2"><span className="dot" /><span>{meal.tags[0]}</span></div>
+            <div className="sticker sticker-orange tilt-r sticker-3"><span className="dot" /><span>ready in {meal.blurb.split("·").pop().trim()}</span></div>
+
+            <div className="sticker-macros">
+              <div className="m"><div className="v">{meal.kcal}</div><div className="u">kcal</div></div>
+              <div className="m"><div className="v">{meal.p}g</div><div className="u">protein</div></div>
+              <div className="m"><div className="v">{meal.c}g</div><div className="u">carbs</div></div>
+              <div className="m"><div className="v">{meal.f}g</div><div className="u">fat</div></div>
+            </div>
+            <div className="scribble-arrow" style={{ top: "44%", right: "-12%", maxWidth: 130, transform: "rotate(8deg)" }}>your body asked for this →</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <section class="section section-center" id="proof">
-    <div class="reveal">
-      <div class="section-label"><span class="dot"></span> Real impact</div>
-      <p class="proof-quote">"I stopped guessing what to eat. MFC reads my blood work and tells me exactly what my body needs — then teaches me how to cook it."</p>
-      <p class="proof-attrib">— Early adopter, 6 months on MFC</p>
-      <div class="proof-stats">
-        <div class="stat"><div class="num">12k+</div><div class="lbl">Meals personalized</div></div>
-        <div class="stat"><div class="num">89%</div><div class="lbl">Users hit nutrition goals</div></div>
-        <div class="stat"><div class="num">4.8★</div><div class="lbl">Average rating</div></div>
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {[...Array(2)].map((_, i) => (
+            <React.Fragment key={i}>
+              <span className="marquee-item">read your blood work</span>
+              <span className="marquee-item">cook with confidence</span>
+              <span className="marquee-item">no calorie counting</span>
+              <span className="marquee-item">close your nutrition gaps</span>
+              <span className="marquee-item">pasta is back on the menu</span>
+              <span className="marquee-item">crave smarter, not less</span>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <section class="section-faq" id="faq">
-    <div class="reveal section-head">
-      <div class="section-label"><span class="dot"></span> FAQ</div>
-      <h2 class="section-title">Common questions</h2>
-    </div>
-    <div class="faq-list reveal">
-      <details>
-        <summary>What health data does MFC use?</summary>
-        <p>MFC can read from Apple Health, Google Fit, or manual entries. We look at blood work markers (iron, B12, vitamin D, cholesterol), vitals (weight, blood pressure, heart rate), and your stated dietary goals and restrictions.</p>
-      </details>
-      <details>
-        <summary>Do I need a fitness tracker?</summary>
-        <p>No. You can enter your health data manually. A connected tracker just makes it automatic and keeps your profile updated in real time.</p>
-      </details>
-      <details>
-        <summary>How are meals personalized?</summary>
-        <p>We combine your health metrics, nutritional gaps, taste preferences, allergies, and cultural food habits to suggest meals that are both healthy for you and enjoyable to eat.</p>
-      </details>
-      <details>
-        <summary>Is my health data safe?</summary>
-        <p>Yes. All health data is encrypted at rest and in transit. We never sell or share your data. Your metrics are used only to personalize your experience.</p>
-      </details>
-      <details>
-        <summary>Can I follow my own recipes?</summary>
-        <p>Absolutely. You can add your own recipes and MFC will analyze them for nutritional content, suggest tweaks if needed, and add them to your guided cooking library.</p>
-      </details>
-      <details>
-        <summary>Is MFC free?</summary>
-        <p>MFC is free to get started with core features. Premium features like advanced health analytics and detailed micronutrient tracking are available on our paid plans.</p>
-      </details>
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <section class="cta-section" id="cta">
-    <div class="cta-box reveal">
-      <h2>Start eating smarter today.</h2>
-      <p class="section-desc">Free to start. No credit card. Your body will thank you.</p>
-      <form class="cta-form" id="cta-form" novalidate>
-        <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
-        <button type="submit" class="btn btn-primary">Get started</button>
-      </form>
-    </div>
-  </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-brand">MyFoodCraving</span>
-      <span class="footer-copy">© 2026 · Infroid Technologies Pvt. Ltd.</span>
-    </div>
-  </footer>
-
-  <div class="auth-modal" id="auth-modal" aria-hidden="true" hidden>
-    <div class="auth-backdrop" data-auth-close></div>
-    <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <button class="auth-close" type="button" aria-label="Close" data-auth-close>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-      <div class="auth-brand" aria-hidden="true">
-        <span class="logo-mark">mfc</span>
-      </div>
-      <h2 id="auth-title">Sign in to MyFoodCraving</h2>
-      <p>Start your personalized nutrition journey.</p>
-      <div class="auth-providers">
-        <button class="provider-btn" type="button">
-          <svg class="provider-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/>
-            <path fill="#EA4335" d="M12 5.37c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06L5.84 9.9C6.71 7.3 9.14 5.37 12 5.37z"/>
-          </svg>
-          <span>Continue with Google</span>
-        </button>
-        <button class="provider-btn" type="button">
-          <svg class="provider-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="#F25022" d="M3 3h8v8H3z"/>
-            <path fill="#7FBA00" d="M13 3h8v8h-8z"/>
-            <path fill="#00A4EF" d="M3 13h8v8H3z"/>
-            <path fill="#FFB900" d="M13 13h8v8h-8z"/>
-          </svg>
-          <span>Continue with Microsoft</span>
-        </button>
-        <button class="provider-btn" type="button">
-          <svg class="provider-icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M16.7 12.4c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8s-1.8-.8-2.9-.8c-1.5 0-2.9.9-3.7 2.2-1.6 2.8-.4 6.9 1.1 9.1.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.8 3-.8s1.8.8 3 .8c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.2-2.5 1.2-2.6 0-.1-2.7-1-2.7-3.6zM14.5 5.8c.6-.7 1-1.7.9-2.8-.9 0-1.9.6-2.5 1.3-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.6-1.2z"/>
-          </svg>
-          <span>Continue with Apple</span>
-        </button>
-      </div>
-      <p class="auth-fineprint">By signing in you agree to our Terms & Privacy Policy.</p>
     </section>
-  </div>
+  );
+}
 
-  <script src="script.js"></script>
+/* ── MANIFESTO ── */
+function Manifesto() {
+  return (
+    <section className="manifesto" id="why">
+      <div className="wrap">
+        <div className="manifesto-grid">
+          <div className="reveal">
+            <div className="eyebrow" style={{ background: "rgba(247,241,227,0.08)", color: "var(--cream)", borderColor: "rgba(247,241,227,0.2)", marginBottom: 28 }}>
+              <span className="eyebrow-dot" /> the problem
+            </div>
+            <h2 className="manifesto-headline">
+              Diets <span className="strike">lied</span> to you.<br />
+              Recipe apps <em>guessed</em>.<br />
+              Your body deserved better.
+            </h2>
+          </div>
+          <div className="manifesto-side reveal">
+            <div className="lies-list">
+              <div className="lie"><span className="lie-num">01</span><p className="lie-text">Calorie counting <span className="strike">tracked your food</span>, but it never knew you were <b>iron-deficient</b>.</p></div>
+              <div className="lie"><span className="lie-num">02</span><p className="lie-text">Generic meal plans gave 47 million people <b>the same</b> 1800-cal salad.</p></div>
+              <div className="lie"><span className="lie-num">03</span><p className="lie-text">Recipe apps showed you the dish but <b>never how to cook it</b> when you've never held a chef's knife.</p></div>
+              <div className="lie"><span className="lie-num">04</span><p className="lie-text">Cravings got framed as the enemy. They're <b>your body talking</b>. We translate.</p></div>
+            </div>
+            <blockquote className="quote-card">
+              "Three apps gave me the same plan. None of them knew my B12 was tanked. MFC figured it out in five minutes."
+              <div className="quote-attrib">— Priya, design lead, six months on MFC</div>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── PERSONALIZE ── */
+function Ring({ pct, color, label, v, inverted }) {
+  const r = 26, circ = 2 * Math.PI * r;
+  const shown = inverted ? Math.max(0, 100 - pct) : pct;
+  const off = circ * (1 - Math.min(100, shown) / 100);
+  return (
+    <div className="ring-cell">
+      <svg className="ring-svg" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r={r} fill="none" strokeWidth="6" className="ring-track" />
+        <circle cx="32" cy="32" r={r} fill="none" strokeWidth="6" className={`ring-fill ${color}`} strokeDasharray={circ} strokeDashoffset={off} />
+      </svg>
+      <div className="ring-pct">{v}</div>
+      <div className="ring-label">{label}</div>
+    </div>
+  );
+}
+
+function Personalize() {
+  const [active, setActive] = useState(HEALTH_METRICS.filter(m => m.default).map(m => m.id));
+  const meal = pickMeal(active);
+  const targets = microTargets(active);
+  const toggle = id => setActive(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+
+  return (
+    <section className="personalize" id="personalize">
+      <div className="wrap">
+        <div className="section-head">
+          <div className="reveal">
+            <div className="eyebrow" style={{ marginBottom: 18 }}><span className="eyebrow-dot" /> live demo · health → plate</div>
+            <h2>Your blood work, <em>on a plate.</em></h2>
+          </div>
+          <p className="lede reveal">Toggle a health flag and watch the meal swap. MFC actually reads your panels — iron, B12, sodium, fiber — and suggests food that closes your real gaps. Not a diet plan. Your plan.</p>
+        </div>
+
+        <div className="personalize-grid">
+          <div className="reveal">
+            <div className="label-mono" style={{ marginBottom: 12 }}>// your health flags</div>
+            <div className="metric-stack">
+              {HEALTH_METRICS.map(m => {
+                const isOn = active.includes(m.id);
+                return (
+                  <div key={m.id} className={`metric-card ${isOn ? "active" : ""}`}
+                    onClick={() => toggle(m.id)} role="switch" aria-checked={isOn} tabIndex={0}
+                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(m.id); } }}>
+                    <div><div className="name">{m.name}</div><div className="sub">{m.sub}</div></div>
+                    <span className="val">{m.val}</span>
+                    <span className="toggle" />
+                  </div>
+                );
+              })}
+            </div>
+            <p className="scribble" style={{ marginTop: 22, fontSize: 24, transform: "rotate(-2deg)" }}>tap any to flip it ↑</p>
+          </div>
+
+          <div className="rec-panel reveal">
+            <div className="rec-scribble" style={{ top: -22, right: 24, transform: "rotate(-6deg)" }}>fresh pick ↘</div>
+            <div className="rec-head">
+              <span className="label-mono">// today's match</span>
+              <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--matcha-deep)" }}>● updated just now</span>
+            </div>
+            <div className="rec-meal" key={meal.name}>
+              <div className="rec-meal-img">[ photo ]</div>
+              <div>
+                <div className="rec-meal-name">{meal.name}</div>
+                <div className="rec-meal-tags">{meal.tags.map((t, i) => <span key={i} className={`rec-tag ${i === 0 ? "orange" : ""}`}>{t}</span>)}</div>
+              </div>
+            </div>
+            <div className="ring-grid">{targets.map(t => <Ring key={t.label} {...t} />)}</div>
+            <div className="rec-why">
+              <b>Why this:</b> {active.length === 0
+                ? "No flags active — showing a balanced default. Add a flag to personalize."
+                : `Tuned for ${active.map(id => HEALTH_METRICS.find(m => m.id === id)?.name).join(" · ")}. Macros sit inside your goals, micros patch your gaps.`}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── COOKING ── */
+function Cooking() {
+  const [stepIdx, setStepIdx] = useState(2);
+  const step = COOKING_STEPS[stepIdx];
+  const [remaining, setRemaining] = useState(step.duration);
+  const [running, setRunning] = useState(true);
+  const [checked, setChecked] = useState({ 0: true, 1: true, 2: true });
+
+  useEffect(() => { setRemaining(COOKING_STEPS[stepIdx].duration); }, [stepIdx]);
+
+  useEffect(() => {
+    if (!running) return;
+    const id = setInterval(() => {
+      setRemaining(r => {
+        if (r <= 1) { setStepIdx(i => Math.min(i + 1, COOKING_STEPS.length - 1)); return COOKING_STEPS[Math.min(stepIdx + 1, COOKING_STEPS.length - 1)].duration; }
+        return r - 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [running, stepIdx]);
+
+  const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  const progress = ((step.duration - remaining) / step.duration) * 100;
+  const toggleIng = i => setChecked(p => ({ ...p, [i]: !p[i] }));
+
+  return (
+    <section className="cooking" id="cooking">
+      <div className="wrap">
+        <div className="section-head">
+          <div className="reveal">
+            <div className="eyebrow" style={{ marginBottom: 18 }}><span className="eyebrow-dot" /> live demo · guided cooking</div>
+            <h2>Cook it like you've <em>done it a hundred times.</em></h2>
+          </div>
+          <p className="lede reveal">One step at a time, with timers that run themselves and a little voice that's not your mom. Pause, rewind, ask why. Recipes you finish — and remember.</p>
+        </div>
+
+        <div className="cook-stage">
+          <div className="cook-board reveal">
+            <div className="cook-progress">
+              {COOKING_STEPS.map((_, i) => (
+                <div key={i} className={`cook-pip ${i < stepIdx ? "done" : i === stepIdx ? "now" : ""}`}
+                  style={i === stepIdx ? { "--p": `${progress}%` } : {}} />
+              ))}
+            </div>
+            <div className="cook-step-num">Step {step.id} of {COOKING_STEPS.length} · in progress</div>
+            <h3 className="cook-step-title">{step.title}</h3>
+            <p className="cook-step-detail">{step.detail}</p>
+
+            <div className="cook-timer-box">
+              <div>
+                <div className="cook-timer-meta">timer remaining</div>
+                <div className="cook-timer-clock">{fmt(remaining)}</div>
+              </div>
+              <div className="cook-controls">
+                <button className="cook-ctrl" onClick={() => setStepIdx(Math.max(0, stepIdx - 1))} aria-label="Previous">‹</button>
+                <button className="cook-ctrl" onClick={() => setRunning(r => !r)} aria-label={running ? "Pause" : "Play"}>{running ? "❚❚" : "▶"}</button>
+                <button className="cook-ctrl" onClick={() => setStepIdx(Math.min(COOKING_STEPS.length - 1, stepIdx + 1))} aria-label="Next">›</button>
+              </div>
+            </div>
+
+            <div className="cook-step-tabs">
+              {COOKING_STEPS.map((s, i) => (
+                <button key={s.id} className={`cook-tab ${i === stepIdx ? "active" : i < stepIdx ? "done" : ""}`}
+                  onClick={() => setStepIdx(i)}>{i < stepIdx ? "✓ " : ""}{s.id} · {s.title.toLowerCase()}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="cook-ingredients reveal">
+            <div className="rec-scribble" style={{ position: "absolute", top: -16, right: 18, transform: "rotate(4deg)", fontSize: 22 }}>tap to check off ↗</div>
+            <h4>Mise en place</h4>
+            <div className="ing-list">
+              {INGREDIENTS.map((ing, i) => (
+                <div key={ing.name} className={`ing-row ${checked[i] ? "checked" : ""}`} onClick={() => toggleIng(i)}>
+                  <span className="ing-check">{checked[i] ? "✓" : ""}</span>
+                  <span>{ing.name}</span>
+                  <span className="ing-amount">{ing.amt}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 22, padding: "14px 16px", background: "var(--paper)", borderRadius: 12, fontSize: 13, color: "var(--ink-soft)", borderLeft: "3px solid var(--matcha)" }}>
+              <b style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--matcha-deep)" }}>chef's note</b>
+              <div style={{ marginTop: 6 }}>Quinoa is done when you see little spirals (the germ uncurling). Trust the spiral.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── CTA + FOOTER ── */
+function CTA() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  return (
+    <section className="cta" id="cta">
+      <div className="wrap">
+        <div className="cta-box reveal">
+          <h2 className="cta-headline">Stop guessing.<br /><em>Start craving smarter.</em></h2>
+          <p className="cta-sub">Free to start. No credit card. Your gut, your iron, your B12 — all on speaking terms.</p>
+          <form className="cta-form" onSubmit={e => { e.preventDefault(); if (email) setSubmitted(true); }}>
+            {submitted ? (
+              <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 28, color: "var(--ink)" }}>✦ check your inbox — we sent your first match.</div>
+            ) : (
+              <>
+                <input type="email" required placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} />
+                <button type="submit" className="btn btn-orange" style={{ boxShadow: "0 6px 0 var(--ink)" }}>Get my first meal →</button>
+              </>
+            )}
+          </form>
+          <p className="cta-fineprint">⌘ apple health · google fit · manual entry · all encrypted</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="wrap footer-inner">
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span className="brand-mark" style={{ width: 28, height: 28, fontSize: 18 }}>m</span>
+          <b style={{ fontWeight: 600 }}>MyFoodCraving</b>
+        </div>
+        <span className="label-mono">© 2026 · Infroid Technologies · cook well, live well</span>
+      </div>
+    </footer>
+  );
+}
+
+/* ── APP ── */
+const TWEAK_DEFAULTS = { accent: "#FF6D2E", secondAccent: "#7A9C5A", bg: "#F7F1E3", wildcardFont: true, density: "regular" };
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--orange", t.accent);
+    root.style.setProperty("--matcha", t.secondAccent);
+    root.style.setProperty("--cream", t.bg);
+    root.style.setProperty("--hand", t.wildcardFont ? '"Caveat", cursive' : "var(--serif)");
+    root.style.setProperty("--container", t.density === "compact" ? "1140px" : t.density === "spacious" ? "1320px" : "1240px");
+  }, [t]);
+
+  useReveal();
+
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Manifesto />
+        <Personalize />
+        <Cooking />
+        <CTA />
+      </main>
+      <Footer />
+      <TweaksPanel>
+        <TweakSection label="Palette" />
+        <TweakColor label="Primary accent" value={t.accent} onChange={v => setTweak("accent", v)} />
+        <TweakColor label="Health accent" value={t.secondAccent} onChange={v => setTweak("secondAccent", v)} />
+        <TweakColor label="Background" value={t.bg} onChange={v => setTweak("bg", v)} />
+        <TweakSection label="Personality" />
+        <TweakToggle label="Handwritten wildcard" value={t.wildcardFont} onChange={v => setTweak("wildcardFont", v)} />
+        <TweakRadio label="Density" value={t.density} options={["compact", "regular", "spacious"]} onChange={v => setTweak("density", v)} />
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
 </body>
 </html>
