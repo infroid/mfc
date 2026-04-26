@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyFoodCraving — Eat smarter. Cook guided.</title>
+  <meta name="description" content="Personalized meal suggestions based on your health metrics. Complete recipes with a step-by-step guided cooking interface. Eat what your body actually needs.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MyFoodCraving — Eat smarter. Cook guided.">
+  <meta property="og:description" content="Personalized nutrition from your health data. Guided cooking for every meal.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MyFoodCraving — Eat smarter. Cook guided.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230B0D10'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='central' fill='%23FF6D2E' font-family='ui-monospace,monospace' font-weight='700' font-size='11'>mfc</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="MyFoodCraving home">
+        <span class="logo-mark">mfc</span>
+        <span>MyFoodCraving</span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">Why MFC</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#cooking">Guided cooking</a>
+        <a href="#faq">FAQ</a>
+        <a href="#auth" class="btn btn-primary btn-sm" data-auth-trigger>Get started</a>
+      </div>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#problem">Why MFC</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#cooking">Guided cooking</a>
+    <a href="#faq">FAQ</a>
+    <a href="#auth" class="btn btn-primary btn-lg" data-auth-trigger>Get started free</a>
+  </div>
+
+  <main id="main">
+
+  <section class="hero" id="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="hero-eyebrow reveal">
+          <span></span>Personalized nutrition · guided cooking
+        </div>
+        <h1 class="reveal">
+          Eat what your body <span class="accent-text">actually needs.</span>
+        </h1>
+        <p class="hero-sub reveal">
+          MyFoodCraving reads your health metrics, suggests meals tailored to you, tracks every bite, and walks you through cooking — step by step.
+        </p>
+        <div class="hero-cta reveal">
+          <a href="#auth" class="btn btn-primary btn-lg" data-auth-trigger>
+            Get started free <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#how-it-works" class="btn btn-ghost btn-lg">
+            See how it works
+          </a>
+        </div>
+        <div class="hero-mini reveal" aria-hidden="true">
+          <span><span class="ok">✓</span> 12k+ meals personalized</span>
+          <span><span class="ok">✓</span> Works with any health tracker</span>
+        </div>
+      </div>
+
+      <div class="app-preview reveal" aria-hidden="true">
+        <div class="app-chrome">
+          <span class="app-dot r"></span><span class="app-dot y"></span><span class="app-dot g"></span>
+          <span class="app-title">MyFoodCraving — Today's plan</span>
+        </div>
+        <div class="app-body">
+          <div class="meal-card">
+            <div class="label">Lunch · recommended</div>
+            <div class="name">Mediterranean Quinoa Bowl</div>
+            <div class="meta">Prep 12 min · Cook 18 min · 480 kcal</div>
+            <div class="macro-row">
+              <div class="macro"><div class="val">32g</div><div class="unit">Protein</div></div>
+              <div class="macro"><div class="val">48g</div><div class="unit">Carbs</div></div>
+              <div class="macro"><div class="val">18g</div><div class="unit">Fat</div></div>
+            </div>
+          </div>
+          <div class="health-row">
+            <span class="dot-ok"></span>
+            <span>Aligned with your iron & B12 goals</span>
+          </div>
+          <div class="health-row">
+            <span class="dot-ok"></span>
+            <span>Under your daily sodium limit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="section" id="problem">
+    <div class="split">
+      <div class="reveal">
+        <div class="section-label"><span class="dot"></span> The problem</div>
+        <h2 class="section-title">Generic diets<br>don't know you.<br>They never did.</h2>
+        <p class="section-desc">Your body, your metrics, your deficiencies — every person is different. Cookie-cutter meal plans ignore what actually matters.</p>
+      </div>
+      <div class="reveal">
+        <p class="pullquote"><span class="pullquote-mark">"</span>I tried three apps. They all gave me the same 1800-calorie plan. None of them knew I was iron-deficient.<span class="pullquote-mark">"</span></p>
+        <p class="pullquote-caption">— a real user, before MFC</p>
+        <div class="pain-list" aria-label="Common pain points">
+          <div class="pain-row"><span class="x">×</span> <span>Calorie-only tracking misses micronutrients</span></div>
+          <div class="pain-row"><span class="x">×</span> <span>Recipe apps ignore your health data</span></div>
+          <div class="pain-row"><span class="x">×</span> <span>Generic plans don't adapt to your body</span></div>
+          <div class="pain-row"><span class="x">×</span> <span>No guidance on how to actually cook it</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="section" id="how-it-works">
+    <div class="reveal section-head">
+      <div class="section-label"><span class="dot"></span> How it works</div>
+      <h2 class="section-title">From your health data<br>to your plate — in four steps</h2>
+      <p class="section-desc">Connect once. MFC learns, adapts, and cooks alongside you.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01 · CONNECT</div>
+        <h3>Link your health data</h3>
+        <p>Sync with Apple Health, Google Fit, or enter your metrics manually. MFC reads what matters — blood work, vitals, deficiencies.</p>
+        <div class="step-visual" aria-hidden="true">
+          <span class="ok">✓</span> Apple Health synced<br>
+          <span class="ok">✓</span> Iron: low · B12: normal
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02 · PERSONALIZE</div>
+        <h3>Get meals built for you</h3>
+        <p>MFC factors in your goals, allergies, taste preferences, and nutritional gaps to suggest meals that actually make sense for your body.</p>
+        <div class="step-visual" aria-hidden="true">
+          <span class="hi">→</span> 3 meals suggested<br>
+          <span class="hi">→</span> optimized for iron intake
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03 · COOK</div>
+        <h3>Follow the guided recipe</h3>
+        <p>Every recipe has step-by-step instructions, timers, and visual cues. No guesswork — just follow along at your own pace.</p>
+        <div class="step-visual" aria-hidden="true">
+          Step 3/7 · <span class="hi">Sauté onions 4 min</span><br>
+          <span class="ok">⏱ Timer running</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04 · TRACK</div>
+        <h3>Watch your health improve</h3>
+        <p>MFC logs what you ate and maps it against your goals. Over time, suggestions get sharper and your nutrition gaps close.</p>
+        <div class="step-visual" aria-hidden="true">
+          Iron intake <span class="ok">↑ 34%</span> this week<br>
+          Sodium <span class="ok">↓ within limit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="section" id="features">
+    <div class="section-center reveal">
+      <div class="section-label"><span class="dot"></span> Features</div>
+      <h2 class="section-title">More than a recipe app.</h2>
+      <p class="section-desc">Six things that make personalized nutrition actually work.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Health-metric driven</h3>
+        <p>Meals are shaped by your blood work, BMI, deficiencies, and daily vitals — not just calories.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Personalized suggestions</h3>
+        <p>Every recommendation factors in taste, allergies, cultural preference, and nutritional gaps unique to you.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Guided cooking</h3>
+        <p>Step-by-step instructions with built-in timers, portion guides, and visual cues. Cook with confidence.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Complete nutrition tracking</h3>
+        <p>Macros, micros, vitamins, minerals — tracked automatically from recipes you cook and log.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Adaptive learning</h3>
+        <p>The more you use MFC, the sharper it gets. Suggestions improve as your data and feedback build up.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Your data stays yours</h3>
+        <p>Health data is encrypted and never shared. We don't sell insights. Your metrics are used only to help you eat better.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="section section-center" id="cooking">
+    <div class="reveal">
+      <div class="section-label"><span class="dot"></span> Guided cooking</div>
+      <h2 class="section-title">Every recipe, <span class="accent-text">step by step.</span></h2>
+      <p class="section-desc">No more guessing. MFC walks you through each recipe with timers, portions, and clear instructions — like having a chef beside you.</p>
+    </div>
+    <div class="cook-preview reveal">
+      <div class="cook-chrome">
+        <span class="app-dot r"></span><span class="app-dot y"></span><span class="app-dot g"></span>
+        <span class="app-title">Guided cooking — Mediterranean Quinoa Bowl</span>
+      </div>
+      <div class="cook-body">
+        <div>
+          <div class="cook-step-card">
+            <div class="cook-step-num">Step 1 · done</div>
+            <div class="cook-step-text">Rinse 1 cup quinoa under cold water. Drain well.</div>
+          </div>
+          <div class="cook-step-card">
+            <div class="cook-step-num">Step 2 · done</div>
+            <div class="cook-step-text">Dice cucumber, tomatoes, and red onion into small cubes.</div>
+          </div>
+          <div class="cook-step-card active">
+            <div class="cook-step-num">Step 3 · in progress</div>
+            <div class="cook-step-text">Cook quinoa in 2 cups water. Bring to boil, then simmer covered for 15 min.</div>
+            <div class="cook-timer">⏱ 11:24 remaining</div>
+          </div>
+          <div class="cook-step-card">
+            <div class="cook-step-num">Step 4 · next</div>
+            <div class="cook-step-text">Toss vegetables with lemon-tahini dressing. Season to taste.</div>
+          </div>
+        </div>
+        <div class="cook-nutrition">
+          <div class="title">Nutrition breakdown</div>
+          <div class="cook-bar"><span>Protein</span><div class="track"><div class="fill" style="width:65%"></div></div><span class="pct">32g</span></div>
+          <div class="cook-bar"><span>Carbs</span><div class="track"><div class="fill" style="width:72%"></div></div><span class="pct">48g</span></div>
+          <div class="cook-bar"><span>Fat</span><div class="track"><div class="fill" style="width:38%"></div></div><span class="pct">18g</span></div>
+          <div class="cook-bar"><span>Fiber</span><div class="track"><div class="fill" style="width:55%"></div></div><span class="pct">8g</span></div>
+          <div class="cook-bar"><span>Iron</span><div class="track"><div class="fill" style="width:82%"></div></div><span class="pct">4.2mg</span></div>
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+            <div class="health-row" style="border:0;padding:4px 0">
+              <span class="dot-ok"></span>
+              <span>Covers 47% daily iron goal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="section section-center" id="proof">
+    <div class="reveal">
+      <div class="section-label"><span class="dot"></span> Real impact</div>
+      <p class="proof-quote">"I stopped guessing what to eat. MFC reads my blood work and tells me exactly what my body needs — then teaches me how to cook it."</p>
+      <p class="proof-attrib">— Early adopter, 6 months on MFC</p>
+      <div class="proof-stats">
+        <div class="stat"><div class="num">12k+</div><div class="lbl">Meals personalized</div></div>
+        <div class="stat"><div class="num">89%</div><div class="lbl">Users hit nutrition goals</div></div>
+        <div class="stat"><div class="num">4.8★</div><div class="lbl">Average rating</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="section-faq" id="faq">
+    <div class="reveal section-head">
+      <div class="section-label"><span class="dot"></span> FAQ</div>
+      <h2 class="section-title">Common questions</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details>
+        <summary>What health data does MFC use?</summary>
+        <p>MFC can read from Apple Health, Google Fit, or manual entries. We look at blood work markers (iron, B12, vitamin D, cholesterol), vitals (weight, blood pressure, heart rate), and your stated dietary goals and restrictions.</p>
+      </details>
+      <details>
+        <summary>Do I need a fitness tracker?</summary>
+        <p>No. You can enter your health data manually. A connected tracker just makes it automatic and keeps your profile updated in real time.</p>
+      </details>
+      <details>
+        <summary>How are meals personalized?</summary>
+        <p>We combine your health metrics, nutritional gaps, taste preferences, allergies, and cultural food habits to suggest meals that are both healthy for you and enjoyable to eat.</p>
+      </details>
+      <details>
+        <summary>Is my health data safe?</summary>
+        <p>Yes. All health data is encrypted at rest and in transit. We never sell or share your data. Your metrics are used only to personalize your experience.</p>
+      </details>
+      <details>
+        <summary>Can I follow my own recipes?</summary>
+        <p>Absolutely. You can add your own recipes and MFC will analyze them for nutritional content, suggest tweaks if needed, and add them to your guided cooking library.</p>
+      </details>
+      <details>
+        <summary>Is MFC free?</summary>
+        <p>MFC is free to get started with core features. Premium features like advanced health analytics and detailed micronutrient tracking are available on our paid plans.</p>
+      </details>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <section class="cta-section" id="cta">
+    <div class="cta-box reveal">
+      <h2>Start eating smarter today.</h2>
+      <p class="section-desc">Free to start. No credit card. Your body will thank you.</p>
+      <form class="cta-form" id="cta-form" novalidate>
+        <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
+        <button type="submit" class="btn btn-primary">Get started</button>
+      </form>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-brand">MyFoodCraving</span>
+      <span class="footer-copy">© 2026 · Infroid Technologies Pvt. Ltd.</span>
+    </div>
+  </footer>
+
+  <div class="auth-modal" id="auth-modal" aria-hidden="true" hidden>
+    <div class="auth-backdrop" data-auth-close></div>
+    <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="auth-close" type="button" aria-label="Close" data-auth-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="auth-brand" aria-hidden="true">
+        <span class="logo-mark">mfc</span>
+      </div>
+      <h2 id="auth-title">Sign in to MyFoodCraving</h2>
+      <p>Start your personalized nutrition journey.</p>
+      <div class="auth-providers">
+        <button class="provider-btn" type="button">
+          <svg class="provider-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/>
+            <path fill="#EA4335" d="M12 5.37c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06L5.84 9.9C6.71 7.3 9.14 5.37 12 5.37z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+        <button class="provider-btn" type="button">
+          <svg class="provider-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#F25022" d="M3 3h8v8H3z"/>
+            <path fill="#7FBA00" d="M13 3h8v8h-8z"/>
+            <path fill="#00A4EF" d="M3 13h8v8H3z"/>
+            <path fill="#FFB900" d="M13 13h8v8h-8z"/>
+          </svg>
+          <span>Continue with Microsoft</span>
+        </button>
+        <button class="provider-btn" type="button">
+          <svg class="provider-icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+            <path d="M16.7 12.4c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8s-1.8-.8-2.9-.8c-1.5 0-2.9.9-3.7 2.2-1.6 2.8-.4 6.9 1.1 9.1.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.8 3-.8s1.8.8 3 .8c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.2-2.5 1.2-2.6 0-.1-2.7-1-2.7-3.6zM14.5 5.8c.6-.7 1-1.7.9-2.8-.9 0-1.9.6-2.5 1.3-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.6-1.2z"/>
+          </svg>
+          <span>Continue with Apple</span>
+        </button>
+      </div>
+      <p class="auth-fineprint">By signing in you agree to our Terms & Privacy Policy.</p>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
