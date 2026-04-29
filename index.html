@@ -212,16 +212,10 @@ body::before {
 }
 .plate-photo {
   width: 70%; height: 70%; border-radius: 50%;
-  background:
-    repeating-linear-gradient(45deg, rgba(255,109,46,.18) 0 12px, transparent 12px 24px),
-    radial-gradient(circle at 50% 50%, var(--butter) 0%, var(--orange) 70%);
-  display: grid; place-items: center; font-family: var(--mono); font-size: 11px;
-  color: var(--ink); letter-spacing: 0.08em; text-transform: uppercase; text-align: center;
+  object-fit: cover;
+  border: 2px solid rgba(31, 26, 20, 0.08);
+  box-shadow: 0 12px 24px rgba(31, 26, 20, 0.18);
   position: relative; overflow: hidden;
-}
-.plate-photo::after {
-  content: "[ food shot ]"; position: absolute; bottom: 14%; left: 50%; transform: translateX(-50%);
-  background: rgba(255, 252, 243, 0.85); padding: 4px 10px; border-radius: 999px; font-size: 10px;
 }
 
 .sticker {
@@ -610,12 +604,12 @@ const { useState, useEffect, useRef, useCallback } = React;
 
 /* ── DATA ── */
 const CRAVINGS = {
-  pasta: { name: "Lemon Ricotta Spaghetti", blurb: "carb · cozy · 30 min", kcal: 520, p: 22, c: 68, f: 18, tags: ["high B12", "low sodium", "gluten-flexible"] },
-  bowl:  { name: "Mediterranean Quinoa Bowl", blurb: "fresh · proteins · 30 min", kcal: 480, p: 32, c: 48, f: 18, tags: ["+47% iron", "high fiber", "vegan-able"] },
-  spicy: { name: "Gochujang Salmon Rice", blurb: "spicy · omega-3 · 25 min", kcal: 590, p: 38, c: 52, f: 24, tags: ["omega-3", "high B12", "spicy"] },
-  sweet: { name: "Greek Yogurt Berry Cup", blurb: "sweet · light · 5 min", kcal: 310, p: 24, c: 38, f: 6, tags: ["high protein", "antioxidants", "low cal"] },
-  cozy:  { name: "Miso Mushroom Soup", blurb: "warm · umami · 20 min", kcal: 340, p: 18, c: 32, f: 12, tags: ["gut-friendly", "low cal", "vegetarian"] },
-  fresh: { name: "Citrus Avocado Salad", blurb: "fresh · crisp · 10 min", kcal: 380, p: 12, c: 24, f: 28, tags: ["healthy fats", "vitamin C", "fiber"] }
+  pasta: { name: "Lemon Ricotta Spaghetti", blurb: "carb · cozy · 30 min", kcal: 520, p: 22, c: 68, f: 18, tags: ["high B12", "low sodium", "gluten-flexible"], image: "assets/images/hero-dishes/lemon-ricotta-pasta.svg" },
+  bowl:  { name: "Mediterranean Quinoa Bowl", blurb: "fresh · proteins · 30 min", kcal: 480, p: 32, c: 48, f: 18, tags: ["+47% iron", "high fiber", "vegan-able"], image: "assets/images/hero-dishes/mediterranean-bowl.svg" },
+  spicy: { name: "Gochujang Salmon Rice", blurb: "spicy · omega-3 · 25 min", kcal: 590, p: 38, c: 52, f: 24, tags: ["omega-3", "high B12", "spicy"], image: "assets/images/hero-dishes/spicy-salmon-rice.svg" },
+  sweet: { name: "Greek Yogurt Berry Cup", blurb: "sweet · light · 5 min", kcal: 310, p: 24, c: 38, f: 6, tags: ["high protein", "antioxidants", "low cal"], image: "assets/images/hero-dishes/mediterranean-bowl.svg" },
+  cozy:  { name: "Miso Mushroom Soup", blurb: "warm · umami · 20 min", kcal: 340, p: 18, c: 32, f: 12, tags: ["gut-friendly", "low cal", "vegetarian"], image: "assets/images/hero-dishes/spicy-salmon-rice.svg" },
+  fresh: { name: "Citrus Avocado Salad", blurb: "fresh · crisp · 10 min", kcal: 380, p: 12, c: 24, f: 28, tags: ["healthy fats", "vitamin C", "fiber"], image: "assets/images/hero-dishes/mediterranean-bowl.svg" }
 };
 
 const HEALTH_METRICS = [
@@ -909,7 +903,7 @@ function Hero() {
 
             <div className="plate" key={cravingId}>
               <div className="plate-content">
-                <div className="plate-photo" />
+                <img className="plate-photo" src={meal.image} alt={meal.name} />
               </div>
             </div>
 
