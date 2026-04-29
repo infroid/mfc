@@ -1,0 +1,36 @@
+/* MyFoodCraving — Canonical shared design tokens
+   Single source of truth for values shared across all pages.
+   Imported by styles.css (landing) and recipe-base.css (recipe pages).
+
+   Use page-specific aliases in components, not these --mfc-* names directly:
+     landing  → --brand, --font-sans, --font-mono, --font-serif
+     recipe   → --orange, --sans, --mono, --serif */
+
+:root {
+  /* Brand orange */
+  --mfc-orange:      #FF6D2E;
+  --mfc-orange-deep: #E2531A;
+  --mfc-orange-warm: #FF8F5C;
+  --mfc-orange-ink:  #1a0800;
+  --mfc-orange-soft: rgba(255, 109, 46, 0.14);
+  --mfc-orange-edge: rgba(255, 109, 46, 0.32);
+  --mfc-orange-glow: rgba(255, 109, 46, 0.22);
+
+  /* Typography stacks */
+  --mfc-font-sans:  "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mfc-font-serif: "Instrument Serif", Georgia, serif;
+  --mfc-font-mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --mfc-font-hand:  "Caveat", "Reenie Beanie", cursive;
+
+  /* Status palette */
+  --mfc-success:      #7DE892;
+  --mfc-success-soft: rgba(125, 232, 146, 0.14);
+  --mfc-warning:      #FFB84D;
+  --mfc-danger:       #FF6B7A;
+  --mfc-info:         #6BB8FF;
+
+  /* Motion */
+  --mfc-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --mfc-dur-base: 200ms;
+  --mfc-dur-slow: 400ms;
+}

@@ -1,12 +1,15 @@
 /* MyFoodCraving — Cream/editorial design system (recipe page base) */
+@import "tokens.css";
 
 :root {
+  /* Warm cream palette (recipe-specific) */
   --cream: #F7F1E3;
   --cream-deep: #EFE6CF;
   --cream-soft: #FBF7EC;
   --paper: #FFFCF3;
   --kraft: #E8DCC0;
 
+  /* Warm ink scale (recipe-specific) */
   --ink: #1F1A14;
   --ink-soft: #3A332A;
   --ink-muted: #6B6253;
@@ -14,25 +17,47 @@
   --rule: rgba(31, 26, 20, 0.14);
   --rule-strong: rgba(31, 26, 20, 0.28);
 
-  --orange: #FF6D2E;
-  --orange-deep: #E2531A;
-  --orange-soft: rgba(255, 109, 46, 0.14);
+  /* Brand — sourced from tokens.css */
+  --orange: var(--mfc-orange);
+  --orange-deep: var(--mfc-orange-deep);
+  --orange-soft: var(--mfc-orange-soft);
+  /* Recipe accent palette (recipe-specific) */
   --matcha: #7A9C5A;
   --matcha-deep: #5E7E40;
   --matcha-soft: rgba(122, 156, 90, 0.18);
   --berry: #C84B5A;
   --butter: #F4D67A;
 
-  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
-  --hand: "Caveat", "Reenie Beanie", cursive;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* Typography — sourced from tokens.css */
+  --sans: var(--mfc-font-sans);
+  --serif: var(--mfc-font-serif);
+  --hand: var(--mfc-font-hand);
+  --mono: var(--mfc-font-mono);
 
   --r-sm: 6px;
   --r-md: 12px;
   --r-lg: 20px;
   --r-xl: 32px;
   --container: 1240px;
+
+  /* Landing-system aliases — lets landing token names work on recipe pages too */
+  --brand: var(--mfc-orange);
+  --brand-ink: var(--mfc-orange-ink);
+  --brand-warm: var(--mfc-orange-warm);
+  --brand-soft: var(--mfc-orange-soft);
+  --brand-edge: var(--mfc-orange-edge);
+  --brand-glow: var(--mfc-orange-glow);
+  --font-sans: var(--mfc-font-sans);
+  --font-mono: var(--mfc-font-mono);
+  --font-serif: var(--mfc-font-serif);
+  --success: var(--mfc-success);
+  --success-soft: var(--mfc-success-soft);
+  --warning: var(--mfc-warning);
+  --danger: var(--mfc-danger);
+  --info: var(--mfc-info);
+  --ease-out: var(--mfc-ease-out);
+  --dur-base: var(--mfc-dur-base);
+  --dur-slow: var(--mfc-dur-slow);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

@@ -1,13 +1,13 @@
 /* MyFoodCraving — Deep-orange / Geist design system */
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap");
+@import "tokens.css";
 
 :root {
-  --brand: #FF6D2E;
-  --brand-ink: #1a0800;
-  --brand-soft: rgba(255,109,46,0.14);
-  --brand-edge: rgba(255,109,46,0.32);
-  --brand-glow: rgba(255,109,46,0.22);
-  --brand-warm: #FF8F5C;
+  /* Brand — sourced from tokens.css */
+  --brand:var(--mfc-orange);--brand-ink:var(--mfc-orange-ink);
+  --brand-soft:var(--mfc-orange-soft);--brand-edge:var(--mfc-orange-edge);
+  --brand-glow:var(--mfc-orange-glow);--brand-warm:var(--mfc-orange-warm);
+  /* Dark ink scale (landing-specific) */
   --ink-0:#07080A;--ink-1:#0B0D10;--ink-2:#101317;--ink-3:#161A1F;
   --ink-4:#1D222A;--ink-5:#2A3039;--ink-6:#3A4250;--ink-7:#5A6272;
   --ink-8:#9098A8;--ink-9:#A8B0BF;--ink-10:#D4D7DE;--ink-11:#F0F1F4;
@@ -17,16 +17,20 @@
   --border:var(--ink-5);--border-strong:var(--ink-6);--border-subtle:rgba(255,255,255,0.06);
   --accent:var(--brand);--accent-fg:var(--brand-ink);--accent-soft:var(--brand-soft);
   --accent-edge:var(--brand-edge);--accent-glow:var(--brand-glow);
-  --success:#7DE892;--success-soft:rgba(125,232,146,0.14);
-  --warning:#FFB84D;--danger:#FF6B7A;--info:#6BB8FF;
-  --font-sans:"Geist",ui-sans-serif,system-ui,-apple-system,sans-serif;
-  --font-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
-  --font-serif:"Instrument Serif",Georgia,serif;
-  --ease-out:cubic-bezier(0.2,0.8,0.2,1);--dur-base:200ms;--dur-slow:400ms;
+  /* Status — sourced from tokens.css */
+  --success:var(--mfc-success);--success-soft:var(--mfc-success-soft);
+  --warning:var(--mfc-warning);--danger:var(--mfc-danger);--info:var(--mfc-info);
+  /* Typography — sourced from tokens.css */
+  --font-sans:var(--mfc-font-sans);--font-mono:var(--mfc-font-mono);--font-serif:var(--mfc-font-serif);
+  /* Motion — sourced from tokens.css */
+  --ease-out:var(--mfc-ease-out);--dur-base:var(--mfc-dur-base);--dur-slow:var(--mfc-dur-slow);
   --container:1200px;--nav-h:56px;
   --r-sm:4px;--r-md:8px;--r-lg:12px;--r-pill:999px;
   --shadow-md:0 4px 16px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.02);
   --shadow-lg:0 12px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.03);
+  /* Recipe-system aliases — lets recipe token names work on this page too */
+  --orange:var(--mfc-orange);--orange-deep:var(--mfc-orange-deep);--orange-soft:var(--mfc-orange-soft);
+  --sans:var(--mfc-font-sans);--mono:var(--mfc-font-mono);--serif:var(--mfc-font-serif);
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
