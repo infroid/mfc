@@ -167,7 +167,17 @@ body::before {
 }
 .featured-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
 .fc-top {
-  height: 160px; position: relative; display: grid; place-items: center;
+  height: 160px; position: relative; display: grid; place-items: center; overflow: hidden;
+}
+.fc-top.has-media { background: var(--cream-deep) !important; }
+.fc-image {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
+}
+.fc-top.has-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(31,26,20,0.12), rgba(31,26,20,0.02) 42%, rgba(31,26,20,0.18));
+  pointer-events: none; z-index: 1;
 }
 .fc-emoji { font-size: 68px; line-height: 1; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.22)); position: relative; z-index: 2; }
 .fc-cuisine {
@@ -216,8 +226,12 @@ body::before {
 }
 .recipe-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
 .rc-left {
-  width: 68px; flex-shrink: 0; display: grid; place-items: center;
+  width: 68px; flex-shrink: 0; display: grid; place-items: center; position: relative; overflow: hidden;
   font-size: 30px;
+}
+.rc-image {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
 }
 .rc-body { flex: 1; padding: 12px 12px 12px 0; min-width: 0; }
 .rc-name { font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.2; margin-bottom: 4px; }
@@ -268,6 +282,7 @@ body::before {
 
 <body>
 
+<script src="shared/auth.js"></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -279,154 +294,203 @@ const { useState, useEffect, useMemo, useRef } = React;
 
 const RECIPES = [
   {
-    id: "paneer-butter-masala",
-    name: "Paneer Butter Masala",
-    emoji: "🧀",
-    tagline: "Silky tomato-cashew gravy, restaurant-style at home",
-    cuisine: "North Indian",
-    difficulty: "Easy",
-    totalMinutes: 35,
-    servings: 4,
-    tags: ["vegetarian", "gluten-free"],
-    color: "#FF6D2E",
-    colorSoft: "rgba(255,109,46,0.15)",
-    featured: true,
-    highlight: "14g protein per serving from paneer"
+    "id": "paneer-butter-masala",
+    "name": "Paneer Butter Masala",
+    "media": {
+      "emoji": "🧀"
+    },
+    "tagline": "Silky tomato-cashew gravy, restaurant-style at home",
+    "cuisine": "North Indian",
+    "difficulty": "Easy",
+    "totalMinutes": 35,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "gluten-free"
+    ],
+    "color": "#FF6D2E",
+    "colorSoft": "rgba(255,109,46,0.15)",
+    "featured": true,
+    "highlight": "14g protein per serving from paneer"
   },
   {
-    id: "butter-chicken",
-    name: "Butter Chicken",
-    emoji: "🍗",
-    tagline: "The world's most-ordered Indian dish, made properly",
-    cuisine: "North Indian",
-    difficulty: "Medium",
-    totalMinutes: 50,
-    servings: 4,
-    tags: ["non-veg"],
-    color: "#F4A261",
-    colorSoft: "rgba(244,162,97,0.18)",
-    featured: true,
-    highlight: "Smoky char from high-heat sear before sauce"
+    "id": "butter-chicken",
+    "name": "Butter Chicken",
+    "media": {
+      "emoji": "🍗"
+    },
+    "tagline": "The world's most-ordered Indian dish, made properly",
+    "cuisine": "North Indian",
+    "difficulty": "Medium",
+    "totalMinutes": 50,
+    "servings": 4,
+    "tags": [
+      "non-veg"
+    ],
+    "color": "#F4A261",
+    "colorSoft": "rgba(244,162,97,0.18)",
+    "featured": true,
+    "highlight": "Smoky char from high-heat sear before sauce"
   },
   {
-    id: "chicken-biryani",
-    name: "Chicken Biryani",
-    emoji: "🍚",
-    tagline: "Hyderabadi dum-style, layered, fragrant, and earthy",
-    cuisine: "Hyderabadi",
-    difficulty: "Hard",
-    totalMinutes: 90,
-    servings: 6,
-    tags: ["non-veg"],
-    color: "#E76F51",
-    colorSoft: "rgba(231,111,81,0.16)",
-    featured: true,
-    highlight: "Real dum sealing = steam-cooked perfection"
+    "id": "chicken-biryani",
+    "name": "Chicken Biryani",
+    "media": {
+      "emoji": "🍚"
+    },
+    "tagline": "Hyderabadi dum-style, layered, fragrant, and earthy",
+    "cuisine": "Hyderabadi",
+    "difficulty": "Hard",
+    "totalMinutes": 90,
+    "servings": 6,
+    "tags": [
+      "non-veg"
+    ],
+    "color": "#E76F51",
+    "colorSoft": "rgba(231,111,81,0.16)",
+    "featured": true,
+    "highlight": "Real dum sealing = steam-cooked perfection"
   },
   {
-    id: "dal-makhani",
-    name: "Dal Makhani",
-    emoji: "🫘",
-    tagline: "Slow-simmered black lentils, butter-kissed and rich",
-    cuisine: "North Indian",
-    difficulty: "Easy",
-    totalMinutes: 45,
-    servings: 4,
-    tags: ["vegetarian", "high-protein"],
-    color: "#8B5E3C",
-    colorSoft: "rgba(139,94,60,0.14)",
-    featured: false,
-    highlight: "18g plant protein per bowl"
+    "id": "dal-makhani",
+    "name": "Dal Makhani",
+    "media": {
+      "emoji": "🫘"
+    },
+    "tagline": "Slow-simmered black lentils, butter-kissed and rich",
+    "cuisine": "North Indian",
+    "difficulty": "Easy",
+    "totalMinutes": 45,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "high-protein"
+    ],
+    "color": "#8B5E3C",
+    "colorSoft": "rgba(139,94,60,0.14)",
+    "featured": false,
+    "highlight": "18g plant protein per bowl"
   },
   {
-    id: "masala-dosa",
-    name: "Masala Dosa",
-    emoji: "🫓",
-    tagline: "Crispy fermented crepe with spiced potato filling",
-    cuisine: "South Indian",
-    difficulty: "Medium",
-    totalMinutes: 40,
-    servings: 4,
-    tags: ["vegetarian", "gluten-free"],
-    color: "#D4A017",
-    colorSoft: "rgba(212,160,23,0.15)",
-    featured: false,
-    highlight: "Fermented batter boosts gut health"
+    "id": "masala-dosa",
+    "name": "Masala Dosa",
+    "media": {
+      "emoji": "🫓"
+    },
+    "tagline": "Crispy fermented crepe with spiced potato filling",
+    "cuisine": "South Indian",
+    "difficulty": "Medium",
+    "totalMinutes": 40,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "gluten-free"
+    ],
+    "color": "#D4A017",
+    "colorSoft": "rgba(212,160,23,0.15)",
+    "featured": false,
+    "highlight": "Fermented batter boosts gut health"
   },
   {
-    id: "chole-bhature",
-    name: "Chole Bhature",
-    emoji: "🫙",
-    tagline: "Spiced chickpea curry with cloud-light fried bread",
-    cuisine: "North Indian",
-    difficulty: "Medium",
-    totalMinutes: 60,
-    servings: 4,
-    tags: ["vegetarian", "high-fiber"],
-    color: "#FF8C00",
-    colorSoft: "rgba(255,140,0,0.15)",
-    featured: false,
-    highlight: "Chickpeas deliver 15g fiber per bowl"
+    "id": "chole-bhature",
+    "name": "Chole Bhature",
+    "media": {
+      "emoji": "🫙"
+    },
+    "tagline": "Spiced chickpea curry with cloud-light fried bread",
+    "cuisine": "North Indian",
+    "difficulty": "Medium",
+    "totalMinutes": 60,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "high-fiber"
+    ],
+    "color": "#FF8C00",
+    "colorSoft": "rgba(255,140,0,0.15)",
+    "featured": false,
+    "highlight": "Chickpeas deliver 15g fiber per bowl"
   },
   {
-    id: "palak-paneer",
-    name: "Palak Paneer",
-    emoji: "🥬",
-    tagline: "Silky spinach gravy with fresh paneer — iron-rich",
-    cuisine: "North Indian",
-    difficulty: "Easy",
-    totalMinutes: 30,
-    servings: 4,
-    tags: ["vegetarian", "iron-rich"],
-    color: "#7A9C5A",
-    colorSoft: "rgba(122,156,90,0.16)",
-    featured: false,
-    highlight: "Spinach + paneer = iron + complete protein"
+    "id": "palak-paneer",
+    "name": "Palak Paneer",
+    "media": {
+      "emoji": "🥬"
+    },
+    "tagline": "Silky spinach gravy with fresh paneer — iron-rich",
+    "cuisine": "North Indian",
+    "difficulty": "Easy",
+    "totalMinutes": 30,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "iron-rich"
+    ],
+    "color": "#7A9C5A",
+    "colorSoft": "rgba(122,156,90,0.16)",
+    "featured": false,
+    "highlight": "Spinach + paneer = iron + complete protein"
   },
   {
-    id: "rajma-chawal",
-    name: "Rajma Chawal",
-    emoji: "🍛",
-    tagline: "Red kidney bean curry — Sunday comfort in a bowl",
-    cuisine: "North Indian",
-    difficulty: "Easy",
-    totalMinutes: 50,
-    servings: 4,
-    tags: ["vegetarian", "high-protein"],
-    color: "#C84B5A",
-    colorSoft: "rgba(200,75,90,0.14)",
-    featured: false,
-    highlight: "Rice + lentil = complete amino acid profile"
+    "id": "rajma-chawal",
+    "name": "Rajma Chawal",
+    "media": {
+      "emoji": "🍛"
+    },
+    "tagline": "Red kidney bean curry — Sunday comfort in a bowl",
+    "cuisine": "North Indian",
+    "difficulty": "Easy",
+    "totalMinutes": 50,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "high-protein"
+    ],
+    "color": "#C84B5A",
+    "colorSoft": "rgba(200,75,90,0.14)",
+    "featured": false,
+    "highlight": "Rice + lentil = complete amino acid profile"
   },
   {
-    id: "aloo-gobi",
-    name: "Aloo Gobi",
-    emoji: "🥔",
-    tagline: "Dry-spiced potato and cauliflower — quick weeknight hero",
-    cuisine: "North Indian",
-    difficulty: "Easy",
-    totalMinutes: 25,
-    servings: 4,
-    tags: ["vegetarian", "vegan", "gluten-free"],
-    color: "#C9A227",
-    colorSoft: "rgba(201,162,39,0.14)",
-    featured: false,
-    highlight: "Low calorie, high fiber, 25 minutes flat"
+    "id": "aloo-gobi",
+    "name": "Aloo Gobi",
+    "media": {
+      "emoji": "🥔"
+    },
+    "tagline": "Dry-spiced potato and cauliflower — quick weeknight hero",
+    "cuisine": "North Indian",
+    "difficulty": "Easy",
+    "totalMinutes": 25,
+    "servings": 4,
+    "tags": [
+      "vegetarian",
+      "vegan",
+      "gluten-free"
+    ],
+    "color": "#C9A227",
+    "colorSoft": "rgba(201,162,39,0.14)",
+    "featured": false,
+    "highlight": "Low calorie, high fiber, 25 minutes flat"
   },
   {
-    id: "tandoori-chicken",
-    name: "Tandoori Chicken",
-    emoji: "🍖",
-    tagline: "Yogurt-marinated, char-grilled, smoky and bold",
-    cuisine: "North Indian",
-    difficulty: "Medium",
-    totalMinutes: 45,
-    servings: 4,
-    tags: ["non-veg", "gluten-free"],
-    color: "#E2531A",
-    colorSoft: "rgba(226,83,26,0.15)",
-    featured: false,
-    highlight: "Yogurt marinade tenderizes + adds probiotics"
+    "id": "tandoori-chicken",
+    "name": "Tandoori Chicken",
+    "media": {
+      "emoji": "🍖"
+    },
+    "tagline": "Yogurt-marinated, char-grilled, smoky and bold",
+    "cuisine": "North Indian",
+    "difficulty": "Medium",
+    "totalMinutes": 45,
+    "servings": 4,
+    "tags": [
+      "non-veg",
+      "gluten-free"
+    ],
+    "color": "#E2531A",
+    "colorSoft": "rgba(226,83,26,0.15)",
+    "featured": false,
+    "highlight": "Yogurt marinade tenderizes + adds probiotics"
   }
 ];
 
@@ -450,22 +514,105 @@ function useScrolled() {
   return scrolled;
 }
 
+function useAuth() {
+  const [user, setUser] = useState(window.MFC?.auth?.getUser() || null);
+  useEffect(() => {
+    const handler = (e) => setUser(e.detail.user);
+    window.addEventListener('mfc:auth-change', handler);
+    return () => window.removeEventListener('mfc:auth-change', handler);
+  }, []);
+  return user;
+}
+
+const __AUTH_STYLE = `
+.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.38);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:var(--paper,#FFFCF3);border:1.5px solid var(--ink,#1F1A14);border-radius:20px;box-shadow:6px 6px 0 var(--ink,#1F1A14);width:100%;max-width:400px;overflow:hidden}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 0}
+.modal-head b{font-size:17px;font-weight:600}
+.modal-close-btn{background:none;border:none;font-size:16px;color:var(--ink-muted,#6B6253);cursor:pointer;padding:4px 8px;border-radius:6px}
+.modal-close-btn:hover{background:rgba(0,0,0,.06)}
+.modal-sub{padding:8px 20px 16px;font-size:14px;color:var(--ink-soft,#3A332A);border-bottom:1px solid var(--rule,rgba(31,26,20,.14))}
+.modal-field{padding:12px 20px 0}
+.modal-input{width:100%;padding:10px 14px;border:1.5px solid var(--rule-strong,rgba(31,26,20,.28));border-radius:10px;font:inherit;font-size:15px;outline:none;background:var(--cream-soft,#FBF7EC);color:var(--ink,#1F1A14)}
+.modal-input:focus{border-color:var(--orange,#FF6D2E)}
+.modal-submit{display:block;width:calc(100% - 40px);margin:16px 20px;padding:12px;background:var(--ink,#1F1A14);color:var(--paper,#FFFCF3);border-radius:999px;font:inherit;font-size:15px;font-weight:500;cursor:pointer;border:none;transition:background 200ms}
+.modal-submit:hover{background:var(--orange,#FF6D2E)}
+.modal-note{text-align:center;padding:0 20px 16px;font-size:11px;color:var(--ink-faint,#9A8F7C);font-family:monospace;letter-spacing:.04em}
+.nav-user-btn{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--orange,#FF6D2E);color:var(--paper,#FFFCF3);border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;border:none;transition:background 200ms}
+.nav-user-btn:hover{background:var(--orange-deep,#E2531A)}
+.nav-avatar{display:inline-grid;place-items:center;width:22px;height:22px;background:rgba(255,255,255,.25);border-radius:50%;font-size:11px;font-weight:700}
+`;
+
+function AuthModal({ onClose }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!name.trim()) return;
+    window.MFC?.auth?.signIn({ name: name.trim(), email: email.trim() });
+    onClose();
+  }
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+  return (
+    <>
+      <style>{__AUTH_STYLE}</style>
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-box" onClick={e => e.stopPropagation()}>
+          <div className="modal-head">
+            <b>Sign in to MyFoodCraving</b>
+            <button className="modal-close-btn" onClick={onClose}>✕</button>
+          </div>
+          <p className="modal-sub">Save recipes · sync health metrics · personalise your feed</p>
+          <form onSubmit={handleSubmit}>
+            <div className="modal-field">
+              <input className="modal-input" type="text" placeholder="Your name" value={name}
+                onChange={e => setName(e.target.value)} required autoFocus />
+            </div>
+            <div className="modal-field">
+              <input className="modal-input" type="email" placeholder="Email (optional)" value={email}
+                onChange={e => setEmail(e.target.value)} />
+            </div>
+            <button type="submit" className="modal-submit">Continue →</button>
+          </form>
+          <p className="modal-note">// Google + Apple Health sign-in coming soon</p>
+        </div>
+      </div>
+    </>
+  );
+}
+
 function Nav() {
   const scrolled = useScrolled();
+  const user = useAuth();
+  const [showAuth, setShowAuth] = useState(false);
   return (
-    <nav className={"nav" + (scrolled ? " scrolled" : "")}>
-      <div className="nav-inner">
-        <a href="index.html" className="brand">
-          <span className="brand-mark">m</span>
-          <span className="brand-name">MyFood<em>Craving</em></span>
-        </a>
-        <div className="nav-links">
-          <a href="index.html">Home</a>
-          <a href="recipe-search.html" className="active">Recipes</a>
+    <>
+      <nav className={"nav" + (scrolled ? " scrolled" : "")}>
+        <div className="nav-inner">
+          <a href="index.html" className="brand">
+            <span className="brand-mark">m</span>
+            <span className="brand-name">MyFood<em>Craving</em></span>
+          </a>
+          <div className="nav-links">
+            <a href="index.html">Home</a>
+            <a href="recipe-search.html" className="active">Recipes</a>
+          </div>
+          {user ? (
+            <button className="nav-user-btn" onClick={() => window.MFC?.auth?.signOut()} title="Sign out">
+              <span className="nav-avatar">{user.name[0].toUpperCase()}</span>
+              {user.name.split(' ')[0]}
+            </button>
+          ) : (
+            <button className="btn-nav" onClick={() => setShowAuth(true)}>Sign in →</button>
+          )}
         </div>
-        <a href="index.html#cta" className="btn-nav">Get started →</a>
-      </div>
-    </nav>
+      </nav>
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+    </>
   );
 }
 
@@ -482,10 +629,29 @@ function RcTag({ label }) {
 }
 
 function FeaturedCard({ recipe }) {
+  const media = recipe.media || {};
+  const card = media.card || {};
+  const cardFit = card.fit || {};
+  const cardSrc = card.src || "";
+  const emoji = media.emoji || "🍽️";
   return (
-    <a href={`recipes/${recipe.id}.html`} className="featured-card">
-      <div className="fc-top" style={{ background: `linear-gradient(135deg, ${recipe.colorSoft} 0%, rgba(255,252,243,0.6) 100%)` }}>
-        <div className="fc-emoji">{recipe.emoji}</div>
+    <a href={`recipe.html?id=${recipe.id}`} className="featured-card">
+      <div className={"fc-top" + (cardSrc ? " has-media" : "")} style={{ background: `linear-gradient(135deg, ${recipe.colorSoft} 0%, rgba(255,252,243,0.6) 100%)` }}>
+        {cardSrc ? (
+          <img
+            className="fc-image"
+            src={cardSrc}
+            alt={card.alt || recipe.name}
+            style={{
+              "--media-scale": cardFit.scale || 1,
+              "--media-x": cardFit.x || "0%",
+              "--media-y": cardFit.y || "0%",
+              objectPosition: cardFit.position || "50% 50%"
+            }}
+          />
+        ) : (
+          <div className="fc-emoji">{emoji}</div>
+        )}
         <div className="fc-cuisine">{recipe.cuisine}</div>
         <div className="fc-badge">{recipe.difficulty}</div>
       </div>
@@ -510,10 +676,27 @@ function FeaturedCard({ recipe }) {
 }
 
 function RecipeCard({ recipe }) {
+  const media = recipe.media || {};
+  const card = media.card || {};
+  const cardFit = card.fit || {};
+  const cardSrc = card.src || "";
+  const emoji = media.emoji || "🍽️";
   return (
-    <a href={`recipes/${recipe.id}.html`} className="recipe-card">
+    <a href={`recipe.html?id=${recipe.id}`} className="recipe-card">
       <div className="rc-left" style={{ background: recipe.colorSoft }}>
-        {recipe.emoji}
+        {cardSrc ? (
+          <img
+            className="rc-image"
+            src={cardSrc}
+            alt={card.alt || recipe.name}
+            style={{
+              "--media-scale": cardFit.scale || 1,
+              "--media-x": cardFit.x || "0%",
+              "--media-y": cardFit.y || "0%",
+              objectPosition: cardFit.position || "50% 50%"
+            }}
+          />
+        ) : emoji}
       </div>
       <div className="rc-body">
         <div className="rc-name">{recipe.name}</div>
@@ -534,12 +717,30 @@ function RecipeCard({ recipe }) {
 }
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("");
+  const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || "");
+  const [filter, setFilter] = useState(() => new URLSearchParams(window.location.search).get('filter') || "");
+  const [recipes, setRecipes] = useState(RECIPES);
   const inputRef = useRef(null);
 
+  // Sync search state to URL so results are shareable / deep-linkable
+  useEffect(() => {
+    const p = new URLSearchParams();
+    if (query.trim()) p.set('q', query.trim());
+    if (filter) p.set('filter', filter);
+    const qs = p.toString();
+    window.history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : ''));
+  }, [query, filter]);
+
+  // Fetch recipe list from data file; RECIPES array above is the fallback
+  useEffect(() => {
+    fetch('data/recipes.json')
+      .then(r => r.json())
+      .then(data => setRecipes(data))
+      .catch(() => {});
+  }, []);
+
   const filtered = useMemo(() => {
-    let list = RECIPES;
+    let list = recipes;
     if (filter === "vegetarian") list = list.filter(r => r.tags.includes("vegetarian") || r.tags.includes("vegan"));
     else if (filter === "non-veg") list = list.filter(r => r.tags.includes("non-veg"));
     else if (filter === "easy") list = list.filter(r => r.difficulty === "Easy");
@@ -555,10 +756,10 @@ function App() {
       );
     }
     return list;
-  }, [query, filter]);
+  }, [query, filter, recipes]);
 
   const searching = query.trim() !== "" || filter !== "";
-  const featured = RECIPES.filter(r => r.featured);
+  const featured = recipes.filter(r => r.featured);
 
   return (
     <>
@@ -625,7 +826,7 @@ function App() {
                 {searching && <><em>Results</em></>}
               </h2>
             </div>
-            <span className="count-badge">{filtered.length} of {RECIPES.length}</span>
+            <span className="count-badge">{filtered.length} of {recipes.length}</span>
           </div>
 
           {filtered.length > 0 ? (
