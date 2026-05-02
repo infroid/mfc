@@ -1,0 +1,168 @@
+{
+  "id": "palak-paneer",
+  "name": "Palak Paneer",
+  "tagline": "iron-rich · silky spinach · 30 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "media": {
+    "emoji": "🥬",
+    "hero": {
+      "palette": [
+        "#7A9C5A",
+        "#5E7E40",
+        "#4A6B30"
+      ],
+      "alt": "Palak Paneer plated dish",
+      "caption": "palak paneer — vibrant green gravy, paneer cubes"
+    }
+  },
+  "healthFacts": [
+    "Spinach contains non-heme iron — vitamin C from tomatoes and lemon doubles its absorption.",
+    "Paneer completes the amino acid profile missing in spinach — together they're a near-complete protein.",
+    "Blanching and shocking spinach preserves chlorophyll and slows oxalate formation.",
+    "Adding cream off-heat retains more fat-soluble vitamins (A, K, E) than cooking them in.",
+    "Ginger in the masala enhances thermogenesis and reduces spinach's natural bitterness.",
+    "One serving provides ~60% of daily vitamin K needs — essential for bone density."
+  ],
+  "ingredients": [
+    {
+      "name": "Spinach (palak, fresh)",
+      "amt": "500g",
+      "group": "main"
+    },
+    {
+      "name": "Paneer",
+      "amt": "250g",
+      "group": "main"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 medium",
+      "group": "gravy"
+    },
+    {
+      "name": "Tomato",
+      "amt": "1 large",
+      "group": "gravy"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1.5 tbsp",
+      "group": "aromatics"
+    },
+    {
+      "name": "Green chili",
+      "amt": "1–2",
+      "group": "aromatics"
+    },
+    {
+      "name": "Heavy cream",
+      "amt": "2 tbsp",
+      "group": "finish"
+    },
+    {
+      "name": "Butter",
+      "amt": "2 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Cumin seeds",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    },
+    {
+      "name": "Lemon juice",
+      "amt": "1 tsp",
+      "group": "finish"
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Large pot for blanching",
+      "essential": true
+    },
+    {
+      "name": "Bowl of ice water",
+      "essential": true
+    },
+    {
+      "name": "Blender or hand blender",
+      "essential": true
+    },
+    {
+      "name": "Heavy pan or kadhai",
+      "essential": true
+    },
+    {
+      "name": "Strainer",
+      "essential": false
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Blanch the spinach",
+      "detail": "Bring a large pot of water to a boil. Add spinach and push it under — blanch for exactly 2 minutes. Transfer immediately to a bowl of ice water. This shocks the spinach and locks in the vivid green color.",
+      "duration": 120,
+      "tip": "The ice bath is not optional — without it, the spinach goes army-green and bitter-tasting.",
+      "media": {
+        "caption": "Step 1 reference shot"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Blend smooth",
+      "detail": "Drain the spinach. Squeeze out excess water gently. Blend with green chili and a splash of water until completely smooth. Set aside. The puree should be a vibrant, bright green.",
+      "duration": 120,
+      "tip": "Over-blending with too much water makes the gravy thin and watery. Use as little as needed."
+    },
+    {
+      "id": 3,
+      "title": "Build the base",
+      "detail": "Heat butter in a pan. Splutter cumin seeds. Add finely chopped onion and cook 5 minutes until light golden. Add ginger-garlic paste and cook 2 minutes. Add chopped tomato and Kashmiri chili. Cook until tomato breaks down completely.",
+      "duration": 540,
+      "tip": "Don't skip the tomato — it adds acidity that brightens the spinach and boosts iron absorption."
+    },
+    {
+      "id": 4,
+      "title": "Add spinach puree",
+      "detail": "Pour the spinach puree into the pan. Stir to combine with the masala. Add salt and ¼ cup water if the gravy is too thick. Cook on medium for 5–6 minutes, stirring frequently.",
+      "duration": 360,
+      "tip": "The gravy will darken slightly as it cooks — that's fine. Don't overcook or it loses vibrancy.",
+      "media": {
+        "caption": "Step 4 reference shot"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Add paneer",
+      "detail": "Cut paneer into 1-inch cubes. For softer paneer, soak the cubes in warm water for 10 minutes before adding. Slide them into the gravy gently. Stir once or twice — don't be aggressive.",
+      "duration": 180,
+      "tip": "Paneer doesn't need to 'cook' — it just needs to warm through and absorb the gravy."
+    },
+    {
+      "id": 6,
+      "title": "Finish and serve",
+      "detail": "Add garam masala and cream. Stir gently. Squeeze in a few drops of lemon juice — it brightens everything. Taste and adjust salt. Serve immediately with roti, naan, or rice.",
+      "duration": 60,
+      "tip": "Add cream off-heat or swirl it in last for richness without losing the green color."
+    }
+  ]
+}

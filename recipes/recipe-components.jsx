@@ -34,6 +34,15 @@ function RecipeNav() {
 // HERO
 // ============================================================
 function RecipeHero({ recipe, progress }) {
+  const hero = recipe.media?.hero || {};
+  const heroSrc = hero.src ? _BASE + hero.src : "";
+  const heroFit = hero.fit || {};
+  const heroPalette = hero.palette || [];
+  const heroStyle = heroSrc ? {} : {
+    "--hero-b": heroPalette[1] || "var(--butter)",
+    "--hero-c": heroPalette[2] || heroPalette[0] || "var(--orange)"
+  };
+
   return (
     <section className="r-hero">
       <div className="r-hero-copy">
@@ -67,10 +76,23 @@ function RecipeHero({ recipe, progress }) {
         </div>
       </div>
 
-      <div className="r-hero-plate">
+      <div className={"r-hero-plate" + (heroSrc ? " has-media" : "")} style={heroStyle}>
+        {heroSrc && (
+          <img
+            className="r-hero-image"
+            src={heroSrc}
+            alt={hero.alt || recipe.name}
+            style={{
+              "--media-scale": heroFit.scale || 1,
+              "--media-x": heroFit.x || "0%",
+              "--media-y": heroFit.y || "0%",
+              objectPosition: heroFit.position || "50% 50%"
+            }}
+          />
+        )}
         <div className="r-hero-sticker">{recipe.cuisine}</div>
         <div className="r-hero-sticker right">★ 4.8</div>
-        <div className="r-hero-plate-tag">{recipe.hero.caption}</div>
+        <div className="r-hero-plate-tag">{hero.caption || recipe.name}</div>
       </div>
     </section>
   );
@@ -81,6 +103,8 @@ function RecipeHero({ recipe, progress }) {
 // ============================================================
 function StepCard({ recipe, stepIdx, setStepIdx, doneSteps, setDoneSteps }) {
   const step = recipe.steps[stepIdx];
+  const stepMedia = step.media || null;
+  const stepSrc = stepMedia?.src ? _BASE + stepMedia.src : "";
   const total = recipe.steps.length;
 
   const [remaining, setRemaining] = useState(step.duration);
@@ -151,8 +175,10 @@ function StepCard({ recipe, stepIdx, setStepIdx, doneSteps, setDoneSteps }) {
       <h2 className="r-step-title">{step.title}</h2>
       <p className="r-step-detail">{step.detail}</p>
 
-      {step.hasImage && (
-        <div className="r-step-image" data-cap={`[ step ${stepIdx + 1} reference shot ]`}></div>
+      {stepMedia && (
+        <figure className={"r-step-image" + (stepSrc ? " has-media" : "")} data-cap={stepMedia.caption || `Step ${stepIdx + 1} reference shot`}>
+          {stepSrc && <img src={stepSrc} alt={stepMedia.alt || `${recipe.name} step ${stepIdx + 1}`} />}
+        </figure>
       )}
 
       {step.tip && (

@@ -1,0 +1,162 @@
+{
+  "id": "masala-dosa",
+  "name": "Masala Dosa",
+  "tagline": "crispy · fermented · gluten-free · 40 min",
+  "cuisine": "South Indian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 40,
+  "media": {
+    "emoji": "🫓",
+    "hero": {
+      "palette": [
+        "#D4A017",
+        "#F4D67A",
+        "#C9813A"
+      ],
+      "alt": "Masala Dosa plated dish",
+      "caption": "masala dosa — crispy golden crepe, potato filling"
+    }
+  },
+  "healthFacts": [
+    "Fermented dosa batter has a lower glycemic index than plain rice — lactic acid slows glucose absorption.",
+    "The fermentation process increases B vitamins, especially B12 and folate.",
+    "Urad dal in the batter provides complete protein when combined with rice.",
+    "Mustard seeds contain glucosinolates — plant compounds with studied anti-cancer properties.",
+    "Curry leaves are rich in carbazole alkaloids that help regulate blood cholesterol.",
+    "Naturally gluten-free — a rare comfort food that works for celiac diets without substitutions."
+  ],
+  "ingredients": [
+    {
+      "name": "Dosa batter (fermented, store-bought or homemade)",
+      "amt": "2 cups",
+      "group": "main"
+    },
+    {
+      "name": "Potatoes (boiled and peeled)",
+      "amt": "4 medium",
+      "group": "filling"
+    },
+    {
+      "name": "Onion (finely sliced)",
+      "amt": "2 medium",
+      "group": "filling"
+    },
+    {
+      "name": "Green chilies",
+      "amt": "2",
+      "group": "filling"
+    },
+    {
+      "name": "Ginger (grated)",
+      "amt": "1 inch",
+      "group": "filling"
+    },
+    {
+      "name": "Mustard seeds",
+      "amt": "1 tsp",
+      "group": "tempering"
+    },
+    {
+      "name": "Curry leaves",
+      "amt": "10–12",
+      "group": "tempering"
+    },
+    {
+      "name": "Chana dal",
+      "amt": "1 tsp",
+      "group": "tempering"
+    },
+    {
+      "name": "Turmeric powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    },
+    {
+      "name": "Fresh coriander",
+      "amt": "handful",
+      "group": "finish"
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Cast iron or non-stick tawa (flat griddle)",
+      "essential": true
+    },
+    {
+      "name": "Wide spatula (dosa ladle preferred)",
+      "essential": true
+    },
+    {
+      "name": "Small bowl of water (for sprinkling tawa)",
+      "essential": true
+    },
+    {
+      "name": "Heavy pan for filling",
+      "essential": false
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make the aloo filling",
+      "detail": "Heat oil in a pan. Splutter mustard seeds, then add curry leaves and chana dal. Once the dal turns golden, add sliced onions, green chilies, and ginger. Cook 5 minutes until onions soften.",
+      "duration": 420,
+      "tip": "Curry leaves must go in hot oil to release their aroma. Don't add them to cold oil.",
+      "media": {
+        "caption": "Step 1 reference shot"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Season and mash",
+      "detail": "Add turmeric and salt to the onion mixture. Stir for 30 seconds. Add the boiled potatoes — roughly mash them directly in the pan, mixing with the onion-spice base. Add coriander. Taste and adjust salt.",
+      "duration": 180,
+      "tip": "Keep some potato texture — completely smooth filling makes the dosa feel soggy inside."
+    },
+    {
+      "id": 3,
+      "title": "Heat the tawa",
+      "detail": "Heat the tawa on medium-high. Sprinkle a few drops of water — it should evaporate in under a second. Drizzle a few drops of oil and wipe with a half-onion or folded cloth. The surface should look lightly shiny.",
+      "duration": 120,
+      "tip": "The onion wipe seasons the tawa and prevents sticking. This is the traditional method."
+    },
+    {
+      "id": 4,
+      "title": "Pour and spread the batter",
+      "detail": "Pour a ladleful of batter in the center. Immediately start spreading in concentric outward circles with the back of the ladle, applying light even pressure. Work fast — the batter sets quickly. Aim for a thin, even round.",
+      "duration": 60,
+      "tip": "Speed matters. The batter should be spread within 5–8 seconds of hitting the pan.",
+      "media": {
+        "caption": "Step 4 reference shot"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Crisp the dosa",
+      "detail": "Drizzle ½ tsp oil around the edges and a few drops in the center. Cook on medium-high until the edges lift naturally and turn golden-brown. The top surface should look dry and matte — no wet patches. This takes 2–3 minutes.",
+      "duration": 180,
+      "tip": "Resist the urge to flip. Dosa is almost always cooked on one side only for the crisp.",
+      "media": {
+        "caption": "Step 5 reference shot"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Fill and fold",
+      "detail": "Place 2–3 tbsp of potato filling on one half of the dosa. Fold the other half over it. Or roll it — place filling along the center and roll into a cone or cylinder. Serve immediately with coconut chutney and sambar.",
+      "duration": 60,
+      "tip": "Dosa goes soft within minutes. Serve straight from the tawa."
+    }
+  ]
+}

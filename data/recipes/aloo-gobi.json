@@ -1,0 +1,165 @@
+{
+  "id": "aloo-gobi",
+  "name": "Aloo Gobi",
+  "tagline": "dry-spiced · vegan · gluten-free · 25 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 25,
+  "media": {
+    "emoji": "🥔",
+    "hero": {
+      "palette": [
+        "#C9A227",
+        "#F4D67A",
+        "#E76F51"
+      ],
+      "alt": "Aloo Gobi plated dish",
+      "caption": "aloo gobi — golden spiced cauliflower and potato"
+    }
+  },
+  "healthFacts": [
+    "Cauliflower is a crucifer — it contains sulforaphane, studied for its cancer-protective properties.",
+    "Turmeric's curcumin is one of the most well-researched anti-inflammatory compounds in food.",
+    "Cooking cauliflower with black pepper increases curcumin bioavailability by up to 2000%.",
+    "Potatoes are unfairly maligned — they're high in potassium, vitamin C, and resistant starch.",
+    "This dish is naturally vegan and gluten-free — no substitutions needed.",
+    "Dry-cooking (no added water) concentrates the natural sugars of both vegetables."
+  ],
+  "ingredients": [
+    {
+      "name": "Cauliflower (gobi)",
+      "amt": "1 medium head",
+      "group": "main"
+    },
+    {
+      "name": "Potatoes (aloo)",
+      "amt": "3 medium",
+      "group": "main"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 medium",
+      "group": "aromatics"
+    },
+    {
+      "name": "Tomato",
+      "amt": "1 medium",
+      "group": "aromatics"
+    },
+    {
+      "name": "Ginger (grated)",
+      "amt": "1 inch",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic (minced)",
+      "amt": "4 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Cumin seeds",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Turmeric powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Coriander powder",
+      "amt": "1.5 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    },
+    {
+      "name": "Fresh coriander",
+      "amt": "handful",
+      "group": "finish"
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide heavy pan or kadhai with lid",
+      "essential": true
+    },
+    {
+      "name": "Spatula or wide spoon",
+      "essential": true
+    },
+    {
+      "name": "Knife and cutting board",
+      "essential": true
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Prep the vegetables",
+      "detail": "Cut cauliflower into small florets — not too small or they'll turn mushy. Peel and cube potatoes into similar sizes. Pat both dry with a cloth. Uniform size means even cooking.",
+      "duration": 300,
+      "tip": "Dry vegetables = better browning. Moisture is the enemy of a good crust."
+    },
+    {
+      "id": 2,
+      "title": "Temper and aromatics",
+      "detail": "Heat oil in the pan until shimmering. Add cumin seeds and let them splutter for 20 seconds. Add sliced onion and cook 5 minutes until translucent. Add grated ginger and garlic, stir 1 minute until fragrant.",
+      "duration": 360,
+      "tip": "Cumin seeds that splutter immediately = the pan is hot enough. Don't add them too early."
+    },
+    {
+      "id": 3,
+      "title": "Add spices",
+      "detail": "Add turmeric, chili powder, and coriander powder to the onion. Stir for 30 seconds — just long enough to bloom the spices in the oil without burning. The kitchen will smell incredible.",
+      "duration": 60,
+      "tip": "Spices bloom in fat, not water. Adding them to hot oil unlocks the fat-soluble aromatics."
+    },
+    {
+      "id": 4,
+      "title": "Cook the potato first",
+      "detail": "Add potato cubes and stir to coat in the spiced oil. Cook covered on medium heat for 8 minutes, stirring every 2–3 minutes. Potatoes need a head start since they take longer than cauliflower.",
+      "duration": 480,
+      "tip": "Adding cauliflower too early is the most common mistake — it goes mushy while potato is still raw.",
+      "media": {
+        "caption": "Step 4 reference shot"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Add cauliflower",
+      "detail": "Add cauliflower florets and chopped tomato. Mix well. Add salt and cover. Cook on medium-low for 8–10 minutes, lifting the lid and stirring every few minutes to prevent sticking.",
+      "duration": 600,
+      "tip": "If the pan looks dry, sprinkle a tablespoon of water on the edges — not in the center.",
+      "media": {
+        "caption": "Step 5 reference shot"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Dry out and finish",
+      "detail": "Remove lid. Cook on medium-high for 2–3 minutes, stirring often, until any moisture evaporates and you see light browning on the edges. Add garam masala, toss, and scatter fresh coriander. Serve immediately.",
+      "duration": 180,
+      "tip": "This final high-heat step is what gives aloo gobi its characteristic slightly crispy edges."
+    }
+  ]
+}
