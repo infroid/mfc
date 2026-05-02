@@ -34,15 +34,17 @@ python3 -m http.server 8080
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via `<script type="text/babel">`
 - `index.html` — landing page, fully self-contained (CSS + React app all inline)
 - `recipe-search.html` — recipe listing page; fetches `data/recipes.json` on load, falls back to inline RECIPES array
-- `recipes/*.html` — individual recipe pages; use inline `window.RECIPE` (fast, no fetch needed) with `window.MFC_RECIPE_ID` set as future fallback
+- `recipe.html` — shared recipe page template; loads by `?id={recipe-id}`
 
 **Shared JS (real `<script src>`):** `shared/auth.js` is loaded on every page. All other components (TweaksPanel, recipe components) are still inlined per-HTML file — editing those requires updating all affected files.
 
 ## Data layer
 
 - `data/recipes.json` — recipe list metadata (search page source of truth; swap `fetch()` target to API when backend is ready)
-- `data/recipes/{id}.json` — full recipe detail per recipe (mirrors inline `window.RECIPE` data)
-- To go fully dynamic: remove `window.RECIPE = {...}` blocks from recipe HTML files; `RecipeApp` fetches `data/recipes/{id}.json` automatically via `window.MFC_RECIPE_ID`
+- `data/recipe-bundles/{id}/recipe.json` — preferred full recipe detail path
+- `data/recipe-bundles/{id}/hero.jpg` and `step-*.jpg` — generated recipe images colocated with the recipe JSON
+- `data/recipes/{id}.json` — legacy fallback full recipe detail path
+- `RecipeApp` fetches `data/recipe-bundles/{id}/recipe.json` first, then falls back to `data/recipes/{id}.json`
 
 ## Auth scaffolding
 

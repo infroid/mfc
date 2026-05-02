@@ -50,7 +50,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; overflow-x: clip; }
 body {
   font-family: var(--sans);
   font-size: 16px;
@@ -970,7 +970,7 @@ function Hero() {
               We read your health, fix the gaps, and guide your cooking.
             </p>
 
-            <form className="hero-craving" onSubmit={submit>
+            <form className="hero-craving" onSubmit={submit}>
               <div className="craving-input-row">
                 <input className="craving-input" placeholder="something with pasta, but make it healthy…" value={text} onChange={e => setText(e.target.value)} />
                 <button className="craving-go" type="submit" aria-label="Find meals">→</button>
@@ -986,7 +986,6 @@ function Hero() {
             <div className="hero-mini">
               <span>✓ <b>12k+</b> meals personalized</span>
               <span>✓ syncs with <b>Apple Health</b> + <b>Google Fit</b></span>
-              <span>✓ <b>4.8★</b> avg rating</span>
             </div>
           </div>
 

@@ -25,9 +25,16 @@ python3 -m http.server 8080
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via `<script type="text/babel">`
 - `index.html` — landing page, fully self-contained (CSS + React app all inline)
 - `recipe-search.html` — recipe listing page
-- `recipes/*.html` — individual recipe pages
+- `recipe.html` — shared recipe page template, loaded as `recipe.html?id={recipe-id}`
 
-**Critical:** `.jsx` files are not imported at runtime — their contents are copy-pasted inline into each HTML's `<script type="text/babel">`. Editing a shared component requires updating all affected HTML files.
+`recipe.html` imports `tweaks-panel.jsx`, `recipe-app.jsx`, and `recipe-components.jsx` at runtime.
+
+## Recipe bundles
+
+- `data/recipes.json` — recipe list metadata
+- `data/recipe-bundles/{id}/recipe.json` — preferred full recipe detail path
+- `data/recipe-bundles/{id}/hero.jpg` and `step-*.jpg` — generated recipe images colocated with the recipe JSON
+- `data/recipes/{id}.json` — legacy fallback full recipe detail path
 
 ## Shared assets
 

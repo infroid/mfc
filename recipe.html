@@ -52,6 +52,7 @@ function RecipeApp() {
     const id = window.MFC_RECIPE_ID;
     if (!id) { setLoading(false); return; }
     fetch('data/recipe-bundles/' + id + '/recipe.json')
+      .then(r => r.ok ? r : fetch('data/recipes/' + id + '.json'))
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(data => {
         document.title = data.name + ' — MyFoodCraving';
