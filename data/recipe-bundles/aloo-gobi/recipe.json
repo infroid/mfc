@@ -14,8 +14,9 @@
         "#F4D67A",
         "#E76F51"
       ],
-      "alt": "Aloo Gobi plated dish",
-      "caption": "aloo gobi — golden spiced cauliflower and potato"
+      "src": "data/recipe-bundles/aloo-gobi/hero.jpg",
+      "alt": "Finished aloo gobi in a black kadhai with browned cauliflower, potatoes, and coriander",
+      "caption": "aloo gobi — dry-spiced cauliflower and potato"
     }
   },
   "healthFacts": [
@@ -118,21 +119,36 @@
       "title": "Prep the vegetables",
       "detail": "Cut cauliflower into small florets — not too small or they'll turn mushy. Peel and cube potatoes into similar sizes. Pat both dry with a cloth. Uniform size means even cooking.",
       "duration": 300,
-      "tip": "Dry vegetables = better browning. Moisture is the enemy of a good crust."
+      "tip": "Dry vegetables = better browning. Moisture is the enemy of a good crust.",
+      "media": {
+        "src": "data/recipe-bundles/aloo-gobi/step-01-prep-vegetables.jpg",
+        "alt": "Raw cauliflower florets and potato cubes prepped on a cutting board",
+        "caption": "Cut and dry vegetables"
+      }
     },
     {
       "id": 2,
       "title": "Temper and aromatics",
       "detail": "Heat oil in the pan until shimmering. Add cumin seeds and let them splutter for 20 seconds. Add sliced onion and cook 5 minutes until translucent. Add grated ginger and garlic, stir 1 minute until fragrant.",
       "duration": 360,
-      "tip": "Cumin seeds that splutter immediately = the pan is hot enough. Don't add them too early."
+      "tip": "Cumin seeds that splutter immediately = the pan is hot enough. Don't add them too early.",
+      "media": {
+        "src": "data/recipe-bundles/aloo-gobi/step-02-temper-aromatics.jpg",
+        "alt": "Sliced onions, cumin, ginger, and garlic sizzling in oil",
+        "caption": "Cumin and aromatics"
+      }
     },
     {
       "id": 3,
       "title": "Add spices",
       "detail": "Add turmeric, chili powder, and coriander powder to the onion. Stir for 30 seconds — just long enough to bloom the spices in the oil without burning. The kitchen will smell incredible.",
       "duration": 60,
-      "tip": "Spices bloom in fat, not water. Adding them to hot oil unlocks the fat-soluble aromatics."
+      "tip": "Spices bloom in fat, not water. Adding them to hot oil unlocks the fat-soluble aromatics.",
+      "media": {
+        "src": "data/recipe-bundles/aloo-gobi/step-03-add-spices.jpg",
+        "alt": "Turmeric, chili, and coriander powders blooming with onions in hot oil",
+        "caption": "Spices bloomed in oil"
+      }
     },
     {
       "id": 4,
@@ -141,7 +157,9 @@
       "duration": 480,
       "tip": "Adding cauliflower too early is the most common mistake — it goes mushy while potato is still raw.",
       "media": {
-        "caption": "Step 4 reference shot"
+        "src": "data/recipe-bundles/aloo-gobi/step-04-cook-potato.jpg",
+        "alt": "Potato cubes coated in spiced onion masala cooking in a kadhai",
+        "caption": "Potatoes get a head start"
       }
     },
     {
@@ -151,7 +169,9 @@
       "duration": 600,
       "tip": "If the pan looks dry, sprinkle a tablespoon of water on the edges — not in the center.",
       "media": {
-        "caption": "Step 5 reference shot"
+        "src": "data/recipe-bundles/aloo-gobi/step-05-add-cauliflower.jpg",
+        "alt": "Cauliflower florets and chopped tomato mixed into the spiced potatoes",
+        "caption": "Cauliflower and tomato added"
       }
     },
     {
@@ -159,7 +179,12 @@
       "title": "Dry out and finish",
       "detail": "Remove lid. Cook on medium-high for 2–3 minutes, stirring often, until any moisture evaporates and you see light browning on the edges. Add garam masala, toss, and scatter fresh coriander. Serve immediately.",
       "duration": 180,
-      "tip": "This final high-heat step is what gives aloo gobi its characteristic slightly crispy edges."
+      "tip": "This final high-heat step is what gives aloo gobi its characteristic slightly crispy edges.",
+      "media": {
+        "src": "data/recipe-bundles/aloo-gobi/step-06-dry-finish.jpg",
+        "alt": "Finished dry aloo gobi with browned edges and fresh coriander",
+        "caption": "Dry browned finish"
+      }
     }
   ]
 }
