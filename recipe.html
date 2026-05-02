@@ -51,7 +51,7 @@ function RecipeApp() {
   React.useEffect(() => {
     const id = window.MFC_RECIPE_ID;
     if (!id) { setLoading(false); return; }
-    fetch('data/recipes/' + id + '.json')
+    fetch('data/recipe-bundles/' + id + '/recipe.json')
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(data => {
         document.title = data.name + ' — MyFoodCraving';

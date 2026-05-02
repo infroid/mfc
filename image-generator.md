@@ -8,7 +8,7 @@ You are generating a consistent, accurate, high-end food photography image set f
 
 - Input:
   - Recipe JSON path: `{RECIPE_JSON_PATH}`
-  - Output folder: `assets/recipe-steps/{recipe-id}/`
+  - Output folder: `data/recipe-bundles/{recipe-id}/`
   - Required assets:
     - 1 hero image for the finished recipe.
     - 1 image for every item in `steps[]`.
@@ -89,6 +89,7 @@ You are generating a consistent, accurate, high-end food photography image set f
   - No text, subtitles, labels, logos, watermark, UI, recipe card, measuring annotations, brand packaging, human face, messy sink, dirty counter, plastic containers, cartoon style, illustration, CGI, surreal food, extra unrelated ingredients, inconsistent utensils, wrong cookware, overfilled pan, impossible perspective, duplicated handles, distorted bowls, malformed spoons, melted plates, artificial neon colors, harsh flash, flat lighting, excessive blur, cropped-off main subject.
 
 - Output naming:
+  - Recipe data: `recipe.json`
   - Hero: `hero.jpg`
   - Steps:
     - `step-01-{short-step-slug}.jpg`
@@ -108,6 +109,7 @@ You are generating a consistent, accurate, high-end food photography image set f
     - `steps[i].media.caption`
   - Alt text must describe the visible cooking state, not repeat the title.
   - Captions must be short, concrete, and useful in the UI.
+  - Image `src` values must point into the recipe bundle, for example `data/recipe-bundles/{recipe-id}/hero.jpg`.
 
 - Prompt structure for each generated image:
   - `Use case: photorealistic-natural`
@@ -134,6 +136,7 @@ You are generating a consistent, accurate, high-end food photography image set f
   - Reject and regenerate any image that violates continuity, accuracy, or ingredient timing.
 
 - Final deliverable:
-  - Save all generated images in the output folder.
-  - Update the recipe JSON and matching static recipe HTML with the final `src`, `alt`, and `caption` values.
+  - Save `recipe.json`, `hero.jpg`, and all step images in the recipe bundle folder.
+  - Update the recipe JSON with the final `src`, `alt`, and `caption` values.
+  - Keep the generic recipe template able to load `data/recipe-bundles/{recipe-id}/recipe.json`.
   - Verify in the browser that hero and every step image load correctly.
