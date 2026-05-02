@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="recipe-base.css" />
-<link rel="stylesheet" href="recipe-styles.css" />
+<link rel="stylesheet" href="recipe-styles.css?v=hero-caption-bottom" />
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FF6D2E'/><text x='50%25' y='62%25' text-anchor='middle' fill='%23FFFCF3' font-family='Georgia,serif' font-style='italic' font-weight='400' font-size='22'>m</text></svg>" />
 </head>
@@ -87,9 +87,7 @@ function RecipeApp() {
     </>
   );
 
-  const progress = Math.round(
-    ((doneSteps.size + (stepIdx < recipe.steps.length ? 0.5 : 0)) / recipe.steps.length) * 100
-  );
+  const progress = Math.round((doneSteps.size / recipe.steps.length) * 100);
 
   return (
     <>
