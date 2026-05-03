@@ -11,10 +11,10 @@ section is independent — do them in order.
 - Region: pick whatever's closest to your users.
 - Save the database password somewhere durable (you won't need it for the website
   but you'll need it if you ever connect via `psql`).
-- Once the project is provisioned, grab from **Project Settings → API**:
+- Once the project is provisioned, grab from **Settings → API**:
   - **Project URL** (e.g. `https://abcdef.supabase.co`)
-  - **anon public** key (long JWT, public-safe — goes in HTML)
-  - **service_role** key (long JWT, **secret** — only for the import script and
+  - **Publishable key** (format: `sb_publishable_...`, public-safe — goes in HTML)
+  - **Secret key** (format: `sb_secret_...`, **secret** — only for the import script and
     your offline data pipeline)
 
 ---
@@ -63,17 +63,17 @@ In each of [index.html](index.html), [recipe-search.html](recipe-search.html),
 
 ```html
 <meta name="mfc-supabase-url" content="" />
-<meta name="mfc-supabase-anon-key" content="" />
+<meta name="mfc-supabase-publishable-key" content="" />
 ```
 
 Fill in `content`:
 
 ```html
 <meta name="mfc-supabase-url" content="https://<your-project>.supabase.co" />
-<meta name="mfc-supabase-anon-key" content="<anon public key>" />
+<meta name="mfc-supabase-publishable-key" content="<publishable key>" />
 ```
 
-The anon key is safe to commit / serve publicly — RLS protects all the
+The publishable key is safe to commit / serve publicly — RLS protects all the
 user-owned tables.
 
 ---
@@ -89,7 +89,7 @@ npm i @supabase/supabase-js
 
 # run the import (idempotent — safe to re-run after editing source JSON)
 SUPABASE_URL="https://<your-project>.supabase.co" \
-SUPABASE_SERVICE_ROLE_KEY="<service role key>" \
+SUPABASE_SECRET_KEY="<secret key>" \
 node scripts/import_recipes.mjs
 ```
 
@@ -102,8 +102,9 @@ Expected output:
 recipes table now has 10 rows.
 ```
 
-The service role key bypasses RLS — keep it out of the browser, out of the repo,
+The secret key bypasses RLS — keep it out of the browser, out of the repo,
 out of any client-side bundle. Keep it in your local `.env` or shell only.
+Never commit secret keys to version control.
 
 After this, ongoing recipe edits happen via Supabase Studio's table editor — no
 script needed.
@@ -141,7 +142,7 @@ Then verify auth flows:
 ## 7. Recommendations pipeline (your separate workstream)
 
 The website only **reads** from `recommendations`. Your offline data pipeline
-**writes** to it using the service-role key.
+**writes** to it using the secret key.
 
 Contract:
 
@@ -172,7 +173,7 @@ pushing to `master` will deploy a Supabase-backed site.
 
 Optional hardening:
 
-- Restrict the anon key by adding a domain whitelist in Supabase → API Settings.
+- Restrict the publishable key by adding a domain whitelist in Supabase → Settings → API.
 - Move the meta tags out of source-controlled HTML by using a build-time
   template substitution (only matters if you don't want the URL/key visible in
   git history — they're public-safe but obfuscation is fine).

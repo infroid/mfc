@@ -65,12 +65,12 @@ python3 -m http.server 8080
 Schema layers:
 
 - **Catalog** — `recipes`, `recipe_ingredients`, `recipe_steps`, `recipe_utensils`,
-  `recipe_tags`, `recipe_health_facts`. Public read, admin writes via service-role.
+  `recipe_tags`, `recipe_health_facts`. Public read, admin writes via secret key.
 - **Health markers** — `metric_definitions` (reference catalog) +
   `user_health_markers` (per-user values, history-preserving via
   `(user_id, metric_id, measured_at)` PK).
 - **Recommendations** — `recommendations`. Written by the offline data pipeline
-  (service-role bypass); user reads only their own rows.
+  (secret key bypass); user reads only their own rows.
 - **User-owned** — `saved_recipes`, `cooking_sessions`, `user_prefs`,
   `meal_logs`. RLS scoped to `auth.uid() = user_id`.
 
@@ -79,7 +79,7 @@ Schema layers:
 Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
 
 1. [shared/supabase.js](shared/supabase.js) — reads `<meta name="mfc-supabase-url">`
-   and `<meta name="mfc-supabase-anon-key">`, creates `window.MFC.supabase`.
+   and `<meta name="mfc-supabase-publishable-key">`, creates `window.MFC.supabase`.
 2. [shared/auth.js](shared/auth.js) — `window.MFC.auth`:
    `getUser()`, `isLoggedIn()`, `signIn({ email })` (magic link),
    `signIn({ provider: 'google' })`, `signOut()`. Emits `mfc:auth-change`.

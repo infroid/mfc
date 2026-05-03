@@ -4,7 +4,7 @@
 //
 // Usage:
 //   SUPABASE_URL=https://<ref>.supabase.co \
-//   SUPABASE_SERVICE_ROLE_KEY=<service-role-key> \
+//   SUPABASE_SECRET_KEY=<secret-key> \
 //   node scripts/import_recipes.mjs
 //
 // Requires: npm i -g @supabase/supabase-js   (or run via `npx --yes` from a temp install)
@@ -19,13 +19,13 @@ const ROOT = join(__dirname, '..');
 const LISTING_PATH = join(ROOT, 'data', 'recipes.json');
 const BUNDLES_DIR = join(ROOT, 'data', 'recipe-bundles');
 
-const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = process.env;
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error('Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY env vars.');
+const { SUPABASE_URL, SUPABASE_SECRET_KEY } = process.env;
+if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
+  console.error('Set SUPABASE_URL and SUPABASE_SECRET_KEY env vars.');
   process.exit(1);
 }
 
-const sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+const sb = createClient(SUPABASE_URL, SUPABASE_SECRET_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
