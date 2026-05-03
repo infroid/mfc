@@ -383,3 +383,138 @@ ALTER TABLE public.recommendations ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "recommendations_owner_read" ON public.recommendations;
 CREATE POLICY "recommendations_owner_read" ON public.recommendations
   FOR SELECT USING (auth.uid() = user_id);
+
+
+-- =============================================================================
+-- 7. ADMIN — library tables, FKs, role gate
+-- The admin pages (admin-recipe.html, admin-ingredient.html, admin-utensil.html)
+-- write to the catalog tables under a JWT whose app_metadata.role = 'admin'.
+-- See USER-TODO.md §3 for how to grant that role.
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION public.is_admin() RETURNS boolean AS $$
+  SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin', false);
+$$ LANGUAGE sql STABLE;
+
+COMMENT ON FUNCTION public.is_admin() IS
+  'Returns true when the calling JWT has app_metadata.role = "admin". Used by the admin RLS policies on the catalog and library tables.';
+
+-- INGREDIENT LIBRARY -----------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.ingredients (
+  id           text PRIMARY KEY,
+  name         text NOT NULL,
+  tagline      text,
+  category     text,
+  default_unit text NOT NULL DEFAULT 'g',
+  photo        text,
+  nutrition    jsonb NOT NULL DEFAULT '{}'::jsonb,
+  health_fact  text,
+  storage      text,
+  substitutes  text[] NOT NULL DEFAULT '{}',
+  show         jsonb NOT NULL DEFAULT '{"nutrition":true,"healthFact":true,"storage":false,"substitutes":false}'::jsonb,
+  ai_filled_at timestamptz,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  updated_at   timestamptz NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE  public.ingredients              IS 'Master library of ingredients. Recipes pick from this — they cannot inline-create ingredients. Edited via admin-ingredient.html.';
+COMMENT ON COLUMN public.ingredients.id           IS 'Stable URL slug (e.g. "paneer", "kasuri-methi"). Recipe rows reference this.';
+COMMENT ON COLUMN public.ingredients.name         IS 'Display name (e.g. "Paneer", "Ginger-garlic paste").';
+COMMENT ON COLUMN public.ingredients.tagline      IS 'One-line description shown on the ingredient card (e.g. "fresh, milky, holds shape under heat").';
+COMMENT ON COLUMN public.ingredients.category     IS 'Free text: "Dairy", "Vegetable", "Spice", "Herb", "Protein", "Oil & Fat", "Nut & Seed", "Aromatic", "Seasoning", etc.';
+COMMENT ON COLUMN public.ingredients.default_unit IS 'Default unit pre-filled when a recipe picks this ingredient (g, ml, tsp, tbsp, cup, medium, large, whole, pinch).';
+COMMENT ON COLUMN public.ingredients.photo        IS 'Relative path to the ingredient photo (e.g. "data/ingredient-photos/paneer.jpg"). Nullable.';
+COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g macros: { calories, protein, fat, carbs }. Numbers; the four macros are what surface in the UI.';
+COMMENT ON COLUMN public.ingredients.health_fact  IS 'One-liner surfaced in the recipe page health-fact rotator (60–110 chars).';
+COMMENT ON COLUMN public.ingredients.storage      IS 'Storage tip shown on the ingredient page only.';
+COMMENT ON COLUMN public.ingredients.substitutes  IS 'Free-text substitute names (e.g. {"tofu (firm)","halloumi"}).';
+COMMENT ON COLUMN public.ingredients.show         IS 'Per-field visibility toggles { nutrition, healthFact, storage, substitutes }. Drives what surfaces in the user-facing output.';
+COMMENT ON COLUMN public.ingredients.ai_filled_at IS 'When the AI auto-fill last ran. NULL if entered manually.';
+
+-- UTENSIL LIBRARY --------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.utensils (
+  id           text PRIMARY KEY,
+  name         text NOT NULL,
+  tagline      text,
+  category     text,
+  photo        text,
+  buy_link     jsonb NOT NULL DEFAULT '{}'::jsonb,
+  care_tip     text,
+  specs        jsonb NOT NULL DEFAULT '{}'::jsonb,
+  show         jsonb NOT NULL DEFAULT '{"buyLink":true,"careTip":true,"specs":false}'::jsonb,
+  ai_filled_at timestamptz,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  updated_at   timestamptz NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE  public.utensils              IS 'Master library of utensils. Recipes pick from this — they cannot inline-create utensils. Edited via admin-utensil.html.';
+COMMENT ON COLUMN public.utensils.id           IS 'Stable URL slug (e.g. "kadhai-cast-iron-9", "chefs-knife-8").';
+COMMENT ON COLUMN public.utensils.name         IS 'Display name (e.g. "Cast-iron kadhai").';
+COMMENT ON COLUMN public.utensils.tagline      IS 'One-line description (e.g. "deep, broad, hot — the workhorse pan").';
+COMMENT ON COLUMN public.utensils.category     IS 'Free text: "Cookware", "Bakeware", "Cutlery", "Small appliance", "Utensil", "Measuring".';
+COMMENT ON COLUMN public.utensils.photo        IS 'Relative path to the utensil photo. Nullable.';
+COMMENT ON COLUMN public.utensils.buy_link     IS 'Affiliate buy link: { store, url, price }. mfc-20 affiliate tag is appended at render time.';
+COMMENT ON COLUMN public.utensils.care_tip     IS 'One-liner care tip (utensil page only).';
+COMMENT ON COLUMN public.utensils.specs        IS 'Optional specs blob: { material, size, weight }.';
+COMMENT ON COLUMN public.utensils.show         IS 'Per-field visibility toggles { buyLink, careTip, specs }.';
+COMMENT ON COLUMN public.utensils.ai_filled_at IS 'When the AI auto-fill last ran. NULL if entered manually.';
+
+-- Bridge the library into the existing recipe joins. Old free-text columns
+-- (recipe_ingredients.ingredient/amount, recipe_utensils.name) stay so the
+-- import script and existing rows keep working; new admin writes populate the
+-- FK columns + unit instead.
+ALTER TABLE public.recipe_ingredients
+  ADD COLUMN IF NOT EXISTS ingredient_id text REFERENCES public.ingredients(id) ON DELETE RESTRICT,
+  ADD COLUMN IF NOT EXISTS unit          text;
+ALTER TABLE public.recipe_ingredients
+  ALTER COLUMN ingredient DROP NOT NULL;
+
+COMMENT ON COLUMN public.recipe_ingredients.ingredient_id IS 'FK → ingredients.id. New (library-driven) writes populate this; old rows still use the ingredient text column.';
+COMMENT ON COLUMN public.recipe_ingredients.unit          IS 'Unit chosen for this row (g, ml, tsp, tbsp, cup, medium, large, whole, pinch). Defaults from ingredients.default_unit; admin can override per recipe.';
+
+ALTER TABLE public.recipe_utensils
+  ADD COLUMN IF NOT EXISTS utensil_id text REFERENCES public.utensils(id) ON DELETE RESTRICT;
+
+-- recipe_utensils.name stays NOT NULL because (recipe_id, name) is the primary
+-- key. Library-driven writes populate name from utensils.name as well as
+-- utensil_id; old free-text rows keep working unchanged.
+
+COMMENT ON COLUMN public.recipe_utensils.utensil_id IS 'FK → utensils.id. New (library-driven) writes populate this alongside name; old rows have utensil_id NULL and use the name text only.';
+
+-- TRIGGERS for new tables ------------------------------------------------------
+DROP TRIGGER IF EXISTS trg_ingredients_updated_at ON public.ingredients;
+CREATE TRIGGER trg_ingredients_updated_at BEFORE UPDATE ON public.ingredients
+  FOR EACH ROW EXECUTE FUNCTION public.touch_updated_at();
+
+DROP TRIGGER IF EXISTS trg_utensils_updated_at ON public.utensils;
+CREATE TRIGGER trg_utensils_updated_at BEFORE UPDATE ON public.utensils
+  FOR EACH ROW EXECUTE FUNCTION public.touch_updated_at();
+
+-- RLS — public read, admin write -----------------------------------------------
+ALTER TABLE public.ingredients ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.utensils    ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "ingredients_public_read"  ON public.ingredients;
+DROP POLICY IF EXISTS "ingredients_admin_write"  ON public.ingredients;
+DROP POLICY IF EXISTS "utensils_public_read"     ON public.utensils;
+DROP POLICY IF EXISTS "utensils_admin_write"     ON public.utensils;
+
+CREATE POLICY "ingredients_public_read"  ON public.ingredients FOR SELECT USING (true);
+CREATE POLICY "ingredients_admin_write"  ON public.ingredients FOR ALL    USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "utensils_public_read"     ON public.utensils    FOR SELECT USING (true);
+CREATE POLICY "utensils_admin_write"     ON public.utensils    FOR ALL    USING (public.is_admin()) WITH CHECK (public.is_admin());
+
+-- Admin write on the existing catalog tables -----------------------------------
+DROP POLICY IF EXISTS "recipes_admin_write"             ON public.recipes;
+DROP POLICY IF EXISTS "recipe_ingredients_admin_write"  ON public.recipe_ingredients;
+DROP POLICY IF EXISTS "recipe_steps_admin_write"        ON public.recipe_steps;
+DROP POLICY IF EXISTS "recipe_utensils_admin_write"     ON public.recipe_utensils;
+DROP POLICY IF EXISTS "recipe_tags_admin_write"         ON public.recipe_tags;
+DROP POLICY IF EXISTS "recipe_health_facts_admin_write" ON public.recipe_health_facts;
+
+CREATE POLICY "recipes_admin_write"             ON public.recipes              FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "recipe_ingredients_admin_write"  ON public.recipe_ingredients   FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "recipe_steps_admin_write"        ON public.recipe_steps         FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "recipe_utensils_admin_write"     ON public.recipe_utensils      FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "recipe_tags_admin_write"         ON public.recipe_tags          FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "recipe_health_facts_admin_write" ON public.recipe_health_facts  FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());

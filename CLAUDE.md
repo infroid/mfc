@@ -35,11 +35,15 @@ python3 -m http.server 8080
 
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via
   `<script type="text/babel">`
-- 3 pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
+- 3 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
   [recipe.html](recipe.html). Each is mostly self-contained with inline React.
 - [recipe.html](recipe.html) imports [recipe-app.jsx](recipe-app.jsx),
   [recipe-components.jsx](recipe-components.jsx),
   [tweaks-panel.jsx](tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
+- 6 admin pages: list + edit for each of recipes, ingredients, utensils
+  ([admin-recipes.html](admin-recipes.html), [admin-recipe.html](admin-recipe.html),
+  and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
+  `app_metadata.role = 'admin'`.
 - Supabase JS client loaded from CDN; bootstrapped from `<meta>` tags in each
   page's `<head>`
 
@@ -56,7 +60,7 @@ python3 -m http.server 8080
 
 ## Schema
 
-- [data/db/schema.sql](data/db/schema.sql) — 13 tables, RLS, triggers. Every
+- [data/db/schema.sql](data/db/schema.sql) — 15 tables, RLS, triggers. Every
   table and column has a `COMMENT ON` description that surfaces in Supabase
   Studio. Idempotent: safe to re-apply.
 - [data/db/seed_metrics.sql](data/db/seed_metrics.sql) — ~21 baseline blood
@@ -65,7 +69,13 @@ python3 -m http.server 8080
 Schema layers:
 
 - **Catalog** — `recipes`, `recipe_ingredients`, `recipe_steps`, `recipe_utensils`,
-  `recipe_tags`, `recipe_health_facts`. Public read, admin writes via secret key.
+  `recipe_tags`, `recipe_health_facts`. Public read, admin writes via secret key
+  or signed-in admin user (RLS via `public.is_admin()`).
+- **Library** — `ingredients`, `utensils`. Master tables that recipes pick from.
+  `recipe_ingredients.ingredient_id` and `recipe_utensils.utensil_id` FK into
+  these. Old free-text columns (`recipe_ingredients.ingredient/amount`,
+  `recipe_utensils.name`) remain for the seed import; new admin writes populate
+  the FK columns.
 - **Health markers** — `metric_definitions` (reference catalog) +
   `user_health_markers` (per-user values, history-preserving via
   `(user_id, metric_id, measured_at)` PK).
@@ -73,6 +83,9 @@ Schema layers:
   (secret key bypass); user reads only their own rows.
 - **User-owned** — `saved_recipes`, `cooking_sessions`, `user_prefs`,
   `meal_logs`. RLS scoped to `auth.uid() = user_id`.
+- **Admin gate** — `public.is_admin()` returns true when
+  `auth.jwt() -> 'app_metadata' ->> 'role' = 'admin'`. Used by RLS policies on
+  the catalog and library tables.
 
 ## Shared JS (`<script src>`)
 
@@ -86,6 +99,12 @@ Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
 3. [shared/db.js](shared/db.js) — `window.MFC.db`: thin wrappers for every
    table. Calls return `null` / `[]` / `false` when the user isn't signed in
    (anonymous code paths just see nothing).
+4. [shared/admin-db.js](shared/admin-db.js) — `window.MFC.adminDb`: CRUD
+   wrappers for the admin pages (recipes, ingredients, utensils). Loaded only
+   on `admin-*.html`.
+5. [shared/admin-gate.js](shared/admin-gate.js) — `window.MFC.adminGate.guard()`
+   resolves true only when the signed-in user has `app_metadata.role = 'admin'`;
+   otherwise renders a sign-in / not-authorized panel and resolves false.
 
 `useAuth()` is a small React hook defined inline in each page that subscribes to
 the `mfc:auth-change` event.
@@ -116,6 +135,11 @@ then clears the local copies.
   [recipe-app.jsx](recipe-app.jsx) — `RecipeNav`, `RecipeHero`, `StepCard`,
   `IngredientsCard`, `UtensilsCard`, `HealthMarquee`, `CookingPlayer`,
   `useScrolled` on `window`
+- [admin-styles.css](admin-styles.css) + [admin-simple.css](admin-simple.css) —
+  admin shell, forms, library picker, list table styles
+- [admin-shared.jsx](admin-shared.jsx) — `AdminSidebar`, `AdminTopbar`,
+  `SaveBar`, `FormCard`, `Field`, `RadioPills`, `Toggle`, `ChipInput`,
+  `Uploader`, `PreviewFrame`, `slugify` on `window`
 
 ## Design tokens (CSS vars)
 

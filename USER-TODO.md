@@ -56,7 +56,38 @@ In **Authentication → URL Configuration**:
 
 ---
 
-## 4. Paste credentials into the HTML pages
+## 4. Grant yourself the admin role
+
+The admin pages ([admin-recipes.html](admin-recipes.html),
+[admin-ingredients.html](admin-ingredients.html),
+[admin-utensils.html](admin-utensils.html), and the editors they link to) are
+gated by `app_metadata.role = 'admin'` on your Supabase user, enforced both in
+the UI ([shared/admin-gate.js](shared/admin-gate.js)) and in RLS
+(`public.is_admin()` in [data/db/schema.sql](data/db/schema.sql) §7).
+
+Steps:
+
+1. Sign in once (magic link or Google) on the public site so your row exists in
+   `auth.users`.
+2. In Supabase Studio → **Authentication → Users**, find your row.
+3. Click it → **Raw User Meta Data** tab → set **App Metadata** to:
+
+   ```json
+   { "role": "admin" }
+   ```
+
+   (If `app_metadata` already has fields, merge — don't overwrite.)
+4. Sign out and back in on the admin pages. The JWT only refreshes on a new
+   session; the role won't take effect until you re-authenticate.
+
+Verify by visiting <http://localhost:8080/admin-recipes.html>. You should see
+the recipes list, not the "Not authorized" panel.
+
+To grant additional admins later, repeat step 3 for their user row.
+
+---
+
+## 5. Paste credentials into the HTML pages
 
 In each of [index.html](index.html), [recipe-search.html](recipe-search.html),
 [recipe.html](recipe.html), find the meta tags in `<head>`:
@@ -78,7 +109,7 @@ user-owned tables.
 
 ---
 
-## 5. Import the recipes (one-time)
+## 6. Import the recipes (one-time)
 
 The recipe catalog lives in Supabase, seeded from
 `data/recipe-bundles/*/recipe.json`. Run from the repo root:
@@ -111,7 +142,7 @@ script needed.
 
 ---
 
-## 6. Verify locally
+## 7. Verify locally
 
 ```bash
 python3 -m http.server 8080
@@ -139,7 +170,7 @@ Then verify auth flows:
 
 ---
 
-## 7. Recommendations pipeline (your separate workstream)
+## 8. Recommendations pipeline (your separate workstream)
 
 The website only **reads** from `recommendations`. Your offline data pipeline
 **writes** to it using the secret key.
@@ -166,7 +197,7 @@ your pipeline drains, or a scheduled job that diffs recent updates.
 
 ---
 
-## 8. Production deploy
+## 9. Production deploy
 
 GitHub Pages already serves the static repo. With the meta tags filled in,
 pushing to `master` will deploy a Supabase-backed site.
