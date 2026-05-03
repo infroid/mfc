@@ -35,11 +35,16 @@ python3 -m http.server 8080
 
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via
   `<script type="text/babel">`
-- 3 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
-  [recipe.html](recipe.html). Each is mostly self-contained with inline React.
+- 5 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
+  [recipe.html](recipe.html), [dashboard.html](dashboard.html),
+  [markers.html](markers.html). Each is mostly self-contained.
 - [recipe.html](recipe.html) imports [recipe-app.jsx](recipe-app.jsx),
   [recipe-components.jsx](recipe-components.jsx),
   [tweaks-panel.jsx](tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
+- [dashboard.html](dashboard.html) imports [dashboard-app.jsx](dashboard-app.jsx).
+  Auth-gated: redirects to index.html if not signed in.
+- [markers.html](markers.html) imports [markers-app.jsx](markers-app.jsx).
+  Auth-gated: blood marker editor only, no other content.
 - 6 admin pages: list + edit for each of recipes, ingredients, utensils
   ([admin-recipes.html](admin-recipes.html), [admin-recipe.html](admin-recipe.html),
   and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
@@ -71,11 +76,13 @@ Schema layers:
 - **Catalog** — `recipes`, `recipe_ingredients`, `recipe_steps`, `recipe_utensils`,
   `recipe_tags`, `recipe_health_facts`. Public read, admin writes via secret key
   or signed-in admin user (RLS via `public.is_admin()`).
-- **Library** — `ingredients`, `utensils`. Master tables that recipes pick from.
-  `recipe_ingredients.ingredient_id` and `recipe_utensils.utensil_id` FK into
-  these. Old free-text columns (`recipe_ingredients.ingredient/amount`,
-  `recipe_utensils.name`) remain for the seed import; new admin writes populate
-  the FK columns.
+- **Library** — `ingredients`, `utensils`, `utensil_buy_links`. Master tables
+  that recipes pick from. `recipe_ingredients.ingredient_id` and
+  `recipe_utensils.utensil_id` FK into these with `ON DELETE RESTRICT` — a
+  library row cannot be deleted while any recipe references it. The admin UI
+  pre-checks usage and disables delete when `usage > 0`; the FK is defence in
+  depth. `utensil_buy_links` is a one-to-many child of `utensils`
+  (`utensil_id, sort_order` PK).
 - **Health markers** — `metric_definitions` (reference catalog) +
   `user_health_markers` (per-user values, history-preserving via
   `(user_id, metric_id, measured_at)` PK).
@@ -99,10 +106,12 @@ Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
 3. [shared/db.js](shared/db.js) — `window.MFC.db`: thin wrappers for every
    table. Calls return `null` / `[]` / `false` when the user isn't signed in
    (anonymous code paths just see nothing).
-4. [shared/admin-db.js](shared/admin-db.js) — `window.MFC.adminDb`: CRUD
+4. [shared/meal-time.js](shared/meal-time.js) — `window.MFC.mealTime.defaultMealTypeForNow()`.
+   Loaded on dashboard.html; import into any page that needs the meal-slot helper.
+5. [shared/admin-db.js](shared/admin-db.js) — `window.MFC.adminDb`: CRUD
    wrappers for the admin pages (recipes, ingredients, utensils). Loaded only
    on `admin-*.html`.
-5. [shared/admin-gate.js](shared/admin-gate.js) — `window.MFC.adminGate.guard()`
+6. [shared/admin-gate.js](shared/admin-gate.js) — `window.MFC.adminGate.guard()`
    resolves true only when the signed-in user has `app_metadata.role = 'admin'`;
    otherwise renders a sign-in / not-authorized panel and resolves false.
 
@@ -115,6 +124,17 @@ the `mfc:auth-change` event.
 - Session persisted by the Supabase JS client; no custom storage
 - Anonymous browsing works fully — auth is additive (saved recipes, health
   markers, recommendations, cooking session sync, meal logs)
+
+### Redirect contract ([shared/auth.js](shared/auth.js))
+
+- **Post-login → `dashboard.html`** unless the user is on a "stay" page
+  (`recipe.html`, `dashboard.html`, or any `admin-*.html`), in which case they
+  stay on the current page. Applies to both Google OAuth (`redirectTo`) and
+  magic link (`emailRedirectTo`), plus an in-tab fallback in
+  `onAuthStateChange`.
+- **Post-logout → `index.html`** always (even from `recipe.html`).
+- Constants `POST_LOGIN` / `POST_LOGOUT` / `STAY_ON_PATHS` are defined at the
+  top of [shared/auth.js](shared/auth.js).
 
 ## Anonymous → authed handoff
 

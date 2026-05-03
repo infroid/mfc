@@ -4,9 +4,26 @@
 // signIn modes:
 //   - signIn({ provider: 'google' })   → Google OAuth redirect (returns null; page navigates)
 //   - signIn({ email })                 → magic link (returns { magicLinkSent: true, email })
+//
+// Redirect contract:
+//   - post-login  → dashboard.html  (unless on a STAY_ON page: recipe.html, dashboard.html, admin-*)
+//   - post-logout → index.html      (always)
 window.MFC = window.MFC || {};
 window.MFC.auth = (function () {
   const sb = window.MFC.supabase;
+
+  const POST_LOGIN  = 'dashboard.html';
+  const POST_LOGOUT = 'index.html';
+  // Pages that keep the user where they are after sign-in.
+  const STAY_ON_PATHS = new Set(['recipe.html', 'dashboard.html']);
+
+  function isStayPage() {
+    const base = location.pathname.split('/').pop() || '';
+    return STAY_ON_PATHS.has(base) || base.startsWith('admin-');
+  }
+
+  function redirectAfterLogin()  { window.location.href = `${location.origin}/${POST_LOGIN}`;  }
+  function redirectAfterLogout() { window.location.href = `${location.origin}/${POST_LOGOUT}`; }
 
   function emit(user) {
     window.dispatchEvent(new CustomEvent('mfc:auth-change', { detail: { user } }));
@@ -41,6 +58,10 @@ window.MFC.auth = (function () {
         if (window.MFC?.db?.handoffAnonymous) {
           window.MFC.db.handoffAnonymous(next).catch((e) => console.warn('[mfc] handoff failed', e));
         }
+        if (!isStayPage()) {
+          redirectAfterLogin();
+          return;
+        }
       }
       emit(next);
     });
@@ -51,10 +72,11 @@ window.MFC.auth = (function () {
 
   async function signIn(opts = {}) {
     if (!sb) throw new Error('Supabase client unavailable — check mfc-supabase-* meta tags.');
+    const loginUrl = isStayPage() ? window.location.href : `${location.origin}/${POST_LOGIN}`;
     if (opts.provider === 'google') {
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.href },
+        options: { redirectTo: loginUrl },
       });
       if (error) throw error;
       return null;
@@ -62,7 +84,7 @@ window.MFC.auth = (function () {
     if (opts.email) {
       const { error } = await sb.auth.signInWithOtp({
         email: opts.email,
-        options: { emailRedirectTo: window.location.href },
+        options: { emailRedirectTo: loginUrl },
       });
       if (error) throw error;
       return { magicLinkSent: true, email: opts.email };
@@ -73,6 +95,7 @@ window.MFC.auth = (function () {
   async function signOut() {
     if (!sb) return;
     await sb.auth.signOut();
+    redirectAfterLogout();
   }
 
   return { getUser, isLoggedIn, signIn, signOut };

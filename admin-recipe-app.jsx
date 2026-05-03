@@ -33,7 +33,6 @@ function fromDb(row) {
     .sort((a, b) => a.sort_order - b.sort_order)
     .map((i) => ({
       ingredient_id: i.ingredient_id,
-      ingredient: i.ingredient, // legacy free-text fallback
       group_name: i.group_name,
       amount: i.amount || "",
       unit: i.unit || "",
@@ -47,11 +46,12 @@ function fromDb(row) {
       tip: s.tip,
       media_caption: s.media_caption,
     }));
-  const utensils = (row.recipe_utensils || []).map((u) => ({
-    utensil_id: u.utensil_id,
-    name: u.name, // legacy fallback
-    essential: !!u.essential,
-  }));
+  const utensils = (row.recipe_utensils || [])
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map((u) => ({
+      utensil_id: u.utensil_id,
+      essential: !!u.essential,
+    }));
   const tags = (row.recipe_tags || []).map((t) => t.tag);
   const health = (row.recipe_health_facts || [])
     .sort((a, b) => a.sort_order - b.sort_order)
@@ -95,8 +95,7 @@ function toDb(r) {
     id: r.id,
     recipe,
     ingredients: r.ingredients.map((ing) => ({
-      ingredient_id: ing.ingredient_id || null,
-      ingredient: ing.ingredient || null,
+      ingredient_id: ing.ingredient_id,
       group_name: ing.group_name || null,
       amount: ing.amount || null,
       unit: ing.unit || null,
@@ -110,8 +109,7 @@ function toDb(r) {
       media_caption: s.media_caption || null,
     })),
     utensils: r.utensils.map((u) => ({
-      utensil_id: u.utensil_id || null,
-      name: u.name || null,
+      utensil_id: u.utensil_id,
       essential: !!u.essential,
     })),
     tags: r.tags,
@@ -175,7 +173,7 @@ function RecipeAdminApp() {
   const removeUt = (i) => update({ utensils: r.utensils.filter((_, k) => k !== i) });
   const addUtFromLib = (lib) => {
     if (r.utensils.some((x) => x.utensil_id === lib.id)) return;
-    update({ utensils: [...r.utensils, { utensil_id: lib.id, name: lib.name, essential: true }] });
+    update({ utensils: [...r.utensils, { utensil_id: lib.id, essential: true }] });
   };
 
   async function onPublish() {
@@ -491,7 +489,7 @@ function IngredientsTab({ r, ingLib, updateIng, removeIng, addIngFromLib }) {
         ) : (
           <div className="picked-list">
             {r.ingredients.map((ing, i) => {
-              const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient || ing.ingredient_id || "(unknown)", category: "—" };
+              const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient_id || "(unknown)", category: "—" };
               return (
                 <div key={i} className="picked-row">
                   <span className="handle">⋮⋮</span>
@@ -551,7 +549,7 @@ function UtensilsTab({ r, utLib, updateUt, removeUt, addUtFromLib }) {
         ) : (
           <div className="picked-list">
             {r.utensils.map((u, i) => {
-              const lib = utLib.find((x) => x.id === u.utensil_id) || { name: u.name || u.utensil_id || "(unknown)", category: "—" };
+              const lib = utLib.find((x) => x.id === u.utensil_id) || { name: u.utensil_id || "(unknown)", category: "—" };
               return (
                 <div key={i} className="picked-row" style={{ gridTemplateColumns: "auto 36px 1fr auto auto" }}>
                   <span className="handle">⋮⋮</span>
@@ -652,7 +650,7 @@ function RecipePreview({ r, ingLib, utLib, activeStep }) {
           <h5>Ingredients <span className="count">· {r.ingredients.length}</span></h5>
           <ul>
             {r.ingredients.slice(0, 6).map((ing, i) => {
-              const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient || ing.ingredient_id };
+              const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient_id };
               return (
                 <li key={i}>
                   <span className="check" />
@@ -667,7 +665,7 @@ function RecipePreview({ r, ingLib, utLib, activeStep }) {
           <h5>Utensils <span className="count">· {r.utensils.length}</span></h5>
           <ul>
             {r.utensils.slice(0, 6).map((u, i) => {
-              const lib = utLib.find((x) => x.id === u.utensil_id) || { name: u.name || u.utensil_id };
+              const lib = utLib.find((x) => x.id === u.utensil_id) || { name: u.utensil_id };
               return (
                 <li key={i}>
                   <span className="check" />

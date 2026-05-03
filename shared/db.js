@@ -55,9 +55,11 @@ window.MFC.db = (function () {
       .from('recipes')
       .select(`
         id, name, tagline, short_tagline, cuisine, difficulty, servings, total_minutes, media,
-        recipe_ingredients ( sort_order, group_name, ingredient, amount ),
+        recipe_ingredients ( sort_order, group_name, amount, unit,
+          ingredient:ingredients ( id, name, photo ) ),
         recipe_steps ( sort_order, title, detail, duration_seconds, tip, media_caption ),
-        recipe_utensils ( name, essential ),
+        recipe_utensils ( sort_order, essential,
+          utensil:utensils ( id, name, photo ) ),
         recipe_health_facts ( sort_order, fact )
       `)
       .eq('id', id)
@@ -67,7 +69,7 @@ window.MFC.db = (function () {
 
     const ingredients = (data.recipe_ingredients || [])
       .sort((a, b) => a.sort_order - b.sort_order)
-      .map((i) => ({ name: i.ingredient, amt: i.amount, group: i.group_name }));
+      .map((i) => ({ name: i.ingredient?.name, amt: i.amount, unit: i.unit, group: i.group_name }));
 
     const localSteps = new Map((local?.steps || []).map((s) => [s.id, s]));
     const steps = (data.recipe_steps || [])
@@ -88,7 +90,9 @@ window.MFC.db = (function () {
         };
       });
 
-    const utensils = (data.recipe_utensils || []).map((u) => ({ name: u.name, essential: !!u.essential }));
+    const utensils = (data.recipe_utensils || [])
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((u) => ({ name: u.utensil?.name, essential: !!u.essential }));
 
     const healthFacts = (data.recipe_health_facts || [])
       .sort((a, b) => a.sort_order - b.sort_order)
@@ -275,6 +279,19 @@ window.MFC.db = (function () {
     return data;
   }
 
+  async function getActiveSessions() {
+    if (!sb) return [];
+    const uid = userId(); if (!uid) return [];
+    const { data, error } = await sb.from('cooking_sessions')
+      .select('recipe_id,current_step,servings,started_at,updated_at')
+      .eq('user_id', uid)
+      .is('completed_at', null)
+      .order('updated_at', { ascending: false })
+      .limit(5);
+    if (error) { console.warn('[db.getActiveSessions]', error); return []; }
+    return data;
+  }
+
   // ---------- Anonymous → authenticated state hand-off ----------
 
   async function handoffAnonymous() {
@@ -317,6 +334,7 @@ window.MFC.db = (function () {
     getMetricDefinitions, getHealthMarkers, upsertHealthMarker,
     getRecommendations,
     logMeal, getMealLogs,
+    getActiveSessions,
     handoffAnonymous,
   };
 })();

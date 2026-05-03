@@ -63,27 +63,46 @@ The admin pages ([admin-recipes.html](admin-recipes.html),
 [admin-utensils.html](admin-utensils.html), and the editors they link to) are
 gated by `app_metadata.role = 'admin'` on your Supabase user, enforced both in
 the UI ([shared/admin-gate.js](shared/admin-gate.js)) and in RLS
-(`public.is_admin()` in [data/db/schema.sql](data/db/schema.sql) §7).
+(`public.is_admin()` in [data/db/schema.sql](data/db/schema.sql) §8).
 
-Steps:
+### Via Supabase Studio (recommended)
 
-1. Sign in once (magic link or Google) on the public site so your row exists in
-   `auth.users`.
-2. In Supabase Studio → **Authentication → Users**, find your row.
-3. Click it → **Raw User Meta Data** tab → set **App Metadata** to:
-
+1. Sign in once on the public site so your row exists in `auth.users`.
+2. Studio → **Authentication → Users** → click your row.
+3. Open the **Raw User Meta Data** tab. You'll see two sections:
+   - **User Metadata** — editable by the user; not trusted for access control.
+   - **App Metadata** — set by the JWT issuer only; safe for roles.
+4. Under **App Metadata**, paste:
    ```json
    { "role": "admin" }
    ```
+   If the field already has content, merge — don't replace the whole object.
+5. Save.
+6. Sign out and sign back in. The JWT only refreshes on a new session; the role
+   won't take effect until you re-authenticate.
 
-   (If `app_metadata` already has fields, merge — don't overwrite.)
-4. Sign out and back in on the admin pages. The JWT only refreshes on a new
-   session; the role won't take effect until you re-authenticate.
+> **Why `app_metadata` and not `user_metadata`?** `user_metadata` can be written
+> by the user themselves via the Supabase client — it is not safe for access
+> control. `app_metadata` is controlled by the service-role key only, which is
+> why `public.is_admin()` reads from there.
 
-Verify by visiting <http://localhost:8080/admin-recipes.html>. You should see
-the recipes list, not the "Not authorized" panel.
+### Via SQL (power users / CI)
 
-To grant additional admins later, repeat step 3 for their user row.
+```sql
+UPDATE auth.users
+   SET raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}'::jsonb
+ WHERE email = 'you@example.com';
+```
+
+Run this in Studio → SQL Editor (or via `psql` with the database password from §1).
+The user must still sign out and back in to pick up the new JWT claim.
+
+### Verify
+
+Visit <http://localhost:8080/admin-recipes.html>. You should see the recipes
+list, not the "Not authorized" panel.
+
+To grant additional admins later, repeat step 4 for their user row.
 
 ---
 

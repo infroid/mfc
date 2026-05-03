@@ -41,7 +41,7 @@ window.MFC.adminDb = (function () {
 
   async function ingredientUsageCounts() {
     const { data, error } = await sb()
-      .from('recipe_ingredients').select('ingredient_id').not('ingredient_id', 'is', null);
+      .from('recipe_ingredients').select('ingredient_id');
     check(error, 'ingredientUsageCounts');
     const counts = {};
     for (const r of data || []) counts[r.ingredient_id] = (counts[r.ingredient_id] || 0) + 1;
@@ -52,7 +52,7 @@ window.MFC.adminDb = (function () {
   async function listUtensils() {
     const { data, error } = await sb()
       .from('utensils')
-      .select('id,name,tagline,category,photo,buy_link,care_tip,specs,show,ai_filled_at,updated_at')
+      .select('id,name,tagline,category,photo,care_tip,specs,show,ai_filled_at,updated_at')
       .order('name', { ascending: true });
     check(error, 'listUtensils');
     return data || [];
@@ -78,7 +78,7 @@ window.MFC.adminDb = (function () {
 
   async function utensilUsageCounts() {
     const { data, error } = await sb()
-      .from('recipe_utensils').select('utensil_id').not('utensil_id', 'is', null);
+      .from('recipe_utensils').select('utensil_id');
     check(error, 'utensilUsageCounts');
     const counts = {};
     for (const r of data || []) counts[r.utensil_id] = (counts[r.utensil_id] || 0) + 1;
@@ -105,9 +105,9 @@ window.MFC.adminDb = (function () {
       .from('recipes')
       .select(`
         id, name, tagline, short_tagline, cuisine, difficulty, servings, total_minutes, media, color, color_soft, featured, highlight, meal_types,
-        recipe_ingredients ( sort_order, group_name, ingredient, ingredient_id, amount, unit ),
+        recipe_ingredients ( sort_order, group_name, ingredient_id, amount, unit ),
         recipe_steps       ( sort_order, title, detail, duration_seconds, tip, media_caption ),
-        recipe_utensils    ( name, utensil_id, essential ),
+        recipe_utensils    ( sort_order, utensil_id, essential ),
         recipe_tags        ( tag ),
         recipe_health_facts ( sort_order, fact )
       `)
@@ -131,13 +131,12 @@ window.MFC.adminDb = (function () {
     await wipe('recipe_ingredients');
     if (ingredients?.length) {
       const rows = ingredients.map((ing, i) => ({
-        recipe_id: id,
-        sort_order: i,
-        group_name: ing.group_name ?? null,
-        ingredient_id: ing.ingredient_id ?? null,
-        ingredient: ing.ingredient ?? null,
-        amount: ing.amount ?? null,
-        unit: ing.unit ?? null,
+        recipe_id:     id,
+        sort_order:    i,
+        ingredient_id: ing.ingredient_id,
+        group_name:    ing.group_name ?? null,
+        amount:        ing.amount ?? null,
+        unit:          ing.unit ?? null,
       }));
       const { error } = await sb().from('recipe_ingredients').insert(rows);
       check(error, 'saveRecipe.recipe_ingredients');
@@ -160,33 +159,14 @@ window.MFC.adminDb = (function () {
 
     await wipe('recipe_utensils');
     if (utensils?.length) {
-      // recipe_utensils.name is part of the PK and NOT NULL — when only utensil_id
-      // is supplied (e.g. picked from library without a name cached), look it up.
-      let nameById = {};
-      const needsLookup = utensils.filter((u) => u.utensil_id && !u.name).map((u) => u.utensil_id);
-      if (needsLookup.length) {
-        const { data, error } = await sb()
-          .from('utensils').select('id,name').in('id', needsLookup);
-        check(error, 'saveRecipe.utensils.lookup');
-        for (const u of data || []) nameById[u.id] = u.name;
-      }
       const seen = new Set();
       const rows = utensils
-        .map((u) => ({
-          ...u,
-          name: u.name || (u.utensil_id ? nameById[u.utensil_id] : null),
-        }))
-        .filter((u) => {
-          const key = u.name || u.utensil_id;
-          if (!u.name) return false;
-          if (seen.has(key)) return false;
-          seen.add(key); return true;
-        })
-        .map((u) => ({
-          recipe_id: id,
-          utensil_id: u.utensil_id ?? null,
-          name: u.name,
-          essential: !!u.essential,
+        .filter((u) => u.utensil_id && !seen.has(u.utensil_id) && seen.add(u.utensil_id))
+        .map((u, i) => ({
+          recipe_id:  id,
+          sort_order: i,
+          utensil_id: u.utensil_id,
+          essential:  !!u.essential,
         }));
       if (rows.length) {
         const { error } = await sb().from('recipe_utensils').insert(rows);
