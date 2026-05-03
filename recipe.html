@@ -43,8 +43,7 @@ window.MFC_RECIPE_ID = new URLSearchParams(location.search).get('id') || '';
 const RECIPE_TWEAK_DEFAULTS = {
   "accent": "#FF6D2E",
   "secondAccent": "#7A9C5A",
-  "bg": "#F7F1E3",
-  "factIntervalMin": 3
+  "bg": "#F7F1E3"
 };
 
 const MEAL_LOG_STYLE = `
@@ -119,6 +118,8 @@ function RecipeApp() {
   const [doneSteps, setDoneSteps] = React.useState(new Set());
   const user = useAuth();
   const [mealLogged, setMealLogged] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const [justSaved, setJustSaved] = React.useState(false);
 
   React.useEffect(() => {
     const id = window.MFC_RECIPE_ID;
@@ -132,6 +133,33 @@ function RecipeApp() {
       })
       .catch(() => setLoading(false));
   }, []);
+
+  // Load saved state for this recipe
+  React.useEffect(() => {
+    if (!user || !recipe) { setSaved(false); return; }
+    let cancelled = false;
+    window.MFC?.db?.getSaved().then(rows => {
+      if (cancelled) return;
+      setSaved((rows || []).some(r => r.recipe_id === recipe.id));
+    });
+    return () => { cancelled = true; };
+  }, [user, recipe?.id]);
+
+  function toggleSave() {
+    if (!user || !recipe) return;
+    const next = !saved;
+    setSaved(next);
+    if (next) {
+      setJustSaved(true);
+      setTimeout(() => setJustSaved(false), 500);
+      window.MFC?.db?.saveRecipe(recipe.id);
+    } else {
+      window.MFC?.db?.unsaveRecipe(recipe.id);
+    }
+  }
+  function requestSignIn() {
+    window.MFC?.auth?.signIn?.();
+  }
 
   // Resume cooking session for logged-in user
   React.useEffect(() => {
@@ -198,35 +226,47 @@ function RecipeApp() {
     </>
   );
 
-  const progress = Math.round((doneSteps.size / recipe.steps.length) * 100);
-
   return (
     <>
       <RecipeNav />
       <main className="recipe-page">
         <div className="wrap">
-          <RecipeHero recipe={recipe} progress={progress} />
-          <HealthMarquee
-            facts={recipe.healthFacts}
-            intervalMs={(t.factIntervalMin || 3) * 60 * 1000}
+          <div className="r-breadcrumb">
+            <a href={(window.MFC_BASE || '') + 'index.html'}>home</a>
+            <span>›</span>
+            <a href={(window.MFC_BASE || '') + 'recipe-search.html'}>{recipe.cuisine}</a>
+            <span>›</span>
+            <span className="current">{recipe.name.toLowerCase()}</span>
+          </div>
+
+          <RecipeHero
+            recipe={recipe}
+            saved={saved}
+            onToggleSave={toggleSave}
+            user={user}
+            onRequestSignIn={requestSignIn}
+            justSaved={justSaved}
           />
-          <div className="r-stage" style={{ marginTop: 32 }}>
-            <StepCard
-              recipe={recipe}
-              stepIdx={stepIdx}
-              setStepIdx={setStepIdx}
-              doneSteps={doneSteps}
-              setDoneSteps={setDoneSteps}
-            />
+
+          <div className="r-stage">
+            <StepCard recipe={recipe} stepIdx={stepIdx} doneSteps={doneSteps} />
             <aside className="r-side">
               <IngredientsCard recipe={recipe} />
               <UtensilsCard recipe={recipe} />
             </aside>
           </div>
+
+          <HealthMarquee facts={recipe.healthFacts} />
         </div>
       </main>
 
-      <CookingPlayer recipe={recipe} stepIdx={stepIdx} setStepIdx={setStepIdx} />
+      <CookingPlayer
+        recipe={recipe}
+        stepIdx={stepIdx}
+        setStepIdx={setStepIdx}
+        doneSteps={doneSteps}
+        setDoneSteps={setDoneSteps}
+      />
 
       {user && allDone && !mealLogged && (
         <MealLogPrompt recipe={recipe} onLogged={() => setMealLogged(true)} />
@@ -237,13 +277,6 @@ function RecipeApp() {
         <TweakColor label="Primary accent" value={t.accent} onChange={(v) => setTweak("accent", v)} />
         <TweakColor label="Health accent" value={t.secondAccent} onChange={(v) => setTweak("secondAccent", v)} />
         <TweakColor label="Background" value={t.bg} onChange={(v) => setTweak("bg", v)} />
-        <TweakSection label="Behavior" />
-        <TweakSlider
-          label="Health-fact interval (min)"
-          value={t.factIntervalMin}
-          min={1} max={10} step={1}
-          onChange={(v) => setTweak("factIntervalMin", v)}
-        />
       </TweaksPanel>
     </>
   );
