@@ -1,0 +1,295 @@
+// Thin Supabase wrappers. window.MFC.supabase is the single source of truth — there
+// is no legacy fallback. The only short-circuits below check whether the user is
+// signed in (anonymous browsing returns empty per-user data, which is correct).
+//
+// Public surface: window.MFC.db.{ ... }
+window.MFC = window.MFC || {};
+window.MFC.db = (function () {
+  const sb = window.MFC.supabase;
+  const userId = () => window.MFC.auth?.getUser()?.id || null;
+
+  // ---------- Catalog ----------
+
+  // Returns array shaped like data/recipes.json (listing).
+  async function getRecipes() {
+    if (!sb) return null;
+    const { data, error } = await sb
+      .from('recipes')
+      .select('id,name,tagline,cuisine,difficulty,total_minutes,servings,media,color,color_soft,featured,highlight,recipe_tags(tag)')
+      .order('featured', { ascending: false })
+      .order('name', { ascending: true });
+    if (error) { console.warn('[db.getRecipes]', error); return null; }
+    return data.map((r) => ({
+      id: r.id,
+      name: r.name,
+      tagline: r.tagline,
+      cuisine: r.cuisine,
+      difficulty: r.difficulty,
+      totalMinutes: r.total_minutes,
+      servings: r.servings,
+      media: { emoji: r.media?.emoji ?? null },
+      tags: (r.recipe_tags || []).map((t) => t.tag),
+      color: r.color,
+      colorSoft: r.color_soft,
+      featured: !!r.featured,
+      highlight: r.highlight,
+    }));
+  }
+
+  // Returns object shaped like data/recipe-bundles/{id}/recipe.json (detail).
+  async function getRecipe(id) {
+    if (!sb) return null;
+    const { data, error } = await sb
+      .from('recipes')
+      .select(`
+        id, name, tagline, short_tagline, cuisine, difficulty, servings, total_minutes, media,
+        recipe_ingredients ( sort_order, group_name, ingredient, amount ),
+        recipe_steps ( sort_order, title, detail, duration_seconds, tip, media_caption ),
+        recipe_utensils ( name, essential ),
+        recipe_health_facts ( sort_order, fact )
+      `)
+      .eq('id', id)
+      .maybeSingle();
+    if (error) { console.warn('[db.getRecipe]', error); return null; }
+    if (!data) return null;
+
+    const ingredients = (data.recipe_ingredients || [])
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((i) => ({ name: i.ingredient, amt: i.amount, group: i.group_name }));
+
+    const steps = (data.recipe_steps || [])
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((s) => ({
+        id: s.sort_order,
+        title: s.title,
+        detail: s.detail,
+        duration: s.duration_seconds,
+        tip: s.tip,
+        ...(s.media_caption ? { media: { caption: s.media_caption } } : {}),
+      }));
+
+    const utensils = (data.recipe_utensils || []).map((u) => ({ name: u.name, essential: !!u.essential }));
+
+    const healthFacts = (data.recipe_health_facts || [])
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((h) => h.fact);
+
+    return {
+      id: data.id,
+      name: data.name,
+      tagline: data.short_tagline || data.tagline,
+      cuisine: data.cuisine,
+      difficulty: data.difficulty,
+      servings: data.servings,
+      totalMinutes: data.total_minutes,
+      media: data.media || {},
+      healthFacts,
+      ingredients,
+      utensils,
+      steps,
+    };
+  }
+
+  // ---------- Saved recipes ----------
+
+  async function saveRecipe(recipeId, note = null) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { error } = await sb.from('saved_recipes').upsert({ user_id: uid, recipe_id: recipeId, note });
+    if (error) { console.warn('[db.saveRecipe]', error); return false; }
+    return true;
+  }
+
+  async function unsaveRecipe(recipeId) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { error } = await sb.from('saved_recipes').delete()
+      .eq('user_id', uid).eq('recipe_id', recipeId);
+    if (error) { console.warn('[db.unsaveRecipe]', error); return false; }
+    return true;
+  }
+
+  async function getSaved() {
+    if (!sb) return [];
+    const uid = userId(); if (!uid) return [];
+    const { data, error } = await sb.from('saved_recipes')
+      .select('recipe_id,note,saved_at').eq('user_id', uid).order('saved_at', { ascending: false });
+    if (error) { console.warn('[db.getSaved]', error); return []; }
+    return data;
+  }
+
+  // ---------- Cooking sessions ----------
+
+  async function upsertSession({ recipeId, currentStep, servings, completedAt = null }) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { error } = await sb.from('cooking_sessions').upsert({
+      user_id: uid,
+      recipe_id: recipeId,
+      current_step: currentStep,
+      servings: servings ?? null,
+      completed_at: completedAt,
+    });
+    if (error) { console.warn('[db.upsertSession]', error); return false; }
+    return true;
+  }
+
+  async function getSession(recipeId) {
+    if (!sb) return null;
+    const uid = userId(); if (!uid) return null;
+    const { data, error } = await sb.from('cooking_sessions')
+      .select('*').eq('user_id', uid).eq('recipe_id', recipeId).maybeSingle();
+    if (error) { console.warn('[db.getSession]', error); return null; }
+    return data;
+  }
+
+  // ---------- Prefs ----------
+
+  async function getPref(key) {
+    if (!sb) return null;
+    const uid = userId(); if (!uid) return null;
+    const { data, error } = await sb.from('user_prefs')
+      .select('value').eq('user_id', uid).eq('key', key).maybeSingle();
+    if (error) { console.warn('[db.getPref]', error); return null; }
+    return data?.value ?? null;
+  }
+
+  async function setPref(key, value) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { error } = await sb.from('user_prefs').upsert({ user_id: uid, key, value });
+    if (error) { console.warn('[db.setPref]', error); return false; }
+    return true;
+  }
+
+  // ---------- Health markers ----------
+
+  async function getMetricDefinitions() {
+    if (!sb) return [];
+    const { data, error } = await sb.from('metric_definitions')
+      .select('*').order('sort_order', { ascending: true });
+    if (error) { console.warn('[db.getMetricDefinitions]', error); return []; }
+    return data;
+  }
+
+  // Returns latest value per metric for the current user.
+  async function getHealthMarkers() {
+    if (!sb) return [];
+    const uid = userId(); if (!uid) return [];
+    const { data, error } = await sb.from('user_health_markers')
+      .select('metric_id,value,unit,measured_at,source,note,updated_at')
+      .eq('user_id', uid)
+      .order('measured_at', { ascending: false });
+    if (error) { console.warn('[db.getHealthMarkers]', error); return []; }
+    const seen = new Set();
+    const latest = [];
+    for (const row of data) {
+      if (seen.has(row.metric_id)) continue;
+      seen.add(row.metric_id); latest.push(row);
+    }
+    return latest;
+  }
+
+  async function upsertHealthMarker({ metricId, value, unit, measuredAt, source = 'manual', note = null }) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { error } = await sb.from('user_health_markers').upsert({
+      user_id: uid,
+      metric_id: metricId,
+      value,
+      unit,
+      measured_at: measuredAt,
+      source,
+      note,
+    });
+    if (error) { console.warn('[db.upsertHealthMarker]', error); return false; }
+    return true;
+  }
+
+  // ---------- Recommendations (read-only) ----------
+
+  async function getRecommendations(mealType) {
+    if (!sb) return [];
+    const uid = userId(); if (!uid) return [];
+    const q = sb.from('recommendations')
+      .select('recipe_id,rank,reason,meal_type,generated_at')
+      .eq('user_id', uid)
+      .order('rank', { ascending: true });
+    const { data, error } = mealType ? await q.eq('meal_type', mealType) : await q;
+    if (error) { console.warn('[db.getRecommendations]', error); return []; }
+    return data;
+  }
+
+  // ---------- Meal logs ----------
+
+  async function logMeal({ recipeId = null, mealType, servings = null, note = null, source = 'manual' }) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { error } = await sb.from('meal_logs').insert({
+      user_id: uid,
+      recipe_id: recipeId,
+      meal_type: mealType,
+      servings,
+      note,
+      source,
+    });
+    if (error) { console.warn('[db.logMeal]', error); return false; }
+    return true;
+  }
+
+  async function getMealLogs({ from = null, to = null } = {}) {
+    if (!sb) return [];
+    const uid = userId(); if (!uid) return [];
+    let q = sb.from('meal_logs').select('*').eq('user_id', uid).order('logged_at', { ascending: false });
+    if (from) q = q.gte('logged_at', from);
+    if (to)   q = q.lte('logged_at', to);
+    const { data, error } = await q;
+    if (error) { console.warn('[db.getMealLogs]', error); return []; }
+    return data;
+  }
+
+  // ---------- Anonymous → authenticated state hand-off ----------
+
+  async function handoffAnonymous() {
+    if (!sb) return;
+    const uid = userId(); if (!uid) return;
+
+    // 1. Tweaks panel (if anything was persisted to localStorage under 'mfc_tweaks').
+    try {
+      const raw = localStorage.getItem('mfc_tweaks');
+      if (raw) {
+        const value = JSON.parse(raw);
+        await setPref('tweaks', value);
+        localStorage.removeItem('mfc_tweaks');
+      }
+    } catch (e) { console.warn('[handoff tweaks]', e); }
+
+    // 2. In-progress cooking sessions (keys like 'mfc_session_<recipeId>').
+    try {
+      const sessionKeys = Object.keys(localStorage).filter((k) => k.startsWith('mfc_session_'));
+      for (const k of sessionKeys) {
+        const recipeId = k.slice('mfc_session_'.length);
+        let s; try { s = JSON.parse(localStorage.getItem(k)); } catch { continue; }
+        if (!s) continue;
+        await upsertSession({
+          recipeId,
+          currentStep: s.currentStep ?? 0,
+          servings: s.servings ?? null,
+          completedAt: s.completedAt ?? null,
+        });
+        localStorage.removeItem(k);
+      }
+    } catch (e) { console.warn('[handoff sessions]', e); }
+  }
+
+  return {
+    getRecipes, getRecipe,
+    saveRecipe, unsaveRecipe, getSaved,
+    upsertSession, getSession,
+    getPref, setPref,
+    getMetricDefinitions, getHealthMarkers, upsertHealthMarker,
+    getRecommendations,
+    logMeal, getMealLogs,
+    handoffAnonymous,
+  };
+})();

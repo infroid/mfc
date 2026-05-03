@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="recipe-styles.css?v=hero-caption-bottom" />
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FF6D2E'/><text x='50%25' y='62%25' text-anchor='middle' fill='%23FFFCF3' font-family='Georgia,serif' font-style='italic' font-weight='400' font-size='22'>m</text></svg>" />
+
+<meta name="mfc-supabase-url" content="" />
+<meta name="mfc-supabase-anon-key" content="" />
 </head>
 
 <body>
@@ -22,7 +25,10 @@
 window.MFC_RECIPE_ID = new URLSearchParams(location.search).get('id') || '';
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/supabase.js"></script>
 <script src="shared/auth.js"></script>
+<script src="shared/db.js"></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -41,26 +47,131 @@ const RECIPE_TWEAK_DEFAULTS = {
   "factIntervalMin": 3
 };
 
+const MEAL_LOG_STYLE = `
+.mfc-meallog{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:200;
+  background:var(--paper,#FFFCF3);border:1px solid var(--ink-faint,rgba(31,29,26,.18));
+  border-radius:14px;padding:14px 16px;box-shadow:0 18px 50px rgba(31,29,26,.18);
+  font-family:var(--sans);display:flex;gap:12px;align-items:center;flex-wrap:wrap;max-width:560px}
+.mfc-meallog b{font-family:var(--serif);font-style:italic;font-weight:500;font-size:18px;color:var(--ink)}
+.mfc-meallog select,.mfc-meallog input{font:inherit;font-size:13px;padding:6px 10px;
+  border:1px solid var(--ink-faint,rgba(31,29,26,.18));border-radius:8px;background:transparent;color:var(--ink)}
+.mfc-meallog input{width:60px}
+.mfc-meallog button{font:inherit;font-size:13px;font-weight:500;padding:8px 14px;
+  border-radius:999px;border:none;cursor:pointer;background:var(--orange,#FF6D2E);color:#FFFCF3}
+.mfc-meallog button.ghost{background:transparent;color:var(--ink-muted);text-decoration:underline}
+.mfc-meallog .ok{color:var(--matcha,#7A9C5A);font-family:var(--mono);font-size:12px}
+`;
+
+function MealLogPrompt({ recipe, onLogged }) {
+  const [mealType, setMealType] = React.useState('dinner');
+  const [servings, setServings] = React.useState(recipe.servings || 1);
+  const [busy, setBusy] = React.useState(false);
+  const [done, setDone] = React.useState(false);
+  const [dismissed, setDismissed] = React.useState(false);
+  if (dismissed) return null;
+  async function submit() {
+    setBusy(true);
+    const ok = await window.MFC?.db?.logMeal({
+      recipeId: recipe.id, mealType, servings: Number(servings) || null,
+      source: 'cooking_session_complete',
+    });
+    setBusy(false);
+    if (ok) { setDone(true); onLogged && onLogged(); setTimeout(() => setDismissed(true), 1800); }
+  }
+  return (
+    <>
+      <style>{MEAL_LOG_STYLE}</style>
+      <div className="mfc-meallog">
+        {done ? <span className="ok">✓ logged</span> : (
+          <>
+            <b>Log this meal?</b>
+            <select value={mealType} onChange={e => setMealType(e.target.value)}>
+              <option value="breakfast">breakfast</option>
+              <option value="lunch">lunch</option>
+              <option value="dinner">dinner</option>
+              <option value="snack">snack</option>
+            </select>
+            <input type="number" min="0.25" step="0.25" value={servings} onChange={e => setServings(e.target.value)} />
+            <button disabled={busy} onClick={submit}>{busy ? '…' : 'Log'}</button>
+            <button className="ghost" onClick={() => setDismissed(true)}>skip</button>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+function useAuth() {
+  const [user, setUser] = React.useState(window.MFC?.auth?.getUser() || null);
+  React.useEffect(() => {
+    const handler = (e) => setUser(e.detail.user);
+    window.addEventListener('mfc:auth-change', handler);
+    return () => window.removeEventListener('mfc:auth-change', handler);
+  }, []);
+  return user;
+}
+
 function RecipeApp() {
   const [t, setTweak] = useTweaks(RECIPE_TWEAK_DEFAULTS);
   const [recipe, setRecipe] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [stepIdx, setStepIdx] = React.useState(0);
   const [doneSteps, setDoneSteps] = React.useState(new Set());
+  const user = useAuth();
+  const [mealLogged, setMealLogged] = React.useState(false);
 
   React.useEffect(() => {
     const id = window.MFC_RECIPE_ID;
     if (!id) { setLoading(false); return; }
-    fetch('data/recipe-bundles/' + id + '/recipe.json')
-      .then(r => r.ok ? r : fetch('data/recipes/' + id + '.json'))
-      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    window.MFC.db.getRecipe(id)
       .then(data => {
+        if (!data) { setLoading(false); return; }
         document.title = data.name + ' — MyFoodCraving';
         setRecipe(data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
+
+  // Resume cooking session for logged-in user
+  React.useEffect(() => {
+    if (!user || !recipe) return;
+    let cancelled = false;
+    window.MFC?.db?.getSession(recipe.id).then(s => {
+      if (cancelled || !s || s.completed_at) return;
+      const idx = Math.max(0, Math.min(s.current_step ?? 0, recipe.steps.length - 1));
+      setStepIdx(idx);
+      const done = new Set();
+      for (let i = 0; i < idx; i++) done.add(i);
+      setDoneSteps(done);
+    });
+    return () => { cancelled = true; };
+  }, [user, recipe?.id]);
+
+  // Persist session progress (debounced)
+  React.useEffect(() => {
+    if (!user || !recipe) return;
+    const timer = setTimeout(() => {
+      window.MFC?.db?.upsertSession({
+        recipeId: recipe.id,
+        currentStep: stepIdx,
+        servings: recipe.servings,
+      });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [user, recipe?.id, stepIdx]);
+
+  // Mark complete + invite to log meal when all steps done
+  const allDone = recipe && doneSteps.size >= recipe.steps.length;
+  React.useEffect(() => {
+    if (!user || !recipe || !allDone) return;
+    window.MFC?.db?.upsertSession({
+      recipeId: recipe.id,
+      currentStep: recipe.steps.length - 1,
+      servings: recipe.servings,
+      completedAt: new Date().toISOString(),
+    });
+  }, [user, recipe?.id, allDone]);
 
   React.useEffect(() => {
     const root = document.documentElement;
@@ -116,6 +227,10 @@ function RecipeApp() {
       </main>
 
       <CookingPlayer recipe={recipe} stepIdx={stepIdx} setStepIdx={setStepIdx} />
+
+      {user && allDone && !mealLogged && (
+        <MealLogPrompt recipe={recipe} onLogged={() => setMealLogged(true)} />
+      )}
 
       <TweaksPanel>
         <TweakSection label="Palette" />

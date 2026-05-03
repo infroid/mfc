@@ -591,11 +591,17 @@ section.block { padding: 100px 0; position: relative; z-index: 2; }
   .cta-form input { width: 100%; }
 }
 </style>
+
+<meta name="mfc-supabase-url" content="" />
+<meta name="mfc-supabase-anon-key" content="" />
 </head>
 
 <body>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared/supabase.js"></script>
 <script src="shared/auth.js"></script>
+<script src="shared/db.js"></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -603,7 +609,7 @@ section.block { padding: 100px 0; position: relative; z-index: 2; }
 <div id="root"></div>
 
 <script type="text/babel" data-presets="react">
-const { useState, useEffect, useRef, useCallback } = React;
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
 /* ── DATA ── */
 const CRAVINGS = {
@@ -859,13 +865,25 @@ const __AUTH_STYLE = `
 `;
 
 function AuthModal({ onClose }) {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  function handleSubmit(e) {
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (!name.trim()) return;
-    window.MFC?.auth?.signIn({ name: name.trim(), email: email.trim() });
-    onClose();
+    setError('');
+    if (!email.trim()) return;
+    setBusy(true);
+    try {
+      await window.MFC.auth.signIn({ email: email.trim() });
+      setSent(true);
+    } catch (err) { setError(err.message || 'Failed to send link'); }
+    setBusy(false);
+  }
+  async function handleGoogle() {
+    setError(''); setBusy(true);
+    try { await window.MFC.auth.signIn({ provider: 'google' }); }
+    catch (err) { setError(err.message || 'Google sign-in failed'); setBusy(false); }
   }
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
@@ -882,18 +900,33 @@ function AuthModal({ onClose }) {
             <button className="modal-close-btn" onClick={onClose}>✕</button>
           </div>
           <p className="modal-sub">Save recipes · sync health metrics · personalise your feed</p>
-          <form onSubmit={handleSubmit}>
-            <div className="modal-field">
-              <input className="modal-input" type="text" placeholder="Your name" value={name}
-                onChange={e => setName(e.target.value)} required autoFocus />
-            </div>
-            <div className="modal-field">
-              <input className="modal-input" type="email" placeholder="Email (optional)" value={email}
-                onChange={e => setEmail(e.target.value)} />
-            </div>
-            <button type="submit" className="modal-submit">Continue →</button>
-          </form>
-          <p className="modal-note">// Google + Apple Health sign-in coming soon</p>
+          {sent ? (
+            <p style={{ padding: '12px 20px 20px', fontSize: 14, color: 'var(--ink-soft)' }}>
+              Check your inbox at <b>{email}</b> for a sign-in link.
+            </p>
+          ) : (
+            <>
+              <div className="modal-field">
+                <button type="button" onClick={handleGoogle} disabled={busy}
+                  className="modal-submit"
+                  style={{ margin: 0, width: '100%', background: '#FFFCF3', color: 'var(--ink, #1F1A14)', border: '1.5px solid var(--rule-strong, rgba(31,26,20,.28))' }}>
+                  Continue with Google
+                </button>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="modal-field">
+                  <input className="modal-input" type="email" required
+                    placeholder="Email for magic link"
+                    value={email} onChange={e => setEmail(e.target.value)} autoFocus />
+                </div>
+                <button type="submit" className="modal-submit" disabled={busy}>
+                  {busy ? '…' : 'Send sign-in link'}
+                </button>
+              </form>
+              {error && <p style={{ padding: '0 20px 12px', color: '#C84B5A', fontSize: 12, fontFamily: 'monospace' }}>{error}</p>}
+            </>
+          )}
+          <p className="modal-note">// Apple sign-in coming soon</p>
         </div>
       </div>
     </>
@@ -1092,64 +1125,233 @@ function Ring({ pct, color, label, v, inverted }) {
   );
 }
 
-function Personalize() {
+function AnonymousPersonalize() {
   const [active, setActive] = useState(HEALTH_METRICS.filter(m => m.default).map(m => m.id));
   const meal = pickMeal(active);
   const targets = microTargets(active);
   const toggle = id => setActive(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
 
   return (
+    <div className="personalize-grid">
+      <div className="reveal">
+        <div className="label-mono" style={{ marginBottom: 12 }}>// your health flags</div>
+        <div className="metric-stack">
+          {HEALTH_METRICS.map(m => {
+            const isOn = active.includes(m.id);
+            return (
+              <div key={m.id} className={`metric-card ${isOn ? "active" : ""}`}
+                onClick={() => toggle(m.id)} role="switch" aria-checked={isOn} tabIndex={0}
+                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(m.id); } }}>
+                <div><div className="name">{m.name}</div><div className="sub">{m.sub}</div></div>
+                <span className="val">{m.val}</span>
+                <span className="toggle" />
+              </div>
+            );
+          })}
+        </div>
+        <p className="scribble" style={{ marginTop: 22, fontSize: 24, transform: "rotate(-2deg)" }}>tap any to flip it ↑</p>
+      </div>
+
+      <div className="rec-panel reveal">
+        <div className="rec-scribble" style={{ top: -22, right: 24, transform: "rotate(-6deg)" }}>fresh pick ↘</div>
+        <div className="rec-head">
+          <span className="label-mono">// today's match</span>
+          <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--matcha-deep)" }}>● updated just now</span>
+        </div>
+        <div className="rec-meal" key={meal.name}>
+          <div className="rec-meal-img">[ photo ]</div>
+          <div>
+            <div className="rec-meal-name">{meal.name}</div>
+            <div className="rec-meal-tags">{meal.tags.map((t, i) => <span key={i} className={`rec-tag ${i === 0 ? "orange" : ""}`}>{t}</span>)}</div>
+          </div>
+        </div>
+        <div className="ring-grid">{targets.map(t => <Ring key={t.label} {...t} />)}</div>
+        <div className="rec-why">
+          <b>Why this:</b> {active.length === 0
+            ? "No flags active — showing a balanced default. Add a flag to personalize."
+            : `Tuned for ${active.map(id => HEALTH_METRICS.find(m => m.id === id)?.name).join(" · ")}. Macros sit inside your goals, micros patch your gaps.`}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const AUTHED_PERSONALIZE_STYLE = `
+.mfc-marker-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;padding-right:6px}
+.mfc-marker-cat{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin:8px 0 4px}
+.mfc-marker-row{display:grid;grid-template-columns:1.2fr 0.7fr 0.9fr auto;gap:8px;align-items:center;
+  padding:10px 12px;background:var(--paper);border:1px solid var(--rule,rgba(31,26,20,.14));border-radius:10px}
+.mfc-marker-row .name{font-weight:600;font-size:13px}
+.mfc-marker-row .range{font-size:11px;color:var(--ink-muted);font-family:var(--mono)}
+.mfc-marker-row input{font:inherit;font-size:13px;padding:6px 10px;border-radius:8px;
+  border:1px solid var(--rule-strong,rgba(31,26,20,.22));background:var(--cream-soft);color:var(--ink);width:100%}
+.mfc-marker-row .ok{font-family:var(--mono);font-size:11px;color:var(--matcha-deep)}
+.mfc-rec-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.mfc-rec-tab{font:inherit;font-size:12px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--rule-strong,rgba(31,26,20,.22));background:transparent;color:var(--ink-muted);cursor:pointer}
+.mfc-rec-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.mfc-rec-list{display:flex;flex-direction:column;gap:10px}
+.mfc-rec-item{display:flex;justify-content:space-between;gap:10px;padding:12px 14px;background:var(--cream-soft);
+  border:1px solid var(--rule,rgba(31,26,20,.14));border-radius:12px;text-decoration:none;color:inherit;transition:transform 150ms,box-shadow 150ms}
+.mfc-rec-item:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.mfc-rec-item .title{font-family:var(--serif);font-style:italic;font-weight:500;font-size:18px;color:var(--ink)}
+.mfc-rec-item .why{font-size:12px;color:var(--ink-muted);margin-top:2px}
+.mfc-rec-item .rank{font-family:var(--mono);font-size:11px;color:var(--orange);align-self:flex-start}
+.mfc-rec-empty{padding:14px;border:1px dashed var(--rule-strong,rgba(31,26,20,.22));border-radius:12px;
+  font-size:13px;color:var(--ink-muted);text-align:center}
+`;
+
+function defaultMealTypeForNow() {
+  const h = new Date().getHours();
+  if (h < 11) return 'breakfast';
+  if (h < 15) return 'lunch';
+  if (h < 18) return 'snack';
+  return 'dinner';
+}
+
+function MarkerRow({ def, latest, onSaved }) {
+  const [value, setValue] = useState(latest?.value ?? '');
+  const [date, setDate] = useState(
+    latest?.measured_at || new Date().toISOString().slice(0, 10)
+  );
+  const [savedAt, setSavedAt] = useState(0);
+  const [busy, setBusy] = useState(false);
+  async function save() {
+    if (!value || isNaN(Number(value))) return;
+    setBusy(true);
+    const ok = await window.MFC?.db?.upsertHealthMarker({
+      metricId: def.id, value: Number(value), unit: def.unit, measuredAt: date,
+    });
+    setBusy(false);
+    if (ok) { setSavedAt(Date.now()); onSaved && onSaved(); }
+  }
+  const justSaved = savedAt && Date.now() - savedAt < 2200;
+  const range = def.normal_min != null && def.normal_max != null
+    ? `${def.normal_min}–${def.normal_max} ${def.unit}`
+    : def.normal_max != null ? `< ${def.normal_max} ${def.unit}`
+    : def.normal_min != null ? `> ${def.normal_min} ${def.unit}` : def.unit;
+  return (
+    <div className="mfc-marker-row">
+      <div>
+        <div className="name">{def.name}</div>
+        <div className="range">{range}</div>
+      </div>
+      <input type="number" step="any" placeholder="value"
+        value={value} onChange={e => setValue(e.target.value)} onBlur={save} />
+      <input type="date" value={date} onChange={e => setDate(e.target.value)} onBlur={save} />
+      <span className="ok">{busy ? '…' : justSaved ? '✓' : ''}</span>
+    </div>
+  );
+}
+
+function AuthedPersonalize() {
+  const [defs, setDefs] = useState([]);
+  const [latest, setLatest] = useState({});
+  const [mealType, setMealType] = useState(defaultMealTypeForNow());
+  const [recs, setRecs] = useState([]);
+  const [recipesById, setRecipesById] = useState({});
+
+  useEffect(() => {
+    window.MFC?.db?.getMetricDefinitions().then(setDefs);
+    window.MFC?.db?.getHealthMarkers().then(rows => {
+      const byId = {};
+      for (const r of rows) byId[r.metric_id] = r;
+      setLatest(byId);
+    });
+  }, []);
+
+  useEffect(() => {
+    window.MFC?.db?.getRecommendations(mealType).then(setRecs);
+  }, [mealType]);
+
+  useEffect(() => {
+    window.MFC?.db?.getRecipes().then(list => {
+      const byId = {};
+      for (const r of (list || [])) byId[r.id] = r;
+      setRecipesById(byId);
+    });
+  }, []);
+
+  const byCategory = useMemo(() => {
+    const out = {};
+    for (const d of defs) (out[d.category || 'other'] ||= []).push(d);
+    return out;
+  }, [defs]);
+
+  const categoryOrder = ['mineral', 'blood', 'vitamin', 'lipid', 'metabolic', 'thyroid', 'kidney', 'other'];
+  const orderedCats = categoryOrder.filter(c => byCategory[c]);
+
+  return (
+    <>
+      <style>{AUTHED_PERSONALIZE_STYLE}</style>
+      <div className="personalize-grid">
+        <div className="reveal">
+          <div className="label-mono" style={{ marginBottom: 12 }}>// your blood markers</div>
+          <div className="mfc-marker-list">
+            {defs.length === 0 && <div className="mfc-rec-empty">Loading markers…</div>}
+            {orderedCats.map(cat => (
+              <React.Fragment key={cat}>
+                <div className="mfc-marker-cat">{cat}</div>
+                {byCategory[cat].map(d => (
+                  <MarkerRow key={d.id} def={d} latest={latest[d.id]} />
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
+        <div className="rec-panel reveal">
+          <div className="rec-head">
+            <span className="label-mono">// recommended for you</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--matcha-deep)" }}>● from your health pipeline</span>
+          </div>
+          <div className="mfc-rec-tabs">
+            {['breakfast', 'lunch', 'dinner', 'snack'].map(m => (
+              <button key={m} className={`mfc-rec-tab ${mealType === m ? 'active' : ''}`}
+                onClick={() => setMealType(m)}>{m}</button>
+            ))}
+          </div>
+          <div className="mfc-rec-list">
+            {recs.length === 0 && (
+              <div className="mfc-rec-empty">
+                No {mealType} recommendations yet — your data pipeline will populate these once your blood markers are processed.
+              </div>
+            )}
+            {recs.map(r => {
+              const recipe = recipesById[r.recipe_id];
+              const name = recipe?.name || r.recipe_id;
+              return (
+                <a key={r.recipe_id} className="mfc-rec-item" href={`recipe.html?id=${r.recipe_id}`}>
+                  <div>
+                    <div className="title">{name}</div>
+                    {r.reason && <div className="why">{r.reason}</div>}
+                  </div>
+                  <span className="rank">#{r.rank}</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Personalize() {
+  const user = useAuth();
+  return (
     <section className="personalize" id="personalize">
       <div className="wrap">
         <div className="section-head">
           <div className="reveal">
-            <div className="eyebrow" style={{ marginBottom: 18 }}><span className="eyebrow-dot" /> live demo · health → plate</div>
+            <div className="eyebrow" style={{ marginBottom: 18 }}><span className="eyebrow-dot" /> {user ? 'your panel · health → plate' : 'live demo · health → plate'}</div>
             <h2>Your blood work, <em>on a plate.</em></h2>
           </div>
-          <p className="lede reveal">Toggle a health flag and watch the meal swap. MFC actually reads your panels — iron, B12, sodium, fiber — and suggests food that closes your real gaps. Not a diet plan. Your plan.</p>
+          <p className="lede reveal">{user
+            ? 'Enter your latest blood test values. Our pipeline maps your numbers to recipes that close real gaps — refreshed as soon as new markers come in.'
+            : 'Toggle a health flag and watch the meal swap. MFC actually reads your panels — iron, B12, sodium, fiber — and suggests food that closes your real gaps. Not a diet plan. Your plan.'}</p>
         </div>
-
-        <div className="personalize-grid">
-          <div className="reveal">
-            <div className="label-mono" style={{ marginBottom: 12 }}>// your health flags</div>
-            <div className="metric-stack">
-              {HEALTH_METRICS.map(m => {
-                const isOn = active.includes(m.id);
-                return (
-                  <div key={m.id} className={`metric-card ${isOn ? "active" : ""}`}
-                    onClick={() => toggle(m.id)} role="switch" aria-checked={isOn} tabIndex={0}
-                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(m.id); } }}>
-                    <div><div className="name">{m.name}</div><div className="sub">{m.sub}</div></div>
-                    <span className="val">{m.val}</span>
-                    <span className="toggle" />
-                  </div>
-                );
-              })}
-            </div>
-            <p className="scribble" style={{ marginTop: 22, fontSize: 24, transform: "rotate(-2deg)" }}>tap any to flip it ↑</p>
-          </div>
-
-          <div className="rec-panel reveal">
-            <div className="rec-scribble" style={{ top: -22, right: 24, transform: "rotate(-6deg)" }}>fresh pick ↘</div>
-            <div className="rec-head">
-              <span className="label-mono">// today's match</span>
-              <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--matcha-deep)" }}>● updated just now</span>
-            </div>
-            <div className="rec-meal" key={meal.name}>
-              <div className="rec-meal-img">[ photo ]</div>
-              <div>
-                <div className="rec-meal-name">{meal.name}</div>
-                <div className="rec-meal-tags">{meal.tags.map((t, i) => <span key={i} className={`rec-tag ${i === 0 ? "orange" : ""}`}>{t}</span>)}</div>
-              </div>
-            </div>
-            <div className="ring-grid">{targets.map(t => <Ring key={t.label} {...t} />)}</div>
-            <div className="rec-why">
-              <b>Why this:</b> {active.length === 0
-                ? "No flags active — showing a balanced default. Add a flag to personalize."
-                : `Tuned for ${active.map(id => HEALTH_METRICS.find(m => m.id === id)?.name).join(" · ")}. Macros sit inside your goals, micros patch your gaps.`}
-            </div>
-          </div>
-        </div>
+        {user ? <AuthedPersonalize /> : <AnonymousPersonalize />}
       </div>
     </section>
   );
