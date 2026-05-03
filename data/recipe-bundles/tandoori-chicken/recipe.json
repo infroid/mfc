@@ -14,8 +14,9 @@
         "#FF6D2E",
         "#F4A261"
       ],
-      "alt": "Tandoori Chicken plated dish",
-      "caption": "tandoori chicken — charred, smoky, vibrant red"
+      "src": "data/recipe-bundles/tandoori-chicken/hero.jpg",
+      "alt": "Charred tandoori chicken on a dark platter with lemon, onion rings, and mint chutney",
+      "caption": "tandoori chicken — charred, smoky, lemon-bright"
     }
   },
   "healthFacts": [
@@ -123,7 +124,9 @@
       "duration": 180,
       "tip": "No scoring = marinade flavor only on the surface. Deep scores = flavor all the way through.",
       "media": {
-        "caption": "Step 1 reference shot"
+        "src": "data/recipe-bundles/tandoori-chicken/step-01-score-chicken.jpg",
+        "alt": "Raw bone-in chicken pieces with deep diagonal scores in a metal tray",
+        "caption": "Deep scored cuts"
       }
     },
     {
@@ -131,7 +134,12 @@
       "title": "First marinade (acid layer)",
       "detail": "Rub the chicken with lemon juice, salt, and Kashmiri chili. Mix in the cuts and on all surfaces. Let rest 15 minutes. This acid pre-treatment begins tenderizing and helps the second marinade adhere.",
       "duration": 900,
-      "tip": "Two-layer marinating is how restaurants get that flavor depth. The acid layer is the key."
+      "tip": "Two-layer marinating is how restaurants get that flavor depth. The acid layer is the key.",
+      "media": {
+        "src": "data/recipe-bundles/tandoori-chicken/step-02-first-marinade.jpg",
+        "alt": "Scored raw chicken rubbed with Kashmiri chili, salt, and lemon juice",
+        "caption": "Chili-lemon first marinade"
+      }
     },
     {
       "id": 3,
@@ -140,7 +148,9 @@
       "duration": 14400,
       "tip": "Longer marination time is the single biggest upgrade you can make to this dish.",
       "media": {
-        "caption": "Step 3 reference shot"
+        "src": "data/recipe-bundles/tandoori-chicken/step-03-yogurt-marinade.jpg",
+        "alt": "Scored chicken pieces coated in thick orange yogurt tandoori marinade",
+        "caption": "Thick yogurt-spice coat"
       }
     },
     {
@@ -148,7 +158,12 @@
       "title": "Bring to room temperature",
       "detail": "Pull the chicken from the fridge 30–45 minutes before cooking. Cold chicken directly into a hot oven = uneven cooking — charred outside, undercooked inside. Room temp chicken cooks more evenly.",
       "duration": 1800,
-      "tip": "This rest step is especially important for thick, bone-in pieces."
+      "tip": "This rest step is especially important for thick, bone-in pieces.",
+      "media": {
+        "src": "data/recipe-bundles/tandoori-chicken/step-04-room-temperature.jpg",
+        "alt": "Marinated chicken resting on a wire rack over a foil-lined tray before broiling",
+        "caption": "Room-temp rack rest"
+      }
     },
     {
       "id": 5,
@@ -157,7 +172,9 @@
       "duration": 1500,
       "tip": "The char is flavor, not burnt. Aim for dark spots on the edges while the flesh stays juicy.",
       "media": {
-        "caption": "Step 5 reference shot"
+        "src": "data/recipe-bundles/tandoori-chicken/step-05-high-heat-cook.jpg",
+        "alt": "Charred tandoori chicken cooking on a wire rack with ghee and a basting brush",
+        "caption": "High-heat char and baste"
       }
     },
     {
@@ -165,7 +182,12 @@
       "title": "Rest and serve",
       "detail": "Pull when the juices run clear or internal temp hits 74°C. Rest on the rack for 5 minutes — the carry-over heat finishes the job. Sprinkle chaat masala, squeeze lemon, serve with mint chutney and sliced onion rings.",
       "duration": 300,
-      "tip": "Chaat masala on top is what makes tandoori chicken taste like a restaurant — don't skip it."
+      "tip": "Chaat masala on top is what makes tandoori chicken taste like a restaurant — don't skip it.",
+      "media": {
+        "src": "data/recipe-bundles/tandoori-chicken/step-06-rest-serve.jpg",
+        "alt": "Rested tandoori chicken served with lemon wedges, onion rings, and mint chutney",
+        "caption": "Rest, dust, and serve"
+      }
     }
   ]
 }

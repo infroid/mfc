@@ -14,7 +14,8 @@
         "#F4A261",
         "#E76F51"
       ],
-      "alt": "Chole Bhature plated dish",
+      "src": "data/recipe-bundles/chole-bhature/hero.jpg",
+      "alt": "Finished chole in a black kadhai with puffed bhature",
       "caption": "chole bhature — dark chole, puffed bhatura"
     }
   },
@@ -126,21 +127,36 @@
       "title": "Soak the chickpeas",
       "detail": "Wash and soak dried chickpeas in 4 cups of water for 8 hours or overnight. They'll nearly double. Drain and rinse. If using canned, rinse well and skip to step 3.",
       "duration": 28800,
-      "tip": "Soaking reduces oligosaccharides that cause bloating. Worth the overnight wait."
+      "tip": "Soaking reduces oligosaccharides that cause bloating. Worth the overnight wait.",
+      "media": {
+        "src": "data/recipe-bundles/chole-bhature/step-01-soak-chickpeas.jpg",
+        "alt": "Soaked kabuli chana in a steel bowl with clear water",
+        "caption": "Overnight-soaked chickpeas"
+      }
     },
     {
       "id": 2,
       "title": "Make the bhature dough",
       "detail": "Mix flour, baking powder, and salt. Add yogurt and oil. Knead into a soft, pliable dough, adding water tablespoon by tablespoon. Cover with a damp cloth and rest for 30 minutes — this is when the gluten relaxes for puffing.",
       "duration": 1800,
-      "tip": "Softer dough = better puff. The dough should feel like soft earlobe texture."
+      "tip": "Softer dough = better puff. The dough should feel like soft earlobe texture.",
+      "media": {
+        "src": "data/recipe-bundles/chole-bhature/step-02-bhature-dough.jpg",
+        "alt": "Soft bhature dough resting under a damp cloth in a steel bowl",
+        "caption": "Soft rested dough"
+      }
     },
     {
       "id": 3,
       "title": "Pressure cook the chole",
       "detail": "Add soaked chickpeas to a pressure cooker with fresh water (just covering), salt, and a tea bag. Cook for 5–6 whistles until completely soft but holding shape. Discard the tea bag. Reserve the cooking water.",
       "duration": 1200,
-      "tip": "The black tea bag gives chole that characteristic deep brownish color. It's not optional."
+      "tip": "The black tea bag gives chole that characteristic deep brownish color. It's not optional.",
+      "media": {
+        "src": "data/recipe-bundles/chole-bhature/step-03-pressure-cook.jpg",
+        "alt": "Cooked chickpeas in a pressure cooker with tea-stained cooking water",
+        "caption": "Tea-stained cooked chole"
+      }
     },
     {
       "id": 4,
@@ -149,7 +165,9 @@
       "duration": 1200,
       "tip": "The masala must be cooked down until it's dark, thick, and jammy. Don't cut this short.",
       "media": {
-        "caption": "Step 4 reference shot"
+        "src": "data/recipe-bundles/chole-bhature/step-04-build-masala.jpg",
+        "alt": "Dark onion-tomato chole masala in a black kadhai with oil separating",
+        "caption": "Jammy masala base"
       }
     },
     {
@@ -159,7 +177,9 @@
       "duration": 1200,
       "tip": "Good chole is dry-ish and dark. If it looks watery and pale, keep simmering.",
       "media": {
-        "caption": "Step 5 reference shot"
+        "src": "data/recipe-bundles/chole-bhature/step-05-simmer-chole.jpg",
+        "alt": "Chickpeas simmering in thick dark masala gravy in a black kadhai",
+        "caption": "Thick simmered chole"
       }
     },
     {
@@ -169,7 +189,9 @@
       "duration": 600,
       "tip": "Oil must be hot enough — test with a small dough piece; it should rise immediately.",
       "media": {
-        "caption": "Step 6 reference shot"
+        "src": "data/recipe-bundles/chole-bhature/step-06-fry-bhature.jpg",
+        "alt": "A puffed bhatura frying in hot oil under a slotted spoon",
+        "caption": "Puffed bhatura fry"
       }
     }
   ]

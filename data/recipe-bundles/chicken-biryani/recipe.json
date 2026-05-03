@@ -14,7 +14,8 @@
         "#F4A261",
         "#D4A017"
       ],
-      "alt": "Chicken Biryani plated dish",
+      "src": "data/recipe-bundles/chicken-biryani/hero.jpg",
+      "alt": "Finished chicken biryani in a black pot with saffron rice, chicken, birista, mint, and coriander",
       "caption": "chicken biryani — dum pot, saffron rice"
     }
   },
@@ -133,7 +134,9 @@
       "duration": 1200,
       "tip": "Don't rush. Pale onions = no flavor. Burnt = bitter. Deep golden-brown is the target.",
       "media": {
-        "caption": "Step 1 reference shot"
+        "src": "data/recipe-bundles/chicken-biryani/step-01-make-birista.jpg",
+        "alt": "Thin sliced onions frying to deep golden birista with crispy onions draining beside the pan",
+        "caption": "Deep-golden birista"
       }
     },
     {
@@ -141,14 +144,24 @@
       "title": "Marinate the chicken",
       "detail": "Mix yogurt, ginger-garlic paste, Kashmiri chili, biryani masala, lemon juice, salt, and half the crushed birista. Score the chicken and coat deeply. Marinate for at least 1 hour — 4 hours is the real move.",
       "duration": 3600,
-      "tip": "Yogurt + lemon acid breaks down the meat fibers. More time = noticeably more tender."
+      "tip": "Yogurt + lemon acid breaks down the meat fibers. More time = noticeably more tender.",
+      "media": {
+        "src": "data/recipe-bundles/chicken-biryani/step-02-marinate-chicken.jpg",
+        "alt": "Scored bone-in chicken pieces coated in orange-red yogurt marinade with crushed birista",
+        "caption": "Yogurt-spice chicken"
+      }
     },
     {
       "id": 3,
       "title": "Parboil the rice",
       "detail": "Soak rice 30 minutes. Boil a large pot of very salty water (like pasta water) with whole spices. Cook rice until exactly 70% done — grains should have a firm, chalky center when pressed. Drain immediately.",
       "duration": 600,
-      "tip": "70% cooked = breaks with slight resistance, not a snap. Watch closely — it moves fast."
+      "tip": "70% cooked = breaks with slight resistance, not a snap. Watch closely — it moves fast.",
+      "media": {
+        "src": "data/recipe-bundles/chicken-biryani/step-03-parboil-rice.jpg",
+        "alt": "Parboiled basmati rice draining in a steel colander with whole spices visible among the grains",
+        "caption": "70% cooked rice"
+      }
     },
     {
       "id": 4,
@@ -157,7 +170,9 @@
       "duration": 300,
       "tip": "Saffron goes on top — it slowly seeps down, creating yellow-orange streaks through the rice.",
       "media": {
-        "caption": "Step 4 reference shot"
+        "src": "data/recipe-bundles/chicken-biryani/step-04-layer-biryani.jpg",
+        "alt": "Raw marinated chicken and parboiled rice layered with herbs, birista, saffron milk, and ghee in a black pot",
+        "caption": "Layered for dum"
       }
     },
     {
@@ -167,7 +182,9 @@
       "duration": 1800,
       "tip": "Place a flat tawa under the pot to diffuse heat and protect the bottom layer.",
       "media": {
-        "caption": "Step 5 reference shot"
+        "src": "data/recipe-bundles/chicken-biryani/step-05-dum-cook.jpg",
+        "alt": "Black biryani pot sealed tightly with foil under a heavy lid on a flat tawa",
+        "caption": "Tight steam seal"
       }
     },
     {
@@ -175,7 +192,12 @@
       "title": "Rest, unseal, and serve",
       "detail": "Turn off heat. Let rest sealed for 10 minutes — the steam continues to cook gently. Unseal carefully (hot steam). Mix gently from the sides with a wide spatula, folding rather than stirring. Serve immediately.",
       "duration": 600,
-      "tip": "Fold gently — biryani rice should be separate grains, never clumped or broken."
+      "tip": "Fold gently — biryani rice should be separate grains, never clumped or broken.",
+      "media": {
+        "src": "data/recipe-bundles/chicken-biryani/step-06-rest-serve.jpg",
+        "alt": "Rested chicken biryani unsealed with foil pulled back, steam rising, and a wooden spatula folding separate grains",
+        "caption": "Folded after rest"
+      }
     }
   ]
 }

@@ -1,6 +1,5 @@
-// Thin Supabase wrappers. window.MFC.supabase is the single source of truth — there
-// is no legacy fallback. The only short-circuits below check whether the user is
-// signed in (anonymous browsing returns empty per-user data, which is correct).
+// Thin Supabase wrappers with local JSON fallbacks for static preview.
+// The only user-data short-circuits below check whether the user is signed in.
 //
 // Public surface: window.MFC.db.{ ... }
 window.MFC = window.MFC || {};
@@ -8,17 +7,29 @@ window.MFC.db = (function () {
   const sb = window.MFC.supabase;
   const userId = () => window.MFC.auth?.getUser()?.id || null;
 
+  async function fetchJson(path) {
+    try {
+      const res = await fetch(path);
+      return res.ok ? await res.json() : null;
+    } catch {
+      return null;
+    }
+  }
+
+  const getLocalRecipes = () => fetchJson('data/recipes.json');
+  const getLocalRecipe = (id) => fetchJson(`data/recipe-bundles/${id}/recipe.json`);
+
   // ---------- Catalog ----------
 
   // Returns array shaped like data/recipes.json (listing).
   async function getRecipes() {
-    if (!sb) return null;
+    if (!sb) return getLocalRecipes();
     const { data, error } = await sb
       .from('recipes')
       .select('id,name,tagline,cuisine,difficulty,total_minutes,servings,media,color,color_soft,featured,highlight,recipe_tags(tag)')
       .order('featured', { ascending: false })
       .order('name', { ascending: true });
-    if (error) { console.warn('[db.getRecipes]', error); return null; }
+    if (error) { console.warn('[db.getRecipes]', error); return getLocalRecipes(); }
     return data.map((r) => ({
       id: r.id,
       name: r.name,
@@ -38,7 +49,8 @@ window.MFC.db = (function () {
 
   // Returns object shaped like data/recipe-bundles/{id}/recipe.json (detail).
   async function getRecipe(id) {
-    if (!sb) return null;
+    const local = await getLocalRecipe(id);
+    if (!sb) return local;
     const { data, error } = await sb
       .from('recipes')
       .select(`
@@ -50,23 +62,31 @@ window.MFC.db = (function () {
       `)
       .eq('id', id)
       .maybeSingle();
-    if (error) { console.warn('[db.getRecipe]', error); return null; }
-    if (!data) return null;
+    if (error) { console.warn('[db.getRecipe]', error); return local; }
+    if (!data) return local;
 
     const ingredients = (data.recipe_ingredients || [])
       .sort((a, b) => a.sort_order - b.sort_order)
       .map((i) => ({ name: i.ingredient, amt: i.amount, group: i.group_name }));
 
+    const localSteps = new Map((local?.steps || []).map((s) => [s.id, s]));
     const steps = (data.recipe_steps || [])
       .sort((a, b) => a.sort_order - b.sort_order)
-      .map((s) => ({
-        id: s.sort_order,
-        title: s.title,
-        detail: s.detail,
-        duration: s.duration_seconds,
-        tip: s.tip,
-        ...(s.media_caption ? { media: { caption: s.media_caption } } : {}),
-      }));
+      .map((s) => {
+        const localStep = localSteps.get(s.sort_order);
+        const media = {
+          ...(s.media_caption ? { caption: s.media_caption } : {}),
+          ...(localStep?.media || {}),
+        };
+        return {
+          id: s.sort_order,
+          title: s.title,
+          detail: s.detail,
+          duration: s.duration_seconds,
+          tip: s.tip,
+          ...(Object.keys(media).length ? { media } : {}),
+        };
+      });
 
     const utensils = (data.recipe_utensils || []).map((u) => ({ name: u.name, essential: !!u.essential }));
 
@@ -82,7 +102,14 @@ window.MFC.db = (function () {
       difficulty: data.difficulty,
       servings: data.servings,
       totalMinutes: data.total_minutes,
-      media: data.media || {},
+      media: {
+        ...(local?.media || {}),
+        ...(data.media || {}),
+        hero: {
+          ...(local?.media?.hero || {}),
+          ...(data.media?.hero || {}),
+        },
+      },
       healthFacts,
       ingredients,
       utensils,

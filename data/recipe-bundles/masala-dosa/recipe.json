@@ -14,8 +14,9 @@
         "#F4D67A",
         "#C9813A"
       ],
-      "alt": "Masala Dosa plated dish",
-      "caption": "masala dosa — crispy golden crepe, potato filling"
+      "src": "data/recipe-bundles/masala-dosa/hero.jpg",
+      "alt": "Crisp masala dosa folded over potato filling with coconut chutney and sambar",
+      "caption": "masala dosa — crisp crepe, potato masala"
     }
   },
   "healthFacts": [
@@ -114,7 +115,9 @@
       "duration": 420,
       "tip": "Curry leaves must go in hot oil to release their aroma. Don't add them to cold oil.",
       "media": {
-        "caption": "Step 1 reference shot"
+        "src": "data/recipe-bundles/masala-dosa/step-01-aloo-filling.jpg",
+        "alt": "Onions, curry leaves, mustard seeds, chana dal, green chilies, and ginger cooking in a pan",
+        "caption": "Tempered onion base"
       }
     },
     {
@@ -122,14 +125,24 @@
       "title": "Season and mash",
       "detail": "Add turmeric and salt to the onion mixture. Stir for 30 seconds. Add the boiled potatoes — roughly mash them directly in the pan, mixing with the onion-spice base. Add coriander. Taste and adjust salt.",
       "duration": 180,
-      "tip": "Keep some potato texture — completely smooth filling makes the dosa feel soggy inside."
+      "tip": "Keep some potato texture — completely smooth filling makes the dosa feel soggy inside.",
+      "media": {
+        "src": "data/recipe-bundles/masala-dosa/step-02-season-mash.jpg",
+        "alt": "Chunky turmeric potato masala with onions, curry leaves, and coriander in a black pan",
+        "caption": "Chunky potato masala"
+      }
     },
     {
       "id": 3,
       "title": "Heat the tawa",
       "detail": "Heat the tawa on medium-high. Sprinkle a few drops of water — it should evaporate in under a second. Drizzle a few drops of oil and wipe with a half-onion or folded cloth. The surface should look lightly shiny.",
       "duration": 120,
-      "tip": "The onion wipe seasons the tawa and prevents sticking. This is the traditional method."
+      "tip": "The onion wipe seasons the tawa and prevents sticking. This is the traditional method.",
+      "media": {
+        "src": "data/recipe-bundles/masala-dosa/step-03-heat-tawa.jpg",
+        "alt": "Hot black tawa with water droplets steaming on an oil-wiped surface",
+        "caption": "Hot seasoned tawa"
+      }
     },
     {
       "id": 4,
@@ -138,7 +151,9 @@
       "duration": 60,
       "tip": "Speed matters. The batter should be spread within 5–8 seconds of hitting the pan.",
       "media": {
-        "caption": "Step 4 reference shot"
+        "src": "data/recipe-bundles/masala-dosa/step-04-spread-batter.jpg",
+        "alt": "Pale dosa batter spread in thin concentric circles on a hot black tawa",
+        "caption": "Thin batter spiral"
       }
     },
     {
@@ -148,7 +163,9 @@
       "duration": 180,
       "tip": "Resist the urge to flip. Dosa is almost always cooked on one side only for the crisp.",
       "media": {
-        "caption": "Step 5 reference shot"
+        "src": "data/recipe-bundles/masala-dosa/step-05-crisp-dosa.jpg",
+        "alt": "Golden dosa crisping on a tawa with dry lacy surface and browned edges",
+        "caption": "Crisp golden dosa"
       }
     },
     {
@@ -156,7 +173,12 @@
       "title": "Fill and fold",
       "detail": "Place 2–3 tbsp of potato filling on one half of the dosa. Fold the other half over it. Or roll it — place filling along the center and roll into a cone or cylinder. Serve immediately with coconut chutney and sambar.",
       "duration": 60,
-      "tip": "Dosa goes soft within minutes. Serve straight from the tawa."
+      "tip": "Dosa goes soft within minutes. Serve straight from the tawa.",
+      "media": {
+        "src": "data/recipe-bundles/masala-dosa/step-06-fill-fold.jpg",
+        "alt": "Crisp dosa folded around yellow potato masala on a black tawa",
+        "caption": "Filled and folded"
+      }
     }
   ]
 }

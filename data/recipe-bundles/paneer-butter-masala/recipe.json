@@ -14,8 +14,9 @@
         "#F4D67A",
         "#E2531A"
       ],
-      "alt": "Paneer Butter Masala plated dish",
-      "caption": "paneer butter masala — overhead shot"
+      "src": "data/recipe-bundles/paneer-butter-masala/hero.jpg",
+      "alt": "Finished paneer butter masala in a black kadhai with cream and kasuri methi",
+      "caption": "paneer butter masala — silky makhani gravy"
     }
   },
   "healthFacts": [
@@ -127,7 +128,9 @@
       "duration": 300,
       "tip": "Hot tap water works. Boiling = 5 min. Room temp = 30 min.",
       "media": {
-        "caption": "Step 1 reference shot"
+        "src": "data/recipe-bundles/paneer-butter-masala/step-01-soak-cashews.jpg",
+        "alt": "Cashews soaking in hot water beside chopped onion and tomatoes",
+        "caption": "Hot-water cashew soak"
       }
     },
     {
@@ -137,7 +140,9 @@
       "duration": 600,
       "tip": "Don't rush this. Tomatoes should look jammy and oil should separate slightly.",
       "media": {
-        "caption": "Step 2 reference shot"
+        "src": "data/recipe-bundles/paneer-butter-masala/step-02-saute-onion-tomato.jpg",
+        "alt": "Onion and tomato cooking down with green chili in a black kadhai",
+        "caption": "Jammy onion-tomato base"
       }
     },
     {
@@ -145,14 +150,24 @@
       "title": "Blend the gravy base",
       "detail": "Cool slightly, then blend the onion-tomato mix with the soaked cashews and ½ cup water until completely smooth. Pass through a fine strainer back into the pan — this is what makes restaurant-style silky.",
       "duration": 240,
-      "tip": "Skip the strainer and you'll get a rustic, homestyle texture. Both are valid."
+      "tip": "Skip the strainer and you'll get a rustic, homestyle texture. Both are valid.",
+      "media": {
+        "src": "data/recipe-bundles/paneer-butter-masala/step-03-blend-gravy-base.jpg",
+        "alt": "Orange tomato-cashew gravy being strained through a fine mesh sieve",
+        "caption": "Blend and strain smooth"
+      }
     },
     {
       "id": 4,
       "title": "Bloom the spices",
       "detail": "Add 2 tbsp butter to the pan. Once melted, add red chili powder and stir for 10 seconds — just long enough to bloom, not burn. Pour the strained gravy back in.",
       "duration": 120,
-      "tip": "Kashmiri chili is mild + gives the signature red color without heat."
+      "tip": "Kashmiri chili is mild + gives the signature red color without heat.",
+      "media": {
+        "src": "data/recipe-bundles/paneer-butter-masala/step-04-bloom-spices.jpg",
+        "alt": "Strained gravy pouring into butter bloomed with Kashmiri chili powder",
+        "caption": "Bloomed chili butter"
+      }
     },
     {
       "id": 5,
@@ -161,7 +176,9 @@
       "duration": 480,
       "tip": "Sugar isn't for sweetness — it balances tomato acidity. Don't skip.",
       "media": {
-        "caption": "Step 5 reference shot"
+        "src": "data/recipe-bundles/paneer-butter-masala/step-05-simmer-gravy.jpg",
+        "alt": "Smooth orange-red makhani gravy bubbling gently in a black kadhai",
+        "caption": "Glossy simmered gravy"
       }
     },
     {
@@ -171,7 +188,9 @@
       "duration": 180,
       "tip": "Soak paneer cubes in warm water for 10 min beforehand for extra-soft texture.",
       "media": {
-        "caption": "Step 6 reference shot"
+        "src": "data/recipe-bundles/paneer-butter-masala/step-06-add-paneer-finish.jpg",
+        "alt": "Paneer cubes in tomato-cashew gravy with cream and kasuri methi",
+        "caption": "Paneer and cream finish"
       }
     },
     {
@@ -179,7 +198,12 @@
       "title": "Rest, then serve",
       "detail": "Turn off the heat and let it sit covered for 5 minutes. The flavors marry in this window. Garnish with a swirl of cream and a pinch of methi. Serve with naan or jeera rice.",
       "duration": 300,
-      "tip": "This rest step is what separates 'good' from 'great'. Try it."
+      "tip": "This rest step is what separates 'good' from 'great'. Try it.",
+      "media": {
+        "src": "data/recipe-bundles/paneer-butter-masala/step-07-rest-serve.jpg",
+        "alt": "Finished paneer butter masala served with cream, kasuri methi, naan, and jeera rice",
+        "caption": "Rested and ready to serve"
+      }
     }
   ]
 }
