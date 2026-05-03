@@ -197,7 +197,7 @@ const MARKERS_STYLE = `
 /* ---------- MARKER CARDS ---------- */
 .markers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: 18px;
   margin-top: 22px;
 }
@@ -355,9 +355,23 @@ const MARKERS_STYLE = `
 
 @media (max-width: 720px) {
   .nav-links { display: none; }
+  .nav-inner { padding: 0 20px; gap: 12px; }
+  .wrap { padding: 0 20px; }
+  .mk-hero { padding: 32px 0 24px; }
+  .mk-hero-sub { font-size: 18px; }
   .markers-grid { grid-template-columns: 1fr; }
   .mc-editor { grid-template-columns: 1fr 1fr; }
   .mc-editor .btn { grid-column: 1 / -1; }
+  .mk-footer-note { margin: 32px 0 32px; padding: 16px 18px; }
+}
+@media (max-width: 420px) {
+  .wrap { padding: 0 16px; }
+  .nav-inner { padding: 0 16px; }
+  .summary-stat { padding: 14px 16px; }
+  .summary-stat-value { font-size: 36px; }
+  .marker-card { padding: 18px; }
+  .mc-num { font-size: 36px; }
+  .filter-chip { padding: 8px 14px; }
 }
 `;
 

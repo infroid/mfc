@@ -295,7 +295,7 @@ const DASH_STYLE = `
 /* ---------- SAVED GRID ---------- */
 .saved-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
   gap: 18px;
 }
 .saved-card { overflow: hidden; text-decoration: none; color: inherit; display: block; }
@@ -439,6 +439,31 @@ const DASH_STYLE = `
 /* ---------- ANIM ---------- */
 @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 .reveal { animation: reveal 700ms cubic-bezier(.2,.8,.2,1) both; }
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .nav-inner { padding: 0 20px; gap: 12px; }
+  .wrap { padding: 0 20px; }
+  .dash-grid { padding: 16px 20px 60px; }
+  .dash-hero { padding: 40px 0 24px; }
+  .dash-hero-sub { font-size: 18px; }
+  .side-card { padding: 18px; }
+  .log-form { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .wrap { padding: 0 16px; }
+  .nav-inner { padding: 0 16px; }
+  .dash-grid { padding: 16px 16px 60px; }
+  .dash-stat { min-width: 96px; padding: 12px 16px; }
+  .dash-stat-value { font-size: 26px; }
+  .resume-name { font-size: 24px; }
+  .rec-name { font-size: 17px; }
+  .rec-reason { font-size: 14px; }
+  .saved-body h4 { font-size: 15px; }
+  .nav-user span:not(.nav-avatar) { display: none; }
+  .nav-user { padding: 4px; }
+}
 `;
 
 // ---------- helpers ----------
