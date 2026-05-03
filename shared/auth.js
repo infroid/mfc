@@ -15,7 +15,7 @@ window.MFC.auth = (function () {
   const POST_LOGIN  = 'dashboard.html';
   const POST_LOGOUT = 'index.html';
   // Pages that keep the user where they are after sign-in.
-  const STAY_ON_PATHS = new Set(['recipe.html', 'dashboard.html']);
+  const STAY_ON_PATHS = new Set(['recipe.html', 'dashboard.html', 'markers.html']);
 
   function isStayPage() {
     const base = location.pathname.split('/').pop() || '';
