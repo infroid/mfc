@@ -341,6 +341,80 @@ const DASH_STYLE = `
   font-size: 15px; color: var(--ink-muted);
   padding: 14px 0;
 }
+.rec-empty-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: 26px;
+  padding: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, var(--paper) 0%, var(--cream-soft) 58%, var(--matcha-soft) 100%);
+}
+.rec-empty-title {
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.04; letter-spacing: -0.03em;
+  max-width: 580px;
+}
+.rec-empty-title em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--orange);
+}
+.rec-empty-copy {
+  max-width: 620px;
+  margin-top: 10px;
+  font-family: var(--serif); font-style: italic;
+  font-size: 18px; line-height: 1.42;
+  color: var(--ink-soft);
+}
+.rec-empty-actions {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 18px;
+}
+.rec-empty-note {
+  display: inline-flex; align-items: center;
+  margin-top: 14px; padding: 6px 12px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--r-pill);
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--matcha-deep);
+  background: rgba(255,252,243,0.68);
+}
+.rec-empty-steps {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 14px;
+  border-left: 1px dashed var(--rule-strong);
+  padding-left: 20px;
+}
+.rec-empty-step {
+  display: grid; grid-template-columns: 32px 1fr;
+  gap: 10px; align-items: start;
+}
+.rec-empty-step-num {
+  display: grid; place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--pop-sm);
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+}
+.rec-empty-step.done .rec-empty-step-num {
+  background: var(--matcha); color: var(--paper);
+}
+.rec-empty-step b {
+  display: block;
+  font-size: 13px; line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.rec-empty-step span:last-child {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--mono); font-size: 10px;
+  line-height: 1.35; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--ink-muted);
+}
 
 /* markers glance */
 .mk-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
@@ -452,6 +526,13 @@ const DASH_STYLE = `
   .dash-hero-sub { font-size: 18px; }
   .side-card { padding: 18px; }
   .log-form { grid-template-columns: 1fr; }
+  .rec-empty-card { grid-template-columns: 1fr; padding: 20px; gap: 22px; }
+  .rec-empty-copy { font-size: 16px; }
+  .rec-empty-steps {
+    border-left: 0;
+    border-top: 1px dashed var(--rule-strong);
+    padding-left: 0; padding-top: 18px;
+  }
 }
 @media (max-width: 420px) {
   .wrap { padding: 0 16px; }
@@ -465,6 +546,7 @@ const DASH_STYLE = `
   .saved-body h4 { font-size: 15px; }
   .nav-user span:not(.nav-avatar) { display: none; }
   .nav-user { padding: 4px; }
+  .rec-empty-actions .btn { width: 100%; }
 }
 `;
 
@@ -552,6 +634,52 @@ function RecipeImage({ recipe, fallbackBg, className, children }) {
   );
 }
 
+function RecommendationEmptyState({ mealType, hasMarkers }) {
+  const mealLabel = mealType ? mealType.charAt(0).toUpperCase() + mealType.slice(1) : 'Meal';
+  const copy = hasMarkers
+    ? `Your bloodwork is on file. Once your food preferences are current too, recommendations can take up to 24 hours after the latest update. If you've already done that, you're in the next processing window.`
+    : `Add your latest bloodwork and food preferences, then give us up to 24 hours. That short pause lets us compare your markers, respect your avoid-list, and serve better ${mealType} picks instead of generic recipes.`;
+
+  return (
+    <div className="rec-empty-card card">
+      <div>
+        <div className="section-label">personalization queue</div>
+        <h3 className="rec-empty-title">Your <em>{mealLabel}</em> picks are getting tuned.</h3>
+        <p className="rec-empty-copy">{copy}</p>
+        <div className="rec-empty-actions">
+          <a className="btn orange sm" href="markers.html">Update bloodwork →</a>
+          <a className="btn ghost sm" href="account.html">Open account →</a>
+        </div>
+        <div className="rec-empty-note">usually ready within 24 hours after updates</div>
+      </div>
+
+      <div className="rec-empty-steps" aria-label="Recommendation setup steps">
+        <div className={'rec-empty-step' + (hasMarkers ? ' done' : '')}>
+          <span className="rec-empty-step-num">{hasMarkers ? '✓' : '1'}</span>
+          <div>
+            <b>Bloodwork saved</b>
+            <span>{hasMarkers ? 'latest markers found' : 'add recent test values'}</span>
+          </div>
+        </div>
+        <div className="rec-empty-step">
+          <span className="rec-empty-step-num">2</span>
+          <div>
+            <b>Preferences current</b>
+            <span>diet, avoid-list, goals</span>
+          </div>
+        </div>
+        <div className="rec-empty-step">
+          <span className="rec-empty-step-num">3</span>
+          <div>
+            <b>Fresh picks arrive</b>
+            <span>after processing completes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ---------- chrome ----------
 
 function Nav({ user }) {
@@ -581,6 +709,7 @@ function DashboardApp() {
 
   const [mealType, setMealType]       = useState(() => window.MFC?.mealTime?.defaultMealTypeForNow?.() || 'lunch');
   const [recs, setRecs]               = useState([]);
+  const [recsReady, setRecsReady]     = useState(false);
   const [recipesById, setRecipesById] = useState({});
   const [sessions, setSessions]       = useState([]);
   const [saved, setSaved]             = useState([]);
@@ -611,7 +740,20 @@ function DashboardApp() {
 
   useEffect(() => {
     if (!user) return;
-    window.MFC?.db?.getRecommendations(mealType).then((r) => setRecs(r || []));
+    const getRecommendations = window.MFC?.db?.getRecommendations;
+    if (!getRecommendations) {
+      setRecs([]);
+      setRecsReady(true);
+      return;
+    }
+    let active = true;
+    setRecsReady(false);
+    getRecommendations(mealType).then((r) => {
+      if (!active) return;
+      setRecs(r || []);
+      setRecsReady(true);
+    });
+    return () => { active = false; };
   }, [user, mealType]);
 
   useEffect(() => {
@@ -739,17 +881,17 @@ function DashboardApp() {
                   <h2><em>Recommended</em> for you</h2>
                 </div>
                 <div className="meal-tabs">
-                  {['breakfast','lunch','dinner','snack'].map((m) => (
+                  {['breakfast','lunch','snack','dinner'].map((m) => (
                     <button key={m}
                       className={'meal-tab' + (mealType === m ? ' active' : '')}
                       onClick={() => setMealType(m)}>{m}</button>
                   ))}
                 </div>
               </div>
-              {recs.length === 0 ? (
-                <p className="dash-empty">
-                  No {mealType} recommendations yet — your pipeline will populate these once your blood markers are processed.
-                </p>
+              {!recsReady ? (
+                <p className="dash-empty">Checking your {mealType} recommendations…</p>
+              ) : recs.length === 0 ? (
+                <RecommendationEmptyState mealType={mealType} hasMarkers={markers.length > 0} />
               ) : (
                 <div className="rec-stack">
                   {recs.map((r) => {
@@ -887,8 +1029,8 @@ function DashboardApp() {
                   <option value="">Meal…</option>
                   <option value="breakfast">Breakfast</option>
                   <option value="lunch">Lunch</option>
-                  <option value="dinner">Dinner</option>
                   <option value="snack">Snack</option>
+                  <option value="dinner">Dinner</option>
                 </select>
                 <input type="number" min="0.5" step="0.5" placeholder="Servings"
                   className="input"
