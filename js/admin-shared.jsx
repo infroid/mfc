@@ -7,6 +7,9 @@ const { useState, useEffect, useRef, useMemo } = React;
 // ============================================================
 function AdminSidebar({ active, counts = {} }) {
   const items = [
+    { group: "Insights", entries: [
+      { id: "dashboard", icon: "▤", label: "Dashboard", href: "dashboard.html" },
+    ]},
     { group: "Library", entries: [
       { id: "recipes",     icon: "✦", label: "Recipes",     href: "recipes.html",     count: counts.recipes },
       { id: "ingredients", icon: "◐", label: "Ingredients", href: "ingredients.html", count: counts.ingredients },
