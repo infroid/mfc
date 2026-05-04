@@ -42,6 +42,7 @@ function RecipeNav() {
         </a>
         <div className="nav-links">
           <a href={_BASE + "index.html"}>Home</a>
+          <a href={_BASE + "my/markers.html"}>Bloodwork</a>
           <a href={_BASE + "recipe-search.html"}>Recipes</a>
         </div>
         <a href={_BASE + "recipe-search.html"} className="btn btn-primary">All recipes</a>

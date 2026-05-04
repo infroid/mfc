@@ -4,9 +4,21 @@ const MARKERS_STYLE = `
 .wrap { max-width: var(--container); margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
 
 .mk-loading {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 100vh; font-family: var(--mono); color: var(--ink-muted); font-size: 13px;
-  letter-spacing: 0.08em; text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; gap: 14px;
+}
+.mk-loading .pulse {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--orange);
+  animation: mk-pulse 1.1s cubic-bezier(.4,0,.6,1) infinite;
+}
+.mk-loading p {
+  font-family: var(--serif); font-style: italic; font-size: 18px;
+  color: var(--ink-muted); letter-spacing: -0.01em;
+}
+@keyframes mk-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.6); }
 }
 
 /* ---------- NAV ---------- */
@@ -36,7 +48,8 @@ const MARKERS_STYLE = `
 .brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a {
-  font-size: 14px; color: var(--ink-soft);
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft);
   transition: color 200ms cubic-bezier(.2,.8,.2,1);
   position: relative;
 }
@@ -352,6 +365,19 @@ const MARKERS_STYLE = `
 /* anim */
 @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 .reveal { animation: reveal 700ms cubic-bezier(.2,.8,.2,1) both; }
+@keyframes card-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.card-stagger { animation: card-rise 520ms cubic-bezier(.2,.8,.2,1) backwards; }
+
+/* hero scribble */
+.mk-hero-wrap { position: relative; }
+.mk-scribble {
+  font-family: var(--hand); font-weight: 500;
+  font-size: 26px; color: var(--orange); line-height: 1;
+  display: inline-block; transform: rotate(-3deg);
+  margin-left: 6px; vertical-align: 2px;
+  white-space: nowrap;
+}
+@media (max-width: 720px) { .mk-scribble { display: none; } }
 
 @media (max-width: 720px) {
   .nav-links { display: none; }
@@ -451,9 +477,8 @@ function Nav({ user }) {
         </a>
         <div className="nav-links">
           <a href="../index.html">Home</a>
+          <a href="markers.html" className="active">Bloodwork</a>
           <a href="../recipe-search.html">Recipes</a>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="markers.html" className="active">Markers</a>
         </div>
         <button
           className="nav-user"
@@ -511,15 +536,15 @@ function RecipeThumb({ recipe }) {
 
 // ---------- marker card ----------
 
-function MarkerCard({ def, reading, recipes, onSaved }) {
-  const [editing, setEditing] = useState(!reading);
+function MarkerCard({ def, reading, recipes, onSaved, index }) {
+  const [editing, setEditing] = useState(false);
   const [value, setValue]     = useState(reading?.value ?? '');
   const [date, setDate]       = useState(reading?.measured_at || todayISO());
   const [busy, setBusy]       = useState(false);
   const [savedAt, setSavedAt] = useState(0);
 
   useEffect(() => {
-    setEditing(!reading);
+    setEditing(false);
     setValue(reading?.value ?? '');
     setDate(reading?.measured_at || todayISO());
   }, [reading?.value, reading?.measured_at]);
@@ -544,8 +569,10 @@ function MarkerCard({ def, reading, recipes, onSaved }) {
     }
   }
 
+  const stagger = typeof index === 'number' ? { animationDelay: Math.min(index, 18) * 40 + 'ms' } : null;
+
   return (
-    <div className={'marker-card card lift status-' + status}>
+    <div className={'marker-card card lift status-' + status + (stagger ? ' card-stagger' : '')} style={stagger}>
       <div className="mc-head">
         <div>
           <div className="mc-cat">{def.category || 'other'}</div>
@@ -571,13 +598,18 @@ function MarkerCard({ def, reading, recipes, onSaved }) {
         </>
       )}
 
+      {!reading && !editing && (
+        <div className="mc-empty">
+          <p>Not tested yet</p>
+          <div className="mc-meta" style={{ justifyContent: 'center', marginTop: 6 }}>
+            <span>{fmtRange(def)}</span>
+          </div>
+          <button className="btn ghost sm" style={{ marginTop: 12 }} onClick={() => setEditing(true)}>+ Add reading</button>
+        </div>
+      )}
+
       {editing && (
         <>
-          {!reading && (
-            <div className="mc-empty">
-              <p>Add a reading to start tracking.</p>
-            </div>
-          )}
           <div className="mc-editor">
             <input
               type="number" step="any" placeholder={`value (${def.unit || ''})`}
@@ -596,7 +628,7 @@ function MarkerCard({ def, reading, recipes, onSaved }) {
           </div>
           <div className="mc-meta">
             <span>{fmtRange(def)}</span>
-            {reading && <button className="mc-edit-toggle" style={{ marginLeft: 'auto' }} onClick={() => setEditing(false)}>cancel</button>}
+            <button className="mc-edit-toggle" style={{ marginLeft: 'auto' }} onClick={() => setEditing(false)}>cancel</button>
           </div>
           {justSaved && <div className="mc-saved-flash">✓ saved</div>}
         </>
@@ -674,7 +706,13 @@ function MarkersApp() {
     return CATEGORY_TABS.filter((c) => c === 'all' || set.has(c));
   }, [defs]);
 
-  if (!ready) return <div className="mk-loading">Loading…</div>;
+  if (!ready) return (
+    <div className="mk-loading">
+      <style>{MARKERS_STYLE}</style>
+      <span className="pulse" />
+      <p>reading your numbers…</p>
+    </div>
+  );
   if (!user)  return null;
 
   return (
@@ -686,7 +724,7 @@ function MarkersApp() {
         <section className="mk-hero">
           <div className="wrap">
             <div className="eyebrow-comment" style={{ marginBottom: 10 }}>your bloodwork</div>
-            <h1>What's your body <em>asking for?</em></h1>
+            <h1>What's your body <em>asking for?</em><span className="mk-scribble">read the signals ↘</span></h1>
             <p className="mk-hero-sub">
               Track {defs.length || 'your'} markers. We'll suggest recipes that move them in the right direction.
             </p>
@@ -725,11 +763,12 @@ function MarkersApp() {
                 </div>
               </div>
               <div className="markers-grid">
-                {flagged.map(({ def, reading }) => (
+                {flagged.map(({ def, reading }, i) => (
                   <MarkerCard
                     key={def.id} def={def} reading={reading}
                     recipes={recipesForMarker(def.id)}
                     onSaved={refreshLatest}
+                    index={i}
                   />
                 ))}
               </div>
@@ -745,10 +784,11 @@ function MarkersApp() {
                 </div>
               </div>
               <div className="markers-grid">
-                {ok.map(({ def, reading }) => (
+                {ok.map(({ def, reading }, i) => (
                   <MarkerCard
                     key={def.id} def={def} reading={reading}
                     onSaved={refreshLatest}
+                    index={i}
                   />
                 ))}
               </div>
@@ -764,10 +804,11 @@ function MarkersApp() {
                 </div>
               </div>
               <div className="markers-grid">
-                {missing.map(({ def }) => (
+                {missing.map(({ def }, i) => (
                   <MarkerCard
                     key={def.id} def={def} reading={null}
                     onSaved={refreshLatest}
+                    index={i}
                   />
                 ))}
               </div>

@@ -6,13 +6,13 @@
 //   - signIn({ email })                 → magic link (returns { magicLinkSent: true, email })
 //
 // Redirect contract:
-//   - post-login  → my/dashboard.html  (unless on a STAY_ON page: recipe.html, anything under /my/ or /admin/)
+//   - post-login  → index.html      (unless on a STAY_ON page: recipe.html, anything under /my/ or /admin/)
 //   - post-logout → index.html      (always)
 window.MFC = window.MFC || {};
 window.MFC.auth = (function () {
   const sb = window.MFC.supabase;
 
-  const POST_LOGIN  = 'my/dashboard.html';
+  const POST_LOGIN  = 'index.html';
   const POST_LOGOUT = 'index.html';
   // Pages that keep the user where they are after sign-in.
   const STAY_ON_PATHS = new Set(['recipe.html']);

@@ -37,7 +37,8 @@ const DASH_STYLE = `
 .brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a {
-  font-size: 14px; color: var(--ink-soft);
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft);
   transition: color 200ms cubic-bezier(.2,.8,.2,1);
   position: relative;
 }
@@ -566,9 +567,8 @@ function Nav({ user }) {
         </a>
         <div className="nav-links">
           <a href="../index.html">Home</a>
+          <a href="markers.html">Bloodwork</a>
           <a href="../recipe-search.html">Recipes</a>
-          <a href="dashboard.html" className="active">Dashboard</a>
-          <a href="markers.html">Markers</a>
         </div>
         <button
           className="nav-user"

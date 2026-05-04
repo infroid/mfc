@@ -111,7 +111,7 @@ body::before {
 .brand-name { font-size: 17px; }
 .brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
 .nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { font-size: 14px; color: var(--ink-soft); transition: color 200ms; }
+.nav-links a { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); transition: color 200ms; }
 .nav-links a:hover { color: var(--orange); }
 
 .btn {
