@@ -251,87 +251,113 @@ body::before {
   font-family: var(--mono); font-size: 12px; color: var(--ink-muted); white-space: nowrap;
 }
 
-/* FEATURED GRID */
-.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+/* FEATURED GRID — vertical cards, square hero photo on top */
+.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .featured-card {
   background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-lg);
   overflow: hidden; box-shadow: 4px 4px 0 var(--ink);
-  transition: transform 200ms, box-shadow 200ms;
-  display: flex; flex-direction: column;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms;
+  display: flex; flex-direction: column; position: relative;
 }
 .featured-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
-.fc-top {
-  height: 160px; position: relative; display: grid; place-items: center; overflow: hidden;
-}
-.fc-top.has-media { background: var(--cream-deep) !important; }
-.fc-image {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
-}
-.fc-top.has-media::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(31,26,20,0.12), rgba(31,26,20,0.02) 42%, rgba(31,26,20,0.18));
-  pointer-events: none; z-index: 1;
-}
-.fc-emoji { font-size: 68px; line-height: 1; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.22)); position: relative; z-index: 2; }
-.fc-cuisine {
-  position: absolute; bottom: 10px; left: 12px; z-index: 3;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 4px 10px; background: rgba(255, 252, 243, 0.92); color: var(--ink); border-radius: 999px;
-}
-.fc-badge {
-  position: absolute; top: 10px; right: 12px; z-index: 3;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 4px 10px; background: var(--ink); color: var(--paper); border-radius: 999px;
-}
-.fc-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-.fc-name { font-family: var(--serif); font-style: italic; font-size: 27px; line-height: 1.1; }
-.fc-tagline { font-size: 14px; color: var(--ink-soft); line-height: 1.4; }
-.fc-meta {
-  display: flex; align-items: center; gap: 16px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted);
-}
-.fc-meta span { display: flex; align-items: center; gap: 4px; }
-.fc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
-.tag-pill {
-  padding: 4px 10px; border-radius: 999px; font-size: 12px;
-  background: var(--cream-deep); color: var(--ink-soft); border: 1px solid var(--rule);
-}
-.tag-pill.veg { background: var(--matcha-soft); color: var(--matcha-deep); }
-.tag-pill.nonveg { background: var(--orange-soft); color: var(--orange-deep); }
-.fc-highlight {
-  margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--rule-strong);
-  font-size: 13px; color: var(--matcha-deep); display: flex; align-items: center; gap: 6px;
-}
-.fc-cta {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 20px; border-top: 1.5px solid var(--ink);
-  background: var(--cream-deep); font-family: var(--mono); font-size: 12px;
-  font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
-}
 
-/* RECIPE GRID */
-.recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.recipe-card {
-  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-md);
-  display: flex; align-items: stretch; overflow: hidden;
-  box-shadow: 3px 3px 0 var(--ink);
-  transition: transform 180ms, box-shadow 180ms;
+.fc-img-wrap {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--cream-deep);
+  border-bottom: 1.5px solid var(--ink);
 }
-.recipe-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
-.rc-left {
-  width: 68px; flex-shrink: 0; display: grid; place-items: center; position: relative; overflow: hidden;
-  font-size: 30px;
-}
-.rc-image {
+.fc-img-wrap.has-media { background: var(--cream-deep); }
+.fc-img-wrap.no-media { display: grid; place-items: center; }
+.fc-img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
   transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
+  transition: transform 360ms cubic-bezier(.2,.8,.2,1);
 }
-.rc-body { flex: 1; padding: 12px 12px 12px 0; min-width: 0; }
-.rc-name { font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.2; margin-bottom: 4px; }
+.featured-card:hover .fc-img { transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(calc(var(--media-scale, 1) * 1.04)); }
+.fc-img-fallback { font-size: 84px; line-height: 1; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18)); }
+.fc-img-wrap::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(31,26,20,0.05) 0%, rgba(31,26,20,0.0) 36%, rgba(31,26,20,0.32) 100%);
+  pointer-events: none; z-index: 1;
+}
+.fc-cuisine {
+  position: absolute; bottom: 12px; left: 12px; z-index: 3;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 11px; background: rgba(255, 252, 243, 0.94); color: var(--ink); border-radius: 999px;
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.fc-difficulty {
+  position: absolute; bottom: 12px; right: 12px; z-index: 3;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 5px 11px; background: var(--ink); color: var(--paper); border-radius: 999px;
+}
+.fc-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+.fc-name {
+  font-family: var(--serif); font-style: italic;
+  font-size: 26px; line-height: 1.1; letter-spacing: -0.01em;
+}
+.fc-meta {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted);
+}
+.fc-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.fc-meta b { color: var(--ink); font-weight: 600; }
+.fc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag-pill {
+  padding: 4px 10px; border-radius: 999px; font-size: 11.5px;
+  background: var(--cream-deep); color: var(--ink-soft); border: 1px solid var(--rule);
+  letter-spacing: -0.01em;
+}
+.tag-pill.veg    { background: var(--matcha-soft);    color: var(--matcha-deep); border-color: transparent; }
+.tag-pill.nonveg { background: var(--orange-soft);    color: var(--orange-deep); border-color: transparent; }
+
+/* RECIPE GRID — vertical cards, smaller square photos */
+.recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.recipe-card {
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-md);
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms;
+  position: relative;
+}
+.recipe-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+.rc-img-wrap {
+  aspect-ratio: 1 / 1;
+  position: relative; overflow: hidden;
+  background: var(--cream-deep);
+  border-bottom: 1.5px solid var(--ink);
+}
+.rc-img-wrap.no-media { display: grid; place-items: center; }
+.rc-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
+  transition: transform 320ms cubic-bezier(.2,.8,.2,1);
+}
+.recipe-card:hover .rc-img { transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(calc(var(--media-scale, 1) * 1.04)); }
+.rc-img-fallback { font-size: 56px; line-height: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.16)); }
+.rc-img-wrap::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(31,26,20,0.0) 60%, rgba(31,26,20,0.28) 100%);
+  pointer-events: none; z-index: 1;
+}
+.rc-cuisine {
+  position: absolute; bottom: 10px; left: 10px; z-index: 3;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 9px; background: rgba(255, 252, 243, 0.94); color: var(--ink); border-radius: 999px;
+}
+.rc-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; }
+.rc-name {
+  font-family: var(--serif); font-style: italic;
+  font-size: 19px; line-height: 1.18; letter-spacing: -0.005em;
+}
 .rc-meta {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 7px;
+  text-transform: uppercase; color: var(--ink-muted);
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
 }
 .rc-meta-sep { color: var(--rule-strong); }
@@ -340,10 +366,8 @@ body::before {
   padding: 3px 8px; border-radius: 999px; font-size: 11px;
   background: var(--cream-deep); color: var(--ink-muted); border: 1px solid var(--rule);
 }
-.rc-tag.veg { background: var(--matcha-soft); color: var(--matcha-deep); }
-.rc-tag.nonveg { background: var(--orange-soft); color: var(--orange-deep); }
-.rc-arrow { flex-shrink: 0; padding: 0 14px; display: grid; place-items: center; font-size: 18px; color: var(--ink-muted); transition: color 150ms; }
-.recipe-card:hover .rc-arrow { color: var(--orange); }
+.rc-tag.veg    { background: var(--matcha-soft); color: var(--matcha-deep); border-color: transparent; }
+.rc-tag.nonveg { background: var(--orange-soft); color: var(--orange-deep); border-color: transparent; }
 
 /* NO RESULTS */
 .no-results { text-align: center; padding: 72px 24px; }
@@ -391,6 +415,7 @@ body::before {
 <div id="root"></div>
 
 <script type="text/babel" src="shared/user-menu.jsx" data-presets="react"></script>
+<script type="text/babel" src="shared/nav.jsx" data-presets="react"></script>
 
 <script type="text/babel" data-presets="react">
 const { useState, useEffect, useMemo, useRef } = React;
@@ -427,50 +452,50 @@ function useAuth() {
 }
 
 function Nav() {
-  const scrolled = useScrolled();
   const user = useAuth();
-  const openAuth = () => window.dispatchEvent(new CustomEvent('mfc:open-auth'));
-  const UserMenu = window.MfcUserMenu;
-  return (
-    <nav className={"nav" + (scrolled ? " scrolled" : "")}>
-      <div className="nav-inner">
-        <a href="index.html" className="brand">
-          <span className="brand-mark">m</span>
-          <span className="brand-name">MyFood<em>Craving</em></span>
-        </a>
-        <div className="nav-links">
-          <a href="index.html">Home</a>
-          {user && <a href="my/markers.html">Bloodwork</a>}
-          <a href="recipe-search.html" className="active">Recipes</a>
-        </div>
-        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref="my/account.html" profileHref="my/profile.html" />}
-      </div>
-    </nav>
-  );
+  const MfcNav = window.MfcNav;
+  return MfcNav ? <MfcNav user={user} active="recipes" /> : null;
+}
+
+// Ingredient-class tags powering the recipe-prefs classifier — useful for
+// allergen flags and identity rules, but visual noise on a card. Hide them
+// from card chips; show the user-meaningful tags only.
+const HIDDEN_DISPLAY_TAGS = new Set([
+  'dairy', 'egg', 'nuts', 'soy', 'shellfish', 'gluten',
+  'pork', 'alcohol', 'seafood', 'fish',
+  'onion', 'garlic', 'root-veg',
+]);
+
+function displayableTags(tags, max) {
+  const filtered = (tags || []).filter((t) => !HIDDEN_DISPLAY_TAGS.has(t));
+  return typeof max === 'number' ? filtered.slice(0, max) : filtered;
+}
+
+function tagToneClass(label) {
+  if (label === "vegetarian" || label === "vegan" || label === "gluten-free" || label === "iron-rich" || label === "high-fiber" || label === "high-protein") return "veg";
+  if (label === "non-veg") return "nonveg";
+  return "";
 }
 
 function TagPill({ label }) {
-  const isVeg = label === "vegetarian" || label === "vegan" || label === "gluten-free" || label === "iron-rich" || label === "high-fiber" || label === "high-protein";
-  const isNonveg = label === "non-veg";
-  return <span className={`tag-pill ${isVeg ? "veg" : ""} ${isNonveg ? "nonveg" : ""}`}>{label}</span>;
+  return <span className={`tag-pill ${tagToneClass(label)}`}>{label}</span>;
 }
 
 function RcTag({ label }) {
-  const isVeg = label === "vegetarian" || label === "vegan" || label === "gluten-free" || label === "iron-rich" || label === "high-fiber" || label === "high-protein";
-  const isNonveg = label === "non-veg";
-  return <span className={`rc-tag ${isVeg ? "veg" : ""} ${isNonveg ? "nonveg" : ""}`}>{label}</span>;
+  return <span className={`rc-tag ${tagToneClass(label)}`}>{label}</span>;
 }
 
 function FeaturedCard({ recipe, classification }) {
   const media = recipe.media || {};
-  const card = media.card || {};
-  const cardFit = card.fit || {};
-  const cardSrc = card.src || "";
+  const hero = media.hero || {};
+  const heroSrc = hero.src || "";
+  const heroFit = hero.fit || {};
   const emoji = media.emoji || "🍽️";
   const isAvoid = classification && classification.violations.length > 0;
   const isMatch = !isAvoid && classification && classification.score > 0;
   const violationReasons = classification ? classification.violations.map(v => v.reason) : [];
   const tooltip = violationReasons.length > 1 ? violationReasons.join(' · ') : undefined;
+  const visibleTags = displayableTags(recipe.tags, 4);
   return (
     <a
       href={`recipe.html?id=${recipe.id}`}
@@ -479,52 +504,50 @@ function FeaturedCard({ recipe, classification }) {
     >
       {isAvoid && <span className="avoid-badge">{violationReasons[0]}</span>}
       {isMatch && <span className="match-badge">{classification.score} of your prefs</span>}
-      <div className={"fc-top" + (cardSrc ? " has-media" : "")} style={{ background: `linear-gradient(135deg, ${recipe.colorSoft} 0%, rgba(255,252,243,0.6) 100%)` }}>
-        {cardSrc ? (
+      <div className={"fc-img-wrap " + (heroSrc ? "has-media" : "no-media")}>
+        {heroSrc ? (
           <img
-            className="fc-image"
-            src={cardSrc}
-            alt={card.alt || recipe.name}
+            className="fc-img"
+            src={heroSrc}
+            alt={hero.alt || recipe.name}
+            loading="lazy"
             style={{
-              "--media-scale": cardFit.scale || 1,
-              "--media-x": cardFit.x || "0%",
-              "--media-y": cardFit.y || "0%",
-              objectPosition: cardFit.position || "50% 50%"
+              "--media-scale": heroFit.scale || 1,
+              "--media-x": heroFit.x || "0%",
+              "--media-y": heroFit.y || "0%",
+              objectPosition: heroFit.position || "50% 50%"
             }}
           />
         ) : (
-          <div className="fc-emoji">{emoji}</div>
+          <div className="fc-img-fallback">{emoji}</div>
         )}
         <div className="fc-cuisine">{recipe.cuisine}</div>
-        <div className="fc-badge">{recipe.difficulty}</div>
+        <div className="fc-difficulty">{recipe.difficulty}</div>
       </div>
       <div className="fc-body">
         <div className="fc-name">{recipe.name}</div>
-        <div className="fc-tagline">{recipe.tagline}</div>
         <div className="fc-meta">
-          <span>⏱ {recipe.totalMinutes} min</span>
-          <span>👥 {recipe.servings} servings</span>
+          <span><b>{recipe.totalMinutes}</b>min</span>
+          <span><b>{recipe.servings}</b>servings</span>
         </div>
-        <div className="fc-tags">
-          {recipe.tags.map(t => <TagPill key={t} label={t} />)}
-        </div>
-        <div className="fc-highlight">✦ {recipe.highlight}</div>
-      </div>
-      <div className="fc-cta">
-        <span>Cook it now</span>
-        <span>→</span>
+        {visibleTags.length > 0 && (
+          <div className="fc-tags">
+            {visibleTags.map(t => <TagPill key={t} label={t} />)}
+          </div>
+        )}
       </div>
     </a>
   );
 }
 
 const HEART_STYLE = `
-.rc-heart{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;
-  background:rgba(255,252,243,.92);border:1px solid rgba(31,29,26,.12);display:grid;place-items:center;
-  cursor:pointer;font-size:14px;line-height:1;color:rgba(31,29,26,.45);transition:color 150ms,transform 150ms;z-index:2}
-.rc-heart:hover{color:var(--orange,#FF6D2E);transform:scale(1.08)}
-.rc-heart.saved{color:var(--orange,#FF6D2E)}
-.recipe-card{position:relative}
+.rc-heart{position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:50%;
+  background:rgba(255,252,243,.94);border:1.5px solid var(--ink);display:grid;place-items:center;
+  cursor:pointer;font-size:15px;line-height:1;color:rgba(31,29,26,.5);
+  box-shadow:1.5px 1.5px 0 var(--ink);
+  transition:color 160ms,transform 160ms,box-shadow 160ms;z-index:5}
+.rc-heart:hover{color:var(--orange);transform:translate(-1px,-1px);box-shadow:2.5px 2.5px 0 var(--ink)}
+.rc-heart.saved{color:var(--orange)}
 `;
 
 function HeartButton({ recipeId }) {
@@ -562,14 +585,15 @@ function HeartButton({ recipeId }) {
 
 function RecipeCard({ recipe, classification }) {
   const media = recipe.media || {};
-  const card = media.card || {};
-  const cardFit = card.fit || {};
-  const cardSrc = card.src || "";
+  const hero = media.hero || {};
+  const heroSrc = hero.src || "";
+  const heroFit = hero.fit || {};
   const emoji = media.emoji || "🍽️";
   const isAvoid = classification && classification.violations.length > 0;
   const isMatch = !isAvoid && classification && classification.score > 0;
   const violationReasons = classification ? classification.violations.map(v => v.reason) : [];
   const tooltip = violationReasons.length > 1 ? violationReasons.join(' · ') : undefined;
+  const visibleTags = displayableTags(recipe.tags, 3);
   return (
     <a
       href={`recipe.html?id=${recipe.id}`}
@@ -578,36 +602,39 @@ function RecipeCard({ recipe, classification }) {
     >
       {isAvoid && <span className="avoid-badge">{violationReasons[0]}</span>}
       {isMatch && <span className="match-badge">{classification.score} of your prefs</span>}
-      <HeartButton recipeId={recipe.id} />
-      <div className="rc-left" style={{ background: recipe.colorSoft }}>
-        {cardSrc ? (
+      <div className={"rc-img-wrap " + (heroSrc ? "" : "no-media")} style={!heroSrc ? { background: recipe.colorSoft } : undefined}>
+        {heroSrc ? (
           <img
-            className="rc-image"
-            src={cardSrc}
-            alt={card.alt || recipe.name}
+            className="rc-img"
+            src={heroSrc}
+            alt={hero.alt || recipe.name}
+            loading="lazy"
             style={{
-              "--media-scale": cardFit.scale || 1,
-              "--media-x": cardFit.x || "0%",
-              "--media-y": cardFit.y || "0%",
-              objectPosition: cardFit.position || "50% 50%"
+              "--media-scale": heroFit.scale || 1,
+              "--media-x": heroFit.x || "0%",
+              "--media-y": heroFit.y || "0%",
+              objectPosition: heroFit.position || "50% 50%"
             }}
           />
-        ) : emoji}
+        ) : (
+          <div className="rc-img-fallback">{emoji}</div>
+        )}
+        <HeartButton recipeId={recipe.id} />
+        <div className="rc-cuisine">{recipe.cuisine}</div>
       </div>
       <div className="rc-body">
         <div className="rc-name">{recipe.name}</div>
         <div className="rc-meta">
-          <span>{recipe.cuisine}</span>
-          <span className="rc-meta-sep">·</span>
           <span>{recipe.totalMinutes} min</span>
           <span className="rc-meta-sep">·</span>
           <span>{recipe.difficulty}</span>
         </div>
-        <div className="rc-tags">
-          {recipe.tags.map(t => <RcTag key={t} label={t} />)}
-        </div>
+        {visibleTags.length > 0 && (
+          <div className="rc-tags">
+            {visibleTags.map(t => <RcTag key={t} label={t} />)}
+          </div>
+        )}
       </div>
-      <div className="rc-arrow">→</div>
     </a>
   );
 }
