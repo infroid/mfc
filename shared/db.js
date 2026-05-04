@@ -192,6 +192,40 @@ window.MFC.db = (function () {
     return true;
   }
 
+  // ---------- Profile ----------
+
+  async function getUserProfile() {
+    if (!sb) return null;
+    const uid = userId(); if (!uid) return null;
+    const { data, error } = await sb.from('user_profiles')
+      .select('user_id,date_of_birth,diet_tags,allergies,goals,units,updated_at')
+      .eq('user_id', uid).maybeSingle();
+    if (error) { console.warn('[db.getUserProfile]', error); return null; }
+    return data;
+  }
+
+  async function upsertUserProfile({
+    dateOfBirth = null,
+    dietTags    = [],
+    allergies   = [],
+    goals       = [],
+    units       = 'metric',
+  } = {}) {
+    if (!sb) return false;
+    const uid = userId(); if (!uid) return false;
+    const { data, error } = await sb.from('user_profiles').upsert({
+      user_id: uid,
+      date_of_birth: dateOfBirth,
+      diet_tags: dietTags,
+      allergies,
+      goals,
+      units,
+    }).select('user_id,date_of_birth,diet_tags,allergies,goals,units,updated_at').maybeSingle();
+    if (error) { console.warn('[db.upsertUserProfile]', error); return false; }
+    window.dispatchEvent(new CustomEvent('mfc:profile-change', { detail: { profile: data } }));
+    return true;
+  }
+
   // ---------- Health markers ----------
 
   async function getMetricDefinitions() {
@@ -330,6 +364,7 @@ window.MFC.db = (function () {
     saveRecipe, unsaveRecipe, getSaved,
     upsertSession, getSession,
     getPref, setPref,
+    getUserProfile, upsertUserProfile,
     getMetricDefinitions, getHealthMarkers, upsertHealthMarker,
     getRecommendations,
     logMeal, getMealLogs,
