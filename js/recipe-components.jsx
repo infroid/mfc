@@ -47,7 +47,7 @@ function RecipeNav({ user }) {
           {user && <a href={_BASE + "my/markers.html"}>Bloodwork</a>}
           <a href={_BASE + "recipe-search.html"}>Recipes</a>
         </div>
-        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref={_BASE + "my/account.html"} />}
+        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref={_BASE + "my/account.html"} profileHref={_BASE + "my/profile.html"} />}
       </div>
     </nav>
   );

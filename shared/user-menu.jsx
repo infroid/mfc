@@ -1,7 +1,10 @@
 // Shared user menu — pill button + dropdown (Account, Sign out).
 // Reuses .nav-user / .nav-avatar / .nav-user-btn already defined per-page.
 // Injects its own dropdown styles once.
-// Usage: <MfcUserMenu user={user} onSignIn={openAuth} accountHref="my/account.html" />
+// Usage: <MfcUserMenu user={user} onSignIn={openAuth}
+//                      accountHref="my/account.html"
+//                      profileHref="my/profile.html" />
+// profileHref is optional; when omitted the Profile item is hidden.
 
 (function () {
   const STYLE = `
@@ -85,7 +88,7 @@
     return src.split(/[\s@]/)[0] || 'You';
   }
 
-  function MfcUserMenu({ user, onSignIn, accountHref }) {
+  function MfcUserMenu({ user, onSignIn, accountHref, profileHref }) {
     const [open, setOpen] = React.useState(false);
     const ref = React.useRef(null);
 
@@ -138,6 +141,16 @@
               {user.email && <div className="user-menu-email">{user.email}</div>}
             </div>
             <div className="user-menu-rule" />
+            {profileHref && (
+              <a
+                className="user-menu-item"
+                role="menuitem"
+                href={profileHref}
+                onClick={() => setOpen(false)}
+              >
+                Profile
+              </a>
+            )}
             <a
               className="user-menu-item"
               role="menuitem"

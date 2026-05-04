@@ -502,7 +502,7 @@ function Nav({ user }) {
           <a href="markers.html" className="active">Bloodwork</a>
           <a href="../recipe-search.html">Recipes</a>
         </div>
-        {UserMenu && <UserMenu user={user} accountHref="account.html" />}
+        {UserMenu && <UserMenu user={user} accountHref="account.html" profileHref="profile.html" />}
       </div>
     </nav>
   );

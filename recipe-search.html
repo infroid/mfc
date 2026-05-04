@@ -353,7 +353,7 @@ function Nav() {
           {user && <a href="my/markers.html">Bloodwork</a>}
           <a href="recipe-search.html" className="active">Recipes</a>
         </div>
-        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref="my/account.html" />}
+        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref="my/account.html" profileHref="my/profile.html" />}
       </div>
     </nav>
   );
