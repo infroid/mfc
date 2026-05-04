@@ -37,7 +37,7 @@ window.MFC.db = (function () {
       difficulty: r.difficulty,
       totalMinutes: r.total_minutes,
       servings: r.servings,
-      media: { emoji: r.media?.emoji ?? null },
+      media: r.media || {},
       tags: (r.recipe_tags || []).map((t) => t.tag),
       color: r.color,
       colorSoft: r.color_soft,
