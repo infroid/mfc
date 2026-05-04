@@ -35,16 +35,21 @@ python3 -m http.server 8080
 
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via
   `<script type="text/babel">`
-- 5 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
+- 6 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
   [recipe.html](recipe.html), [dashboard.html](my/dashboard.html),
-  [markers.html](my/markers.html). Each is mostly self-contained.
+  [markers.html](my/markers.html), [account.html](my/account.html). Each is mostly
+  self-contained.
 - [recipe.html](recipe.html) imports [recipe-app.jsx](js/recipe-app.jsx),
   [recipe-components.jsx](js/recipe-components.jsx),
   [tweaks-panel.jsx](js/tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
 - [dashboard.html](my/dashboard.html) imports [dashboard-app.jsx](js/dashboard-app.jsx).
   Auth-gated: redirects to index.html if not signed in.
 - [markers.html](my/markers.html) imports [markers-app.jsx](js/markers-app.jsx).
-  Auth-gated: blood marker editor only, no other content.
+  Auth-gated: blood marker editor only. Mounts the biological-sex gate when
+  `user.biologicalSex` is null — answer is permanent and stored in
+  `auth.users.user_metadata.biological_sex`.
+- [account.html](my/account.html) imports [account-app.jsx](js/account-app.jsx).
+  Auth-gated profile page: editable display name, read-only biological sex.
 - 6 admin pages: list + edit for each of recipes, ingredients, utensils
   ([admin/recipes.html](admin/recipes.html), [admin/recipe.html](admin/recipe.html),
   and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
@@ -70,7 +75,9 @@ python3 -m http.server 8080
   table and column has a `COMMENT ON` description that surfaces in Supabase
   Studio. Idempotent: safe to re-apply.
 - [data/db/seed_metrics.sql](data/db/seed_metrics.sql) — ~21 baseline blood
-  markers (`metric_definitions`).
+  markers (`metric_definitions`). Sex-specific bounds (`normal_min_female`,
+  `normal_max_female`, `normal_min_male`, `normal_max_male`) override the
+  unisex baseline for iron, ferritin, hemoglobin, and creatinine.
 
 Schema layers:
 
@@ -116,8 +123,24 @@ Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
    resolves true only when the signed-in user has `app_metadata.role = 'admin'`;
    otherwise renders a sign-in / not-authorized panel and resolves false.
 
+JSX UI components (loaded selectively as `<script type="text/babel" src="…">`,
+must run before the page's main babel script that references them):
+
+- [shared/auth-modal.jsx](shared/auth-modal.jsx) — self-mounting sign-in modal.
+  Opens on `window` event `mfc:open-auth`. Loaded on every public page that
+  shows a "Sign in" affordance.
+- [shared/user-menu.jsx](shared/user-menu.jsx) — `window.MfcUserMenu({ user,
+  onSignIn, accountHref })`. Logged-out: orange "Sign in →" button. Logged-in:
+  white pill + orange-avatar + dropdown (Account, Sign out).
+- [shared/biological-sex-prompt.jsx](shared/biological-sex-prompt.jsx) —
+  `window.MfcBiologicalSexGate({ user, onSaved })`, `MfcSaveBiologicalSex(value)`,
+  `MFC_BIOSEX_OPTIONS`, `MFC_BIOSEX_LABEL_FOR(value)`. Mandatory, non-dismissible
+  modal. Loaded on markers.html (gate) and account.html (label lookup).
+
 `useAuth()` is a small React hook defined inline in each page that subscribes to
-the `mfc:auth-change` event.
+the `mfc:auth-change` event. `useAuthGuard` (markers/dashboard/account) must
+keep `[]` deps on its effect so the listener persists for `USER_UPDATED` events
+(e.g. saving display name or biological sex).
 
 ## Auth
 
