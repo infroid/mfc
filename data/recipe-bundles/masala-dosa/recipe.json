@@ -1,11 +1,20 @@
 {
   "id": "masala-dosa",
   "name": "Masala Dosa",
-  "tagline": "crispy · fermented · gluten-free · 40 min",
+  "tagline": "Crispy fermented crepe with spiced potato filling",
+  "shortTagline": "crispy · fermented · gluten-free · 40 min",
   "cuisine": "South Indian",
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 40,
+  "tags": [
+    "vegetarian",
+    "gluten-free"
+  ],
+  "color": "#D4A017",
+  "colorSoft": "rgba(212,160,23,0.15)",
+  "featured": false,
+  "highlight": "Fermented batter boosts gut health",
   "media": {
     "emoji": "🫓",
     "hero": {
@@ -89,24 +98,6 @@
       "group": "finish"
     }
   ],
-  "utensils": [
-    {
-      "name": "Cast iron or non-stick tawa (flat griddle)",
-      "essential": true
-    },
-    {
-      "name": "Wide spatula (dosa ladle preferred)",
-      "essential": true
-    },
-    {
-      "name": "Small bowl of water (for sprinkling tawa)",
-      "essential": true
-    },
-    {
-      "name": "Heavy pan for filling",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -179,6 +170,24 @@
         "alt": "Crisp dosa folded around yellow potato masala on a black tawa",
         "caption": "Filled and folded"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Cast iron or non-stick tawa (flat griddle)",
+      "essential": true
+    },
+    {
+      "name": "Wide spatula (dosa ladle preferred)",
+      "essential": true
+    },
+    {
+      "name": "Small bowl of water (for sprinkling tawa)",
+      "essential": true
+    },
+    {
+      "name": "Heavy pan for filling",
+      "essential": false
     }
   ]
 }

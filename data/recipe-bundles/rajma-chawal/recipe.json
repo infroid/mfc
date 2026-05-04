@@ -1,11 +1,20 @@
 {
   "id": "rajma-chawal",
   "name": "Rajma Chawal",
-  "tagline": "kidney bean curry · sunday comfort · 50 min",
+  "tagline": "Red kidney bean curry — Sunday comfort in a bowl",
+  "shortTagline": "kidney bean curry · sunday comfort · 50 min",
   "cuisine": "North Indian",
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 50,
+  "tags": [
+    "vegetarian",
+    "high-protein"
+  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.14)",
+  "featured": false,
+  "highlight": "Rice + lentil = complete amino acid profile",
   "media": {
     "emoji": "🍛",
     "hero": {
@@ -94,24 +103,6 @@
       "group": "spice"
     }
   ],
-  "utensils": [
-    {
-      "name": "Pressure cooker or Instant Pot",
-      "essential": true
-    },
-    {
-      "name": "Heavy-bottomed pan",
-      "essential": true
-    },
-    {
-      "name": "Rice cooker or pot for rice",
-      "essential": false
-    },
-    {
-      "name": "Ladle",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -184,6 +175,24 @@
         "alt": "Finished rajma served over basmati rice with onion, green chili, lemon, and melted butter",
         "caption": "Butter-finished rajma chawal"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Pressure cooker or Instant Pot",
+      "essential": true
+    },
+    {
+      "name": "Heavy-bottomed pan",
+      "essential": true
+    },
+    {
+      "name": "Rice cooker or pot for rice",
+      "essential": false
+    },
+    {
+      "name": "Ladle",
+      "essential": false
     }
   ]
 }

@@ -16,20 +16,19 @@ window.MFC.db = (function () {
     }
   }
 
-  const getLocalRecipes = () => fetchJson('data/recipes.json');
   const getLocalRecipe = (id) => fetchJson(`data/recipe-bundles/${id}/recipe.json`);
 
   // ---------- Catalog ----------
 
-  // Returns array shaped like data/recipes.json (listing).
+  // Returns the recipe listing (summary fields only).
   async function getRecipes() {
-    if (!sb) return getLocalRecipes();
+    if (!sb) return [];
     const { data, error } = await sb
       .from('recipes')
       .select('id,name,tagline,cuisine,difficulty,total_minutes,servings,media,color,color_soft,featured,highlight,recipe_tags(tag)')
       .order('featured', { ascending: false })
       .order('name', { ascending: true });
-    if (error) { console.warn('[db.getRecipes]', error); return getLocalRecipes(); }
+    if (error) { console.warn('[db.getRecipes]', error); return []; }
     return data.map((r) => ({
       id: r.id,
       name: r.name,

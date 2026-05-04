@@ -1,11 +1,19 @@
 {
   "id": "chicken-biryani",
   "name": "Chicken Biryani",
-  "tagline": "hyderabadi dum · saffron · layered · 90 min",
+  "tagline": "Hyderabadi dum-style, layered, fragrant, and earthy",
+  "shortTagline": "hyderabadi dum · saffron · layered · 90 min",
   "cuisine": "Hyderabadi",
   "difficulty": "Hard",
   "servings": 6,
   "totalMinutes": 90,
+  "tags": [
+    "non-veg"
+  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.16)",
+  "featured": true,
+  "highlight": "Real dum sealing = steam-cooked perfection",
   "media": {
     "emoji": "🍚",
     "hero": {
@@ -104,28 +112,6 @@
       "group": "spice"
     }
   ],
-  "utensils": [
-    {
-      "name": "Large heavy-bottomed pot with tight lid",
-      "essential": true
-    },
-    {
-      "name": "Deep pan for frying onions",
-      "essential": true
-    },
-    {
-      "name": "Foil or dough for sealing (dum)",
-      "essential": true
-    },
-    {
-      "name": "Colander",
-      "essential": true
-    },
-    {
-      "name": "Flat tawa (griddle) for base heat",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -198,6 +184,28 @@
         "alt": "Rested chicken biryani unsealed with foil pulled back, steam rising, and a wooden spatula folding separate grains",
         "caption": "Folded after rest"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Large heavy-bottomed pot with tight lid",
+      "essential": true
+    },
+    {
+      "name": "Deep pan for frying onions",
+      "essential": true
+    },
+    {
+      "name": "Foil or dough for sealing (dum)",
+      "essential": true
+    },
+    {
+      "name": "Colander",
+      "essential": true
+    },
+    {
+      "name": "Flat tawa (griddle) for base heat",
+      "essential": false
     }
   ]
 }

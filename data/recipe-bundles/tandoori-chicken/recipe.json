@@ -1,11 +1,20 @@
 {
   "id": "tandoori-chicken",
   "name": "Tandoori Chicken",
-  "tagline": "yogurt-marinated · char-grilled · smoky · 45 min",
+  "tagline": "Yogurt-marinated, char-grilled, smoky and bold",
+  "shortTagline": "yogurt-marinated · char-grilled · smoky · 45 min",
   "cuisine": "North Indian",
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 45,
+  "tags": [
+    "non-veg",
+    "gluten-free"
+  ],
+  "color": "#E2531A",
+  "colorSoft": "rgba(226,83,26,0.15)",
+  "featured": false,
+  "highlight": "Yogurt marinade tenderizes + adds probiotics",
   "media": {
     "emoji": "🍖",
     "hero": {
@@ -94,28 +103,6 @@
       "group": "finish"
     }
   ],
-  "utensils": [
-    {
-      "name": "Oven with broil setting (or outdoor grill)",
-      "essential": true
-    },
-    {
-      "name": "Wire rack over a baking tray",
-      "essential": true
-    },
-    {
-      "name": "Basting brush",
-      "essential": false
-    },
-    {
-      "name": "Meat thermometer",
-      "essential": false
-    },
-    {
-      "name": "Tongs",
-      "essential": true
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -188,6 +175,28 @@
         "alt": "Rested tandoori chicken served with lemon wedges, onion rings, and mint chutney",
         "caption": "Rest, dust, and serve"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Oven with broil setting (or outdoor grill)",
+      "essential": true
+    },
+    {
+      "name": "Wire rack over a baking tray",
+      "essential": true
+    },
+    {
+      "name": "Basting brush",
+      "essential": false
+    },
+    {
+      "name": "Meat thermometer",
+      "essential": false
+    },
+    {
+      "name": "Tongs",
+      "essential": true
     }
   ]
 }

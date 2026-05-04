@@ -1,11 +1,21 @@
 {
   "id": "aloo-gobi",
   "name": "Aloo Gobi",
-  "tagline": "dry-spiced · vegan · gluten-free · 25 min",
+  "tagline": "Dry-spiced potato and cauliflower — quick weeknight hero",
+  "shortTagline": "dry-spiced · vegan · gluten-free · 25 min",
   "cuisine": "North Indian",
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 25,
+  "tags": [
+    "vegetarian",
+    "vegan",
+    "gluten-free"
+  ],
+  "color": "#C9A227",
+  "colorSoft": "rgba(201,162,39,0.14)",
+  "featured": false,
+  "highlight": "Low calorie, high fiber, 25 minutes flat",
   "media": {
     "emoji": "🥔",
     "hero": {
@@ -99,20 +109,6 @@
       "group": "finish"
     }
   ],
-  "utensils": [
-    {
-      "name": "Wide heavy pan or kadhai with lid",
-      "essential": true
-    },
-    {
-      "name": "Spatula or wide spoon",
-      "essential": true
-    },
-    {
-      "name": "Knife and cutting board",
-      "essential": true
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -185,6 +181,20 @@
         "alt": "Finished dry aloo gobi with browned edges and fresh coriander",
         "caption": "Dry browned finish"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide heavy pan or kadhai with lid",
+      "essential": true
+    },
+    {
+      "name": "Spatula or wide spoon",
+      "essential": true
+    },
+    {
+      "name": "Knife and cutting board",
+      "essential": true
     }
   ]
 }

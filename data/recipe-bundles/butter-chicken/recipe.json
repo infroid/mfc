@@ -1,11 +1,19 @@
 {
   "id": "butter-chicken",
   "name": "Butter Chicken",
-  "tagline": "murgh makhani · smoky · creamy · 50 min",
+  "tagline": "The world's most-ordered Indian dish, made properly",
+  "shortTagline": "murgh makhani · smoky · creamy · 50 min",
   "cuisine": "North Indian",
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 50,
+  "tags": [
+    "non-veg"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": true,
+  "highlight": "Smoky char from high-heat sear before sauce",
   "media": {
     "emoji": "🍗",
     "hero": {
@@ -99,28 +107,6 @@
       "group": "finish"
     }
   ],
-  "utensils": [
-    {
-      "name": "Heavy-bottomed pan / kadhai",
-      "essential": true
-    },
-    {
-      "name": "Blender or mixie",
-      "essential": true
-    },
-    {
-      "name": "Grill pan or oven",
-      "essential": true
-    },
-    {
-      "name": "Fine mesh strainer",
-      "essential": false
-    },
-    {
-      "name": "Wooden spatula",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -193,6 +179,28 @@
         "alt": "Charred chicken pieces simmering in makhani gravy with cream and kasuri methi",
         "caption": "Cream and kasuri methi finish"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Blender or mixie",
+      "essential": true
+    },
+    {
+      "name": "Grill pan or oven",
+      "essential": true
+    },
+    {
+      "name": "Fine mesh strainer",
+      "essential": false
+    },
+    {
+      "name": "Wooden spatula",
+      "essential": false
     }
   ]
 }

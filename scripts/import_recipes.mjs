@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// One-shot recipe import: data/recipes.json + data/recipe-bundles/{id}/recipe.json → Supabase.
+// One-shot recipe import: data/recipe-bundles/{id}/recipe.json → Supabase.
 // Idempotent: re-runs reconcile to the same state. No duplicate library entries.
 //
 // Usage:
@@ -16,7 +16,6 @@ import { createClient } from '@supabase/supabase-js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
-const LISTING_PATH = join(ROOT, 'data', 'recipes.json');
 const BUNDLES_DIR = join(ROOT, 'data', 'recipe-bundles');
 
 const { SUPABASE_URL, SUPABASE_SECRET_KEY } = process.env;
@@ -33,10 +32,8 @@ async function readJson(path) {
   return JSON.parse(await readFile(path, 'utf8'));
 }
 
-async function loadDetailIfExists(id) {
-  const path = join(BUNDLES_DIR, id, 'recipe.json');
-  try { return await readJson(path); }
-  catch { return null; }
+async function loadBundle(id) {
+  return readJson(join(BUNDLES_DIR, id, 'recipe.json'));
 }
 
 function slugify(s) {
@@ -59,15 +56,12 @@ function guessUnit(amountStr) {
 
 // ---- Pass 1: collect all unique ingredients + utensils across all recipes ----
 
-async function collectLibrary(listing) {
+async function collectLibrary(bundles) {
   // Maps: slug → { id, name, default_unit }  and  slug → { id, name }
   const ingredients = new Map();
   const utensils    = new Map();
 
-  for (const r of listing) {
-    const detail = await loadDetailIfExists(r.id);
-    if (!detail) continue;
-
+  for (const detail of bundles) {
     for (const ing of (detail.ingredients || [])) {
       if (!ing.name) continue;
       const id = slugify(ing.name);
@@ -108,48 +102,42 @@ async function upsertLibrary(ingredients, utensils) {
 
 // ---- Pass 3: upsert recipes + all join tables ----
 
-function buildRecipeRow(listing, detail) {
-  const id = listing.id;
+function buildRecipeRow(detail) {
+  const id = detail.id;
   return {
     id,
-    name: listing.name,
-    tagline: listing.tagline ?? null,
-    short_tagline: detail?.tagline ?? null,
-    cuisine: listing.cuisine,
-    difficulty: listing.difficulty,
-    servings: listing.servings,
-    total_minutes: listing.totalMinutes,
+    name: detail.name,
+    tagline: detail.tagline ?? null,
+    short_tagline: detail.shortTagline ?? null,
+    cuisine: detail.cuisine,
+    difficulty: detail.difficulty,
+    servings: detail.servings,
+    total_minutes: detail.totalMinutes,
     media: {
-      emoji: listing.media?.emoji ?? detail?.media?.emoji ?? null,
-      hero:  detail?.media?.hero ?? null,
+      emoji: detail.media?.emoji ?? null,
+      hero:  detail.media?.hero ?? null,
       image: `data/recipe-bundles/${id}/hero.jpg`,
     },
-    color:      listing.color ?? null,
-    color_soft: listing.colorSoft ?? null,
-    featured:   !!listing.featured,
-    highlight:  listing.highlight ?? null,
+    color:      detail.color ?? null,
+    color_soft: detail.colorSoft ?? null,
+    featured:   !!detail.featured,
+    highlight:  detail.highlight ?? null,
     meal_types: [],
   };
 }
 
-async function upsertRecipe(listing) {
-  const id     = listing.id;
-  const detail = await loadDetailIfExists(id);
+async function upsertRecipe(detail) {
+  const id = detail.id;
 
-  const { error: rErr } = await sb.from('recipes').upsert(buildRecipeRow(listing, detail));
+  const { error: rErr } = await sb.from('recipes').upsert(buildRecipeRow(detail));
   if (rErr) throw new Error(`recipes upsert ${id}: ${rErr.message}`);
 
   // Tags
   await sb.from('recipe_tags').delete().eq('recipe_id', id);
-  if (Array.isArray(listing.tags) && listing.tags.length) {
+  if (Array.isArray(detail.tags) && detail.tags.length) {
     const { error } = await sb.from('recipe_tags')
-      .insert(listing.tags.map((tag) => ({ recipe_id: id, tag })));
+      .insert(detail.tags.map((tag) => ({ recipe_id: id, tag })));
     if (error) throw new Error(`recipe_tags ${id}: ${error.message}`);
-  }
-
-  if (!detail) {
-    console.log(`  ✓ ${id} (listing only — no recipe-bundle detail found)`);
-    return;
   }
 
   // Ingredients — FK join using slugified ingredient IDs
@@ -210,27 +198,22 @@ async function upsertRecipe(listing) {
 }
 
 async function main() {
-  const listing = await readJson(LISTING_PATH);
   const bundleIds = (await readdir(BUNDLES_DIR, { withFileTypes: true }))
     .filter((d) => d.isDirectory())
     .map((d) => d.name);
 
-  const listingIds = new Set(listing.map((r) => r.id));
-  const orphans = bundleIds.filter((id) => !listingIds.has(id));
-  if (orphans.length) {
-    console.warn(`! recipe-bundles without listing entry (skipping): ${orphans.join(', ')}`);
-  }
+  const bundles = await Promise.all(bundleIds.map(loadBundle));
 
   console.log('Pass 1/3: collecting library rows…');
-  const { ingredients, utensils } = await collectLibrary(listing);
+  const { ingredients, utensils } = await collectLibrary(bundles);
 
   console.log('Pass 2/3: upserting library tables…');
   await upsertLibrary(ingredients, utensils);
 
   console.log('Pass 3/3: upserting recipes…');
-  for (const r of listing) {
-    try { await upsertRecipe(r); }
-    catch (e) { console.error(`  ✗ ${r.id}: ${e.message}`); process.exitCode = 1; }
+  for (const detail of bundles) {
+    try { await upsertRecipe(detail); }
+    catch (e) { console.error(`  ✗ ${detail.id}: ${e.message}`); process.exitCode = 1; }
   }
 
   const { count } = await sb.from('recipes').select('*', { count: 'exact', head: true });

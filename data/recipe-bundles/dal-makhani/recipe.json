@@ -1,11 +1,20 @@
 {
   "id": "dal-makhani",
   "name": "Dal Makhani",
-  "tagline": "slow-simmered · butter-kissed · 45 min active",
+  "tagline": "Slow-simmered black lentils, butter-kissed and rich",
+  "shortTagline": "slow-simmered · butter-kissed · 45 min active",
   "cuisine": "North Indian",
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 45,
+  "tags": [
+    "vegetarian",
+    "high-protein"
+  ],
+  "color": "#8B5E3C",
+  "colorSoft": "rgba(139,94,60,0.14)",
+  "featured": false,
+  "highlight": "18g plant protein per bowl",
   "media": {
     "emoji": "🫘",
     "hero": {
@@ -89,24 +98,6 @@
       "group": "spice"
     }
   ],
-  "utensils": [
-    {
-      "name": "Pressure cooker or Instant Pot",
-      "essential": true
-    },
-    {
-      "name": "Heavy-bottomed pan",
-      "essential": true
-    },
-    {
-      "name": "Wooden spatula",
-      "essential": false
-    },
-    {
-      "name": "Ladle",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -179,6 +170,24 @@
         "alt": "Glossy dal makhani finished with cream, butter, and a brass ladle",
         "caption": "Butter and cream finish"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Pressure cooker or Instant Pot",
+      "essential": true
+    },
+    {
+      "name": "Heavy-bottomed pan",
+      "essential": true
+    },
+    {
+      "name": "Wooden spatula",
+      "essential": false
+    },
+    {
+      "name": "Ladle",
+      "essential": false
     }
   ]
 }

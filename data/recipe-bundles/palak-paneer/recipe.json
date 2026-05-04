@@ -1,11 +1,20 @@
 {
   "id": "palak-paneer",
   "name": "Palak Paneer",
-  "tagline": "iron-rich · silky spinach · 30 min",
+  "tagline": "Silky spinach gravy with fresh paneer — iron-rich",
+  "shortTagline": "iron-rich · silky spinach · 30 min",
   "cuisine": "North Indian",
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
+  "tags": [
+    "vegetarian",
+    "iron-rich"
+  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.16)",
+  "featured": false,
+  "highlight": "Spinach + paneer = iron + complete protein",
   "media": {
     "emoji": "🥬",
     "hero": {
@@ -94,28 +103,6 @@
       "group": "finish"
     }
   ],
-  "utensils": [
-    {
-      "name": "Large pot for blanching",
-      "essential": true
-    },
-    {
-      "name": "Bowl of ice water",
-      "essential": true
-    },
-    {
-      "name": "Blender or hand blender",
-      "essential": true
-    },
-    {
-      "name": "Heavy pan or kadhai",
-      "essential": true
-    },
-    {
-      "name": "Strainer",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -188,6 +175,28 @@
         "alt": "Palak paneer finished with cream, lemon, and paneer cubes in a black kadhai",
         "caption": "Creamy palak finish"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Large pot for blanching",
+      "essential": true
+    },
+    {
+      "name": "Bowl of ice water",
+      "essential": true
+    },
+    {
+      "name": "Blender or hand blender",
+      "essential": true
+    },
+    {
+      "name": "Heavy pan or kadhai",
+      "essential": true
+    },
+    {
+      "name": "Strainer",
+      "essential": false
     }
   ]
 }

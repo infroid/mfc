@@ -1,11 +1,20 @@
 {
   "id": "paneer-butter-masala",
   "name": "Paneer Butter Masala",
-  "tagline": "creamy · tomato · 35 min",
+  "tagline": "Silky tomato-cashew gravy, restaurant-style at home",
+  "shortTagline": "creamy · tomato · 35 min",
   "cuisine": "North Indian",
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
+  "tags": [
+    "vegetarian",
+    "gluten-free"
+  ],
+  "color": "#FF6D2E",
+  "colorSoft": "rgba(255,109,46,0.15)",
+  "featured": true,
+  "highlight": "14g protein per serving from paneer",
   "media": {
     "emoji": "🧀",
     "hero": {
@@ -94,32 +103,6 @@
       "group": "spice"
     }
   ],
-  "utensils": [
-    {
-      "name": "Heavy-bottomed pan / kadhai",
-      "essential": true
-    },
-    {
-      "name": "Blender or mixie",
-      "essential": true
-    },
-    {
-      "name": "Fine strainer",
-      "essential": true
-    },
-    {
-      "name": "Wooden spatula",
-      "essential": false
-    },
-    {
-      "name": "Measuring spoons",
-      "essential": false
-    },
-    {
-      "name": "Small bowl for soaking cashews",
-      "essential": false
-    }
-  ],
   "steps": [
     {
       "id": 1,
@@ -204,6 +187,32 @@
         "alt": "Finished paneer butter masala served with cream, kasuri methi, naan, and jeera rice",
         "caption": "Rested and ready to serve"
       }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Blender or mixie",
+      "essential": true
+    },
+    {
+      "name": "Fine strainer",
+      "essential": true
+    },
+    {
+      "name": "Wooden spatula",
+      "essential": false
+    },
+    {
+      "name": "Measuring spoons",
+      "essential": false
+    },
+    {
+      "name": "Small bowl for soaking cashews",
+      "essential": false
     }
   ]
 }

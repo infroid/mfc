@@ -31,10 +31,8 @@ python3 -m http.server 8080
 
 ## Recipe bundles
 
-- `data/recipes.json` — recipe list metadata
-- `data/recipe-bundles/{id}/recipe.json` — preferred full recipe detail path
+- `data/recipe-bundles/{id}/recipe.json` — self-contained recipe (listing fields + full detail); import seed
 - `data/recipe-bundles/{id}/hero.jpg` and `step-*.jpg` — generated recipe images colocated with the recipe JSON
-- `data/recipes/{id}.json` — legacy fallback full recipe detail path
 
 ## Shared assets
 
