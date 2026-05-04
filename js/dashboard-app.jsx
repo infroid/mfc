@@ -288,6 +288,18 @@ const DASH_STYLE = `
   white-space: nowrap;
 }
 .rec-card:hover .rec-go { background: var(--orange); color: var(--paper); border-color: var(--orange); }
+.rec-card.rec-card-avoid { border-color: var(--berry); box-shadow: 4px 4px 0 var(--berry); opacity: 0.78; }
+.rec-card.rec-card-avoid:hover { opacity: 1; box-shadow: 6px 6px 0 var(--berry); }
+.rec-avoid-badge {
+  display: inline-block;
+  margin: 6px 0 4px;
+  padding: 3px 10px;
+  background: var(--berry); color: var(--paper);
+  border-radius: var(--r-pill);
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.rec-avoid-badge::before { content: "⚠ "; }
 @media (max-width: 720px) {
   .rec-card { grid-template-columns: 88px 1fr; gap: 14px; padding: 12px; }
   .rec-img { width: 88px; height: 88px; font-size: 36px; }
@@ -718,10 +730,22 @@ function DashboardApp() {
   const [markers, setMarkers]         = useState([]);
   const [logForm, setLogForm]         = useState({ mealType: '', recipeId: '', servings: '' });
   const [logBusy, setLogBusy]         = useState(false);
+  const [profile, setProfile]         = useState(null);
 
   useEffect(() => {
     if (ready && !user) window.location.href = 'index.html';
   }, [ready, user]);
+
+  // Load (and refresh) the user's profile for defensive allergy flagging.
+  useEffect(() => {
+    if (!user) { setProfile(null); return; }
+    let cancelled = false;
+    const load = () => window.MFC.db.getUserProfile?.().then((p) => { if (!cancelled) setProfile(p); });
+    load();
+    const onChange = () => load();
+    window.addEventListener('mfc:profile-change', onChange);
+    return () => { cancelled = true; window.removeEventListener('mfc:profile-change', onChange); };
+  }, [user?.id]);
 
   useEffect(() => {
     if (!user) return;
@@ -896,13 +920,25 @@ function DashboardApp() {
                 <div className="rec-stack">
                   {recs.map((r) => {
                     const recipe = recipesById[r.recipe_id];
+                    // Defensive check: pipeline already accounts for prefs, but
+                    // double-check allergies client-side as a safety floor.
+                    const allergyHit = (recipe && profile && window.MFC?.recipePrefs)
+                      ? window.MFC.recipePrefs.classify(recipe, profile)
+                          .violations.find((v) => v.kind === 'allergy')
+                      : null;
                     return (
-                      <a key={r.recipe_id} className="rec-card card lift" href={`recipe.html?id=${r.recipe_id}`}>
+                      <a
+                        key={r.recipe_id}
+                        className={'rec-card card lift' + (allergyHit ? ' rec-card-avoid' : '')}
+                        href={`recipe.html?id=${r.recipe_id}`}
+                        title={allergyHit ? `Pipeline says match — but ${allergyHit.reason.toLowerCase()}.` : undefined}
+                      >
                         <RecipeImage recipe={recipe} className="rec-img">
                           <span className="rec-rank">#{r.rank}</span>
                         </RecipeImage>
                         <div>
                           <div className="rec-name">{recipe?.name || r.recipe_id}</div>
+                          {allergyHit && <span className="rec-avoid-badge">{allergyHit.reason}</span>}
                           {r.reason && <p className="rec-reason">{r.reason}</p>}
                           <div className="rec-meta">
                             {recipe?.cuisine && <span>{recipe.cuisine}</span>}
