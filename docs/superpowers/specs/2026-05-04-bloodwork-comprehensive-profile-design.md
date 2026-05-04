@@ -122,10 +122,31 @@ columns.
 Sort order convention: 10s gap per category so admins can wedge in custom rows
 between defaults.
 
+## Design system constraint
+
+All new UI on this spec MUST be implemented with the
+`frontend-design:frontend-design` skill *and* must reuse the existing design
+system rather than inventing new visual treatments:
+
+- **Tokens** — `css/recipe-base.css` defines `--cream` / `--paper` / `--ink`
+  scale, `--orange` / `--matcha` / `--berry` / `--butter` accents, and the
+  typography stack (Geist sans, Instrument Serif, Caveat handwriting,
+  JetBrains Mono). Profile/search/dashboard pages either link this file or
+  duplicate the inline `:root` block as `markers.html` does.
+- **Component vocabulary** — `.card`, `.btn` / `.btn.orange` / `.btn.ghost` /
+  `.btn.sm`, `.filter-chip`, `.section-label`, `.eyebrow-comment`,
+  `.summary-stat` tone variants, `.nav-user` pill + `MfcUserMenu` dropdown.
+  Anything new (e.g. profile chip group, soft-pref strip, avoid-state badge)
+  is built by composing these atoms, not introducing parallel ones.
+- **Aesthetic anchors** — `my/markers.html` and `recipe-search.html` are the
+  reference pages. Match their tone: editorial cream surfaces, orange flame
+  accents, dashed rule-strong dividers, hard-shadow pop on cards, occasional
+  Caveat handwriting accent.
+
 ## Profile page (`my/profile.html`)
 
-Auth-gated like `my/markers.html`. New file. Same editorial cream/orange
-aesthetic. Single-column layout, sectioned.
+Auth-gated like `my/markers.html`. New file. Reuses the design system per the
+constraint above. Single-column layout, sectioned.
 
 ### Sections (in order)
 
