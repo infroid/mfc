@@ -21,7 +21,7 @@ const MARKERS_STYLE = `
   50% { opacity: 0.4; transform: scale(0.6); }
 }
 
-/* ---------- NAV ---------- */
+/* ---------- NAV (outer only — inner pieces in shared/nav.jsx) ---------- */
 .nav {
   position: sticky; top: 0; z-index: 50; height: 64px;
   display: flex; align-items: center;
@@ -29,55 +29,6 @@ const MARKERS_STYLE = `
   -webkit-backdrop-filter: blur(14px) saturate(160%);
           backdrop-filter: blur(14px) saturate(160%);
   border-bottom: 1px solid var(--rule);
-}
-.nav-inner {
-  width: 100%; max-width: var(--container);
-  margin: 0 auto; padding: 0 28px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-}
-.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
-.brand-mark {
-  display: inline-grid; place-items: center;
-  width: 32px; height: 32px;
-  background: var(--orange); color: var(--paper);
-  font-family: var(--serif); font-style: italic; font-size: 22px;
-  border-radius: 50%; transform: rotate(-6deg);
-  flex-shrink: 0;
-}
-.brand-name { font-size: 17px; }
-.brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a {
-  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--ink-soft);
-  transition: color 200ms cubic-bezier(.2,.8,.2,1);
-  position: relative;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--orange); }
-.nav-links a.active::after {
-  content: ""; position: absolute; left: 50%; bottom: -22px;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--orange);
-  transform: translateX(-50%);
-}
-.nav-user {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 14px 6px 6px;
-  background: var(--paper); color: var(--ink);
-  border: 1.5px solid var(--ink); border-radius: var(--r-pill);
-  font-size: 13px; font-weight: 500;
-  cursor: pointer; box-shadow: var(--pop-sm);
-  transition: transform 180ms, box-shadow 180ms;
-}
-.nav-user:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
-.nav-avatar {
-  display: grid; place-items: center;
-  width: 26px; height: 26px;
-  background: var(--orange); color: var(--paper);
-  border-radius: 50%;
-  font-size: 12px; font-weight: 700;
-  font-family: var(--mono);
-  flex-shrink: 0;
-  text-transform: uppercase;
 }
 
 /* ---------- BUTTONS ---------- */
@@ -489,23 +440,8 @@ function useAuthGuard() {
 // ---------- chrome ----------
 
 function Nav({ user }) {
-  const UserMenu = window.MfcUserMenu;
-  return (
-    <nav className="nav">
-      <div className="nav-inner">
-        <a className="brand" href="../index.html">
-          <span className="brand-mark">m</span>
-          <span className="brand-name">MyFood<em>Craving</em></span>
-        </a>
-        <div className="nav-links">
-          <a href="../index.html">Home</a>
-          <a href="markers.html" className="active">Bloodwork</a>
-          <a href="../recipe-search.html">Recipes</a>
-        </div>
-        {UserMenu && <UserMenu user={user} accountHref="account.html" profileHref="profile.html" />}
-      </div>
-    </nav>
-  );
+  const MfcNav = window.MfcNav;
+  return MfcNav ? <MfcNav user={user} active="bloodwork" base="../" /> : null;
 }
 
 // ---------- range bar ----------

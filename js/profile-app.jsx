@@ -68,7 +68,7 @@ const PROFILE_STYLE = `
   50%      { opacity: 0.4; transform: scale(0.6); }
 }
 
-/* ---------- NAV (mirrors account / markers) ---------- */
+/* ---------- NAV (outer only — inner pieces in shared/nav.jsx) ---------- */
 .nav {
   position: sticky; top: 0; z-index: 50; height: 64px;
   display: flex; align-items: center;
@@ -76,35 +76,6 @@ const PROFILE_STYLE = `
   -webkit-backdrop-filter: blur(14px) saturate(160%);
           backdrop-filter: blur(14px) saturate(160%);
   border-bottom: 1px solid var(--rule);
-}
-.nav-inner {
-  width: 100%; max-width: var(--container);
-  margin: 0 auto; padding: 0 28px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-}
-.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
-.brand-mark {
-  display: inline-grid; place-items: center;
-  width: 32px; height: 32px;
-  background: var(--orange); color: var(--paper);
-  font-family: var(--serif); font-style: italic; font-size: 22px;
-  border-radius: 50%; transform: rotate(-6deg);
-  flex-shrink: 0;
-}
-.brand-name { font-size: 17px; }
-.brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a {
-  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--ink-soft);
-  transition: color 200ms cubic-bezier(.2,.8,.2,1);
-  position: relative;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--orange); }
-.nav-links a.active::after {
-  content: ""; position: absolute; left: 50%; bottom: -22px;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--orange);
-  transform: translateX(-50%);
 }
 
 /* ---------- HEADER ---------- */
@@ -423,23 +394,8 @@ function useAuthGuard() {
 // ---------- chrome ----------
 
 function Nav({ user }) {
-  const UserMenu = window.MfcUserMenu;
-  return (
-    <nav className="nav">
-      <div className="nav-inner">
-        <a className="brand" href="../index.html">
-          <span className="brand-mark">m</span>
-          <span className="brand-name">MyFood<em>Craving</em></span>
-        </a>
-        <div className="nav-links">
-          <a href="../index.html">Home</a>
-          <a href="markers.html">Bloodwork</a>
-          <a href="../recipe-search.html">Recipes</a>
-        </div>
-        {UserMenu && <UserMenu user={user} accountHref="account.html" profileHref="profile.html" />}
-      </div>
-    </nav>
-  );
+  const MfcNav = window.MfcNav;
+  return MfcNav ? <MfcNav user={user} base="../" /> : null;
 }
 
 // ---------- chip primitives ----------

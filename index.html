@@ -75,7 +75,7 @@ body::before {
   z-index: 1;
 }
 
-/* NAV */
+/* NAV (outer only — inner pieces in shared/nav.jsx) */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 64px;
   display: flex; align-items: center;
@@ -88,27 +88,6 @@ body::before {
   backdrop-filter: blur(14px) saturate(160%);
   border-bottom-color: var(--rule);
 }
-.nav-inner {
-  width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 28px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-}
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
-.brand-mark {
-  display: inline-grid; place-items: center; width: 32px; height: 32px;
-  background: var(--orange); color: var(--paper);
-  font-family: var(--serif); font-style: italic; font-size: 22px;
-  border-radius: 50%; transform: rotate(-6deg);
-}
-.brand-name { font-size: 17px; }
-.brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); transition: color 200ms; }
-.nav-links a:hover { color: var(--orange); }
-.nav-user-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--orange); color: var(--paper); border-radius: 999px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: background 200ms; }
-.nav-user-btn:hover { background: var(--orange-deep); }
-.nav-user { display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); transition: transform 180ms, box-shadow 180ms; }
-.nav-user:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
-.nav-avatar { display: grid; place-items: center; width: 26px; height: 26px; background: var(--orange); color: var(--paper); border-radius: 50%; font-size: 12px; font-weight: 700; font-family: var(--mono); flex-shrink: 0; text-transform: uppercase; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -616,6 +595,7 @@ section.block { padding: 100px 0; position: relative; z-index: 2; }
 <div id="root"></div>
 
 <script type="text/babel" src="shared/user-menu.jsx" data-presets="react"></script>
+<script type="text/babel" src="shared/nav.jsx" data-presets="react"></script>
 
 <script type="text/babel" data-presets="react">
 const { useState, useEffect, useRef, useCallback, useMemo } = React;
@@ -855,36 +835,9 @@ function TweakRadio({ label, value, options, onChange }) {
 
 /* ── NAV ── */
 function Nav() {
-  const scrolled = useScrolled();
   const user = useAuth();
-  const openAuth = () => window.dispatchEvent(new CustomEvent('mfc:open-auth'));
-  const UserMenu = window.MfcUserMenu;
-  return (
-    <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
-      <div className="nav-inner">
-        <a href="#" className="brand">
-          <span className="brand-mark">m</span>
-          <span className="brand-name">MyFood<em>Craving</em></span>
-        </a>
-        <div className="nav-links">
-          {user ? (
-            <>
-              <a href="my/markers.html">Bloodwork</a>
-              <a href="recipe-search.html">Recipes</a>
-            </>
-          ) : (
-            <>
-              <a href="#why">The problem</a>
-              <a href="#personalize">Tuned to you</a>
-              <a href="#cooking">Cook along</a>
-              <a href="recipe-search.html">Browse recipes</a>
-            </>
-          )}
-        </div>
-        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref="my/account.html" profileHref="my/profile.html" />}
-      </div>
-    </nav>
-  );
+  const MfcNav = window.MfcNav;
+  return MfcNav ? <MfcNav user={user} active="home" /> : null;
 }
 
 /* ── HERO ── */

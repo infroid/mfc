@@ -36,6 +36,7 @@ window.MFC_RECIPE_ID = new URLSearchParams(location.search).get('id') || '';
 <div id="root"></div>
 
 <script type="text/babel" src="shared/user-menu.jsx" data-presets="react"></script>
+<script type="text/babel" src="shared/nav.jsx" data-presets="react"></script>
 <script type="text/babel" src="js/tweaks-panel.jsx"></script>
 <script type="text/babel" src="js/recipe-app.jsx"></script>
 <script type="text/babel" src="js/recipe-components.jsx"></script>
@@ -101,6 +102,8 @@ function MealLogPrompt({ recipe, onLogged }) {
     </>
   );
 }
+
+const MfcNav = window.MfcNav;
 
 function useAuth() {
   const [user, setUser] = React.useState(window.MFC?.auth?.getUser() || null);
@@ -212,7 +215,7 @@ function RecipeApp() {
 
   if (loading) return (
     <>
-      <RecipeNav user={user} />
+      <MfcNav user={user} active="recipes" />
       <div style={{ height: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <p style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-muted)", fontSize: 22 }}>loading recipe…</p>
       </div>
@@ -221,7 +224,7 @@ function RecipeApp() {
 
   if (!recipe) return (
     <>
-      <RecipeNav user={user} />
+      <MfcNav user={user} active="recipes" />
       <div style={{ height: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <p style={{ fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-muted)", fontSize: 22 }}>recipe not found</p>
       </div>
@@ -230,7 +233,7 @@ function RecipeApp() {
 
   return (
     <>
-      <RecipeNav user={user} />
+      <MfcNav user={user} active="recipes" />
       <main className="recipe-page">
         <div className="wrap">
           <div className="r-breadcrumb">
