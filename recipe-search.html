@@ -83,6 +83,11 @@ body::before {
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); transition: color 200ms; }
 .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+.nav-user-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--orange); color: var(--paper); border-radius: 999px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: background 200ms; }
+.nav-user-btn:hover { background: var(--orange-deep); }
+.nav-user { display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); transition: transform 180ms, box-shadow 180ms; }
+.nav-user:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+.nav-avatar { display: grid; place-items: center; width: 26px; height: 26px; background: var(--orange); color: var(--paper); border-radius: 50%; font-size: 12px; font-weight: 700; font-family: var(--mono); flex-shrink: 0; text-transform: uppercase; }
 .btn-nav {
   background: var(--ink); color: var(--paper);
   padding: 10px 20px; border-radius: 999px; font-size: 14px; font-weight: 500;
@@ -295,6 +300,8 @@ body::before {
 
 <div id="root"></div>
 
+<script type="text/babel" src="shared/user-menu.jsx" data-presets="react"></script>
+
 <script type="text/babel" data-presets="react">
 const { useState, useEffect, useMemo, useRef } = React;
 
@@ -329,152 +336,26 @@ function useAuth() {
   return user;
 }
 
-const __AUTH_STYLE = `
-.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center;padding:20px;animation:m-fade 200ms cubic-bezier(.2,.8,.2,1)}
-@keyframes m-fade{from{opacity:0}to{opacity:1}}
-.modal-box{position:relative;background:var(--paper,#FFFCF3);border:1.5px solid var(--ink,#1F1A14);border-radius:24px;box-shadow:8px 8px 0 var(--orange,#FF6D2E);width:100%;max-width:440px;overflow:hidden;animation:m-pop 240ms cubic-bezier(.2,.8,.2,1)}
-@keyframes m-pop{from{transform:translate(8px,8px) scale(.96);opacity:0}to{transform:translate(0,0) scale(1);opacity:1}}
-.modal-head{padding:28px 28px 22px;border-bottom:1px dashed var(--rule-strong,rgba(31,26,20,.28))}
-.modal-eyebrow{font-family:var(--mono,monospace);font-size:12px;color:var(--ink-muted,#6B6253);letter-spacing:.04em;margin-bottom:10px}
-.modal-eyebrow::before{content:"// ";color:var(--orange,#FF6D2E)}
-.modal-title{font-family:var(--sans);font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.025em;color:var(--ink);margin-bottom:10px}
-.modal-title em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--orange,#FF6D2E)}
-.modal-tag{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--ink-soft,#3A332A);line-height:1.4}
-.modal-body{padding:22px 28px 26px}
-.modal-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 18px;border:1.5px solid var(--ink,#1F1A14);border-radius:999px;background:var(--paper,#FFFCF3);color:var(--ink,#1F1A14);font:inherit;font-size:14px;font-weight:500;cursor:pointer;box-shadow:4px 4px 0 var(--ink,#1F1A14);transition:transform 180ms cubic-bezier(.2,.8,.2,1),box-shadow 180ms cubic-bezier(.2,.8,.2,1),background 180ms;margin-bottom:10px}
-.modal-btn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink,#1F1A14)}
-.modal-btn:disabled{opacity:.5;cursor:not-allowed}
-.modal-btn.primary{background:var(--ink,#1F1A14);color:var(--paper,#FFFCF3)}
-.modal-btn.primary:hover:not(:disabled){background:var(--orange,#FF6D2E)}
-.modal-btn.provider{background:#fff;color:#1F1F1F;border-color:#747775}
-.modal-btn.provider:hover:not(:disabled){background:#fff}
-.modal-provider-icon{display:block;width:20px;height:20px;flex:0 0 auto;object-fit:contain}
-.modal-provider-icon.apple{width:30px;height:30px;margin:-5px -3px -5px -2px}
-.modal-divider{display:flex;align-items:center;gap:10px;margin:18px 0 14px}
-.modal-divider hr{flex:1;border:none;border-top:1px dashed var(--rule-strong,rgba(31,26,20,.28))}
-.modal-divider span{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted,#6B6253)}
-.modal-input{width:100%;padding:12px 14px;background:var(--cream-soft,#FBF7EC);border:1.5px solid var(--rule-strong,rgba(31,26,20,.28));border-radius:12px;font:inherit;font-size:15px;color:var(--ink,#1F1A14);outline:none;transition:border-color 180ms,box-shadow 180ms,background 180ms}
-.modal-input:focus{border-color:var(--orange,#FF6D2E);box-shadow:0 0 0 3px rgba(255,109,46,.14);background:var(--paper,#FFFCF3)}
-.modal-input::placeholder{color:var(--ink-faint,#9A8F7C)}
-.modal-magic{display:flex;flex-direction:column;gap:10px}
-.modal-error{color:var(--berry,#C84B5A);font-size:12px;font-family:var(--mono,monospace);margin-top:12px;letter-spacing:.04em}
-.modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;display:grid;place-items:center;border:none;background:transparent;color:var(--ink-muted,#6B6253);font-size:16px;cursor:pointer;border-radius:999px;transition:background 150ms,color 150ms}
-.modal-close:hover{background:var(--cream-deep,#EFE6CF);color:var(--ink,#1F1A14)}
-.modal-sent{padding:36px 28px 32px;text-align:center}
-.modal-sent .scribble{font-family:var(--hand,cursive);font-size:42px;color:var(--orange,#FF6D2E);transform:rotate(-4deg);display:inline-block;line-height:1;margin-bottom:6px}
-.modal-sent .lede{font-family:var(--serif,serif);font-style:italic;font-size:18px;color:var(--ink-soft,#3A332A);line-height:1.4}
-.modal-sent .tip{font-family:var(--mono,monospace);font-size:11px;color:var(--ink-faint,#9A8F7C);margin-top:14px;letter-spacing:.06em}
-.nav-user-btn{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--orange,#FF6D2E);color:var(--paper,#FFFCF3);border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;border:none;transition:background 200ms}
-.nav-user-btn:hover{background:var(--orange-deep,#E2531A)}
-.nav-avatar{display:inline-grid;place-items:center;width:22px;height:22px;background:rgba(255,255,255,.25);border-radius:50%;font-size:11px;font-weight:700}
-`;
-
-function AuthModal({ onClose }) {
-  const [email, setEmail] = useState('');
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState('');
-  const [busy, setBusy] = useState(false);
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError('');
-    if (!email.trim()) return;
-    setBusy(true);
-    try {
-      await window.MFC.auth.signIn({ email: email.trim() });
-      setSent(true);
-    } catch (err) { setError(err.message || 'Failed to send link'); }
-    setBusy(false);
-  }
-  async function handleGoogle() {
-    setError(''); setBusy(true);
-    try { await window.MFC.auth.signIn({ provider: 'google' }); }
-    catch (err) { setError(err.message || 'Google sign-in failed'); setBusy(false); }
-  }
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
-  return (
-    <>
-      <style>{__AUTH_STYLE}</style>
-      <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-box" onClick={e => e.stopPropagation()}>
-          <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
-          <div className="modal-head">
-            <div className="modal-eyebrow">welcome back</div>
-            <h3 className="modal-title">
-              Sign in to{' '}
-              <span className="brand" style={{ display: 'inline-flex', verticalAlign: 'middle' }}>
-                <span className="brand-mark">m</span>
-                <span className="brand-name" style={{ fontSize: 'inherit' }}>MyFood<em>Craving</em></span>
-              </span>
-            </h3>
-            <p className="modal-tag">Sync your health markers, get food recommendations tuned to your bloodwork, and pick up cooking right where you left off.</p>
-          </div>
-          {sent ? (
-            <div className="modal-sent">
-              <div className="scribble">✎</div>
-              <p className="lede">Check <b>{email}</b> for a sign-in link.</p>
-              <p className="tip">// link expires in 1 hour</p>
-            </div>
-          ) : (
-            <div className="modal-body">
-              <button type="button" className="modal-btn provider" onClick={handleGoogle} disabled={busy}>
-                <img className="modal-provider-icon" src="assets/brand/google-g.svg" alt="" aria-hidden="true" draggable="false" />
-                Continue with Google
-              </button>
-              <button type="button" className="modal-btn provider" disabled title="Coming soon">
-                <img className="modal-provider-icon apple" src="assets/brand/apple-logo.png" alt="" aria-hidden="true" draggable="false" />
-                Continue with Apple
-              </button>
-              <div className="modal-divider"><hr /><span>or magic link</span><hr /></div>
-              <form onSubmit={handleSubmit} className="modal-magic">
-                <input className="modal-input" type="email" required
-                  placeholder="you@kitchen.com"
-                  value={email} onChange={e => setEmail(e.target.value)} autoFocus />
-                <button type="submit" className="modal-btn primary" disabled={busy} style={{ marginBottom: 0 }}>
-                  {busy ? 'sending…' : 'Send sign-in link →'}
-                </button>
-              </form>
-              {error && <div className="modal-error">{error}</div>}
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-  );
-}
-
 function Nav() {
   const scrolled = useScrolled();
   const user = useAuth();
-  const [showAuth, setShowAuth] = useState(false);
+  const openAuth = () => window.dispatchEvent(new CustomEvent('mfc:open-auth'));
+  const UserMenu = window.MfcUserMenu;
   return (
-    <>
-      <nav className={"nav" + (scrolled ? " scrolled" : "")}>
-        <div className="nav-inner">
-          <a href="index.html" className="brand">
-            <span className="brand-mark">m</span>
-            <span className="brand-name">MyFood<em>Craving</em></span>
-          </a>
-          <div className="nav-links">
-            <a href="index.html">Home</a>
-            {user && <a href="my/markers.html">Bloodwork</a>}
-            <a href="recipe-search.html" className="active">Recipes</a>
-          </div>
-          {user ? (
-            <button className="nav-user-btn" onClick={() => window.MFC?.auth?.signOut()} title="Sign out">
-              <span className="nav-avatar">{user.name[0].toUpperCase()}</span>
-              {user.name.split(' ')[0]}
-            </button>
-          ) : (
-            <button className="btn-nav" onClick={() => setShowAuth(true)}>Sign in →</button>
-          )}
+    <nav className={"nav" + (scrolled ? " scrolled" : "")}>
+      <div className="nav-inner">
+        <a href="index.html" className="brand">
+          <span className="brand-mark">m</span>
+          <span className="brand-name">MyFood<em>Craving</em></span>
+        </a>
+        <div className="nav-links">
+          <a href="index.html">Home</a>
+          {user && <a href="my/markers.html">Bloodwork</a>}
+          <a href="recipe-search.html" className="active">Recipes</a>
         </div>
-      </nav>
-      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
-    </>
+        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref="my/account.html" />}
+      </div>
+    </nav>
   );
 }
 
@@ -762,6 +643,8 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
+
+<script type="text/babel" src="shared/auth-modal.jsx" data-presets="react"></script>
 
 </body>
 </html>

@@ -51,20 +51,21 @@ const DASH_STYLE = `
 .nav-user {
   display: flex; align-items: center; gap: 8px;
   padding: 6px 14px 6px 6px;
-  background: var(--paper);
+  background: var(--paper); color: var(--ink);
   border: 1.5px solid var(--ink); border-radius: var(--r-pill);
   font-size: 13px; font-weight: 500;
-  box-shadow: var(--pop-sm); cursor: pointer;
+  cursor: pointer; box-shadow: var(--pop-sm);
   transition: transform 180ms, box-shadow 180ms;
 }
 .nav-user:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
 .nav-avatar {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: var(--orange); color: var(--paper);
   display: grid; place-items: center;
+  width: 26px; height: 26px;
+  background: var(--orange); color: var(--paper);
+  border-radius: 50%;
   font-size: 12px; font-weight: 700;
-  font-family: var(--mono); flex-shrink: 0;
-  text-transform: uppercase;
+  font-family: var(--mono);
+  flex-shrink: 0; text-transform: uppercase;
 }
 
 /* ---------- BUTTONS / PILLS ---------- */
@@ -555,9 +556,7 @@ function RecipeImage({ recipe, fallbackBg, className, children }) {
 // ---------- chrome ----------
 
 function Nav({ user }) {
-  const initials = (user?.name || user?.email || '?')
-    .split(/[\s@.]/).filter(Boolean).slice(0, 2)
-    .map((s) => s[0]).join('') || '?';
+  const UserMenu = window.MfcUserMenu;
   return (
     <nav className="nav">
       <div className="nav-inner">
@@ -570,14 +569,7 @@ function Nav({ user }) {
           <a href="markers.html">Bloodwork</a>
           <a href="../recipe-search.html">Recipes</a>
         </div>
-        <button
-          className="nav-user"
-          onClick={() => window.MFC.auth.signOut()}
-          title={`${user?.email || ''} — click to sign out`}
-        >
-          <span className="nav-avatar">{initials}</span>
-          <span>Sign out</span>
-        </button>
+        {UserMenu && <UserMenu user={user} accountHref="account.html" />}
       </div>
     </nav>
   );

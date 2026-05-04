@@ -31,21 +31,23 @@ function scaleAmt(ing, serv, base) {
 // ============================================================
 // NAV
 // ============================================================
-function RecipeNav() {
+function RecipeNav({ user }) {
   const scrolled = useScrolled();
+  const openAuth = () => window.dispatchEvent(new CustomEvent('mfc:open-auth'));
+  const UserMenu = window.MfcUserMenu;
   return (
     <nav className={"nav" + (scrolled ? " scrolled" : "")}>
       <div className="nav-inner">
         <a href={_BASE + "index.html"} className="brand">
           <span className="brand-mark">m</span>
-          <span className="brand-name">my<em>food</em>craving</span>
+          <span className="brand-name">MyFood<em>Craving</em></span>
         </a>
         <div className="nav-links">
           <a href={_BASE + "index.html"}>Home</a>
-          <a href={_BASE + "my/markers.html"}>Bloodwork</a>
+          {user && <a href={_BASE + "my/markers.html"}>Bloodwork</a>}
           <a href={_BASE + "recipe-search.html"}>Recipes</a>
         </div>
-        <a href={_BASE + "recipe-search.html"} className="btn btn-primary">All recipes</a>
+        {UserMenu && <UserMenu user={user} onSignIn={openAuth} accountHref={_BASE + "my/account.html"} />}
       </div>
     </nav>
   );
