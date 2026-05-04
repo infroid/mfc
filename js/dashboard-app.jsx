@@ -733,7 +733,7 @@ function DashboardApp() {
   const [profile, setProfile]         = useState(null);
 
   useEffect(() => {
-    if (ready && !user) window.location.href = 'index.html';
+    if (ready && !user) window.location.href = '../index.html';
   }, [ready, user]);
 
   // Load (and refresh) the user's profile for defensive allergy flagging.
@@ -885,7 +885,7 @@ function DashboardApp() {
                         Paused on <b>step {s.current_step + 1}</b> · {formatAgo(s.updated_at)}
                       </p>
                     </div>
-                    <a className="btn orange" href={`recipe.html?id=${r.id}&resume=1`}>Resume →</a>
+                    <a className="btn orange" href={`../recipe.html?id=${r.id}&resume=1`}>Resume →</a>
                   </div>
                 );
               })}
@@ -930,7 +930,7 @@ function DashboardApp() {
                       <a
                         key={r.recipe_id}
                         className={'rec-card card lift' + (allergyHit ? ' rec-card-avoid' : '')}
-                        href={`recipe.html?id=${r.recipe_id}`}
+                        href={`../recipe.html?id=${r.recipe_id}`}
                         title={allergyHit ? `Pipeline says match — but ${allergyHit.reason.toLowerCase()}.` : undefined}
                       >
                         <RecipeImage recipe={recipe} className="rec-img">
@@ -969,7 +969,7 @@ function DashboardApp() {
                   {saved.map((s) => {
                     const r = recipesById[s.recipe_id];
                     return (
-                      <a key={s.recipe_id} className="saved-card card lift" href={`recipe.html?id=${s.recipe_id}`}>
+                      <a key={s.recipe_id} className="saved-card card lift" href={`../recipe.html?id=${s.recipe_id}`}>
                         <RecipeImage recipe={r} className="saved-img" fallbackBg="var(--cream-deep)">
                           <span className="saved-heart">♥</span>
                         </RecipeImage>

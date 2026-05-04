@@ -676,7 +676,7 @@ function MarkersApp() {
   const [tab, setTab]               = useState('all');
 
   useEffect(() => {
-    if (ready && !user) window.location.href = 'index.html';
+    if (ready && !user) window.location.href = '../index.html';
   }, [ready, user]);
 
   useEffect(() => {

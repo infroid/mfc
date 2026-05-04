@@ -72,10 +72,6 @@ window.MFC.auth = (function () {
         if (window.MFC?.db?.handoffAnonymous) {
           window.MFC.db.handoffAnonymous(next).catch((e) => console.warn('[mfc] handoff failed', e));
         }
-        if (!isStayPage()) {
-          redirectAfterLogin();
-          return;
-        }
       }
       if (next && isLoggedOutOnlyPage()) {
         redirectAfterLogin();
