@@ -11,8 +11,11 @@
 .user-menu { position: relative; display: inline-flex; }
 .user-menu .nav-user { gap: 8px; }
 .user-menu-caret {
-  font-size: 10px; color: var(--ink-muted, #6B6253);
-  margin-left: 2px; transition: transform 200ms cubic-bezier(.2,.8,.2,1);
+  width: 0; height: 0; margin-left: 4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--ink-muted, #6B6253);
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1);
 }
 .user-menu .nav-user.open .user-menu-caret { transform: rotate(180deg); }
 .user-menu-dropdown {
@@ -132,7 +135,7 @@
         >
           <span className="nav-avatar">{initials}</span>
           <span>{firstName}</span>
-          <span className="user-menu-caret" aria-hidden="true">▾</span>
+          <span className="user-menu-caret" aria-hidden="true" />
         </button>
         {open && (
           <div className="user-menu-dropdown" role="menu">
