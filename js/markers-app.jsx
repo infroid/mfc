@@ -425,7 +425,14 @@ const MARKER_RECIPE_HINTS = {
   wbc:               ['palak-paneer'],
 };
 
-const CATEGORY_TABS = ['all', 'mineral', 'vitamin', 'lipid', 'metabolic', 'blood', 'thyroid', 'kidney'];
+const CATEGORY_TABS = [
+  'all',
+  'iron-panel', 'inflammation',
+  'lipid', 'metabolic',
+  'liver', 'kidney',
+  'vitamin', 'mineral',
+  'thyroid', 'other',
+];
 
 // Apply user.biologicalSex to a metric def: when sex-specific bounds exist
 // they replace the unisex normal_min/max; otherwise the def is unchanged.
