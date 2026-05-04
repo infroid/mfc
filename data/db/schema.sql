@@ -21,6 +21,7 @@
 -- DESTRUCTIVE: uncomment to wipe everything before re-applying the schema.
 -- DROP TABLE IF EXISTS public.meal_logs, public.cooking_sessions, public.saved_recipes,
 --   public.recommendations, public.user_health_markers, public.user_prefs,
+--   public.user_profiles,
 --   public.recipe_health_facts, public.recipe_tags, public.recipe_utensils,
 --   public.recipe_steps, public.recipe_ingredients, public.utensil_buy_links,
 --   public.recipes, public.utensils, public.ingredients, public.metric_definitions
@@ -265,7 +266,8 @@ ALTER TABLE public.metric_definitions
   ADD COLUMN IF NOT EXISTS normal_min_female numeric,
   ADD COLUMN IF NOT EXISTS normal_max_female numeric,
   ADD COLUMN IF NOT EXISTS normal_min_male   numeric,
-  ADD COLUMN IF NOT EXISTS normal_max_male   numeric;
+  ADD COLUMN IF NOT EXISTS normal_max_male   numeric,
+  ADD COLUMN IF NOT EXISTS description       text;
 
 COMMENT ON TABLE  public.metric_definitions                   IS 'Catalog of recordable health markers (iron, b12, d3, ldl, etc.). Seeded by data/db/seed_metrics.sql.';
 COMMENT ON COLUMN public.metric_definitions.id                IS 'Stable string id (e.g. "iron", "b12", "d3", "ldl"). Join key for the data pipeline.';
@@ -277,8 +279,9 @@ COMMENT ON COLUMN public.metric_definitions.normal_min_female IS 'Lower bound fo
 COMMENT ON COLUMN public.metric_definitions.normal_max_female IS 'Upper bound for female biological sex. Used when set; otherwise normal_max.';
 COMMENT ON COLUMN public.metric_definitions.normal_min_male   IS 'Lower bound for male biological sex. Used when set; otherwise normal_min.';
 COMMENT ON COLUMN public.metric_definitions.normal_max_male   IS 'Upper bound for male biological sex. Used when set; otherwise normal_max.';
-COMMENT ON COLUMN public.metric_definitions.category          IS 'UI grouping: "mineral", "vitamin", "lipid", "metabolic", "thyroid", "kidney", "blood".';
+COMMENT ON COLUMN public.metric_definitions.category          IS 'UI grouping: lipid | metabolic | iron-panel | inflammation | liver | kidney | vitamin | mineral | thyroid | other.';
 COMMENT ON COLUMN public.metric_definitions.sort_order        IS 'Display order within the markers panel.';
+COMMENT ON COLUMN public.metric_definitions.description       IS 'One-liner explaining what the marker measures and how diet affects it. Surfaced on the marker card''s expanded view.';
 
 
 CREATE TABLE IF NOT EXISTS public.user_health_markers (
@@ -386,6 +389,27 @@ COMMENT ON COLUMN public.user_prefs.value      IS 'JSONB blob — shape owned by
 COMMENT ON COLUMN public.user_prefs.updated_at IS 'Auto-updated via touch_updated_at trigger on UPDATE.';
 
 
+CREATE TABLE IF NOT EXISTS public.user_profiles (
+  user_id       uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  date_of_birth date,
+  diet_tags     text[] NOT NULL DEFAULT '{}',
+  allergies     text[] NOT NULL DEFAULT '{}',
+  goals         text[] NOT NULL DEFAULT '{}',
+  units         text   NOT NULL DEFAULT 'metric'
+                       CHECK (units IN ('metric','imperial')),
+  updated_at    timestamptz NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE  public.user_profiles               IS 'Per-user food/health profile: dietary identity, allergies, goals, units. Display name and biological sex live on auth.users.user_metadata (set via account/markers UI; permanent for biological sex).';
+COMMENT ON COLUMN public.user_profiles.user_id       IS 'PK + FK → auth.users.id. One row per user.';
+COMMENT ON COLUMN public.user_profiles.date_of_birth IS 'Optional. Used by the recommender pipeline for age-aware ranges and recommendations.';
+COMMENT ON COLUMN public.user_profiles.diet_tags     IS 'Diet style + soft-pref tags (e.g. {"vegetarian","high-protein","mediterranean"}). Drawn from a shared taxonomy aligned with recipe_tags.tag.';
+COMMENT ON COLUMN public.user_profiles.allergies     IS 'Hard exclusions (e.g. {"nut-free","egg-free"}). Always enforced — recipes that violate are demoted regardless of master toggle.';
+COMMENT ON COLUMN public.user_profiles.goals         IS 'Health goals (e.g. {"weight-loss","heart-health"}).';
+COMMENT ON COLUMN public.user_profiles.units         IS '"metric" | "imperial". Controls unit rendering across the app.';
+COMMENT ON COLUMN public.user_profiles.updated_at    IS 'Auto-updated via touch_updated_at trigger on UPDATE.';
+
+
 CREATE TABLE IF NOT EXISTS public.meal_logs (
   id        uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id   uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -429,6 +453,7 @@ DROP TRIGGER IF EXISTS trg_recipes_updated_at             ON public.recipes;
 DROP TRIGGER IF EXISTS trg_user_health_markers_updated_at ON public.user_health_markers;
 DROP TRIGGER IF EXISTS trg_cooking_sessions_updated_at    ON public.cooking_sessions;
 DROP TRIGGER IF EXISTS trg_user_prefs_updated_at          ON public.user_prefs;
+DROP TRIGGER IF EXISTS trg_user_profiles_updated_at       ON public.user_profiles;
 
 CREATE TRIGGER trg_ingredients_updated_at
   BEFORE UPDATE ON public.ingredients
@@ -452,6 +477,10 @@ CREATE TRIGGER trg_cooking_sessions_updated_at
 
 CREATE TRIGGER trg_user_prefs_updated_at
   BEFORE UPDATE ON public.user_prefs
+  FOR EACH ROW EXECUTE FUNCTION public.touch_updated_at();
+
+CREATE TRIGGER trg_user_profiles_updated_at
+  BEFORE UPDATE ON public.user_profiles
   FOR EACH ROW EXECUTE FUNCTION public.touch_updated_at();
 
 
@@ -498,12 +527,14 @@ ALTER TABLE public.user_health_markers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.saved_recipes       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cooking_sessions    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_prefs          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_profiles       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.meal_logs           ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "user_health_markers_owner_all" ON public.user_health_markers;
 DROP POLICY IF EXISTS "saved_recipes_owner_all"       ON public.saved_recipes;
 DROP POLICY IF EXISTS "cooking_sessions_owner_all"    ON public.cooking_sessions;
 DROP POLICY IF EXISTS "user_prefs_owner_all"          ON public.user_prefs;
+DROP POLICY IF EXISTS "user_profiles_owner_all"       ON public.user_profiles;
 DROP POLICY IF EXISTS "meal_logs_owner_all"           ON public.meal_logs;
 
 CREATE POLICY "user_health_markers_owner_all" ON public.user_health_markers
@@ -513,6 +544,8 @@ CREATE POLICY "saved_recipes_owner_all"       ON public.saved_recipes
 CREATE POLICY "cooking_sessions_owner_all"    ON public.cooking_sessions
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "user_prefs_owner_all"          ON public.user_prefs
+  FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "user_profiles_owner_all"       ON public.user_profiles
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "meal_logs_owner_all"           ON public.meal_logs
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
