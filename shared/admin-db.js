@@ -196,9 +196,67 @@ window.MFC.adminDb = (function () {
     check(error, 'deleteRecipe');
   }
 
+  // ---------- DASHBOARD AGGREGATES ----------
+  // Single shot: fetches everything the analytics dashboard needs in parallel.
+  // All catalog/library tables are public-read, so this works for any signed-in
+  // admin (or anonymous, but the page is gated to admins).
+  async function getDashboardSnapshot() {
+    const [
+      recipesRes,
+      ingredientsRes,
+      utensilsRes,
+      ingUsageRes,
+      utUsageRes,
+      tagsRes,
+      healthRes,
+      utLinksRes,
+    ] = await Promise.all([
+      sb().from('recipes').select(
+        'id,name,cuisine,difficulty,total_minutes,featured,meal_types,media,highlight,created_at,updated_at,' +
+        'recipe_steps(count),recipe_ingredients(count),recipe_utensils(count),recipe_tags(count),recipe_health_facts(count)'
+      ).order('updated_at', { ascending: false }),
+      sb().from('ingredients').select('id,name,category,photo,nutrition,health_fact,ai_filled_at,created_at,updated_at'),
+      sb().from('utensils').select('id,name,category,photo,care_tip,ai_filled_at,created_at,updated_at'),
+      sb().from('recipe_ingredients').select('ingredient_id'),
+      sb().from('recipe_utensils').select('utensil_id'),
+      sb().from('recipe_tags').select('tag,recipe_id'),
+      sb().from('recipe_health_facts').select('recipe_id'),
+      sb().from('utensil_buy_links').select('utensil_id'),
+    ]);
+
+    [recipesRes, ingredientsRes, utensilsRes, ingUsageRes, utUsageRes, tagsRes, healthRes, utLinksRes]
+      .forEach((r, i) => check(r.error, `dashboard.${i}`));
+
+    const recipes = (recipesRes.data || []).map((r) => ({
+      ...r,
+      stepCount: r.recipe_steps?.[0]?.count ?? 0,
+      ingCount:  r.recipe_ingredients?.[0]?.count ?? 0,
+      utCount:   r.recipe_utensils?.[0]?.count ?? 0,
+      tagCount:  r.recipe_tags?.[0]?.count ?? 0,
+      healthCount: r.recipe_health_facts?.[0]?.count ?? 0,
+    }));
+
+    return {
+      recipes,
+      ingredients: ingredientsRes.data || [],
+      utensils:    utensilsRes.data || [],
+      ingredientUsage: tally(ingUsageRes.data || [], 'ingredient_id'),
+      utensilUsage:    tally(utUsageRes.data || [], 'utensil_id'),
+      tags:            tagsRes.data || [],
+      utensilBuyLinks: tally(utLinksRes.data || [], 'utensil_id'),
+    };
+  }
+
+  function tally(rows, key) {
+    const out = {};
+    for (const r of rows) out[r[key]] = (out[r[key]] || 0) + 1;
+    return out;
+  }
+
   return {
     listIngredients, getIngredient, upsertIngredient, deleteIngredient, ingredientUsageCounts,
     listUtensils,    getUtensil,    upsertUtensil,    deleteUtensil,    utensilUsageCounts,
     listRecipes,     getRecipe,     saveRecipe,       deleteRecipe,
+    getDashboardSnapshot,
   };
 })();
