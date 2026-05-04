@@ -85,10 +85,6 @@ python3 -m http.server 8080
   bounds override the unisex baseline on iron, ferritin, hemoglobin,
   transferrin_saturation, uric_acid, and creatinine. Each row carries a
   `description` one-liner that surfaces on the marker card.
-- [data/db/migration-2026-05-04-profiles-and-marker-ranges.sql](data/db/migration-2026-05-04-profiles-and-marker-ranges.sql)
-  — apply-on-existing delta for the bloodwork-and-profile rev. Adds the
-  description + sex-specific columns and creates `user_profiles`. Re-running
-  `seed_metrics.sql` after applying loads the 54-row catalog.
 
 Schema layers:
 
