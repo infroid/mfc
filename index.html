@@ -1285,7 +1285,7 @@ function AuthedPersonalize() {
     <>
       <style>{AUTHED_PERSONALIZE_STYLE}</style>
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
-        <a href="dashboard.html" style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--orange)', letterSpacing: '0.04em' }}>Open dashboard →</a>
+        <a href="my/dashboard.html" style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--orange)', letterSpacing: '0.04em' }}>Open dashboard →</a>
       </div>
       <div className="personalize-grid">
         <div className="reveal">
@@ -1353,7 +1353,7 @@ function Personalize() {
           <p className="lede reveal">{user
             ? 'Enter your latest blood test values. Our pipeline maps your numbers to recipes that close real gaps — refreshed as soon as new markers come in.'
             : 'Toggle a health flag and watch the meal swap. MFC actually reads your panels — iron, B12, sodium, fiber — and suggests food that closes your real gaps. Not a diet plan. Your plan.'}</p>
-          {user && <p className="reveal" style={{ marginTop: 10 }}><a href="markers.html" style={{ fontFamily: 'var(--mono)', fontSize: 13, color: 'var(--orange)' }}>Manage your markers →</a></p>}
+          {user && <p className="reveal" style={{ marginTop: 10 }}><a href="my/markers.html" style={{ fontFamily: 'var(--mono)', fontSize: 13, color: 'var(--orange)' }}>Manage your markers →</a></p>}
         </div>
         {user ? <AuthedPersonalize /> : <AnonymousPersonalize />}
       </div>

@@ -560,13 +560,13 @@ function Nav({ user }) {
   return (
     <nav className="nav">
       <div className="nav-inner">
-        <a className="brand" href="index.html">
+        <a className="brand" href="../index.html">
           <span className="brand-mark">m</span>
           <span className="brand-name">MyFood<em>Craving</em></span>
         </a>
         <div className="nav-links">
-          <a href="index.html">Home</a>
-          <a href="recipe-search.html">Recipes</a>
+          <a href="../index.html">Home</a>
+          <a href="../recipe-search.html">Recipes</a>
           <a href="dashboard.html" className="active">Dashboard</a>
           <a href="markers.html">Markers</a>
         </div>

@@ -13,7 +13,7 @@ Guidance for Claude Code working in this repo.
 
 Marketing + recipe site for MyFoodCraving (Infroid Technologies). Static frontend
 on GitHub Pages, dynamic data from Supabase. See [README.md](README.md) for the
-public-facing summary and [USER-TODO.md](USER-TODO.md) for setup steps the human
+public-facing summary and [USER-TODO.md](docs/USER-TODO.md) for setup steps the human
 performs (project creation, schema apply, auth config, recipe import).
 
 ## Dev
@@ -36,17 +36,17 @@ python3 -m http.server 8080
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via
   `<script type="text/babel">`
 - 5 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
-  [recipe.html](recipe.html), [dashboard.html](dashboard.html),
-  [markers.html](markers.html). Each is mostly self-contained.
-- [recipe.html](recipe.html) imports [recipe-app.jsx](recipe-app.jsx),
-  [recipe-components.jsx](recipe-components.jsx),
-  [tweaks-panel.jsx](tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
-- [dashboard.html](dashboard.html) imports [dashboard-app.jsx](dashboard-app.jsx).
+  [recipe.html](recipe.html), [dashboard.html](my/dashboard.html),
+  [markers.html](my/markers.html). Each is mostly self-contained.
+- [recipe.html](recipe.html) imports [recipe-app.jsx](js/recipe-app.jsx),
+  [recipe-components.jsx](js/recipe-components.jsx),
+  [tweaks-panel.jsx](js/tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
+- [dashboard.html](my/dashboard.html) imports [dashboard-app.jsx](js/dashboard-app.jsx).
   Auth-gated: redirects to index.html if not signed in.
-- [markers.html](markers.html) imports [markers-app.jsx](markers-app.jsx).
+- [markers.html](my/markers.html) imports [markers-app.jsx](js/markers-app.jsx).
   Auth-gated: blood marker editor only, no other content.
 - 6 admin pages: list + edit for each of recipes, ingredients, utensils
-  ([admin-recipes.html](admin-recipes.html), [admin-recipe.html](admin-recipe.html),
+  ([admin/recipes.html](admin/recipes.html), [admin/recipe.html](admin/recipe.html),
   and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
   `app_metadata.role = 'admin'`.
 - Supabase JS client loaded from CDN; bootstrapped from `<meta>` tags in each
@@ -56,10 +56,11 @@ python3 -m http.server 8080
 
 - **Source of truth: Supabase Postgres**, accessed via the Supabase JS client.
   No static-JSON fallback at runtime.
-- [data/recipes.json](data/recipes.json) and
-  [data/recipe-bundles/{id}/recipe.json](data/recipe-bundles/) are the **import
+- [data/recipe-bundles/{id}/recipe.json](data/recipe-bundles/) is the **import
   seed** for [scripts/import_recipes.mjs](scripts/import_recipes.mjs); not
-  fetched by the browser.
+  fetched by the browser. Each bundle is self-contained (listing fields +
+  full detail). The browser does still fetch a bundle as a side-channel for
+  step image paths that aren't stored in Supabase.
 - Recipe images stay at `data/recipe-bundles/{id}/hero.jpg` (and `step-*.jpg`),
   served by GH Pages CDN. Recipe rows store the relative path.
 
@@ -107,10 +108,10 @@ Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
    table. Calls return `null` / `[]` / `false` when the user isn't signed in
    (anonymous code paths just see nothing).
 4. [shared/meal-time.js](shared/meal-time.js) — `window.MFC.mealTime.defaultMealTypeForNow()`.
-   Loaded on dashboard.html; import into any page that needs the meal-slot helper.
+   Loaded on my/dashboard.html; import into any page that needs the meal-slot helper.
 5. [shared/admin-db.js](shared/admin-db.js) — `window.MFC.adminDb`: CRUD
    wrappers for the admin pages (recipes, ingredients, utensils). Loaded only
-   on `admin-*.html`.
+   under `admin/`.
 6. [shared/admin-gate.js](shared/admin-gate.js) — `window.MFC.adminGate.guard()`
    resolves true only when the signed-in user has `app_metadata.role = 'admin'`;
    otherwise renders a sign-in / not-authorized panel and resolves false.
@@ -127,8 +128,8 @@ the `mfc:auth-change` event.
 
 ### Redirect contract ([shared/auth.js](shared/auth.js))
 
-- **Post-login → `dashboard.html`** unless the user is on a "stay" page
-  (`recipe.html`, `dashboard.html`, or any `admin-*.html`), in which case they
+- **Post-login → `my/dashboard.html`** unless the user is on a "stay" page
+  (`recipe.html`, `my/dashboard.html`, or any page under `admin/`), in which case they
   stay on the current page. Applies to both Google OAuth (`redirectTo`) and
   magic link (`emailRedirectTo`), plus an in-tab fallback in
   `onAuthStateChange`.
@@ -146,18 +147,18 @@ then clears the local copies.
 
 ## Shared assets
 
-- [recipe-base.css](recipe-base.css) — CSS custom properties (design tokens)
-- [recipe-styles.css](recipe-styles.css) — recipe page styles
-- [tweaks-panel.jsx](tweaks-panel.jsx) — `TweaksPanel`, `useTweaks`,
+- [recipe-base.css](css/recipe-base.css) — CSS custom properties (design tokens)
+- [recipe-styles.css](css/recipe-styles.css) — recipe page styles
+- [tweaks-panel.jsx](js/tweaks-panel.jsx) — `TweaksPanel`, `useTweaks`,
   `TweakSection`, `TweakRow`, `TweakSlider`, `TweakToggle`, `TweakColor` on
   `window`
-- [recipe-components.jsx](recipe-components.jsx) +
-  [recipe-app.jsx](recipe-app.jsx) — `RecipeNav`, `RecipeHero`, `StepCard`,
+- [recipe-components.jsx](js/recipe-components.jsx) +
+  [recipe-app.jsx](js/recipe-app.jsx) — `RecipeNav`, `RecipeHero`, `StepCard`,
   `IngredientsCard`, `UtensilsCard`, `HealthMarquee`, `CookingPlayer`,
   `useScrolled` on `window`
-- [admin-styles.css](admin-styles.css) + [admin-simple.css](admin-simple.css) —
+- [admin-styles.css](css/admin-styles.css) + [admin-simple.css](css/admin-simple.css) —
   admin shell, forms, library picker, list table styles
-- [admin-shared.jsx](admin-shared.jsx) — `AdminSidebar`, `AdminTopbar`,
+- [admin-shared.jsx](js/admin-shared.jsx) — `AdminSidebar`, `AdminTopbar`,
   `SaveBar`, `FormCard`, `Field`, `RadioPills`, `Toggle`, `ChipInput`,
   `Uploader`, `PreviewFrame`, `slugify` on `window`
 
@@ -167,7 +168,7 @@ then clears the local copies.
 - `--cream` / `--paper` / `--ink` — background/text scale
 - `--sans` / `--serif` / `--hand` / `--mono` — Geist / Instrument Serif / Caveat / JetBrains Mono
 
-Tokens defined in [recipe-base.css](recipe-base.css); duplicated inline in
+Tokens defined in [recipe-base.css](css/recipe-base.css); duplicated inline in
 [index.html](index.html) and [recipe-search.html](recipe-search.html).
 
 ## TweaksPanel

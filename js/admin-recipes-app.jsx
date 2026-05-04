@@ -68,7 +68,7 @@ function RecipesListApp() {
               />
               {filtered && <span className="list-count">{filtered.length} of {rows.length}</span>}
             </div>
-            <a href="admin-recipe.html?new=1" className="btn-sm primary" style={{ textDecoration: "none" }}>+ New recipe</a>
+            <a href="recipe.html?new=1" className="btn-sm primary" style={{ textDecoration: "none" }}>+ New recipe</a>
           </div>
 
           {err && (
@@ -94,11 +94,11 @@ function RecipesListApp() {
                 <div className="list-empty">
                   <h3>{q ? "Nothing matches" : "No recipes yet"}</h3>
                   <p>{q ? "Try a different search term." : "Create your first recipe to get started."}</p>
-                  {!q && <a href="admin-recipe.html?new=1" className="btn-sm primary" style={{ textDecoration: "none" }}>+ New recipe</a>}
+                  {!q && <a href="recipe.html?new=1" className="btn-sm primary" style={{ textDecoration: "none" }}>+ New recipe</a>}
                 </div>
               )}
               {rows && filtered.map((r) => (
-                <div key={r.id} className="list-row" onClick={() => { location.href = `admin-recipe.html?id=${encodeURIComponent(r.id)}`; }}>
+                <div key={r.id} className="list-row" onClick={() => { location.href = `recipe.html?id=${encodeURIComponent(r.id)}`; }}>
                   <div className="lib-thumb" />
                   <div>
                     <div className="name">{r.name}</div>

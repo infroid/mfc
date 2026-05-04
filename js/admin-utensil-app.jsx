@@ -97,7 +97,7 @@ function UtensilAdminApp() {
       }
       await window.MFC.adminDb.upsertUtensil(toDb({ ...r, id }));
       setDirty(false); setSavedAgo("just now");
-      if (isNew) { location.href = `admin-utensil.html?id=${encodeURIComponent(id)}`; return; }
+      if (isNew) { location.href = `utensil.html?id=${encodeURIComponent(id)}`; return; }
     } catch (e) { setErr(e.message || String(e)); }
     finally { setBusy(false); }
   }
@@ -113,11 +113,11 @@ function UtensilAdminApp() {
       <div className="admin-shell">
         <AdminSidebar active="utensils" />
         <div className="admin-main">
-          <AdminTopbar crumb={[{ label: "Utensils", href: "admin-utensils.html" }, { label: "Error" }]} />
+          <AdminTopbar crumb={[{ label: "Utensils", href: "utensils.html" }, { label: "Error" }]} />
           <div className="admin-page">
             <div className="form-card" style={{ borderColor: "var(--berry)" }}>
               <div className="form-card-body" style={{ color: "var(--berry)" }}>
-                {err} · <a href="admin-utensils.html" style={{ color: "var(--orange)" }}>Back to utensils</a>
+                {err} · <a href="utensils.html" style={{ color: "var(--orange)" }}>Back to utensils</a>
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ function UtensilAdminApp() {
       <AdminSidebar active="utensils" />
       <div className="admin-main">
         <AdminTopbar
-          crumb={[{ label: "Utensils", href: "admin-utensils.html" }, { label: r.name || "Untitled" }]}
+          crumb={[{ label: "Utensils", href: "utensils.html" }, { label: r.name || "Untitled" }]}
           status="live"
           savedAgo={savedAgo}
           isNew={isNew}

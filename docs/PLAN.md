@@ -9,9 +9,9 @@ Three threads of change:
    - [shared/db.js](shared/db.js):51-118 `getRecipe()` still maps `i.ingredient` and `u.name` (free-text) into the public-site shape; consumers ([recipe-components.jsx](recipe-components.jsx):286-294, 309-314) read those fields. After the wipe, those columns won't exist, so the public read path must JOIN the library tables.
    - The user also asked for "no cascade effect" when deleting ingredients/utensils — i.e. an ingredient referenced by N recipes shouldn't blow up those recipes when removed.
 
-2. **Post-auth redirects.** Today both `redirectTo` (OAuth) and `emailRedirectTo` (magic link) hardcode `window.location.href` in [shared/auth.js](shared/auth.js):57, 65; `onAuthStateChange` ([shared/auth.js](shared/auth.js):36-46) emits an event but performs no navigation. Sign-out buttons ([index.html](index.html):956, [recipe-search.html](recipe-search.html):437) just call `signOut()` without redirecting. Goal: post-login → `dashboard.html`; post-logout → `index.html`.
+2. **Post-auth redirects.** Today both `redirectTo` (OAuth) and `emailRedirectTo` (magic link) hardcode `window.location.href` in [shared/auth.js](shared/auth.js):57, 65; `onAuthStateChange` ([shared/auth.js](shared/auth.js):36-46) emits an event but performs no navigation. Sign-out buttons ([index.html](index.html):956, [recipe-search.html](recipe-search.html):437) just call `signOut()` without redirecting. Goal: post-login → `my/dashboard.html`; post-logout → `index.html`.
 
-3. **Dashboard page.** No `dashboard.html` exists. The closest analog is `AuthedPersonalize` ([index.html](index.html):1247-1338) — a logged-in panel embedded in the landing page. Lift the recommendations half into a real dashboard alongside saved recipes, continue-cooking, recent meal log. Move the editable markers panel into its own page.
+3. **Dashboard page.** No `my/dashboard.html` exists. The closest analog is `AuthedPersonalize` ([index.html](index.html):1247-1338) — a logged-in panel embedded in the landing page. Lift the recommendations half into a real dashboard alongside saved recipes, continue-cooking, recent meal log. Move the editable markers panel into its own page.
 
 Plus expanding USER-TODO.md §4 ("how to make a user admin") with a self-contained how-to.
 
@@ -101,9 +101,9 @@ Then in the mapper, surface `i.ingredient.name` / `u.utensil.name` as `name`, pr
 
 **Redirect mechanics**, [shared/auth.js](shared/auth.js):
 
-- Module-level constants near the top: `const POST_LOGIN = 'dashboard.html'`, `const POST_LOGOUT = 'index.html'`. Pages that should *not* be the post-login target list themselves in a `STAY_ON_PATHS` set: `recipe.html` (mid-cook), `dashboard.html` (already there), all `admin-*.html` (admin gate handles its own).
+- Module-level constants near the top: `const POST_LOGIN = 'my/dashboard.html'`, `const POST_LOGOUT = 'index.html'`. Pages that should *not* be the post-login target list themselves in a `STAY_ON_PATHS` set: `recipe.html` (mid-cook), `my/dashboard.html` (already there), all pages under `admin/` (admin gate handles its own).
 - `signIn({ email })` and `signIn({ provider: 'google' })`: pass an absolute URL to `redirectTo` / `emailRedirectTo`. The URL is `${origin}/${POST_LOGIN}` *unless* the caller is on a `STAY_ON_PATHS` page (then it's `window.location.href` — current behavior preserved for mid-cook etc.).
-- In-tab fallback: on `onAuthStateChange` `SIGNED_IN`, if `location.pathname` is *not* in `STAY_ON_PATHS` and *not* already `dashboard.html`, navigate to dashboard. Skips when the user signed in mid-cook on `recipe.html`.
+- In-tab fallback: on `onAuthStateChange` `SIGNED_IN`, if `location.pathname` is *not* in `STAY_ON_PATHS` and *not* already `my/dashboard.html`, navigate to dashboard. Skips when the user signed in mid-cook on `recipe.html`.
 - `signOut()`: navigate to `${origin}/${POST_LOGOUT}` after the call settles. (Single rule — even from recipe.html, signing out goes home.)
 
 Caller-level changes:
@@ -111,7 +111,7 @@ Caller-level changes:
 - [index.html](index.html):956, [recipe-search.html](recipe-search.html):437 — sign-out button onClicks can stay; the navigation now lives inside `signOut()`.
 - Sign-in modal calls in [index.html](index.html):878,885, [recipe-search.html](recipe-search.html):362,369 — unchanged.
 
-**Dashboard page** (`dashboard.html` + `dashboard-app.jsx`):
+**Dashboard page** (`my/dashboard.html` + `dashboard-app.jsx`):
 
 - Same shell as the public pages (recipe-base.css tokens, supabase + auth + db scripts).
 - If not signed in → redirect to `index.html`.
@@ -121,11 +121,11 @@ Caller-level changes:
   3. **Continue cooking** — adds `MFC.db.getActiveSessions()` to [shared/db.js](shared/db.js) — selects from `cooking_sessions where user_id = auth.uid() and completed_at is null order by updated_at desc limit 5`. Each row links to `recipe.html?id=…&resume=1`.
   4. **Saved recipes** — `MFC.db.getSaved()` joined to `getRecipes()` for the card grid. Empty state: "Tap the heart icon on a recipe to save it."
   5. **Recent meal log** — last 5 rows from `MFC.db.getMealLogs({ from: <7 days ago> })`, with a quick-add row at top (meal type select + recipe select + servings + log button → `MFC.db.logMeal()`).
-  6. **Footer link** — "Manage blood markers →" pointing to the new `markers.html`.
+  6. **Footer link** — "Manage blood markers →" pointing to the new `my/markers.html`.
 - No editable health markers panel on dashboard. That moves to a new dedicated page.
 - Reuses existing CSS: `recipe-base.css` for tokens. Cards reuse the recipe-search card style if applicable; otherwise a small `dashboard.css` for layout.
 
-**Blood markers page** (`markers.html` + `markers-app.jsx`):
+**Blood markers page** (`my/markers.html` + `markers-app.jsx`):
 
 - New page. Lifts the markers-only half of `AuthedPersonalize` ([index.html](index.html):1247-1300) — `MarkerRow`, `getMetricDefinitions`, `getHealthMarkers`, `upsertHealthMarker`.
 - Sections:
@@ -149,7 +149,7 @@ Caller-level changes:
      WHERE email = 'you@example.com';
     ```
   - Note re-auth requirement for the JWT to refresh.
-  - Verification: visit `admin-recipes.html`, expect the list — not the gate.
+  - Verification: visit `admin/recipes.html`, expect the list — not the gate.
 
 - **CLAUDE.md** — note the redirect contract (post-login → dashboard, post-logout → home, recipe.html exempt) and the FK-RESTRICT delete behavior on libraries.
 
@@ -173,8 +173,8 @@ Caller-level changes:
 - [index.html](index.html) — leave `AuthedPersonalize` intact; add a small "Open dashboard →" CTA when user is logged in.
 
 **Create:**
-- `dashboard.html` + `dashboard-app.jsx` — sections from the answer set (next-meal recommendations, continue cooking, saved, recent meal log).
-- `markers.html` + `markers-app.jsx` — separate blood-markers editor.
+- `my/dashboard.html` + `dashboard-app.jsx` — sections from the answer set (next-meal recommendations, continue cooking, saved, recent meal log).
+- `my/markers.html` + `markers-app.jsx` — separate blood-markers editor.
 - `shared/meal-time.js` — `defaultMealTypeForNow()` extracted from index.html so dashboard can reuse.
 - Optional: `dashboard.css` if needed beyond recipe-base.css.
 
@@ -193,12 +193,12 @@ After implementation:
 1. **Schema** — `psql -f data/db/schema.sql` (with the DROP block uncommented once) succeeds; `\dt` shows the expected tables; `\d recipe_ingredients` shows the FK-only shape.
 2. **Re-seed** — `SUPABASE_URL=… SUPABASE_SECRET_KEY=… node scripts/import_recipes.mjs` populates `ingredients`, `utensils`, `recipes`, joins. Output: "ingredients populated · utensils populated · recipes populated".
 3. **Public site** — `python3 -m http.server 8080`, visit `/recipe.html?id=paneer-butter-masala`. Ingredients & utensils render with the correct names (proves the JOIN read works).
-4. **Auth redirect — magic link**: from `index.html`, sign in with email → click magic link → land on `dashboard.html`. From `dashboard.html`, sign out → land on `index.html`.
+4. **Auth redirect — magic link**: from `index.html`, sign in with email → click magic link → land on `my/dashboard.html`. From `my/dashboard.html`, sign out → land on `index.html`.
 5. **Auth redirect — Google OAuth**: same outcome.
 6. **Mid-cook stay**: open `recipe.html?id=…` (no auth), sign in via a modal launched from there → land back on the *same* recipe page (not dashboard). Sign out → home.
-7. **Dashboard content** — "Continue cooking" lists in-progress sessions; "Saved recipes" shows hearted recipes; "Recommended" defaults to the current meal slot per `defaultMealTypeForNow()` and offers slot-switcher; "Recent meal log" shows last 5 + quick-add row; footer link goes to `markers.html`.
-8. **Markers page** — `/markers.html` shows the blood-markers editor; entering a value upserts to `user_health_markers`; nothing else on the page.
+7. **Dashboard content** — "Continue cooking" lists in-progress sessions; "Saved recipes" shows hearted recipes; "Recommended" defaults to the current meal slot per `defaultMealTypeForNow()` and offers slot-switcher; "Recent meal log" shows last 5 + quick-add row; footer link goes to `my/markers.html`.
+8. **Markers page** — `/my/markers.html` shows the blood-markers editor; entering a value upserts to `user_health_markers`; nothing else on the page.
 9. **Hard delete blocked when in use** — admin "delete" button is disabled with a "used by N recipes" hint when `usage > 0`. Direct API attempt hits FK `RESTRICT` and returns an error; row remains.
 10. **Hard delete succeeds when unused** — create a new ingredient, don't reference it, delete it → succeeds.
-11. **Admin gate** — sign in as a non-admin user, visit `/admin-recipes.html`, expect "Not authorized" panel. Grant role per USER-TODO.md §4, sign out + back in, expect the recipes list.
+11. **Admin gate** — sign in as a non-admin user, visit `/admin/recipes.html`, expect "Not authorized" panel. Grant role per USER-TODO.md §4, sign out + back in, expect the recipes list.
 12. **Re-import idempotent** — re-run `node scripts/import_recipes.mjs` after a successful run; row counts unchanged, no duplicate library entries.

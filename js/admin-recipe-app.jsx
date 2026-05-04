@@ -188,7 +188,7 @@ function RecipeAdminApp() {
       await window.MFC.adminDb.saveRecipe(payload);
       setDirty(false);
       setSavedAgo("just now");
-      if (isNew) { location.href = `admin-recipe.html?id=${encodeURIComponent(id)}`; return; }
+      if (isNew) { location.href = `recipe.html?id=${encodeURIComponent(id)}`; return; }
     } catch (e) { setErr(e.message || String(e)); }
     finally { setBusy(false); }
   }
@@ -204,11 +204,11 @@ function RecipeAdminApp() {
       <div className="admin-shell">
         <AdminSidebar active="recipes" />
         <div className="admin-main">
-          <AdminTopbar crumb={[{ label: "Recipes", href: "admin-recipes.html" }, { label: "Error" }]} />
+          <AdminTopbar crumb={[{ label: "Recipes", href: "recipes.html" }, { label: "Error" }]} />
           <div className="admin-page">
             <div className="form-card" style={{ borderColor: "var(--berry)" }}>
               <div className="form-card-body" style={{ color: "var(--berry)" }}>
-                {err} · <a href="admin-recipes.html" style={{ color: "var(--orange)" }}>Back to recipes</a>
+                {err} · <a href="recipes.html" style={{ color: "var(--orange)" }}>Back to recipes</a>
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ function RecipeAdminApp() {
       <AdminSidebar active="recipes" />
       <div className="admin-main">
         <AdminTopbar
-          crumb={[{ label: "Recipes", href: "admin-recipes.html" }, { label: r.name || "Untitled" }]}
+          crumb={[{ label: "Recipes", href: "recipes.html" }, { label: r.name || "Untitled" }]}
           status={r.featured ? "live" : "draft"}
           savedAgo={savedAgo}
           isNew={isNew}
@@ -521,13 +521,13 @@ function IngredientsTab({ r, ingLib, updateIng, removeIng, addIngFromLib }) {
       </FormCard>
 
       <FormCard title="Add from library" scribble="search & pick"
-        headRight={<a href="admin-ingredient.html?new=1" className="btn-sm ghost" style={{ textDecoration: "none" }}>+ New ingredient ↗</a>}>
+        headRight={<a href="ingredient.html?new=1" className="btn-sm ghost" style={{ textDecoration: "none" }}>+ New ingredient ↗</a>}>
         <LibraryPicker
           kind="ing"
           library={ingLib}
           picked={r.ingredients}
           onPick={addIngFromLib}
-          manageHref="admin-ingredients.html"
+          manageHref="ingredients.html"
           manageLabel="Manage library"
         />
       </FormCard>
@@ -574,13 +574,13 @@ function UtensilsTab({ r, utLib, updateUt, removeUt, addUtFromLib }) {
       </FormCard>
 
       <FormCard title="Add from library" scribble="search & pick"
-        headRight={<a href="admin-utensil.html?new=1" className="btn-sm ghost" style={{ textDecoration: "none" }}>+ New utensil ↗</a>}>
+        headRight={<a href="utensil.html?new=1" className="btn-sm ghost" style={{ textDecoration: "none" }}>+ New utensil ↗</a>}>
         <LibraryPicker
           kind="ut"
           library={utLib}
           picked={r.utensils}
           onPick={addUtFromLib}
-          manageHref="admin-utensils.html"
+          manageHref="utensils.html"
           manageLabel="Manage library"
         />
       </FormCard>

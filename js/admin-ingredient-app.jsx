@@ -102,7 +102,7 @@ function IngredientAdminApp() {
       }
       await window.MFC.adminDb.upsertIngredient(toDb({ ...r, id }));
       setDirty(false); setSavedAgo("just now");
-      if (isNew) { location.href = `admin-ingredient.html?id=${encodeURIComponent(id)}`; return; }
+      if (isNew) { location.href = `ingredient.html?id=${encodeURIComponent(id)}`; return; }
     } catch (e) { setErr(e.message || String(e)); }
     finally { setBusy(false); }
   }
@@ -118,11 +118,11 @@ function IngredientAdminApp() {
       <div className="admin-shell">
         <AdminSidebar active="ingredients" />
         <div className="admin-main">
-          <AdminTopbar crumb={[{ label: "Ingredients", href: "admin-ingredients.html" }, { label: "Error" }]} />
+          <AdminTopbar crumb={[{ label: "Ingredients", href: "ingredients.html" }, { label: "Error" }]} />
           <div className="admin-page">
             <div className="form-card" style={{ borderColor: "var(--berry)" }}>
               <div className="form-card-body" style={{ color: "var(--berry)" }}>
-                {err} · <a href="admin-ingredients.html" style={{ color: "var(--orange)" }}>Back to ingredients</a>
+                {err} · <a href="ingredients.html" style={{ color: "var(--orange)" }}>Back to ingredients</a>
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ function IngredientAdminApp() {
       <AdminSidebar active="ingredients" />
       <div className="admin-main">
         <AdminTopbar
-          crumb={[{ label: "Ingredients", href: "admin-ingredients.html" }, { label: r.name || "Untitled" }]}
+          crumb={[{ label: "Ingredients", href: "ingredients.html" }, { label: r.name || "Untitled" }]}
           status="live"
           savedAgo={savedAgo}
           isNew={isNew}

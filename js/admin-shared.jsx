@@ -8,24 +8,24 @@ const { useState, useEffect, useRef, useMemo } = React;
 function AdminSidebar({ active, counts = {} }) {
   const items = [
     { group: "Library", entries: [
-      { id: "recipes",     icon: "✦", label: "Recipes",     href: "admin-recipes.html",     count: counts.recipes },
-      { id: "ingredients", icon: "◐", label: "Ingredients", href: "admin-ingredients.html", count: counts.ingredients },
-      { id: "utensils",    icon: "▣", label: "Utensils",    href: "admin-utensils.html",    count: counts.utensils },
+      { id: "recipes",     icon: "✦", label: "Recipes",     href: "recipes.html",     count: counts.recipes },
+      { id: "ingredients", icon: "◐", label: "Ingredients", href: "ingredients.html", count: counts.ingredients },
+      { id: "utensils",    icon: "▣", label: "Utensils",    href: "utensils.html",    count: counts.utensils },
     ]},
     { group: "Site", entries: [
-      { id: "view-site", icon: "↗", label: "View site",  href: "index.html" },
-      { id: "search",    icon: "⌕", label: "Recipe search", href: "recipe-search.html" },
+      { id: "view-site", icon: "↗", label: "View site",  href: "../index.html" },
+      { id: "search",    icon: "⌕", label: "Recipe search", href: "../recipe-search.html" },
     ]},
   ];
 
   async function signOut() {
     if (window.MFC?.supabase) await window.MFC.supabase.auth.signOut();
-    location.href = "index.html";
+    location.href = "../index.html";
   }
 
   return (
     <aside className="admin-side">
-      <a href="index.html" className="admin-brand">
+      <a href="../index.html" className="admin-brand">
         <span className="brand-mark">m</span>
         <span className="brand-name">my<em>food</em>craving</span>
         <span className="admin-tag">admin</span>
@@ -61,7 +61,7 @@ function AdminTopbar({ crumb, status, savedAgo, onPreview, onPublish, isNew, pub
   return (
     <div className="admin-topbar">
       <div className="admin-crumb">
-        <a href="index.html">Admin</a>
+        <a href="../index.html">Admin</a>
         {crumb.map((c, i) => (
           <React.Fragment key={i}>
             <span className="sep">›</span>

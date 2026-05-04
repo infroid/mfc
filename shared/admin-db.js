@@ -1,6 +1,6 @@
 // Admin CRUD wrappers. Reads use the public client; writes succeed only when
 // the signed-in user's JWT carries app_metadata.role = 'admin' (enforced by RLS
-// via public.is_admin()). See data/db/schema.sql §7 and USER-TODO.md §3.
+// via public.is_admin()). See data/db/schema.sql §7 and docs/USER-TODO.md §3.
 //
 // Public surface: window.MFC.adminDb.{ ... }
 window.MFC = window.MFC || {};

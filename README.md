@@ -40,7 +40,7 @@ GitHub Pages, dynamic data from Supabase.
 |---|---|
 | [data/db/schema.sql](data/db/schema.sql) | 13-table schema with `COMMENT ON` docs |
 | [data/db/seed_metrics.sql](data/db/seed_metrics.sql) | ~21 baseline blood markers |
-| [data/recipes.json](data/recipes.json), [data/recipe-bundles/](data/recipe-bundles/) | Import seed for the catalog (not fetched at runtime) |
+| [data/recipe-bundles/](data/recipe-bundles/) | Import seed for the catalog (one self-contained `recipe.json` per recipe) |
 | [scripts/import_recipes.mjs](scripts/import_recipes.mjs) | One-shot importer (recipe JSON → Supabase) |
 
 ## Dev
@@ -57,7 +57,7 @@ kill -9 $(lsof -t -i :8080) && python3 -m http.server 8080
 
 ## Setup
 
-See [USER-TODO.md](USER-TODO.md) for one-time Supabase setup (project creation,
+See [USER-TODO.md](docs/USER-TODO.md) for one-time Supabase setup (project creation,
 schema apply, auth provider config, recipe import).
 
 ## Recipe admin

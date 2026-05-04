@@ -6,20 +6,21 @@
 //   - signIn({ email })                 → magic link (returns { magicLinkSent: true, email })
 //
 // Redirect contract:
-//   - post-login  → dashboard.html  (unless on a STAY_ON page: recipe.html, dashboard.html, admin-*)
+//   - post-login  → my/dashboard.html  (unless on a STAY_ON page: recipe.html, anything under /my/ or /admin/)
 //   - post-logout → index.html      (always)
 window.MFC = window.MFC || {};
 window.MFC.auth = (function () {
   const sb = window.MFC.supabase;
 
-  const POST_LOGIN  = 'dashboard.html';
+  const POST_LOGIN  = 'my/dashboard.html';
   const POST_LOGOUT = 'index.html';
   // Pages that keep the user where they are after sign-in.
-  const STAY_ON_PATHS = new Set(['recipe.html', 'dashboard.html', 'markers.html']);
+  const STAY_ON_PATHS = new Set(['recipe.html']);
 
   function isStayPage() {
-    const base = location.pathname.split('/').pop() || '';
-    return STAY_ON_PATHS.has(base) || base.startsWith('admin-');
+    const path = location.pathname;
+    const base = path.split('/').pop() || '';
+    return STAY_ON_PATHS.has(base) || path.includes('/admin/') || path.includes('/my/');
   }
 
   function redirectAfterLogin()  { window.location.href = `${location.origin}/${POST_LOGIN}`;  }

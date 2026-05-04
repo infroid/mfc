@@ -58,9 +58,9 @@ In **Authentication → URL Configuration**:
 
 ## 4. Grant yourself the admin role
 
-The admin pages ([admin-recipes.html](admin-recipes.html),
-[admin-ingredients.html](admin-ingredients.html),
-[admin-utensils.html](admin-utensils.html), and the editors they link to) are
+The admin pages ([admin/recipes.html](admin/recipes.html),
+[admin/ingredients.html](admin/ingredients.html),
+[admin/utensils.html](admin/utensils.html), and the editors they link to) are
 gated by `app_metadata.role = 'admin'` on your Supabase user, enforced both in
 the UI ([shared/admin-gate.js](shared/admin-gate.js)) and in RLS
 (`public.is_admin()` in [data/db/schema.sql](data/db/schema.sql) §8).
@@ -99,7 +99,7 @@ The user must still sign out and back in to pick up the new JWT claim.
 
 ### Verify
 
-Visit <http://localhost:8080/admin-recipes.html>. You should see the recipes
+Visit <http://localhost:8080/admin/recipes.html>. You should see the recipes
 list, not the "Not authorized" panel.
 
 To grant additional admins later, repeat step 4 for their user row.

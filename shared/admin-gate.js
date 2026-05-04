@@ -62,7 +62,7 @@ window.MFC.adminGate = (function () {
   async function guard() {
     if (!sb()) {
       panel('Supabase not configured',
-        'The <code>mfc-supabase-url</code> / <code>mfc-supabase-publishable-key</code> meta tags are empty. Fill them in (see USER-TODO.md §4) and reload.',
+        'The <code>mfc-supabase-url</code> / <code>mfc-supabase-publishable-key</code> meta tags are empty. Fill them in (see docs/USER-TODO.md §4) and reload.',
         []);
       return false;
     }
@@ -83,7 +83,7 @@ window.MFC.adminGate = (function () {
     const role = await getRole();
     if (role !== 'admin') {
       panel('Not authorized',
-        `Signed in as <b>${user.email || user.id}</b>, but this account doesn’t have the <code>admin</code> role. Ask the project owner to grant it (USER-TODO.md §3).`,
+        `Signed in as <b>${user.email || user.id}</b>, but this account doesn’t have the <code>admin</code> role. Ask the project owner to grant it (docs/USER-TODO.md §3).`,
         [
           { label: 'Sign out', onClick: signOut },
           { label: 'Back to site', primary: true, onClick: () => { location.href = 'index.html'; } },
