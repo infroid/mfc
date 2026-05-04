@@ -28,8 +28,10 @@ In **SQL Editor**, run these in order:
 
 Verify in **Table Editor**:
 
-- 13 tables exist under `public` schema.
-- `metric_definitions` has ~21 rows (iron, ferritin, b12, d3, etc.).
+- 17 tables exist under `public` schema (catalog, library, health markers,
+  recommendations, user-owned including `user_profiles`).
+- `metric_definitions` has 54 rows across 10 categories (lipid, metabolic,
+  iron-panel, inflammation, liver, kidney, vitamin, mineral, thyroid, other).
 - Each table has descriptions visible in the Studio table view (hover the column
   names — comments come from the `COMMENT ON` statements).
 
@@ -58,51 +60,102 @@ In **Authentication → URL Configuration**:
 
 ## 4. Grant yourself the admin role
 
-The admin pages ([admin/recipes.html](admin/recipes.html),
-[admin/ingredients.html](admin/ingredients.html),
-[admin/utensils.html](admin/utensils.html), and the editors they link to) are
-gated by `app_metadata.role = 'admin'` on your Supabase user, enforced both in
-the UI ([shared/admin-gate.js](shared/admin-gate.js)) and in RLS
-(`public.is_admin()` in [data/db/schema.sql](data/db/schema.sql) §8).
+The admin pages are gated by `app_metadata.role = 'admin'` on your Supabase
+user, enforced both in the UI ([shared/admin-gate.js](shared/admin-gate.js))
+and at the database level via the RLS predicate `public.is_admin()` (defined
+in [data/db/schema.sql](data/db/schema.sql) §8).
 
-### Via Supabase Studio (recommended)
+> **Why `app_metadata` and not `user_metadata`?** `user_metadata` can be
+> written by the user themselves via the Supabase client — it is **not safe**
+> for access control. `app_metadata` is mutable only via the service-role key
+> (or SQL), which is why `public.is_admin()` reads from there.
 
-1. Sign in once on the public site so your row exists in `auth.users`.
-2. Studio → **Authentication → Users** → click your row.
-3. Open the **Raw User Meta Data** tab. You'll see two sections:
-   - **User Metadata** — editable by the user; not trusted for access control.
-   - **App Metadata** — set by the JWT issuer only; safe for roles.
-4. Under **App Metadata**, paste:
-   ```json
-   { "role": "admin" }
-   ```
-   If the field already has content, merge — don't replace the whole object.
-5. Save.
-6. Sign out and sign back in. The JWT only refreshes on a new session; the role
-   won't take effect until you re-authenticate.
+### Prerequisite
 
-> **Why `app_metadata` and not `user_metadata`?** `user_metadata` can be written
-> by the user themselves via the Supabase client — it is not safe for access
-> control. `app_metadata` is controlled by the service-role key only, which is
-> why `public.is_admin()` reads from there.
+**Sign in once on the public site first** (magic link or Google) so your row
+exists in `auth.users`. The grant won't work until the row exists.
 
-### Via SQL (power users / CI)
+### Option A — copy-paste SQL (fastest)
 
+Run any of these in **Studio → SQL Editor**, replacing the email. They use
+`raw_app_meta_data || '...'::jsonb` so existing keys (e.g. `provider`) are
+preserved.
+
+**Grant admin to a single user:**
 ```sql
 UPDATE auth.users
    SET raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}'::jsonb
  WHERE email = 'you@example.com';
 ```
 
-Run this in Studio → SQL Editor (or via `psql` with the database password from §1).
-The user must still sign out and back in to pick up the new JWT claim.
+**Revoke admin (useful for testing the gate):**
+```sql
+UPDATE auth.users
+   SET raw_app_meta_data = raw_app_meta_data - 'role'
+ WHERE email = 'you@example.com';
+```
+
+**List all current admins:**
+```sql
+SELECT email, raw_app_meta_data->>'role' AS role, last_sign_in_at
+  FROM auth.users
+ WHERE raw_app_meta_data->>'role' = 'admin'
+ ORDER BY last_sign_in_at DESC NULLS LAST;
+```
+
+**Check your own role right now (run while signed in):**
+```sql
+SELECT email, raw_app_meta_data->>'role' AS role
+  FROM auth.users
+ WHERE id = auth.uid();
+```
+
+### Option B — Supabase Studio UI
+
+1. Studio → **Authentication → Users** → click your row.
+2. Open the **Raw User Meta Data** tab. Two sections:
+   - **User Metadata** — user-editable; not trusted for access control.
+   - **App Metadata** — service-role-only; safe for roles.
+3. Under **App Metadata**, merge in `"role": "admin"` (don't replace the whole
+   object). E.g.:
+   ```json
+   { "provider": "email", "role": "admin" }
+   ```
+4. Save.
+
+### ⚠️ Re-auth required
+
+**The JWT only refreshes on a new session.** After granting, sign out + sign
+back in — otherwise the gate will still block you with the old token.
 
 ### Verify
 
-Visit <http://localhost:8080/admin/recipes.html>. You should see the recipes
-list, not the "Not authorized" panel.
+Once re-authenticated, visit each admin page and expect the editor (not the
+"Not authorized" panel):
 
-To grant additional admins later, repeat step 4 for their user row.
+- <http://localhost:8080/admin/recipes.html> — recipe list
+- <http://localhost:8080/admin/ingredients.html> — ingredient library
+- <http://localhost:8080/admin/utensils.html> — utensil library
+- <http://localhost:8080/admin/recipe.html?id=butter-chicken> — recipe editor
+- <http://localhost:8080/admin/ingredient.html?id=paneer> — ingredient editor
+- <http://localhost:8080/admin/utensil.html?id=kadhai-cast-iron-9> — utensil editor
+
+If any page shows "Not authorized", check the console for the user's JWT
+claims (`window.MFC.auth.getUser()`) and confirm `app_metadata.role` is
+`'admin'`. If it isn't, you're still on the pre-grant token — sign out and
+back in.
+
+### Test the negative path (gate works)
+
+Useful before shipping. Revoke yourself via the SQL above, sign out + sign
+back in, and confirm the same URLs render the "Not authorized" panel rather
+than the editors. Re-grant when done.
+
+### Granting others
+
+Same `UPDATE auth.users ... WHERE email = '<their email>'` SQL. They must
+sign in to the site at least once first, then re-authenticate to pick up the
+role.
 
 ---
 
