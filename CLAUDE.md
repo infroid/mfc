@@ -35,21 +35,26 @@ python3 -m http.server 8080
 
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via
   `<script type="text/babel">`
-- 6 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
+- 7 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
   [recipe.html](recipe.html), [dashboard.html](my/dashboard.html),
-  [markers.html](my/markers.html), [account.html](my/account.html). Each is mostly
-  self-contained.
+  [markers.html](my/markers.html), [account.html](my/account.html),
+  [profile.html](my/profile.html). Each is mostly self-contained.
 - [recipe.html](recipe.html) imports [recipe-app.jsx](js/recipe-app.jsx),
   [recipe-components.jsx](js/recipe-components.jsx),
   [tweaks-panel.jsx](js/tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
 - [dashboard.html](my/dashboard.html) imports [dashboard-app.jsx](js/dashboard-app.jsx).
-  Auth-gated: redirects to index.html if not signed in.
+  Auth-gated: redirects to index.html if not signed in. Also runs a defensive
+  client-side allergy check on pipeline recommendations.
 - [markers.html](my/markers.html) imports [markers-app.jsx](js/markers-app.jsx).
   Auth-gated: blood marker editor only. Mounts the biological-sex gate when
   `user.biologicalSex` is null — answer is permanent and stored in
   `auth.users.user_metadata.biological_sex`.
 - [account.html](my/account.html) imports [account-app.jsx](js/account-app.jsx).
-  Auth-gated profile page: editable display name, read-only biological sex.
+  Identity page: editable display name, read-only biological sex (set via
+  bloodwork gate). Both live on `auth.users.user_metadata`.
+- [profile.html](my/profile.html) imports [profile-app.jsx](js/profile-app.jsx).
+  Food/health preferences: date_of_birth, units, diet style, allergies, goals,
+  lifestyle. Powers the soft-pref strip on /recipe-search.html.
 - 6 admin pages: list + edit for each of recipes, ingredients, utensils
   ([admin/recipes.html](admin/recipes.html), [admin/recipe.html](admin/recipe.html),
   and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
@@ -71,13 +76,19 @@ python3 -m http.server 8080
 
 ## Schema
 
-- [data/db/schema.sql](data/db/schema.sql) — 15 tables, RLS, triggers. Every
+- [data/db/schema.sql](data/db/schema.sql) — 16 tables, RLS, triggers. Every
   table and column has a `COMMENT ON` description that surfaces in Supabase
   Studio. Idempotent: safe to re-apply.
-- [data/db/seed_metrics.sql](data/db/seed_metrics.sql) — ~21 baseline blood
-  markers (`metric_definitions`). Sex-specific bounds (`normal_min_female`,
-  `normal_max_female`, `normal_min_male`, `normal_max_male`) override the
-  unisex baseline for iron, ferritin, hemoglobin, and creatinine.
+- [data/db/seed_metrics.sql](data/db/seed_metrics.sql) — 54-marker catalog
+  (`metric_definitions`) across 10 categories: lipid, metabolic, iron-panel,
+  inflammation, liver, kidney, vitamin, mineral, thyroid, other. Sex-specific
+  bounds override the unisex baseline on iron, ferritin, hemoglobin,
+  transferrin_saturation, uric_acid, and creatinine. Each row carries a
+  `description` one-liner that surfaces on the marker card.
+- [data/db/migration-2026-05-04-profiles-and-marker-ranges.sql](data/db/migration-2026-05-04-profiles-and-marker-ranges.sql)
+  — apply-on-existing delta for the bloodwork-and-profile rev. Adds the
+  description + sex-specific columns and creates `user_profiles`. Re-running
+  `seed_metrics.sql` after applying loads the 54-row catalog.
 
 Schema layers:
 
@@ -97,7 +108,11 @@ Schema layers:
 - **Recommendations** — `recommendations`. Written by the offline data pipeline
   (secret key bypass); user reads only their own rows.
 - **User-owned** — `saved_recipes`, `cooking_sessions`, `user_prefs`,
-  `meal_logs`. RLS scoped to `auth.uid() = user_id`.
+  `user_profiles`, `meal_logs`. RLS scoped to `auth.uid() = user_id`.
+  `user_profiles` (one row per user) holds typed columns the recommender
+  pipeline joins on: `date_of_birth`, `diet_tags[]`, `allergies[]`, `goals[]`,
+  `units`. Display name and biological sex live separately on
+  `auth.users.user_metadata` (mutable for name, permanent for biological sex).
 - **Admin gate** — `public.is_admin()` returns true when
   `auth.jwt() -> 'app_metadata' ->> 'role' = 'admin'`. Used by RLS policies on
   the catalog and library tables.
@@ -122,6 +137,10 @@ Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
 6. [shared/admin-gate.js](shared/admin-gate.js) — `window.MFC.adminGate.guard()`
    resolves true only when the signed-in user has `app_metadata.role = 'admin'`;
    otherwise renders a sign-in / not-authorized panel and resolves false.
+7. [shared/recipe-prefs.js](shared/recipe-prefs.js) — `window.MFC.recipePrefs.classify(recipe, profile)`
+   returns `{ score, violations[] }`. Single source of truth for matching
+   recipes against a user profile (allergies, dietary identity, soft prefs,
+   cuisine). Loaded on /recipe-search.html and /my/dashboard.html.
 
 JSX UI components (loaded selectively as `<script type="text/babel" src="…">`,
 must run before the page's main babel script that references them):
@@ -130,17 +149,22 @@ must run before the page's main babel script that references them):
   Opens on `window` event `mfc:open-auth`. Loaded on every public page that
   shows a "Sign in" affordance.
 - [shared/user-menu.jsx](shared/user-menu.jsx) — `window.MfcUserMenu({ user,
-  onSignIn, accountHref })`. Logged-out: orange "Sign in →" button. Logged-in:
-  white pill + orange-avatar + dropdown (Account, Sign out).
+  onSignIn, accountHref, profileHref })`. Logged-out: orange "Sign in →" button.
+  Logged-in: white pill + orange-avatar + dropdown (Profile, Account, Sign out).
+  `profileHref` is optional — when omitted, the Profile item is hidden.
 - [shared/biological-sex-prompt.jsx](shared/biological-sex-prompt.jsx) —
   `window.MfcBiologicalSexGate({ user, onSaved })`, `MfcSaveBiologicalSex(value)`,
   `MFC_BIOSEX_OPTIONS`, `MFC_BIOSEX_LABEL_FOR(value)`. Mandatory, non-dismissible
   modal. Loaded on markers.html (gate) and account.html (label lookup).
 
 `useAuth()` is a small React hook defined inline in each page that subscribes to
-the `mfc:auth-change` event. `useAuthGuard` (markers/dashboard/account) must
-keep `[]` deps on its effect so the listener persists for `USER_UPDATED` events
-(e.g. saving display name or biological sex).
+the `mfc:auth-change` event. `useAuthGuard` (markers/dashboard/account/profile)
+must keep `[]` deps on its effect so the listener persists for `USER_UPDATED`
+events (e.g. saving display name or biological sex).
+
+`mfc:profile-change` is dispatched by `MFC.db.upsertUserProfile` on success.
+Pages that derive UI from the profile (search-page soft-pref strip, dashboard
+defensive allergy badge) listen and re-fetch.
 
 ## Auth
 
@@ -159,6 +183,28 @@ keep `[]` deps on its effect so the listener persists for `USER_UPDATED` events
 - **Post-logout → `index.html`** always (even from `recipe.html`).
 - Constants `POST_LOGIN` / `POST_LOGOUT` / `STAY_ON_PATHS` are defined at the
   top of [shared/auth.js](shared/auth.js).
+
+## Recipe preferences (soft-filtering)
+
+When a signed-in user has any tags in their profile, `/recipe-search.html`
+runs `MFC.recipePrefs.classify(recipe, profile)` for every recipe and:
+
+- Renders a paper-pill **soft-pref strip** below the filter row (first 2 tags
+  visible + "+N more", master toggle, edit link, × dismiss). Strip dismissal
+  uses sessionStorage; master toggle (`mfc_respect_prefs`) persists per session.
+- Sorts both featured and all-recipes grids: avoid-state recipes last, score
+  desc among non-avoid.
+- Tags cards as **match** (matcha badge), **avoid** (berry ring + reason
+  badge), or neutral.
+- Master toggle OFF demotes only identity violations; allergy violations
+  still flag (safety floor).
+
+`/my/dashboard.html` runs the same classifier defensively on pipeline-supplied
+recommendations and surfaces only allergy violations as a berry warning badge —
+the pipeline already accounts for prefs server-side, this is a safety net.
+
+`/index.html` is marketing-only (`AnonymousPersonalize` demo); no real recipes
+render there, so no soft-pref treatment.
 
 ## Anonymous → authed handoff
 
