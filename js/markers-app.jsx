@@ -427,6 +427,22 @@ const MARKER_RECIPE_HINTS = {
 
 const CATEGORY_TABS = ['all', 'mineral', 'vitamin', 'lipid', 'metabolic', 'blood', 'thyroid', 'kidney'];
 
+// Apply user.biologicalSex to a metric def: when sex-specific bounds exist
+// they replace the unisex normal_min/max; otherwise the def is unchanged.
+function resolveDef(def, sex) {
+  if (sex !== 'female' && sex !== 'male') return def;
+  const minKey = sex === 'female' ? 'normal_min_female' : 'normal_min_male';
+  const maxKey = sex === 'female' ? 'normal_max_female' : 'normal_max_male';
+  const lo = def[minKey];
+  const hi = def[maxKey];
+  if (lo == null && hi == null) return def;
+  return {
+    ...def,
+    normal_min: lo != null ? lo : def.normal_min,
+    normal_max: hi != null ? hi : def.normal_max,
+  };
+}
+
 function markerStatus(def, value) {
   if (value == null || value === '') return 'missing';
   const v = Number(value);
@@ -456,11 +472,10 @@ function useAuthGuard() {
   const [user, setUser]   = useState(() => window.MFC?.auth?.getUser() || null);
   const [ready, setReady] = useState(() => !!window.MFC?.auth?.getUser());
   useEffect(() => {
-    if (ready) return;
     const h = (e) => { setUser(e.detail.user); setReady(true); };
     window.addEventListener('mfc:auth-change', h);
     return () => window.removeEventListener('mfc:auth-change', h);
-  }, [ready]);
+  }, []);
   return { user, ready };
 }
 
@@ -681,9 +696,14 @@ function MarkersApp() {
     return ids.map((id) => recipesById[id]).filter(Boolean);
   }
 
+  const resolvedDefs = useMemo(
+    () => defs.map((d) => resolveDef(d, user?.biologicalSex)),
+    [defs, user?.biologicalSex]
+  );
+
   const filteredDefs = useMemo(() => {
-    return defs.filter((d) => tab === 'all' || (d.category || 'other') === tab);
-  }, [defs, tab]);
+    return resolvedDefs.filter((d) => tab === 'all' || (d.category || 'other') === tab);
+  }, [resolvedDefs, tab]);
 
   const items = useMemo(() => {
     return filteredDefs.map((d) => ({ def: d, reading: latest[d.id] || null }));
@@ -708,10 +728,14 @@ function MarkersApp() {
   );
   if (!user)  return null;
 
+  const Gate = window.MfcBiologicalSexGate;
+  const needsBioSex = !user.biologicalSex;
+
   return (
     <>
       <style>{MARKERS_STYLE}</style>
       <Nav user={user} />
+      {needsBioSex && Gate && <Gate user={user} />}
 
       <main className="reveal">
         <section className="mk-hero">

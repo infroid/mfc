@@ -522,11 +522,10 @@ function useAuthGuard() {
   const [ready, setReady] = useState(() => !!window.MFC?.auth?.getUser());
 
   useEffect(() => {
-    if (ready) return;
     const h = (e) => { setUser(e.detail.user); setReady(true); };
     window.addEventListener('mfc:auth-change', h);
     return () => window.removeEventListener('mfc:auth-change', h);
-  }, [ready]);
+  }, []);
 
   return { user, ready };
 }

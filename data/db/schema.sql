@@ -259,14 +259,26 @@ CREATE TABLE IF NOT EXISTS public.metric_definitions (
   sort_order int NOT NULL DEFAULT 0
 );
 
-COMMENT ON TABLE  public.metric_definitions            IS 'Catalog of recordable health markers (iron, b12, d3, ldl, etc.). Seeded by data/db/seed_metrics.sql.';
-COMMENT ON COLUMN public.metric_definitions.id         IS 'Stable string id (e.g. "iron", "b12", "d3", "ldl"). Join key for the data pipeline.';
-COMMENT ON COLUMN public.metric_definitions.name       IS 'Display name (e.g. "Vitamin D (25-OH)").';
-COMMENT ON COLUMN public.metric_definitions.unit       IS 'Canonical unit (e.g. "ng/mL", "mg/dL").';
-COMMENT ON COLUMN public.metric_definitions.normal_min IS 'Lower bound of typical adult reference range. Nullable.';
-COMMENT ON COLUMN public.metric_definitions.normal_max IS 'Upper bound of typical adult reference range. Nullable.';
-COMMENT ON COLUMN public.metric_definitions.category   IS 'UI grouping: "mineral", "vitamin", "lipid", "metabolic", "thyroid", "kidney", "blood".';
-COMMENT ON COLUMN public.metric_definitions.sort_order IS 'Display order within the markers panel.';
+-- Sex-specific reference range overrides. Resolver in frontend prefers these
+-- when user.biologicalSex matches; falls back to the unisex normal_min/max.
+ALTER TABLE public.metric_definitions
+  ADD COLUMN IF NOT EXISTS normal_min_female numeric,
+  ADD COLUMN IF NOT EXISTS normal_max_female numeric,
+  ADD COLUMN IF NOT EXISTS normal_min_male   numeric,
+  ADD COLUMN IF NOT EXISTS normal_max_male   numeric;
+
+COMMENT ON TABLE  public.metric_definitions                   IS 'Catalog of recordable health markers (iron, b12, d3, ldl, etc.). Seeded by data/db/seed_metrics.sql.';
+COMMENT ON COLUMN public.metric_definitions.id                IS 'Stable string id (e.g. "iron", "b12", "d3", "ldl"). Join key for the data pipeline.';
+COMMENT ON COLUMN public.metric_definitions.name              IS 'Display name (e.g. "Vitamin D (25-OH)").';
+COMMENT ON COLUMN public.metric_definitions.unit              IS 'Canonical unit (e.g. "ng/mL", "mg/dL").';
+COMMENT ON COLUMN public.metric_definitions.normal_min        IS 'Lower bound of typical adult reference range (unisex fallback). Nullable.';
+COMMENT ON COLUMN public.metric_definitions.normal_max        IS 'Upper bound of typical adult reference range (unisex fallback). Nullable.';
+COMMENT ON COLUMN public.metric_definitions.normal_min_female IS 'Lower bound for female biological sex. Used when set; otherwise normal_min.';
+COMMENT ON COLUMN public.metric_definitions.normal_max_female IS 'Upper bound for female biological sex. Used when set; otherwise normal_max.';
+COMMENT ON COLUMN public.metric_definitions.normal_min_male   IS 'Lower bound for male biological sex. Used when set; otherwise normal_min.';
+COMMENT ON COLUMN public.metric_definitions.normal_max_male   IS 'Upper bound for male biological sex. Used when set; otherwise normal_max.';
+COMMENT ON COLUMN public.metric_definitions.category          IS 'UI grouping: "mineral", "vitamin", "lipid", "metabolic", "thyroid", "kidney", "blood".';
+COMMENT ON COLUMN public.metric_definitions.sort_order        IS 'Display order within the markers panel.';
 
 
 CREATE TABLE IF NOT EXISTS public.user_health_markers (

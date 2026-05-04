@@ -48,6 +48,7 @@ window.MFC.auth = (function () {
       email: u.email || '',
       avatar: m.avatar_url || m.picture || null,
       provider: u.app_metadata?.provider || 'email',
+      biologicalSex: m.biological_sex || null,
     };
   }
 
