@@ -8,7 +8,12 @@
   "servings": 4,
   "totalMinutes": 50,
   "tags": [
-    "non-veg"
+    "non-veg",
+    "high-protein",
+    "halal",
+    "dairy",
+    "onion",
+    "garlic"
   ],
   "color": "#F4A261",
   "colorSoft": "rgba(244,162,97,0.18)",

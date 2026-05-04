@@ -9,7 +9,12 @@
   "totalMinutes": 60,
   "tags": [
     "vegetarian",
-    "high-fiber"
+    "high-fiber",
+    "high-protein",
+    "gluten",
+    "dairy",
+    "onion",
+    "garlic"
   ],
   "color": "#FF8C00",
   "colorSoft": "rgba(255,140,0,0.15)",
