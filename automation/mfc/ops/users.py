@@ -228,14 +228,10 @@ def set_role(
                 f"Promote another user to admin first."
             )
 
-    app_meta = (user.app_metadata or {}) if hasattr(user, "app_metadata") else (user.get("app_metadata") or {})
-    new_meta = dict(app_meta)
-    if new_role == "user":
-        new_meta.pop("role", None)
-    else:
-        new_meta["role"] = new_role
-
-    client.auth.admin.update_user_by_id(before.id, {"app_metadata": new_meta})
+    # GoTrue's update_user_by_id MERGES app_metadata key-by-key; null deletes
+    # the key. Send a sparse patch: only the role key, never the full dict.
+    role_patch = {"role": None if new_role == "user" else new_role}
+    client.auth.admin.update_user_by_id(before.id, {"app_metadata": role_patch})
 
     signed_out = False
     if force_signout and _is_demotion(before.role, new_role):
