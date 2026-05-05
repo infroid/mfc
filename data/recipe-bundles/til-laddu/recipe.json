@@ -1,0 +1,65 @@
+{
+  "id": "til-laddu",
+  "name": "Til Laddu (Sesame Balls)",
+  "tagline": "Sesame and jaggery winter laddus — calcium, copper, magnesium",
+  "shortTagline": "sesame laddu · calcium · 20 min",
+  "cuisine": "Indian",
+  "difficulty": "Medium",
+  "servings": 12,
+  "totalMinutes": 20,
+  "tags": ["veg", "vegan", "high-calcium", "winter", "snack"],
+  "color": "#8B4513",
+  "colorSoft": "rgba(139,69,19,0.18)",
+  "featured": false,
+  "highlight": "Sesame at 975mg calcium per 100g — most calcium-dense seed in your kitchen",
+  "media": {
+    "emoji": "🟫",
+    "hero": {
+      "palette": ["#8B4513", "#E9C46A", "#FBF7EE"],
+      "src": "data/recipe-bundles/til-laddu/hero.jpg",
+      "alt": "Round dark-brown sesame laddus stacked on a brass plate",
+      "caption": "til laddu — sesame and jaggery balls"
+    }
+  },
+  "healthFacts": [
+    "Sesame seeds deliver calcium, copper, magnesium, and zinc together — rare bone-health combo.",
+    "Lignans (sesamin, sesamolin) support cholesterol metabolism and antioxidant pathways.",
+    "Vitamin E in sesame oil supports skin barrier and reduces oxidative stress.",
+    "Traditional winter food — warming and energy-dense for cold months."
+  ],
+  "ingredients": [
+    {"name": "White sesame seeds", "amt": "1 cup", "group": "main"},
+    {"name": "Jaggery (grated)", "amt": "¾ cup", "group": "main"},
+    {"name": "Ghee", "amt": "1.5 tbsp", "group": "fat"},
+    {"name": "Cardamom powder", "amt": "¼ tsp", "group": "spice"},
+    {"name": "Roasted peanuts (crushed)", "amt": "2 tbsp", "group": "optional"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Roast the sesame",
+      "detail": "Dry-roast sesame seeds on low heat in a wide pan for 4–5 minutes, stirring constantly, until they pop slightly and turn golden. Set aside.",
+      "duration": 300,
+      "tip": "Sesame burns quickly — keep heat low and never stop stirring."
+    },
+    {
+      "id": 2,
+      "title": "Melt the jaggery",
+      "detail": "Heat ghee in the same pan. Add jaggery, stir on low till fully melted and smooth — about 3 minutes. Test with the cold water hard-crack check.",
+      "duration": 180,
+      "tip": "Don't let it boil hard — sesame jaggery is delicate and burns fast."
+    },
+    {
+      "id": 3,
+      "title": "Combine and shape",
+      "detail": "Stir in roasted sesame, cardamom, and crushed peanuts. Mix off heat for 20 seconds. While still warm enough to handle, grease your palms with ghee and roll into walnut-sized balls. Cool fully before storing.",
+      "duration": 600,
+      "tip": "If the mixture cools too much, return to low heat for a few seconds — but don't overheat."
+    }
+  ],
+  "utensils": [
+    {"name": "Heavy-bottomed pan", "essential": true},
+    {"name": "Wooden spoon", "essential": true},
+    {"name": "Greased plate", "essential": false}
+  ]
+}

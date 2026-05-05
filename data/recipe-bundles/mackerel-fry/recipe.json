@@ -1,0 +1,69 @@
+{
+  "id": "mackerel-fry",
+  "name": "Bangda Fry (Mackerel)",
+  "tagline": "Konkani-style pan-fried mackerel — high omega-3, low cost",
+  "shortTagline": "mackerel · omega-3 · 20 min",
+  "cuisine": "Konkani",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 20,
+  "tags": ["non-veg", "fish", "omega-3", "high-b12", "high-d3"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.18)",
+  "featured": false,
+  "highlight": "Mackerel beats salmon on cost-per-omega-3 — a budget heart-health hero",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": ["#A0522D", "#E76F51", "#E9C46A"],
+      "src": "data/recipe-bundles/mackerel-fry/hero.jpg",
+      "alt": "Two whole pan-fried mackerel coated in red Kashmiri masala on a banana leaf",
+      "caption": "bangda fry — masala-coated, shallow-fried"
+    }
+  },
+  "healthFacts": [
+    "Mackerel has 2.6g EPA+DHA per 100g — among the richest omega-3 sources.",
+    "Single fillet covers 100% of B12 and 90% of selenium daily needs.",
+    "Coenzyme Q10 content supports cardiac mitochondrial energy.",
+    "Lower mercury than larger predator fish — safer for frequent eating."
+  ],
+  "ingredients": [
+    {"name": "Mackerel (cleaned, slit)", "amt": "2 whole (~400g)", "group": "main"},
+    {"name": "Kashmiri chili powder", "amt": "1.5 tsp", "group": "masala"},
+    {"name": "Turmeric powder", "amt": "½ tsp", "group": "masala"},
+    {"name": "Ginger-garlic paste", "amt": "1 tbsp", "group": "masala"},
+    {"name": "Tamarind paste", "amt": "1 tsp", "group": "masala"},
+    {"name": "Rice flour", "amt": "2 tbsp", "group": "coating"},
+    {"name": "Coconut oil", "amt": "3 tbsp", "group": "fat"},
+    {"name": "Salt", "amt": "to taste", "group": "finish"},
+    {"name": "Lemon", "amt": "for serving", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate the mackerel",
+      "detail": "Slit the mackerel diagonally on both sides for the masala to penetrate. Mix Kashmiri chili, turmeric, ginger-garlic, tamarind, and salt into a paste. Rub all over and inside the slits. Rest 15 minutes.",
+      "duration": 900,
+      "tip": "Tamarind both seasons and removes the fishy edge."
+    },
+    {
+      "id": 2,
+      "title": "Coat with rice flour",
+      "detail": "Right before frying, dust the marinated fish with rice flour on both sides — this gives the lacy crisp crust.",
+      "duration": 30,
+      "tip": "Coat just before frying — too early and it gets gummy."
+    },
+    {
+      "id": 3,
+      "title": "Pan-fry hot",
+      "detail": "Heat coconut oil in a wide pan till shimmering. Place the mackerel and cook on medium-high for 3 minutes per side without moving. Flip carefully, cook another 3 minutes. Drain on paper. Squeeze lemon and serve with rice.",
+      "duration": 360,
+      "tip": "Don't move the fish too early — the crust needs time to set or it'll stick."
+    }
+  ],
+  "utensils": [
+    {"name": "Wide non-stick or cast-iron pan", "essential": true},
+    {"name": "Fish spatula", "essential": true},
+    {"name": "Plate for marinating", "essential": false}
+  ]
+}

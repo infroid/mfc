@@ -1,0 +1,69 @@
+{
+  "id": "methi-thepla",
+  "name": "Methi Thepla",
+  "tagline": "Gujarati fenugreek-flatbread — blood-sugar friendly travel staple",
+  "shortTagline": "fenugreek flatbread · low-GI · 30 min",
+  "cuisine": "Gujarati",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": ["veg", "low-glycemic", "high-fiber", "blood-sugar"],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Fenugreek's galactomannan fiber slows glucose absorption — ideal for HbA1c control",
+  "media": {
+    "emoji": "🫓",
+    "hero": {
+      "palette": ["#7A9C5A", "#A4C268", "#E9C46A"],
+      "src": "data/recipe-bundles/methi-thepla/hero.jpg",
+      "alt": "Stack of green-flecked fenugreek theplas on a wooden board with a side of yogurt",
+      "caption": "methi thepla — fenugreek-flecked flatbread"
+    }
+  },
+  "healthFacts": [
+    "Fenugreek's soluble fiber lowers post-meal glucose spikes by 20–30%.",
+    "Whole-wheat + besan combo gives complete protein and slow-release carbs.",
+    "Fenugreek leaves contain iron, vitamin K, and modest amounts of folate.",
+    "Cooks dry on a tawa with minimal oil — friendly to LDL and triglyceride control."
+  ],
+  "ingredients": [
+    {"name": "Whole-wheat flour", "amt": "1.5 cups", "group": "dough"},
+    {"name": "Gram flour (besan)", "amt": "¼ cup", "group": "dough"},
+    {"name": "Fenugreek leaves (chopped)", "amt": "1 cup", "group": "dough"},
+    {"name": "Yogurt", "amt": "3 tbsp", "group": "dough"},
+    {"name": "Green chili (chopped)", "amt": "1", "group": "dough"},
+    {"name": "Turmeric powder", "amt": "½ tsp", "group": "spice"},
+    {"name": "Cumin seeds", "amt": "1 tsp", "group": "spice"},
+    {"name": "Oil", "amt": "1 tbsp", "group": "fat"},
+    {"name": "Salt", "amt": "to taste", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Knead the dough",
+      "detail": "Combine all dough ingredients and knead with a little water until smooth and pliable. Rest 15 minutes covered.",
+      "duration": 900,
+      "tip": "The dough should be slightly stiffer than a chapati dough — keeps theplas thin."
+    },
+    {
+      "id": 2,
+      "title": "Roll thin",
+      "detail": "Divide into 10 balls. Roll each into a thin round (~6 inches) on a lightly floured surface.",
+      "duration": 600,
+      "tip": "Thin theplas mean a longer shelf life — they keep for 2–3 days at room temperature."
+    },
+    {
+      "id": 3,
+      "title": "Cook on tawa",
+      "detail": "Heat a tawa on medium. Cook each thepla 30 seconds per side, then brush both sides with a little oil and cook another 30 seconds till golden brown spots appear.",
+      "duration": 600,
+      "tip": "Eat with thick yogurt and pickle for the canonical pairing."
+    }
+  ],
+  "utensils": [
+    {"name": "Tawa / flat skillet", "essential": true},
+    {"name": "Rolling pin", "essential": true},
+    {"name": "Mixing bowl", "essential": false}
+  ]
+}

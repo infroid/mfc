@@ -1,0 +1,72 @@
+{
+  "id": "mutton-curry",
+  "name": "Mutton Curry",
+  "tagline": "Slow-cooked goat curry — heme iron, B12, and zinc in restaurant-style gravy",
+  "shortTagline": "goat curry · heme iron · 90 min",
+  "cuisine": "North Indian",
+  "difficulty": "Hard",
+  "servings": 4,
+  "totalMinutes": 90,
+  "tags": ["non-veg", "goat", "high-iron", "high-protein", "high-zinc", "halal", "garlic", "onion"],
+  "color": "#7B2D26",
+  "colorSoft": "rgba(123,45,38,0.18)",
+  "featured": false,
+  "highlight": "Bhuna technique — slow-fry the masala till oil separates twice",
+  "media": {
+    "emoji": "🍖",
+    "hero": {
+      "palette": ["#7B2D26", "#C44536", "#E76F51"],
+      "src": "data/recipe-bundles/mutton-curry/hero.jpg",
+      "alt": "Dark-red mutton curry with bone-in goat pieces, oil pooling on top",
+      "caption": "mutton curry — slow-bhuna, deep-spiced"
+    }
+  },
+  "healthFacts": [
+    "Goat meat: 3.7mg heme iron per 100g — absorbed 3× better than plant iron.",
+    "Single serving covers 100% of B12 and zinc daily targets.",
+    "Lower fat than lamb or mutton (sheep) — leaner red meat option.",
+    "Bone-in cuts release collagen and trace minerals into the gravy."
+  ],
+  "ingredients": [
+    {"name": "Goat (bone-in, curry cut)", "amt": "1 kg", "group": "main"},
+    {"name": "Yogurt", "amt": "½ cup", "group": "marinade"},
+    {"name": "Onion (sliced)", "amt": "3 large", "group": "base"},
+    {"name": "Tomato (puréed)", "amt": "2 large", "group": "base"},
+    {"name": "Ginger-garlic paste", "amt": "3 tbsp", "group": "base"},
+    {"name": "Kashmiri chili powder", "amt": "2 tsp", "group": "spice"},
+    {"name": "Coriander powder", "amt": "2 tsp", "group": "spice"},
+    {"name": "Garam masala", "amt": "1.5 tsp", "group": "spice"},
+    {"name": "Bay leaf", "amt": "2", "group": "whole-spice"},
+    {"name": "Cinnamon", "amt": "1 stick", "group": "whole-spice"},
+    {"name": "Mustard oil", "amt": "5 tbsp", "group": "fat"},
+    {"name": "Salt", "amt": "to taste", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate the meat",
+      "detail": "Mix yogurt with half the ginger-garlic paste, ½ tsp salt, and a pinch of turmeric. Coat the goat pieces and rest 30 minutes (overnight in fridge for best result).",
+      "duration": 1800,
+      "tip": "Yogurt's lactic acid pre-tenderises the meat — non-negotiable for goat."
+    },
+    {
+      "id": 2,
+      "title": "Brown the masala",
+      "detail": "Heat mustard oil till it just smokes. Add bay leaf and cinnamon. Brown sliced onions deeply (12 min). Add remaining ginger-garlic, then tomato purée. Cook till oil separates. Add chili, coriander, garam masala. Cook 2 more minutes.",
+      "duration": 1080,
+      "tip": "Deeply browned onions are the soul of mutton curry — don't rush this."
+    },
+    {
+      "id": 3,
+      "title": "Bhuna and pressure-cook",
+      "detail": "Add the marinated goat and cook on medium-high for 10 minutes, stirring constantly — this is the bhuna. Add 3 cups water, transfer to a pressure cooker, cook 25 minutes (8–10 whistles). Open, simmer to thicken if needed. Finish with fresh garam masala.",
+      "duration": 2100,
+      "tip": "Pressure cooker is the only practical way for goat — slow simmer takes 2.5 hours."
+    }
+  ],
+  "utensils": [
+    {"name": "Pressure cooker", "essential": true},
+    {"name": "Heavy-bottomed pan / kadhai", "essential": true},
+    {"name": "Wooden spoon", "essential": false}
+  ]
+}
