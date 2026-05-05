@@ -26,6 +26,8 @@ make             # list every Make target
 make serve       # http.server on :8080
 make sync        # sync the python venv (after editing automation/pyproject.toml)
 make status      # supabase: list public tables + row counts
+make list-users  # supabase: list users; optional ROLE=user|chef|admin Q=alice
+make set-role    # supabase: change role; USER=<email> ROLE=<user|chef|admin>
 make reset       # supabase: drop + apply schema + seed metrics + import recipes
 ```
 
@@ -114,9 +116,16 @@ Schema layers:
   pipeline joins on: `date_of_birth`, `diet_tags[]`, `allergies[]`, `goals[]`,
   `units`. Display name and biological sex live separately on
   `auth.users.user_metadata` (mutable for name, permanent for biological sex).
-- **Admin gate** — `public.is_admin()` returns true when
-  `auth.jwt() -> 'app_metadata' ->> 'role' = 'admin'`. Used by RLS policies on
-  the catalog and library tables.
+- **Admin gate** — `public.is_admin()` / `public.is_chef()` return true when
+  `auth.jwt() -> 'app_metadata' ->> 'role'` matches `'admin'` / `'chef'`. Used
+  by RLS policies on the catalog and library tables. `public.list_app_users()`
+  is a SECURITY DEFINER function that returns `auth.users` rows to admin
+  callers; powers `/admin/users.html`.
+- **Roles** — `app_metadata.role ∈ {chef, admin}` (or absent for default
+  `user`). Mutated only by `mfc set-role` (= `make set-role USER=<email>
+  ROLE=<user|chef|admin>`). Never writable from the browser. (`user_metadata`
+  is intentionally avoided — user-writable, would be a privilege-escalation
+  vulnerability.)
 
 ## Shared JS (`<script src>`)
 

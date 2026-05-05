@@ -94,22 +94,48 @@ In **Authentication → URL Configuration**:
 
 ## 4. Grant yourself the admin role
 
-The admin pages are gated by `app_metadata.role = 'admin'` on your Supabase
-user, enforced both in the UI ([web/assets/js/lib/admin-gate.js](web/assets/js/lib/admin-gate.js))
+Roles live in `auth.users.app_metadata.role` and accept `'admin'`, `'chef'`,
+or absent (= default `'user'`). The admin pages are gated by `'admin'` both in
+the UI ([web/assets/js/lib/admin-gate.js](web/assets/js/lib/admin-gate.js))
 and at the database level via the RLS predicate `public.is_admin()` (defined
-in [automation/db/schema.sql](automation/db/schema.sql) §8).
+in [automation/db/schema.sql](automation/db/schema.sql) §8). `public.is_chef()`
+is a parallel helper that will gate chef ownership in a later sub-project.
 
 > **Why `app_metadata` and not `user_metadata`?** `user_metadata` can be
 > written by the user themselves via the Supabase client — it is **not safe**
 > for access control. `app_metadata` is mutable only via the service-role key
-> (or SQL), which is why `public.is_admin()` reads from there.
+> (or SQL), which is why `public.is_admin()` / `public.is_chef()` read from
+> there.
 
 ### Prerequisite
 
 **Sign in once on the public site first** (magic link or Google) so your row
 exists in `auth.users`. The grant won't work until the row exists.
 
-### Option A — copy-paste SQL (fastest)
+### Recommended — `make set-role`
+
+```bash
+make set-role USER=you@example.com ROLE=admin
+```
+
+Idempotent. Other roles: `ROLE=chef` (stages for the chef-ownership sub-project)
+or `ROLE=user` (demotes; the CLI will sign the target out of every active
+session and refuse if you'd be removing the last admin).
+
+To list users at any time:
+
+```bash
+make list-users                    # all
+make list-users ROLE=admin         # filter
+make list-users Q=alice            # email-substring search
+```
+
+The CLI talks to the Supabase Auth Admin API via the service-role key in
+`automation/.env`. Same access path is also used by the read-only browser
+admin UI at `/admin/users.html` (which calls `public.list_app_users()` via
+RPC, gated by `is_admin()`); role *changes* always go through the CLI.
+
+### Option A — copy-paste SQL (fallback if Make/uv aren't set up yet)
 
 Run any of these in **Studio → SQL Editor**, replacing the email. They use
 `raw_app_meta_data || '...'::jsonb` so existing keys (e.g. `provider`) are
