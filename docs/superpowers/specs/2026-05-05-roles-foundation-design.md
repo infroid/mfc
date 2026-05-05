@@ -3,12 +3,13 @@
 - **Date:** 2026-05-05
 - **Status:** Approved (brainstorm). Ready for implementation plan.
 - **Sub-project:** #1 of 4 in the broader role/ownership/transfer/freeze rollout.
+- **Revision:** 2 — re-evaluated after the major repo refactor (`web/`, `automation/`, Python CLI, Makefile). Edge functions dropped in favour of the existing CLI automation; browser admin UI is read-only with copyable terminal-command suggestions (Option C from the re-evaluation).
 
 ## Context
 
 The user requested a four-part feature spanning roles, recipe ownership, transfer-with-admin-approval, and a global freeze switch. Brainstorming decomposed this into four independent sub-projects with a strict dependency order:
 
-1. **Roles foundation** *(this spec)* — introduce `user` / `chef` / `admin` roles, with admin UI for user listing and role changes.
+1. **Roles foundation** *(this spec)* — introduce `user` / `chef` / `admin` roles, with admin UI for user listing.
 2. Recipe ownership (`recipes.owner_id`, chef-write RLS, chef-portal UI).
 3. Ownership transfer with admin approval.
 4. Global freeze switch.
@@ -18,12 +19,14 @@ Sub-projects 2–4 cannot be designed concretely until #1 ships. This spec cover
 ## Goals
 
 - Introduce three roles: `user`, `chef`, `admin`. `user` is the implicit default (absence of role).
-- Provide an admin-only UI to list all users, search/filter them, and change any user's role.
-- Provide an operator script for bootstrap and emergency role changes.
+- Provide CLI commands for listing users and changing roles. The CLI is the single privileged mutation surface.
+- Provide a read-only browser admin UI (`/admin/users.html`, `/admin/user.html`) so admins can browse users; role changes from the UI are not in scope — instead, the user-detail page shows copyable `make` commands the operator runs in a terminal.
 - Lay groundwork (`is_chef()` SQL helper) for sub-project #2 to consume.
 
 ## Non-goals (deferred)
 
+- Browser-driven role mutation. The detail page is read-only + suggestion text.
+- Edge functions of any kind. The repo's automation pattern (Python CLI + Makefile) is the privileged surface.
 - `recipes.owner_id` column, chef write-RLS, chef-portal UI → sub-project #2.
 - `recipe_ownership_transfers` workflow → sub-project #3.
 - Global freeze switch → sub-project #4.
@@ -33,250 +36,311 @@ Sub-projects 2–4 cannot be designed concretely until #1 ships. This spec cover
 
 ## Decisions captured
 
-1. **Role storage** — `auth.users.app_metadata.role`. Read at query time from `auth.jwt()`. Mutated only by service-role-bearing code (edge functions or operator script). Never writable from the browser. (`user_metadata` is intentionally avoided — it is user-writable and would be a privilege-escalation hole.)
-2. **Mutation path** — both an Edge Function (for the eventual admin UI and any browser-driven action) AND a local Node script (for bootstrap and emergencies). Both share the same business rules in parallel modules (Deno-side TS and Node-side JS); they cannot share imports across runtimes but stay short enough that drift is unlikely.
-3. **Last-admin guard** — the role-change path refuses to demote the last remaining admin. Returns 409 `{ code: 'last_admin' }` from the edge function; same error semantics from the script.
-4. **Force sign-out on demotion** — `auth.admin.signOut(targetUserId, 'global')` is called whenever the change is `admin → chef|user` or `chef → user`. Closes the stale-JWT window immediately. Promotions do not force a sign-out.
+1. **Role storage** — `auth.users.app_metadata.role`. Read at query time from `auth.jwt()`. Mutated only by service-role-bearing code (the CLI). Never writable from the browser. (`user_metadata` is intentionally avoided — it is user-writable and would be a privilege-escalation hole.)
+2. **Mutation path** — local Python CLI only. `mfc set-role --user <email|uuid> --role <user|chef|admin>` exposed via `make set-role USER=<...> ROLE=<...>`. No edge function, no browser-driven write.
+3. **Last-admin guard** — `mfc set-role` refuses to demote the last remaining admin. Inline error; non-zero exit.
+4. **Force sign-out on demotion** — when the change is `admin → chef|user` or `chef → user`, the CLI invalidates all of the target's sessions immediately. Preferred path: supabase-py admin API (`client.auth.admin.sign_out(user_id)` if exposed in the installed version). Fallback: `DELETE FROM auth.refresh_tokens WHERE user_id = %s` via psycopg, plus session deletion if the API path doesn't cover it. Skippable with `--no-signout`.
 5. **Default role for new users** — implicit `'user'`. No Auth hook, no trigger. `app_metadata.role` is absent until someone is promoted. Demoting back to `'user'` clears the key (writes `null`) rather than storing the literal string `'user'`. `is_admin()` and `is_chef()` both naturally return `false` for absence-of-key.
-6. **User listing path** — a `roles-list` edge function. Same security envelope as `roles-update`. No Postgres view exposing `auth.users` to the `public` schema.
-7. **Admin UI scope** — two pages: `/admin/users.html` (list, search, role filter, pagination) and `/admin/user.html?id=<uuid>` (read-only identity block + role selector + save). No additional features (no password reset, saved-recipes view, suspension, etc.).
+6. **User listing path** — a `public.list_app_users(...)` SECURITY DEFINER SQL function. Browser calls it via `supabase.rpc()`; the body asserts `is_admin()`. The CLI uses the same function via supabase-py service-role client (or queries `auth.users` directly via psycopg — service-role bypasses everything anyway).
+7. **Admin UI scope** — two pages. `/admin/users.html` lists and paginates. `/admin/user.html?id=<uuid>` shows identity + current role badge + three "suggested terminal command" rows with Copy buttons. No save button, no role selector.
 
 ## Architecture
 
 ```
-admin UI pages (/admin/users.html, /admin/user.html)
-       │ supabase.functions.invoke()
-       ▼
-  Edge Functions (roles-list, roles-update)
-       │ supabase.auth.admin.* (service-role key)
-       ▼
-  Supabase Auth (auth.users.app_metadata.role)
-       ▲
-       │ supabase.auth.admin.* (service-role key)
-  scripts/set_role.mjs (operator console)
+        ┌─ Browser (read-only)
+        │     /admin/users.html, /admin/user.html
+        │            │
+        │            │  supabase.rpc('list_app_users', ...)
+        │            ▼
+        │     public.list_app_users(...)        ← SECURITY DEFINER, asserts is_admin()
+        │            │
+        │            ▼
+        │     auth.users
+        │            ▲
+        ▼            │
+  Operator terminal  │
+   make set-role / list-users
+        │            │
+        ▼            │
+   automation/mfc CLI │
+        │            │
+        ▼            │
+   supabase-py service-role client
+        │            │
+        ├────────────┘
+        ▼
+   auth.users.raw_app_meta_data.role  + auth.refresh_tokens (force-signout)
 ```
 
 Three components, each with one purpose:
 
 1. **JWT-driven role gate** — `is_admin()` (existing) and new `is_chef()`. Both read `auth.jwt() -> 'app_metadata' ->> 'role'`. No new tables, no view, no auth hook. Existing admin RLS policies untouched.
-2. **Role-management API** — two Supabase Edge Functions sharing a TS helper module that encapsulates `requireAdmin(req)` (JWT validation + admin check) and `applyRoleChange(...)` (last-admin guard, write, optional force-signout).
-3. **Local operator script** — `scripts/set_role.mjs`, mirrors the edge function rules. Uses service-role key from env. Used for bootstrap and emergencies.
+2. **`list_app_users` SECURITY DEFINER function** — the only DB-level privilege escalation. Reads `auth.users`, normalises role from `raw_app_meta_data`, supports filter/search/pagination. EXECUTE granted only to `authenticated`. Body asserts `is_admin()`.
+3. **CLI commands** — `mfc list-users` (read; mirrors the function for terminal use) and `mfc set-role` (write). Same business rules as before: validate role value, last-admin guard, write `app_metadata.role`, optional force-signout on demotion. Layered as `commands → ops → clients` per the existing automation convention.
 
 ## Schema changes
 
-One new function. No tables, policies, views, hooks, or triggers.
+One new helper function (`is_chef()`) and one new SECURITY DEFINER function (`list_app_users`). No tables, no policies, no views, no hooks.
 
 ```sql
+-- Helper for sub-project #2; mirrors is_admin() shape.
 CREATE OR REPLACE FUNCTION public.is_chef() RETURNS boolean AS $$
   SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'chef', false);
 $$ LANGUAGE sql STABLE;
 
 COMMENT ON FUNCTION public.is_chef() IS
   'Returns true when the calling JWT has app_metadata.role = "chef". Used by chef-ownership RLS policies (sub-project #2).';
+
+-- Browser-readable users list. SECURITY DEFINER so it can read auth.users;
+-- body asserts is_admin() so callers must hold an admin JWT.
+CREATE OR REPLACE FUNCTION public.list_app_users(
+  p_role     text DEFAULT 'all',          -- 'user' | 'chef' | 'admin' | 'all'
+  p_q        text DEFAULT NULL,           -- email substring; ILIKE
+  p_page     int  DEFAULT 1,
+  p_per_page int  DEFAULT 50              -- clamped to 200 in body
+) RETURNS TABLE (
+  id              uuid,
+  email           text,
+  full_name       text,
+  role            text,                   -- normalised: 'user' for null/absent
+  created_at      timestamptz,
+  last_sign_in_at timestamptz,
+  provider        text,
+  total_count     bigint                  -- echoed on every row, for client-side pagination math
+) LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $$
+DECLARE
+  v_offset int;
+  v_per    int := least(greatest(p_per_page, 1), 200);
+  v_role   text := lower(coalesce(p_role, 'all'));
+  v_q      text := nullif(trim(coalesce(p_q, '')), '');
+BEGIN
+  IF NOT public.is_admin() THEN
+    RAISE EXCEPTION 'forbidden' USING ERRCODE = '42501';
+  END IF;
+
+  v_offset := greatest(p_page - 1, 0) * v_per;
+
+  RETURN QUERY
+  WITH base AS (
+    SELECT
+      u.id,
+      u.email::text,
+      coalesce(u.raw_user_meta_data ->> 'full_name', u.raw_user_meta_data ->> 'name') AS full_name,
+      coalesce(u.raw_app_meta_data ->> 'role', 'user') AS role,
+      u.created_at,
+      u.last_sign_in_at,
+      coalesce(u.raw_app_meta_data ->> 'provider', 'email') AS provider
+    FROM auth.users u
+    WHERE
+      (v_role = 'all' OR coalesce(u.raw_app_meta_data ->> 'role', 'user') = v_role)
+      AND (v_q IS NULL OR u.email ILIKE '%' || v_q || '%')
+  ),
+  counted AS (SELECT count(*)::bigint AS n FROM base)
+  SELECT b.id, b.email, b.full_name, b.role, b.created_at, b.last_sign_in_at, b.provider, c.n
+  FROM base b CROSS JOIN counted c
+  ORDER BY b.created_at DESC
+  LIMIT v_per OFFSET v_offset;
+END $$;
+
+REVOKE ALL ON FUNCTION public.list_app_users(text, text, int, int) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.list_app_users(text, text, int, int) TO authenticated;
+
+COMMENT ON FUNCTION public.list_app_users(text, text, int, int) IS
+  'Admin-only browser-callable function returning auth.users with role normalised. SECURITY DEFINER; body asserts is_admin().';
 ```
 
-Delivered as `data/db/migration-2026-05-05-roles-foundation.sql` (one statement, idempotent, safe to re-apply). Also folded into `data/db/schema.sql` next to `is_admin()` so a fresh apply gets it.
+Delivered as `automation/db/migration-2026-05-05-roles-foundation.sql` (idempotent, safe to re-apply via `mfc apply-schema` mechanics or as a one-off). Both functions also folded into `automation/db/schema.sql` §8 next to `is_admin()` so a fresh `make apply-schema` gets them.
 
-## Edge functions
+## CLI
 
-Layout under `supabase/functions/`:
-
-```
-supabase/
-  functions/
-    _shared/
-      auth.ts           — requireAdmin(req): { adminClient, callerUser }
-      roles.ts          — applyRoleChange(adminClient, target, newRole, opts)
-                          → encapsulates last-admin guard, app_metadata write,
-                            optional auth.admin.signOut on demotion
-    roles-list/
-      index.ts
-    roles-update/
-      index.ts
-```
-
-### `requireAdmin(req)`
-
-Shared helper used by both functions:
-
-1. Reads `Authorization: Bearer <jwt>` from the request.
-2. Constructs a Supabase client with the **anon key** + the caller's JWT, calls `getUser()` to verify.
-3. Inspects `caller.app_metadata.role`. If not `'admin'`, throws → 403.
-4. Returns `{ adminClient, callerUser }` where `adminClient` uses the **service-role key** for privileged ops.
-
-Service-role key never reaches the browser. The JWT-bound client establishes identity; the service-role client performs privileged writes.
-
-### `roles-list` (GET)
-
-Query params:
-- `role` ∈ `'user'|'chef'|'admin'|'all'` (default `'all'`)
-- `q` — email-substring search (case-insensitive)
-- `id` — single-user lookup (UUID); when present, returns at most one row and ignores `role` / `q`
-- `page` (default 1)
-- `per_page` (default 50, max 200)
-
-Behaviour:
-1. `requireAdmin(req)`.
-2. `id` mode: calls `adminClient.auth.admin.getUserById(id)`. Returns `{ users: [...], page: 1, total: 1 }` or empty + 404 if not found.
-3. List mode: calls `adminClient.auth.admin.listUsers({ page, perPage })`. Filters in-process by role + email. Acceptable for low-hundreds user counts; revisit with a SECURITY DEFINER view if it ever crosses ~200ms.
-4. Returns `{ users: [{ id, email, full_name, role, created_at, last_sign_in_at, provider }], page, total }`.
-
-`role` is normalized to `'user'` for any user with absent or null `app_metadata.role`.
-
-### `roles-update` (POST)
-
-Body: `{ targetUserId: string, newRole: 'user' | 'chef' | 'admin' }`.
-
-Behaviour:
-1. `requireAdmin(req)`.
-2. Validates `newRole` ∈ `['user', 'chef', 'admin']`. Reject with 400 otherwise.
-3. `adminClient.auth.admin.getUserById(targetUserId)` → resolve current role (absence → `'user'`).
-4. **Last-admin guard:** if current role is `'admin'` and `newRole !== 'admin'`, count current admins by paging `listUsers`. If the only admin and target IS that admin → 409 `{ code: 'last_admin' }`.
-5. Writes `app_metadata.role = newRole === 'user' ? null : newRole`, merged into existing `app_metadata`, via `updateUserById`.
-6. **Force sign-out on demotion** (`'admin' → 'chef'|'user'` or `'chef' → 'user'`): `adminClient.auth.admin.signOut(targetUserId, 'global')`.
-7. Returns `{ ok: true, user: { id, email, role: newRole } }`.
-
-Error codes: 400 (bad input) · 401 (no/bad JWT) · 403 (caller not admin) · 404 (target not found) · 409 (last-admin) · 500 (unexpected).
-
-### Foot-gun guard
-
-A comment near the role-write call:
-
-```ts
-// IMPORTANT: app_metadata only. user_metadata is user-writable; storing role
-// there would be a privilege escalation vulnerability.
-```
-
-Mirrored in `scripts/set_role.mjs` and noted in `USER-TODO.md` §4 alongside the role bootstrap commands.
-
-## Local operator script
-
-`scripts/set_role.mjs`. Node ES module, ~80 lines. Same style as `scripts/import_recipes.mjs` (env loading, supabase-js, `console.log` UX).
-
-Invocation:
+Layout under `automation/mfc/` follows the documented `commands → ops → clients` layering.
 
 ```
-node scripts/set_role.mjs --user <email-or-uuid> --role <user|chef|admin> [--no-signout]
+automation/mfc/
+  ops/
+    users.py        — list_users(...) + set_role(...) (the work)
+  commands/
+    list_users.py   — `mfc list-users` argparse wrapper
+    set_role.py     — `mfc set-role` argparse wrapper
+  cli.py            — append both to COMMAND_MODULES
 ```
 
-Behaviour:
+### `ops/users.py`
 
-1. Loads `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from `process.env` or `.env.local`.
-2. Constructs `createClient(url, serviceKey, { auth: { persistSession: false } })`.
-3. Resolves target: UUID → `getUserById`; otherwise → page `listUsers` and match by email. Fail fast if not found.
-4. Mirrors the edge function's `applyRoleChange` rules:
-   - validates `--role`,
-   - applies the last-admin guard,
-   - writes `app_metadata.role` (null on `'user'`),
-   - calls `auth.admin.signOut(targetId, 'global')` on demotion unless `--no-signout` is set.
-5. Prints a single summary line: `[set_role] alice@example.com  user → chef  (signed out: yes)`.
+```python
+from dataclasses import dataclass
+from ..clients import sb as sb_client
+from ..core.config import Config
 
-`scripts/lib/roles.mjs` holds the shared rules (valid roles, `isDemotion()`, `targetMetadataPatch()`, last-admin guard).
+VALID_ROLES = ('user', 'chef', 'admin')
 
-The first admin is created via this script — service-role key bypasses RLS and the last-admin guard only triggers on demotions.
+@dataclass(frozen=True)
+class AppUser:
+    id: str
+    email: str
+    full_name: str | None
+    role: str           # 'user' | 'chef' | 'admin'
+    created_at: str
+    last_sign_in_at: str | None
+    provider: str
 
-## Admin UI pages
+class RoleError(RuntimeError):
+    """Raised for guard failures: invalid role, last-admin, target-not-found."""
 
-Both pages are gated by the existing `shared/admin-gate.js`. No new gate logic.
+def list_users(config, *, role='all', q=None, page=1, per_page=50) -> list[AppUser]:
+    """Pages auth.admin.list_users, filters in-process, returns AppUser rows."""
 
-### `/admin/users.html` + `js/admin-users-app.jsx`
+def set_role(config, *, target: str, new_role: str, force_signout: bool = True) -> tuple[AppUser, AppUser]:
+    """Resolves target (UUID or email), applies last-admin guard, writes
+    app_metadata.role (None for 'user'), force-signs-out on demotion.
+    Returns (before, after). Raises RoleError on guard failures."""
+```
 
-Layout reuses the `/admin/recipes.html` shell (`AdminSidebar`, `AdminTopbar`, `FormCard`):
+Implementation notes:
+- Last-admin guard: count current admins by paging `auth.admin.list_users()` until exhausted. Cheap for low-hundred user counts.
+- Demotion definition: `admin → chef|user` or `chef → user`. Promotions never trigger force-signout.
+- Force-signout: prefer `client.auth.admin.sign_out(user_id)` if supabase-py exposes it; otherwise fall back to a `DELETE FROM auth.refresh_tokens WHERE user_id = %s` via psycopg `pg.exec_sql`. (We'll detect at runtime; both paths are compatible.)
+- Idempotency: if `new_role == current_role`, `set_role` is a no-op (returns identical before/after, no signout) — operator gets a friendly summary rather than an error.
 
+### `commands/list_users.py`
+
+`mfc list-users [--role user|chef|admin|all] [--q <substr>] [--page N] [--per-page N]`. Prints a tidy table to stdout (`core.log`-styled), columns: email, name, role badge, created, last sign-in, provider. Empty list → "no users match" warn.
+
+### `commands/set_role.py`
+
+`mfc set-role --user <email|uuid> --role <user|chef|admin> [--no-signout]`.
+- Validates `--role` against `VALID_ROLES`.
+- Resolves target; fails fast with a clear error if not found.
+- For demotions: prompts via `core.prompts.confirm` ("Demote alice@example.com from admin to chef? Their session will be ended."). Honours global `--yes` flag for non-TTY runs.
+- Calls `ops.users.set_role(...)` and prints the one-line summary on success: `[set_role] alice@example.com  user → chef  (signed out: yes)`.
+- `RoleError` (last-admin, target not found, etc.) → `log.error` + non-zero exit.
+
+Both registered in `cli.py` (appended to `COMMAND_MODULES` after `import_recipes`, before `drop_schema`).
+
+## Makefile
+
+Two new targets at the root `Makefile`:
+
+```make
+list-users: ## list users; optional ROLE=chef Q=alice
+	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
+
+set-role: ## change role; required USER=<email-or-uuid> ROLE=<user|chef|admin>
+	@$(UV) run mfc set-role --user "$(USER)" --role "$(ROLE)"
+```
+
+Caveat: the `USER=` make var collides with `$USER` shell env var. Make's command-line `USER=alice` override wins for the recipe's lifetime, so it works correctly. If a future operator preference shifts (e.g. to `EMAIL=`), the rename is one line.
+
+`make help` will surface both via the existing grep-based help target.
+
+## Browser admin UI (read-only)
+
+Both pages gated by existing `web/assets/js/lib/admin-gate.js`. Both use existing components from `web/assets/js/lib/admin-shared.jsx`.
+
+### `web/admin/users.html` + `web/assets/js/app/admin-users-app.jsx`
+
+Layout reuses the existing `/admin/recipes.html` shell (`AdminSidebar`, `AdminTopbar`, `FormCard`).
+
+- AdminSidebar gains a `Users` entry (added to `web/assets/js/lib/admin-shared.jsx`).
 - Topbar title: "Users".
-- Filter row: search input (debounced 250ms; sets `q`) + role pills `All / User / Chef / Admin` (sets `role`, resets to page 1).
+- Filter row: search input (debounced 250ms; sets `q`) + role pills `All / User / Chef / Admin`. Changing either resets to page 1.
+- Banner above the table: "Role changes are made from the terminal. Open a user to see the exact command."
 - Table columns: avatar (initials), email, name, role badge, signed up (relative), last sign-in (relative), provider.
 - Each row links to `user.html?id=<uuid>`.
 - Empty state when no rows match.
-- Pagination footer (Prev / page X / Next).
+- Pagination footer (Prev / page X / Next), driven by `total_count` from the RPC.
 
-A new `Users` entry is added to `AdminSidebar` in `js/admin-shared.jsx`.
+Data via `supabase.rpc('list_app_users', { p_role, p_q, p_page, p_per_page })`. Surfaces 401/403 by routing through `MFC.adminGate.guard()`.
 
-Data flow: `MFC.adminApi.listUsers({ role, q, page, perPage })` → `supabase.functions.invoke('roles-list', ...)`.
-
-### `/admin/user.html?id=<uuid>` + `js/admin-user-app.jsx`
+### `web/admin/user.html?id=<uuid>` + `web/assets/js/app/admin-user-app.jsx`
 
 Layout:
 
 - Topbar: "← Users / `<email>`".
 - Identity block (read-only): email, name, provider, signed up, last sign-in, user id (mono, copyable).
-- Role section: 3-way `RadioPills` (`user / chef / admin`) + Save button (disabled when unchanged).
+- Role panel:
+  - Current role displayed as the same role badge component used in the table.
+  - Below it, two suggestion rows (one for each non-current role). Each row:
+    - Mono-styled command: `make set-role USER=<email> ROLE=<role>`
+    - Copy-to-clipboard button.
+    - One-line caption explaining the consequence. Promotions: "Grants chef-level write access to recipes they own." Demotions: "Will sign Alice out of all sessions immediately."
+  - No Save button. No editable selector.
 
-Data flow:
-- On mount: `MFC.adminApi.getUser(id)` → `roles-list?id=<uuid>`.
-- On Save:
-  - If demotion (current `admin` → not-admin, or `chef` → `user`): show confirmation modal — "This will sign the user out of all sessions. They'll need to sign in again to use the site." (Self-edit text variant: "This will sign **you** out of all sessions immediately. You'll need to sign in again as the new role.")
-  - On confirm (or directly for promotions): `MFC.adminApi.updateRole({ targetUserId, newRole })` → `roles-update`.
-  - Success: refresh identity block + role selector from response; toast.
-  - 409 `last_admin`: inline error under role selector — "You can't demote the only remaining admin. Promote another user first."
-  - 401 / 403: redirect to admin sign-in via `MFC.adminGate.guard()`.
+Data: `supabase.rpc('list_app_users', { p_q: <email-or-uuid>, p_per_page: 1 })`. We accept this is mildly awkward (passing the id through the email-substring filter) — keeps the RPC surface to one function. If single-row lookup becomes painful, a tiny `public.get_app_user(uuid)` companion is a small follow-up; not in #1.
 
-**Self-demote handling:** the handler awaits `roles-update`'s `{ ok: true }`, then calls `window.MFC.auth.signOut()` itself, then navigates to `/index.html`. This avoids racing the supabase-js `SIGNED_OUT` event triggered by the now-invalidated session.
-
-### `shared/admin-api.js` (new)
-
-Thin wrapper, ~30 lines. `MFC.adminApi.listUsers`, `MFC.adminApi.getUser`, `MFC.adminApi.updateRole`. Translates `supabase.functions.invoke` results into `{ data, error }`-shaped returns matching the rest of `MFC.db`. Loaded only on `/admin/` pages.
+No new shared lib JS file. The two RPC calls are direct `supabase.rpc(...)` inside the app jsx. Two call sites doesn't justify a wrapper.
 
 ## Auth / JWT handling
 
-No changes to `shared/auth.js`, `shared/admin-gate.js`, or any RLS policy.
+No changes to `web/assets/js/lib/auth.js`, `web/assets/js/lib/admin-gate.js`, or any RLS policy.
 
-**Reads:** `is_admin()`, new `is_chef()`, and `admin-gate.js` all read `app_metadata.role` from the JWT. Untouched.
+**Reads:** `is_admin()` and new `is_chef()` continue to read `app_metadata.role` from the JWT. `admin-gate.js` checks `user.app_metadata.role === 'admin'`. Untouched.
 
-**Writes:** only the two edge functions and the operator script touch `app_metadata.role`, both via service-role `auth.admin.updateUserById()`. No browser path can write `app_metadata`.
+**Writes:** only `mfc set-role` touches `app_metadata.role`, via supabase-py service-role client. `app_metadata` is server-only — there is no path from the browser that can write it.
 
 **JWT freshness windows in #1:**
 
-- *Promotion* (e.g. `user → chef`, `user → admin`): the target's existing JWT reports the old role until natural refresh (~1h) or sign-out/back-in. Zero observable effect in #1 — chef has no chef-only UI yet, and admin promotion needing a re-login is acceptable for an operator action.
-- *Demotion*: force-signout invalidates all refresh tokens immediately. Their next API call → 401 → supabase-js fires `SIGNED_OUT`. Window is `<1 round-trip`.
+- *Promotion* (`user → chef`, `user → admin`): the target's existing JWT reports the old role until natural refresh (~1h) or sign-out/back-in. Zero observable effect in #1 — chef has no chef-only UI yet (deferred to #2), and admin promotion needing a re-login is acceptable for an operator action.
+- *Demotion*: force-signout invalidates all refresh tokens immediately (default). Their next API call → 401 → supabase-js fires `SIGNED_OUT`. Window is `<1 round-trip`.
 
-## Bootstrap & documentation
+**`user_metadata` foot-gun guard:** a comment near the role-write call site in `ops/users.py`:
+
+```python
+# IMPORTANT: app_metadata only. user_metadata is user-writable; storing role
+# there would be a privilege escalation vulnerability.
+```
+
+Mirrored in the bullet point added to `CLAUDE.md` (see Documentation).
+
+## Documentation
 
 ### `docs/USER-TODO.md`
 
-The current §4 ("how to grant the admin role via Supabase Studio SQL") is rewritten:
+§4 ("Grant yourself the admin role") rewritten:
 
-- **Recommended**: `node scripts/set_role.mjs --user <email> --role admin`. Idempotent.
-- **Fallback**: existing Studio SQL one-liner (kept for operators without Node).
-- **Edge function deployment** (one-time per project):
-  ```
-  supabase functions deploy roles-list
-  supabase functions deploy roles-update
-  ```
-  No env vars to configure — Supabase auto-injects `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` inside functions.
+- **Recommended**: `make set-role USER=<your-email> ROLE=admin`. Idempotent.
+- **Fallback**: existing copy-paste SQL one-liner (kept for operators who haven't run `make sync` yet).
 
 ### `CLAUDE.md`
 
-Add to the "Schema layers — Admin gate" section:
+Add to "Schema layers — Admin gate" section:
 
-> - **Roles** — `app_metadata.role ∈ {chef, admin}` (or absent for default `user`). Read via JWT in `is_admin()` / `is_chef()`. Mutated only by the `roles-update` edge function or `scripts/set_role.mjs`. Never writable from the browser.
+> - **Roles** — `app_metadata.role ∈ {chef, admin}` (or absent for default `user`). Read via JWT in `is_admin()` / `is_chef()`. Mutated only by `mfc set-role` (= `make set-role`). Never writable from the browser.
 
-Add a one-line entry under "Shared JS" for `shared/admin-api.js`.
+Add to the "Dev" section's Make-target list:
+
+> ```
+> make list-users  # supabase: list users; optional ROLE=chef Q=alice
+> make set-role    # supabase: change role; USER=<email> ROLE=<user|chef|admin>
+> ```
 
 ### `README.md`
 
-No change. Roles are operator/admin facing, not part of the public pitch.
+No change. Roles are operator/admin-facing, not part of the public pitch.
 
 ## Build sequence
 
 All steps performed by the assistant; no operator handoff.
 
-1. Write `data/db/migration-2026-05-05-roles-foundation.sql`. Fold into `data/db/schema.sql`.
+1. Write `automation/db/migration-2026-05-05-roles-foundation.sql`. Fold both functions into `automation/db/schema.sql` §8.
 2. Apply migration to live Supabase project via the Supabase MCP — re-confirm project URL before running.
-3. Build edge functions (`supabase/functions/_shared/auth.ts`, `_shared/roles.ts`, `roles-list/index.ts`, `roles-update/index.ts`).
-4. Build operator script (`scripts/set_role.mjs`, `scripts/lib/roles.mjs`).
-5. Deploy both edge functions to the live project (Supabase MCP if it exposes a deploy tool, otherwise `supabase functions deploy` via Bash).
-6. Build admin UI: `/admin/users.html`, `/admin/user.html`, `js/admin-users-app.jsx`, `js/admin-user-app.jsx`, `shared/admin-api.js`. Add `Users` entry to `AdminSidebar` in `js/admin-shared.jsx`. Update each page's documented script load order.
-7. Update `docs/USER-TODO.md` and `CLAUDE.md` per "Bootstrap & documentation" above.
-8. Run `node scripts/set_role.mjs --user <your-email> --role admin` to ensure the operator user is admin (idempotent).
-9. Smoke-test: load `/admin/users.html`, verify list; open a non-admin user; promote to chef → verify role badge updates; demote → verify confirmation modal + force-signout behaviour; attempt to demote the only admin → verify 409 inline error.
+3. Implement `automation/mfc/ops/users.py` (`AppUser` dataclass, `list_users`, `set_role`, `RoleError`, `VALID_ROLES`).
+4. Implement `automation/mfc/commands/list_users.py` and `commands/set_role.py`. Register both in `cli.py` (`COMMAND_MODULES`).
+5. Add `list-users` and `set-role` Makefile targets.
+6. Run `make set-role USER=<your-email> ROLE=admin` once to ensure operator user is admin (idempotent).
+7. Build `web/admin/users.html`, `web/admin/user.html`, `web/assets/js/app/admin-users-app.jsx`, `web/assets/js/app/admin-user-app.jsx`. Add `Users` entry to `AdminSidebar` in `web/assets/js/lib/admin-shared.jsx`. Update each page's documented script load order.
+8. Update `docs/USER-TODO.md` and `CLAUDE.md` per Documentation above.
+9. Smoke-test:
+   - `make list-users` returns at least the operator row with `role=admin`.
+   - `/admin/users.html` loads, filter pills work, search works, pagination works.
+   - `/admin/user.html?id=<your-id>` shows identity, current role badge, and the two terminal-command suggestion rows with Copy buttons.
+   - `make set-role USER=<another-user> ROLE=chef` flips role; refresh `/admin/users.html` to confirm.
+   - `make set-role USER=<self> ROLE=user` (still only admin) → CLI refuses with last-admin error.
+   - After promoting a second admin, `make set-role USER=<that-admin> ROLE=user` → demotion succeeds, refresh tokens for that user are gone (verifiable via `select count(*) from auth.refresh_tokens where user_id = '<id>'`).
 
-### Pre-implementation prerequisites
+### Pre-implementation prerequisite
 
-Two items the operator confirms before I start:
-
-- **Target Supabase project URL** — current `<meta name="mfc-supabase-url">` is `https://fqjzhntqppbcwvqtjscb.supabase.co`. Confirm this is the right env vs. a staging copy.
-- **Service-role key for local script** — must be in `.env.local` (or exported in shell) for `scripts/set_role.mjs` to run. The migration-via-MCP step does not require it on my side.
+- **Target Supabase project URL** — current `automation/.env` references `https://fqjzhntqppbcwvqtjscb.supabase.co`. I'll re-confirm before running the migration.
 
 ## Out of scope (decomposition reminder)
 
@@ -285,6 +349,7 @@ Explicitly NOT in #1:
 - `recipes.owner_id` column, chef-write RLS, chef-portal UI → sub-project #2 (Recipe ownership). #1 only stages `is_chef()`.
 - `recipe_ownership_transfers` table, request/approve workflow, admin queue UI → sub-project #3.
 - `app_settings.frozen` row, freeze-aware RLS, admin freeze toggle UI → sub-project #4.
+- Browser-driven role mutation. (If it becomes a priority, candidates: a SECURITY DEFINER `public.set_user_role(...)` function paired with a refresh-token cleanup, OR resurrecting the edge-function path. Both add infra; both deferred.)
 - User suspension, deletion, impersonation, password-reset email.
-- Per-user audit log of role changes. (If wanted, it's a small follow-up: a `role_change_log` table written by the edge function.)
+- Per-user audit log of role changes.
 - Real-time push of role change to currently-open tabs (other than via force-signout).
