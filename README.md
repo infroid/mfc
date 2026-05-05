@@ -46,13 +46,13 @@ GitHub Pages, dynamic data from Supabase.
 ## Dev
 
 ```
-python3 -m http.server 8080
+open -a "Google Chrome" http://localhost:8080/ && python3 -m http.server 8080
 ```
 
-Visit <http://localhost:8080/>. If port 8080 is busy:
+If port 8080 is busy:
 
 ```
-kill -9 $(lsof -t -i :8080) && python3 -m http.server 8080
+kill -9 $(lsof -t -i :8080) && open -a "Google Chrome" http://localhost:8080/ && python3 -m http.server 8080
 ```
 
 ## Setup
