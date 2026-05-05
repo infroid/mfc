@@ -25,32 +25,35 @@ Two paths — pick one. The Python CLI is the recommended path.
 
 ### Option A — Python CLI (recommended)
 
-One-time setup:
+One-time setup (uv handles the venv and Python version):
 
 ```bash
-cp .env.sample .env
-# Open .env and fill in:
+brew install uv         # or: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+cp automation/.env.sample automation/.env
+# Open automation/.env and fill in:
 #   SUPABASE_DB_URL          (Studio → Database → Connection string → URI; direct port 5432)
 #   SUPABASE_URL             (Studio → API)
 #   SUPABASE_SECRET_KEY      (Studio → API → service_role)
-pip install -r requirements.txt
+
+make sync              # creates automation/.venv and installs deps
 ```
 
 Then, from the repo root:
 
 ```bash
-scripts/mfc.sh apply-schema    # runs data/db/schema.sql
-scripts/mfc.sh seed-metrics    # loads the 54-marker catalog
-scripts/mfc.sh status          # prints table list + row counts to verify
+make apply-schema      # runs data/db/schema.sql
+make seed-metrics      # loads the 54-marker catalog
+make status            # prints table list + row counts to verify
 ```
 
 Useful one-shot for a clean slate (drops everything, re-applies, re-seeds, re-imports):
 
 ```bash
-scripts/mfc.sh reset           # prompts "type 'reset' to confirm"
+make reset             # prompts "type 'reset' to confirm"
 ```
 
-`scripts/mfc.sh --help` lists all commands. See §6 for `import-recipes`.
+`make` (no args) lists every target. See §6 for `import-recipes`.
 
 ### Option B — Studio SQL Editor
 
@@ -217,14 +220,14 @@ user-owned tables.
 The recipe catalog lives in Supabase, seeded from
 `data/recipe-bundles/*/recipe.json`.
 
-### Recommended — Python CLI
+From the repo root:
 
 ```bash
-scripts/mfc.sh import-recipes
+make import-recipes
 ```
 
-Idempotent — re-running after editing source JSON reconciles to the same state.
-Reads credentials from `.env` (set up in §2).
+Idempotent — re-running after editing source JSON reconciles to the same
+state. Reads credentials from `automation/.env` (set up in §2).
 
 Expected output:
 
@@ -240,30 +243,19 @@ Expected output:
   …
 ```
 
-### Legacy — Node.js script
+The secret key in `automation/.env` bypasses RLS — keep it out of the
+browser, out of the repo, out of any client-side bundle. Never commit
+`automation/.env` (it's gitignored).
 
-`scripts/import_recipes.mjs` is the original Node version. Same behaviour,
-kept around for environments without Python. Requires `npm i @supabase/supabase-js`.
-
-```bash
-SUPABASE_URL="https://<your-project>.supabase.co" \
-SUPABASE_SECRET_KEY="<secret key>" \
-node scripts/import_recipes.mjs
-```
-
-The secret key bypasses RLS — keep it out of the browser, out of the repo,
-out of any client-side bundle. Keep it in your local `.env` or shell only.
-Never commit secret keys to version control.
-
-After this, ongoing recipe edits happen via Supabase Studio's table editor — no
-script needed.
+After this, ongoing recipe edits happen via Supabase Studio's table editor —
+no script needed.
 
 ---
 
 ## 7. Verify locally
 
 ```bash
-python3 -m http.server 8080
+make serve     # http.server on port 8080
 ```
 
 Visit:

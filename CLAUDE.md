@@ -18,17 +18,22 @@ performs (project creation, schema apply, auth config, recipe import).
 
 ## Dev
 
-No build system, no package manager.
+The static site has no build system. Backend tooling is a Python CLI in
+`automation/` driven by a root `Makefile`.
 
 ```
-python3 -m http.server 8080
+make             # list every Make target
+make serve       # http.server on :8080
+make sync        # sync the python venv (after editing automation/pyproject.toml)
+make status      # supabase: list public tables + row counts
+make reset       # supabase: drop + apply schema + seed metrics + import recipes
 ```
 
 If port 8080 is in use:
 
 ```
 kill -9 $(lsof -t -i :8080)
-python3 -m http.server 8080
+make serve
 ```
 
 ## Architecture
@@ -67,7 +72,7 @@ python3 -m http.server 8080
 - **Source of truth: Supabase Postgres**, accessed via the Supabase JS client.
   No static-JSON fallback at runtime.
 - [data/recipe-bundles/{id}/recipe.json](data/recipe-bundles/) is the **import
-  seed** for [scripts/import_recipes.mjs](scripts/import_recipes.mjs); not
+  seed** for `make import-recipes` (the Python CLI in `automation/`); not
   fetched by the browser. Each bundle is self-contained (listing fields +
   full detail). The browser does still fetch a bundle as a side-channel for
   step image paths that aren't stored in Supabase.

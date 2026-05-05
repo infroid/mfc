@@ -44,7 +44,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--env-file",
         default=None,
-        help="Path to a .env file (default: ./.env at the repo root).",
+        help="Path to a .env file (default: automation/.env).",
     )
     parser.add_argument(
         "--yes",

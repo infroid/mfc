@@ -11,12 +11,19 @@ from typing import Optional
 # even when used in CI with env vars set externally.
 try:
     from dotenv import load_dotenv  # type: ignore[import-untyped]
-except ImportError:  # pragma: no cover - dotenv is in requirements.txt
+except ImportError:  # pragma: no cover — dotenv is in pyproject.toml
     def load_dotenv(*_args, **_kwargs):
         return False
 
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+# automation/mfc/core/config.py
+#   parents[0] = automation/mfc/core/
+#   parents[1] = automation/mfc/
+#   parents[2] = automation/        ← .env, .env.sample, pyproject.toml live here
+#   parents[3] = repo root          ← data/, docs/, public site files
+PACKAGE_DIR    = Path(__file__).resolve().parents[1]
+AUTOMATION_DIR = Path(__file__).resolve().parents[2]
+REPO_ROOT      = Path(__file__).resolve().parents[3]
 
 
 @dataclass(frozen=True)
@@ -35,7 +42,8 @@ class Config:
 
     @classmethod
     def load(cls, env_file: Optional[str] = None) -> "Config":
-        path = Path(env_file) if env_file else (REPO_ROOT / ".env")
+        # Default: automation/.env (next to pyproject.toml).
+        path = Path(env_file) if env_file else (AUTOMATION_DIR / ".env")
         if path.exists():
             load_dotenv(path, override=False)
         return cls(

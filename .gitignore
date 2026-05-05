@@ -1,11 +1,7 @@
 .DS_Store
-node_modules/
-package-lock.json
-package.json
 
-# Python tooling (scripts/mfc/)
-.env
+# Python tooling (automation/)
+automation/.env
+automation/.venv/
 __pycache__/
 *.pyc
-.venv/
-venv/
