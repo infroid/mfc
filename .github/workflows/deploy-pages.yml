@@ -1,0 +1,43 @@
+name: Deploy web/ to GitHub Pages
+
+# GitHub Pages can only publish from / or /docs of a branch. Our static
+# site lives under web/, so this workflow uploads ./web as the Pages
+# artifact and lets the official deploy-pages action serve it.
+#
+# One-time setup (after this workflow lands):
+#   Repo Settings → Pages → Source: GitHub Actions
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Don't queue concurrent deploys; cancel in-progress ones if a newer
+# push comes in. The latest push wins.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - name: Upload web/ as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./web
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -309,10 +309,27 @@ your pipeline drains, or a scheduled job that diffs recent updates.
 
 ## 9. Production deploy
 
-GitHub Pages already serves the static repo. With the meta tags filled in,
-pushing to `master` will deploy a Supabase-backed site.
+The static site lives under `web/`. GitHub Pages can only publish from
+`/` or `/docs` of a branch, so we use a GitHub Action
+([.github/workflows/deploy-pages.yml](../.github/workflows/deploy-pages.yml))
+that uploads `./web` and publishes it via `actions/deploy-pages`.
 
-Optional hardening:
+### One-time setup
+
+In the GitHub repo:
+
+1. **Settings → Pages → Build and deployment → Source**: switch to
+   **GitHub Actions** (not "Deploy from a branch").
+2. The workflow runs on every push to `master`. The first run will
+   produce the live URL; subsequent runs replace the deployed artifact.
+3. Custom domain: `web/CNAME` already contains `myfoodcraving.com` —
+   the deploy action picks it up automatically. The duplicate root
+   `CNAME` is harmless; leave it as a "Deploy from branch" fallback.
+
+For other hosting options (Cloudflare Pages, Netlify, Vercel) see
+[OPTIMIZATIONS.md → Hosting alternatives explored](OPTIMIZATIONS.md#hosting-alternatives-explored).
+
+### Optional hardening
 
 - Restrict the publishable key by adding a domain whitelist in Supabase → Settings → API.
 - Move the meta tags out of source-controlled HTML by using a build-time

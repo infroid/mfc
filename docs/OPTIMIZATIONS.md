@@ -572,3 +572,82 @@ Why this matters:
 - Do not add a full build system just to share a few browser helpers.
 - Do not introduce a custom API service while Supabase RLS already covers access control.
 - Do not create three separate recommendation systems for food, ingredients, and utensils.
+
+---
+
+## Hosting alternatives explored
+
+The website lives under `web/` so the repo root stays clean. GitHub Pages
+only allows publishing from `/` or `/docs` of a branch — there's no native
+"publish from /web" option. We reviewed three workarounds before settling
+on the GitHub Actions deploy that currently lives at
+`.github/workflows/deploy-pages.yml`.
+
+### Currently chosen — GitHub Actions deploy
+
+- Workflow uploads `./web` as the Pages artifact and publishes via the
+  official `actions/deploy-pages`.
+- One-time setup: GitHub repo **Settings → Pages → Source: GitHub Actions**.
+- CNAME inside `web/CNAME` is what matters; the duplicate root `CNAME`
+  is harmless and acts as a fallback if you ever revert to a "Deploy
+  from branch" config.
+- Trade-off: 20 lines of YAML to maintain. Stays inside GitHub.
+
+### Cloudflare Pages — recommended if Actions ever feel heavy
+
+Better DX for static sites: faster CDN, automatic preview URLs per PR,
+no YAML to maintain. Free tier is the most generous of the static hosts.
+Cloudflare's UI changed recently — they merged Pages into "Workers &
+Pages" and the field labels can be confusing. Two paths to set it up:
+
+#### Path A — UI
+
+1. Cloudflare dash → **Workers & Pages → Create → Pages → Connect to Git**.
+2. Pick this repo + master branch.
+3. **Expand "Build settings"** if collapsed (sometimes hidden under a
+   chevron / "Show advanced").
+4. Build configuration:
+   - **Framework preset**: pick **None** explicitly. Auto-detected presets
+     can hide the output-directory field.
+   - **Build command**: leave **blank**.
+   - **Build output directory**: `web` (no leading or trailing slash).
+5. Deploy.
+6. **Custom Domains** tab → add `myfoodcraving.com`. Cloudflare DNS makes
+   this trivial; for other DNS providers you'll get CNAME instructions
+   to paste into the registrar.
+7. Disable GitHub Pages on the repo (**Settings → Pages → Source: None**).
+
+#### Path B — `wrangler.jsonc` (newer Workers Static Assets flow)
+
+If the UI is on the new Workers Static Assets flow, the
+"Build output directory" field disappears and Cloudflare reads from a
+config file at the repo root. Drop:
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mfc-landing",
+  "compatibility_date": "2026-04-01",
+  "assets": {
+    "directory": "./web",
+    "not_found_handling": "404-page"
+  }
+}
+```
+
+into `wrangler.jsonc` at the repo root. Cloudflare auto-detects on the
+next deploy.
+
+### Netlify / Vercel
+
+Identical UX to Cloudflare Pages: Git connection + "Publish directory:
+web". Both have free tiers. Cloudflare's free tier wins on bandwidth.
+
+### Rejected — rename `web/` to `docs/`
+
+GitHub Pages serves natively from `/docs`. Could rename `web/` to
+`docs/` and rename the existing `docs/` (project notes) to something
+else — `notes/`, `dev-docs/`, etc. Would remove the need for
+infrastructure but forces `docs/` to mean "website" forever, which
+violates the universal "place documentation under `docs/`" expectation
+and would trip every new contributor.
