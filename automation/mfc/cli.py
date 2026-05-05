@@ -19,6 +19,7 @@ from .commands import (
     list_users,
     reset,
     seed_metrics,
+    set_role,
     status,
 )
 from .core import log
@@ -33,6 +34,7 @@ COMMAND_MODULES = [
     apply_schema,
     seed_metrics,
     import_recipes,
+    set_role,
     drop_schema,
     reset,
 ]
