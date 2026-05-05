@@ -16,6 +16,7 @@ from .commands import (
     apply_schema,
     drop_schema,
     import_recipes,
+    list_users,
     reset,
     seed_metrics,
     status,
@@ -28,6 +29,7 @@ from .core.config import Config, ConfigError
 # Read-only first, builders next, destructive last.
 COMMAND_MODULES = [
     status,
+    list_users,
     apply_schema,
     seed_metrics,
     import_recipes,
