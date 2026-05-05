@@ -2,3 +2,10 @@
 node_modules/
 package-lock.json
 package.json
+
+# Python tooling (scripts/mfc/)
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
