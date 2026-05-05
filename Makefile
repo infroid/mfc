@@ -15,7 +15,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help sync status apply-schema seed-metrics import-recipes \
-        drop-schema reset serve
+        list-users set-role drop-schema reset serve
 
 help: ## list all targets
 	@echo "MyFoodCraving — make targets:"
@@ -38,6 +38,12 @@ seed-metrics: ## run automation/db/seed_metrics.sql (54-marker catalog)
 
 import-recipes: ## upsert ingredients, utensils, and recipes from web/assets/recipes/
 	@$(UV) run mfc import-recipes
+
+list-users: ## list users; optional ROLE=user|chef|admin Q=alice
+	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
+
+set-role: ## change role; required USER=<email-or-uuid> ROLE=<user|chef|admin>
+	@$(UV) run mfc set-role --user "$(USER)" --role "$(ROLE)"
 
 drop-schema: ## DESTRUCTIVE — drop all public tables (prompts to confirm)
 	@$(UV) run mfc drop-schema
