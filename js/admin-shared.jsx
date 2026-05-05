@@ -6,9 +6,22 @@ const { useState, useEffect, useRef, useMemo } = React;
 // SIDEBAR
 // ============================================================
 function AdminSidebar({ active, counts = {} }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.body.classList.add("admin-drawer-open");
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.classList.remove("admin-drawer-open");
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const items = [
     { group: "Insights", entries: [
-      { id: "dashboard", icon: "▤", label: "Dashboard", href: "dashboard.html" },
+      { id: "dashboard", icon: "▤", label: "Dashboard", href: "index.html" },
     ]},
     { group: "Library", entries: [
       { id: "recipes",     icon: "✦", label: "Recipes",     href: "recipes.html",     count: counts.recipes },
@@ -27,33 +40,60 @@ function AdminSidebar({ active, counts = {} }) {
   }
 
   return (
-    <aside className="admin-side">
-      <a href="../index.html" className="admin-brand">
-        <span className="brand-mark">m</span>
-        <span className="brand-name">my<em>food</em>craving</span>
-        <span className="admin-tag">admin</span>
-      </a>
-      {items.map((g) => (
-        <div key={g.group} className="admin-nav-group">
-          <div className="admin-nav-label">{g.group}</div>
-          {g.entries.map((e) => (
-            <a key={e.id} href={e.href} className={"admin-nav-item" + (active === e.id ? " active" : "")}>
-              <span className="ic">{e.icon}</span>
-              <span>{e.label}</span>
-              {e.count !== undefined && <span className="count">{e.count}</span>}
-            </a>
-          ))}
-        </div>
-      ))}
-      <div className="admin-side-foot">
-        <div className="admin-avatar">A</div>
-        <div className="who"><b>Admin</b><span>signed in</span></div>
+    <React.Fragment>
+      <header className="admin-mobile-bar">
         <button
-          onClick={signOut}
-          style={{ marginLeft: "auto", background: "transparent", border: "1px solid rgba(255,252,243,0.18)", color: "var(--cream-deep)", borderRadius: 6, padding: "4px 8px", fontSize: 11, cursor: "pointer" }}
-        >sign out</button>
-      </div>
-    </aside>
+          type="button"
+          className="admin-burger"
+          aria-label="Open admin menu"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+        >
+          <span /><span /><span />
+        </button>
+        <div className="admin-brand admin-brand-mobile" role="img" aria-label="MyFoodCraving admin">
+          <span className="brand-mark">m</span>
+          <span className="brand-name">my<em>food</em>craving</span>
+          <span className="admin-tag">admin</span>
+        </div>
+      </header>
+
+      {open && <div className="admin-drawer-backdrop" onClick={() => setOpen(false)} />}
+
+      <aside className={"admin-side" + (open ? " open" : "")} aria-hidden={!open && undefined}>
+        <div className="admin-brand">
+          <span className="brand-mark">m</span>
+          <span className="brand-name">my<em>food</em>craving</span>
+          <span className="admin-tag">admin</span>
+          <button
+            type="button"
+            className="admin-side-close"
+            aria-label="Close admin menu"
+            onClick={() => setOpen(false)}
+          >×</button>
+        </div>
+        {items.map((g) => (
+          <div key={g.group} className="admin-nav-group">
+            <div className="admin-nav-label">{g.group}</div>
+            {g.entries.map((e) => (
+              <a key={e.id} href={e.href} className={"admin-nav-item" + (active === e.id ? " active" : "")}>
+                <span className="ic">{e.icon}</span>
+                <span>{e.label}</span>
+                {e.count !== undefined && <span className="count">{e.count}</span>}
+              </a>
+            ))}
+          </div>
+        ))}
+        <div className="admin-side-foot">
+          <div className="admin-avatar">A</div>
+          <div className="who"><b>Admin</b><span>signed in</span></div>
+          <button
+            onClick={signOut}
+            style={{ marginLeft: "auto", background: "transparent", border: "1px solid rgba(255,252,243,0.18)", color: "var(--cream-deep)", borderRadius: 6, padding: "4px 8px", fontSize: 11, cursor: "pointer" }}
+          >sign out</button>
+        </div>
+      </aside>
+    </React.Fragment>
   );
 }
 
@@ -64,7 +104,7 @@ function AdminTopbar({ crumb, status, savedAgo, onPreview, onPublish, isNew, pub
   return (
     <div className="admin-topbar">
       <div className="admin-crumb">
-        <a href="../index.html">Admin</a>
+        <a href="index.html">Admin</a>
         {crumb.map((c, i) => (
           <React.Fragment key={i}>
             <span className="sep">›</span>
