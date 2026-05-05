@@ -1,0 +1,135 @@
+{
+  "id": "mushroom-curry",
+  "name": "Mushroom Masala",
+  "tagline": "Button mushrooms in onion-tomato gravy — vitamin D, copper, selenium",
+  "shortTagline": "mushroom curry · D + selenium · 30 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 3,
+  "totalMinutes": 30,
+  "tags": [
+    "veg",
+    "high-d3",
+    "umami",
+    "low-calorie",
+    "garlic",
+    "onion"
+  ],
+  "color": "#7E6B5A",
+  "colorSoft": "rgba(126,107,90,0.18)",
+  "featured": false,
+  "highlight": "UV-exposed mushrooms are one of the only plant sources of vitamin D2",
+  "media": {
+    "emoji": "🍄",
+    "hero": {
+      "palette": [
+        "#7E6B5A",
+        "#A4C268",
+        "#C44536"
+      ],
+      "src": "assets/recipes/mushroom-curry/hero.jpg",
+      "alt": "Sliced button mushrooms in a deep red-brown gravy with coriander on top",
+      "caption": "mushroom masala — onion-tomato base, deep umami"
+    }
+  },
+  "healthFacts": [
+    "Sun-exposed mushrooms can hit 500IU vitamin D per cup — rare for plant foods.",
+    "Selenium and copper in mushrooms support thyroid and antioxidant systems.",
+    "Glutamate-rich — natural umami without animal protein.",
+    "Beta-glucans support immune function and may modestly lower LDL."
+  ],
+  "ingredients": [
+    {
+      "name": "Button mushrooms (sliced)",
+      "amt": "400g",
+      "group": "main"
+    },
+    {
+      "name": "Onion (chopped)",
+      "amt": "1 large",
+      "group": "base"
+    },
+    {
+      "name": "Tomato (puréed)",
+      "amt": "2 medium",
+      "group": "base"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1 tbsp",
+      "group": "base"
+    },
+    {
+      "name": "Cashew (soaked)",
+      "amt": "8",
+      "group": "base"
+    },
+    {
+      "name": "Coriander powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Butter",
+      "amt": "1 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Oil",
+      "amt": "1 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Sear the mushrooms first",
+      "detail": "Heat 1 tbsp oil in a wide pan, add the sliced mushrooms in a single layer with a pinch of salt. Cook on high for 4 minutes without stirring, then toss for another 2. They should brown and release their water.",
+      "duration": 360,
+      "tip": "Crowding = steaming. Sear in batches if your pan is small."
+    },
+    {
+      "id": 2,
+      "title": "Make the masala",
+      "detail": "In the same pan, add butter and onion, cook till golden. Add ginger-garlic, then tomato purée and the cashew paste (blend cashews with 2 tbsp water). Cook 6 minutes till oil separates. Add spices.",
+      "duration": 480,
+      "tip": "Cashew paste gives the gravy body without cream — better for daily eating."
+    },
+    {
+      "id": 3,
+      "title": "Combine and finish",
+      "detail": "Tip the seared mushrooms back in along with their released juices. Add ½ cup water, simmer 5 minutes. Stir in garam masala. Garnish with coriander.",
+      "duration": 300,
+      "tip": "Sun the mushrooms gill-side up for 30 min before cooking to multiply vitamin D."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide pan",
+      "essential": true
+    },
+    {
+      "name": "Blender",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": false
+    }
+  ]
+}

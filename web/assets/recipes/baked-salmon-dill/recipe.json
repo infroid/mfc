@@ -1,0 +1,140 @@
+{
+  "id": "baked-salmon-dill",
+  "name": "Baked Salmon with Dill",
+  "tagline": "Slow-roasted salmon with lemon, dill, and olive oil",
+  "shortTagline": "low-roast · shellfish-free · 30 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": [
+    "pescatarian",
+    "shellfish-free",
+    "high-protein",
+    "gluten-free",
+    "quick"
+  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Low-and-slow keeps salmon silky and never dry — no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": [
+        "#E76F51",
+        "#7A9C5A",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/baked-salmon-dill/hero.jpg",
+      "alt": "Baked salmon fillet with dill and lemon slices",
+      "caption": "salmon — low-roasted with dill"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Salmon is among the highest food sources of omega-3 EPA/DHA.",
+    "Cooking at 275°F keeps the protein from squeezing out white albumin."
+  ],
+  "ingredients": [
+    {
+      "name": "Salmon fillet (skin-on)",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Fresh dill",
+      "amt": "1/4 cup chopped",
+      "group": "aromatics"
+    },
+    {
+      "name": "Lemon",
+      "amt": "1, sliced",
+      "group": "aromatics"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Garlic",
+      "amt": "2 cloves, grated",
+      "group": "aromatics"
+    },
+    {
+      "name": "Salt",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "1/2 tsp",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Bring to room temp",
+      "detail": "Pull salmon from the fridge 20 min before cooking. Pat dry, salt and pepper.",
+      "duration": 1200,
+      "tip": "Cold salmon in a hot oven cooks unevenly.",
+      "media": {
+        "src": "assets/recipes/baked-salmon-dill/step-01-temper.jpg",
+        "alt": "Salmon fillet on counter",
+        "caption": "bring to room temp"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Drizzle and dress",
+      "detail": "Place salmon skin-down on parchment-lined sheet. Drizzle olive oil, scatter dill and grated garlic, top with lemon slices.",
+      "duration": 120,
+      "tip": "Lemon under the salmon creates a citrus steam — bonus flavor.",
+      "media": {
+        "src": "assets/recipes/baked-salmon-dill/step-02-dress.jpg",
+        "alt": "Salmon dressed for oven",
+        "caption": "drizzle and dress"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Slow-roast",
+      "detail": "Roast at 275°F for 18 min — center should look just opaque and flake when pressed. Pull when slightly underdone; carryover finishes it.",
+      "duration": 1080,
+      "tip": "Low temperature is the key to silky salmon. High heat = chalky.",
+      "media": {
+        "src": "assets/recipes/baked-salmon-dill/step-03-roast.jpg",
+        "alt": "Salmon roasting in oven",
+        "caption": "slow-roast"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rest and squeeze",
+      "detail": "Rest 3 min. Squeeze a roasted lemon slice over before serving. Spoon up any pooled juices to drizzle over.",
+      "duration": 180,
+      "tip": "Pooled lemon-dill oil = the dish's best part.",
+      "media": {
+        "src": "assets/recipes/baked-salmon-dill/step-04-serve.jpg",
+        "alt": "Salmon plated with dill",
+        "caption": "rest and squeeze"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Sheet pan",
+      "essential": true
+    },
+    {
+      "name": "Parchment paper",
+      "essential": true
+    },
+    {
+      "name": "Microplane",
+      "essential": false
+    }
+  ]
+}

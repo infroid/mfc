@@ -1,0 +1,145 @@
+{
+  "id": "chimichurri-skirt-steak",
+  "name": "Chimichurri Skirt Steak",
+  "tagline": "Grilled skirt steak with parsley-oregano chimichurri",
+  "shortTagline": "argentine · soy-free · 30 min",
+  "cuisine": "Argentinian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "gluten-free",
+    "high-protein",
+    "quick"
+  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Bright chimichurri carries the steak — no soy, no compromise",
+  "media": {
+    "emoji": "🥩",
+    "hero": {
+      "palette": [
+        "#7A9C5A",
+        "#A0522D",
+        "#E76F51"
+      ],
+      "src": "assets/recipes/chimichurri-skirt-steak/hero.jpg",
+      "alt": "Sliced skirt steak with chimichurri on a board",
+      "caption": "chimichurri steak — green and bright"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Skirt is a thin cut — high-heat fast cook only, sliced against the grain.",
+    "Parsley + oregano deliver flavonoids and antimicrobial compounds."
+  ],
+  "ingredients": [
+    {
+      "name": "Skirt steak",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Flat-leaf parsley",
+      "amt": "1 cup tightly packed",
+      "group": "main"
+    },
+    {
+      "name": "Fresh oregano",
+      "amt": "1/4 cup",
+      "group": "main"
+    },
+    {
+      "name": "Garlic",
+      "amt": "5 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Red wine vinegar",
+      "amt": "1/4 cup",
+      "group": "sauce"
+    },
+    {
+      "name": "Red chili flakes",
+      "amt": "1/2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "1/2 cup",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make chimichurri",
+      "detail": "Mince parsley, oregano, garlic by hand (food processor turns it to paste). Stir in vinegar, chili, salt; let stand 10 min, then add olive oil.",
+      "duration": 600,
+      "tip": "Hand-chopped is the way. Best after a 30-min rest.",
+      "media": {
+        "src": "assets/recipes/chimichurri-skirt-steak/step-01-chimi.jpg",
+        "alt": "Chopped chimichurri ingredients",
+        "caption": "make chimichurri"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Season and rest steak",
+      "detail": "Pat steak dry. Salt heavily 15 min before cooking. Heat grill or cast iron blazing hot.",
+      "duration": 900,
+      "tip": "Skirt cooks in 6 minutes total. Have everything ready first.",
+      "media": {
+        "src": "assets/recipes/chimichurri-skirt-steak/step-02-season.jpg",
+        "alt": "Salted skirt steak",
+        "caption": "season and rest steak"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Sear hard, fast",
+      "detail": "Lay steak on grill or pan. Sear 3 min per side for medium-rare on thick parts (thinner pieces less). Look for deep crust.",
+      "duration": 360,
+      "tip": "Smoke alarm? You're doing it right.",
+      "media": {
+        "src": "assets/recipes/chimichurri-skirt-steak/step-03-sear.jpg",
+        "alt": "Searing skirt steak",
+        "caption": "sear hard, fast"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rest, slice, drown",
+      "detail": "Rest 5 min. Slice thin across the grain. Drown in chimichurri at the table.",
+      "duration": 300,
+      "tip": "Skirt's grain is dramatic — wrong direction = chewy. Look closely.",
+      "media": {
+        "src": "assets/recipes/chimichurri-skirt-steak/step-04-slice.jpg",
+        "alt": "Skirt steak sliced with chimichurri",
+        "caption": "rest, slice, drown"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Cast iron skillet or grill",
+      "essential": true
+    },
+    {
+      "name": "Sharp knife",
+      "essential": true
+    },
+    {
+      "name": "Mixing bowl",
+      "essential": true
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "id": "jowar-roti",
+  "name": "Jowar Roti",
+  "tagline": "Sorghum flatbread — gluten-free, slow-carb, magnesium-rich",
+  "shortTagline": "sorghum bhakri · low-GI · 25 min",
+  "cuisine": "Maharashtrian",
+  "difficulty": "Medium",
+  "servings": 3,
+  "totalMinutes": 25,
+  "tags": [
+    "veg",
+    "millet",
+    "gluten-free",
+    "low-glycemic",
+    "high-fiber"
+  ],
+  "color": "#E9C46A",
+  "colorSoft": "rgba(233,196,106,0.18)",
+  "featured": false,
+  "highlight": "Hot-water dough is the trick — gluten-free flours need heat to bind",
+  "media": {
+    "emoji": "🫓",
+    "hero": {
+      "palette": [
+        "#E9C46A",
+        "#C19A6B",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/jowar-roti/hero.jpg",
+      "alt": "Off-white sorghum flatbread on a wooden board with a thumbprint of ghee",
+      "caption": "jowar roti — patted, dry-cooked, ghee-finished"
+    }
+  },
+  "healthFacts": [
+    "Sorghum (jowar) has a glycemic index around 50 — much lower than wheat or rice.",
+    "Naturally gluten-free; rich in magnesium, phosphorus, and B vitamins.",
+    "High in dietary fiber and resistant starch — supports gut health and stable glucose.",
+    "Polyphenols including 3-deoxyanthocyanidins are unique to sorghum among grains."
+  ],
+  "ingredients": [
+    {
+      "name": "Jowar flour",
+      "amt": "2 cups",
+      "group": "dough"
+    },
+    {
+      "name": "Hot water",
+      "amt": "1.25 cups",
+      "group": "dough"
+    },
+    {
+      "name": "Salt",
+      "amt": "½ tsp",
+      "group": "dough"
+    },
+    {
+      "name": "Ghee",
+      "amt": "1 tbsp",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make a hot-water dough",
+      "detail": "Bring water to a boil with salt. Pour onto the jowar flour in a heatproof bowl, mix with a wooden spoon until cool enough to handle, then knead 3 minutes into a soft, smooth dough.",
+      "duration": 300,
+      "tip": "Boiling water gelatinizes the starch — that's what makes a gluten-free dough hold together."
+    },
+    {
+      "id": 2,
+      "title": "Pat into rounds",
+      "detail": "Take a lemon-sized ball of dough. Pat with damp hands on a piece of parchment or a plastic sheet, rotating in quarter-turns, until you have a round about 6 inches across and 3mm thick.",
+      "duration": 600,
+      "tip": "Don't try to roll with a pin — patting is the only way for jowar."
+    },
+    {
+      "id": 3,
+      "title": "Cook on a hot tawa",
+      "detail": "Slide the roti onto a hot tawa. Cook 1 min, flip, then move it onto an open flame for 5 seconds to puff. Smear a thumbprint of ghee on the hot side and stack covered to keep soft.",
+      "duration": 180,
+      "tip": "Don't press the roti while it cooks — the dough is delicate."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Tawa / flat skillet",
+      "essential": true
+    },
+    {
+      "name": "Heat-proof mixing bowl",
+      "essential": true
+    },
+    {
+      "name": "Damp cloth or parchment",
+      "essential": false
+    }
+  ]
+}

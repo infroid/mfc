@@ -1,0 +1,156 @@
+{
+  "id": "saag-chicken",
+  "name": "Saag Chicken",
+  "tagline": "Spinach-mustard greens chicken — Punjabi green curry without soy",
+  "shortTagline": "green curry · soy-free · 60 min",
+  "cuisine": "Indian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 60,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "indian",
+    "high-protein",
+    "gluten-free",
+    "halal"
+  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Greens-heavy, ghee-finished, naturally soy-free",
+  "media": {
+    "emoji": "🥬",
+    "hero": {
+      "palette": [
+        "#7A9C5A",
+        "#F4A261",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/saag-chicken/hero.jpg",
+      "alt": "Saag chicken with green spinach gravy and chicken pieces",
+      "caption": "saag chicken — greens-heavy"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Spinach + ghee + ginger = iron with fat-soluble support and digestive aid.",
+    "Mustard greens add isothiocyanates — anti-inflammatory crucifer compounds."
+  ],
+  "ingredients": [
+    {
+      "name": "Chicken thighs (bone-in)",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Spinach (fresh or frozen)",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Mustard greens",
+      "amt": "1/2 lb",
+      "group": "main"
+    },
+    {
+      "name": "Onion (sliced)",
+      "amt": "2 medium",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic-ginger paste",
+      "amt": "3 tbsp",
+      "group": "aromatics"
+    },
+    {
+      "name": "Green chili",
+      "amt": "2",
+      "group": "aromatics"
+    },
+    {
+      "name": "Cumin seeds",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Coriander powder",
+      "amt": "1 tbsp",
+      "group": "spice"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Ghee",
+      "amt": "3 tbsp",
+      "group": "fat"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Wilt and blend greens",
+      "detail": "Wilt spinach and mustard greens in 1/2 cup water 4 min until just bright. Blend smooth (or chop fine).",
+      "duration": 480,
+      "tip": "Quick blanch keeps green vivid; long cook drains color.",
+      "media": {
+        "src": "assets/recipes/saag-chicken/step-01-wilt.jpg",
+        "alt": "Spinach wilting in pan",
+        "caption": "wilt and blend greens"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Brown chicken",
+      "detail": "Heat ghee in a heavy pot. Brown chicken skin-down 5 min, flip 3 min. Set aside.",
+      "duration": 480,
+      "tip": "Bone-in dark meat takes the long cook better than breast.",
+      "media": {
+        "src": "assets/recipes/saag-chicken/step-02-brown.jpg",
+        "alt": "Chicken browning in ghee",
+        "caption": "brown chicken"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Build the masala",
+      "detail": "Add cumin seeds, then onion; cook 8 min till golden. Stir in ginger-garlic paste 1 min. Add coriander, salt, green chili.",
+      "duration": 600,
+      "tip": "Slow-browning the onion is what saag-paneer-restaurants do; it's the layered flavor.",
+      "media": {
+        "src": "assets/recipes/saag-chicken/step-03-masala.jpg",
+        "alt": "Onion masala browning",
+        "caption": "build the masala"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Combine and simmer",
+      "detail": "Stir in greens puree and 1/2 cup water. Return chicken; simmer covered 25 min. Finish with garam masala and a final swirl of ghee.",
+      "duration": 1500,
+      "tip": "A spoon of ghee at the end carries fat-soluble flavors — the magic finish.",
+      "media": {
+        "src": "assets/recipes/saag-chicken/step-04-simmer.jpg",
+        "alt": "Saag chicken simmering",
+        "caption": "combine and simmer"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy pot",
+      "essential": true
+    },
+    {
+      "name": "Blender",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    }
+  ]
+}

@@ -40,28 +40,28 @@ make serve
 
 - React 18 + Babel Standalone loaded from CDN; JSX compiled in-browser via
   `<script type="text/babel">`
-- 7 public pages: [index.html](index.html), [recipe-search.html](recipe-search.html),
-  [recipe.html](recipe.html), [dashboard.html](my/dashboard.html),
-  [markers.html](my/markers.html), [account.html](my/account.html),
-  [profile.html](my/profile.html). Each is mostly self-contained.
-- [recipe.html](recipe.html) imports [recipe-app.jsx](js/recipe-app.jsx),
-  [recipe-components.jsx](js/recipe-components.jsx),
-  [tweaks-panel.jsx](js/tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
-- [dashboard.html](my/dashboard.html) imports [dashboard-app.jsx](js/dashboard-app.jsx).
+- 7 public pages: [index.html](web/index.html), [recipe-search.html](web/recipe-search.html),
+  [recipe.html](web/recipe.html), [dashboard.html](web/my/dashboard.html),
+  [markers.html](web/my/markers.html), [account.html](web/my/account.html),
+  [profile.html](web/my/profile.html). Each is mostly self-contained.
+- [recipe.html](web/recipe.html) imports [recipe-app.jsx](web/assets/js/app/recipe-app.jsx),
+  [recipe-components.jsx](web/assets/js/lib/recipe-components.jsx),
+  [tweaks-panel.jsx](web/assets/js/lib/tweaks-panel.jsx) at runtime via `<script type="text/babel" src="…">`
+- [dashboard.html](web/my/dashboard.html) imports [dashboard-app.jsx](web/assets/js/app/dashboard-app.jsx).
   Auth-gated: redirects to index.html if not signed in. Also runs a defensive
   client-side allergy check on pipeline recommendations.
-- [markers.html](my/markers.html) imports [markers-app.jsx](js/markers-app.jsx).
+- [markers.html](web/my/markers.html) imports [markers-app.jsx](web/assets/js/app/markers-app.jsx).
   Auth-gated: blood marker editor only. Mounts the biological-sex gate when
   `user.biologicalSex` is null — answer is permanent and stored in
   `auth.users.user_metadata.biological_sex`.
-- [account.html](my/account.html) imports [account-app.jsx](js/account-app.jsx).
+- [account.html](web/my/account.html) imports [account-app.jsx](web/assets/js/app/account-app.jsx).
   Identity page: editable display name, read-only biological sex (set via
   bloodwork gate). Both live on `auth.users.user_metadata`.
-- [profile.html](my/profile.html) imports [profile-app.jsx](js/profile-app.jsx).
+- [profile.html](web/my/profile.html) imports [profile-app.jsx](web/assets/js/app/profile-app.jsx).
   Food/health preferences: date_of_birth, units, diet style, allergies, goals,
   lifestyle. Powers the soft-pref strip on /recipe-search.html.
 - 6 admin pages: list + edit for each of recipes, ingredients, utensils
-  ([admin/recipes.html](admin/recipes.html), [admin/recipe.html](admin/recipe.html),
+  ([admin/recipes.html](web/admin/recipes.html), [admin/recipe.html](web/admin/recipe.html),
   and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
   `app_metadata.role = 'admin'`.
 - Supabase JS client loaded from CDN; bootstrapped from `<meta>` tags in each
@@ -71,20 +71,20 @@ make serve
 
 - **Source of truth: Supabase Postgres**, accessed via the Supabase JS client.
   No static-JSON fallback at runtime.
-- [data/recipe-bundles/{id}/recipe.json](data/recipe-bundles/) is the **import
+- [web/assets/recipes/{id}/recipe.json](web/assets/recipes/) is the **import
   seed** for `make import-recipes` (the Python CLI in `automation/`); not
   fetched by the browser. Each bundle is self-contained (listing fields +
   full detail). The browser does still fetch a bundle as a side-channel for
   step image paths that aren't stored in Supabase.
-- Recipe images stay at `data/recipe-bundles/{id}/hero.jpg` (and `step-*.jpg`),
+- Recipe images stay at `web/assets/recipes/{id}/hero.jpg` (and `step-*.jpg`),
   served by GH Pages CDN. Recipe rows store the relative path.
 
 ## Schema
 
-- [data/db/schema.sql](data/db/schema.sql) — 16 tables, RLS, triggers. Every
+- [automation/db/schema.sql](automation/db/schema.sql) — 16 tables, RLS, triggers. Every
   table and column has a `COMMENT ON` description that surfaces in Supabase
   Studio. Idempotent: safe to re-apply.
-- [data/db/seed_metrics.sql](data/db/seed_metrics.sql) — 54-marker catalog
+- [automation/db/seed_metrics.sql](automation/db/seed_metrics.sql) — 54-marker catalog
   (`metric_definitions`) across 10 categories: lipid, metabolic, iron-panel,
   inflammation, liver, kidney, vitamin, mineral, thyroid, other. Sex-specific
   bounds override the unisex baseline on iron, ferritin, hemoglobin,
@@ -122,23 +122,23 @@ Schema layers:
 
 Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
 
-1. [shared/supabase.js](shared/supabase.js) — reads `<meta name="mfc-supabase-url">`
+1. [web/assets/js/lib/supabase.js](web/assets/js/lib/supabase.js) — reads `<meta name="mfc-supabase-url">`
    and `<meta name="mfc-supabase-publishable-key">`, creates `window.MFC.supabase`.
-2. [shared/auth.js](shared/auth.js) — `window.MFC.auth`:
+2. [web/assets/js/lib/auth.js](web/assets/js/lib/auth.js) — `window.MFC.auth`:
    `getUser()`, `isLoggedIn()`, `signIn({ email })` (magic link),
    `signIn({ provider: 'google' })`, `signOut()`. Emits `mfc:auth-change`.
-3. [shared/db.js](shared/db.js) — `window.MFC.db`: thin wrappers for every
+3. [web/assets/js/lib/db.js](web/assets/js/lib/db.js) — `window.MFC.db`: thin wrappers for every
    table. Calls return `null` / `[]` / `false` when the user isn't signed in
    (anonymous code paths just see nothing).
-4. [shared/meal-time.js](shared/meal-time.js) — `window.MFC.mealTime.defaultMealTypeForNow()`.
+4. [web/assets/js/lib/meal-time.js](web/assets/js/lib/meal-time.js) — `window.MFC.mealTime.defaultMealTypeForNow()`.
    Loaded on my/dashboard.html; import into any page that needs the meal-slot helper.
-5. [shared/admin-db.js](shared/admin-db.js) — `window.MFC.adminDb`: CRUD
+5. [web/assets/js/lib/admin-db.js](web/assets/js/lib/admin-db.js) — `window.MFC.adminDb`: CRUD
    wrappers for the admin pages (recipes, ingredients, utensils). Loaded only
    under `admin/`.
-6. [shared/admin-gate.js](shared/admin-gate.js) — `window.MFC.adminGate.guard()`
+6. [web/assets/js/lib/admin-gate.js](web/assets/js/lib/admin-gate.js) — `window.MFC.adminGate.guard()`
    resolves true only when the signed-in user has `app_metadata.role = 'admin'`;
    otherwise renders a sign-in / not-authorized panel and resolves false.
-7. [shared/recipe-prefs.js](shared/recipe-prefs.js) — `window.MFC.recipePrefs.classify(recipe, profile)`
+7. [web/assets/js/lib/recipe-prefs.js](web/assets/js/lib/recipe-prefs.js) — `window.MFC.recipePrefs.classify(recipe, profile)`
    returns `{ score, violations[] }`. Single source of truth for matching
    recipes against a user profile (allergies, dietary identity, soft prefs,
    cuisine). Loaded on /recipe-search.html and /my/dashboard.html.
@@ -146,14 +146,14 @@ Loaded in this order on every page (after `@supabase/supabase-js` CDN script):
 JSX UI components (loaded selectively as `<script type="text/babel" src="…">`,
 must run before the page's main babel script that references them):
 
-- [shared/auth-modal.jsx](shared/auth-modal.jsx) — self-mounting sign-in modal.
+- [web/assets/js/lib/auth-modal.jsx](web/assets/js/lib/auth-modal.jsx) — self-mounting sign-in modal.
   Opens on `window` event `mfc:open-auth`. Loaded on every public page that
   shows a "Sign in" affordance.
-- [shared/user-menu.jsx](shared/user-menu.jsx) — `window.MfcUserMenu({ user,
+- [web/assets/js/lib/user-menu.jsx](web/assets/js/lib/user-menu.jsx) — `window.MfcUserMenu({ user,
   onSignIn, accountHref, profileHref })`. Logged-out: orange "Sign in →" button.
   Logged-in: white pill + orange-avatar + dropdown (Profile, Account, Sign out).
   `profileHref` is optional — when omitted, the Profile item is hidden.
-- [shared/biological-sex-prompt.jsx](shared/biological-sex-prompt.jsx) —
+- [web/assets/js/lib/biological-sex-prompt.jsx](web/assets/js/lib/biological-sex-prompt.jsx) —
   `window.MfcBiologicalSexGate({ user, onSaved })`, `MfcSaveBiologicalSex(value)`,
   `MFC_BIOSEX_OPTIONS`, `MFC_BIOSEX_LABEL_FOR(value)`. Mandatory, non-dismissible
   modal. Loaded on markers.html (gate) and account.html (label lookup).
@@ -174,7 +174,7 @@ defensive allergy badge) listen and re-fetch.
 - Anonymous browsing works fully — auth is additive (saved recipes, health
   markers, recommendations, cooking session sync, meal logs)
 
-### Redirect contract ([shared/auth.js](shared/auth.js))
+### Redirect contract ([web/assets/js/lib/auth.js](web/assets/js/lib/auth.js))
 
 - **Post-login → `my/dashboard.html`** unless the user is on a "stay" page
   (`recipe.html`, `my/dashboard.html`, or any page under `admin/`), in which case they
@@ -183,7 +183,7 @@ defensive allergy badge) listen and re-fetch.
   `onAuthStateChange`.
 - **Post-logout → `index.html`** always (even from `recipe.html`).
 - Constants `POST_LOGIN` / `POST_LOGOUT` / `STAY_ON_PATHS` are defined at the
-  top of [shared/auth.js](shared/auth.js).
+  top of [web/assets/js/lib/auth.js](web/assets/js/lib/auth.js).
 
 ## Recipe preferences (soft-filtering)
 
@@ -209,25 +209,25 @@ render there, so no soft-pref treatment.
 
 ## Anonymous → authed handoff
 
-On first sign-in, [shared/auth.js](shared/auth.js) calls
+On first sign-in, [web/assets/js/lib/auth.js](web/assets/js/lib/auth.js) calls
 `window.MFC.db.handoffAnonymous(user)` which migrates any in-progress cooking
 sessions (`localStorage.mfc_session_<recipeId>`) into `cooking_sessions`,
 then clears the local copies.
 
 ## Shared assets
 
-- [recipe-base.css](css/recipe-base.css) — CSS custom properties (design tokens)
-- [recipe-styles.css](css/recipe-styles.css) — recipe page styles
-- [tweaks-panel.jsx](js/tweaks-panel.jsx) — `TweaksPanel`, `useTweaks`,
+- [recipe-base.css](web/assets/css/recipe-base.css) — CSS custom properties (design tokens)
+- [recipe-styles.css](web/assets/css/recipe-styles.css) — recipe page styles
+- [tweaks-panel.jsx](web/assets/js/lib/tweaks-panel.jsx) — `TweaksPanel`, `useTweaks`,
   `TweakSection`, `TweakRow`, `TweakSlider`, `TweakToggle`, `TweakColor` on
   `window`
-- [recipe-components.jsx](js/recipe-components.jsx) +
-  [recipe-app.jsx](js/recipe-app.jsx) — `RecipeNav`, `RecipeHero`, `StepCard`,
+- [recipe-components.jsx](web/assets/js/lib/recipe-components.jsx) +
+  [recipe-app.jsx](web/assets/js/app/recipe-app.jsx) — `RecipeNav`, `RecipeHero`, `StepCard`,
   `IngredientsCard`, `UtensilsCard`, `HealthMarquee`, `CookingPlayer`,
   `useScrolled` on `window`
-- [admin-styles.css](css/admin-styles.css) + [admin-simple.css](css/admin-simple.css) —
+- [admin-styles.css](web/assets/css/admin-styles.css) + [admin-simple.css](web/assets/css/admin-simple.css) —
   admin shell, forms, library picker, list table styles
-- [admin-shared.jsx](js/admin-shared.jsx) — `AdminSidebar`, `AdminTopbar`,
+- [admin-shared.jsx](web/assets/js/lib/admin-shared.jsx) — `AdminSidebar`, `AdminTopbar`,
   `SaveBar`, `FormCard`, `Field`, `RadioPills`, `Toggle`, `ChipInput`,
   `Uploader`, `PreviewFrame`, `slugify` on `window`
 
@@ -237,8 +237,8 @@ then clears the local copies.
 - `--cream` / `--paper` / `--ink` — background/text scale
 - `--sans` / `--serif` / `--hand` / `--mono` — Geist / Instrument Serif / Caveat / JetBrains Mono
 
-Tokens defined in [recipe-base.css](css/recipe-base.css); duplicated inline in
-[index.html](index.html) and [recipe-search.html](recipe-search.html).
+Tokens defined in [recipe-base.css](web/assets/css/recipe-base.css); duplicated inline in
+[index.html](web/index.html) and [recipe-search.html](web/recipe-search.html).
 
 ## TweaksPanel
 

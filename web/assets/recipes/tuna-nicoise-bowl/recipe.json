@@ -1,0 +1,154 @@
+{
+  "id": "tuna-nicoise-bowl",
+  "name": "Tuna Niçoise Bowl",
+  "tagline": "Composed bowl with seared tuna, potatoes, eggs, olives, beans",
+  "shortTagline": "composed · shellfish-free · 35 min",
+  "cuisine": "French",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 35,
+  "tags": [
+    "pescatarian",
+    "shellfish-free",
+    "mediterranean",
+    "high-protein"
+  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Provençal classic, shellfish-free, all components in one bowl",
+  "media": {
+    "emoji": "🥗",
+    "hero": {
+      "palette": [
+        "#7A9C5A",
+        "#E76F51",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/tuna-nicoise-bowl/hero.jpg",
+      "alt": "Tuna niçoise composed with potatoes, eggs, olives, beans",
+      "caption": "niçoise — composed and bright"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Niçoise traditionally uses canned tuna, but a quick-seared fresh tuna lifts it.",
+    "Eggs + potatoes + tuna together provide complete sustained protein."
+  ],
+  "ingredients": [
+    {
+      "name": "Tuna steaks",
+      "amt": "2 (5oz)",
+      "group": "main"
+    },
+    {
+      "name": "Baby potatoes",
+      "amt": "8 oz",
+      "group": "main"
+    },
+    {
+      "name": "Green beans",
+      "amt": "6 oz",
+      "group": "main"
+    },
+    {
+      "name": "Eggs",
+      "amt": "2",
+      "group": "main"
+    },
+    {
+      "name": "Cherry tomatoes",
+      "amt": "1 cup",
+      "group": "main"
+    },
+    {
+      "name": "Niçoise olives",
+      "amt": "1/3 cup",
+      "group": "main"
+    },
+    {
+      "name": "Anchovies",
+      "amt": "4 fillets",
+      "group": "main"
+    },
+    {
+      "name": "Dijon mustard",
+      "amt": "1 tsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Red wine vinegar",
+      "amt": "2 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "1/3 cup",
+      "group": "fat"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil potatoes and eggs",
+      "detail": "Boil potatoes in salted water 12 min. In the last 5 min, add eggs to the same pot. Pull eggs at 5 min for jammy. Drain potatoes; halve.",
+      "duration": 720,
+      "tip": "Two birds, one pot. Watch the timer.",
+      "media": {
+        "src": "assets/recipes/tuna-nicoise-bowl/step-01-boil.jpg",
+        "alt": "Boiling potatoes and eggs",
+        "caption": "boil potatoes and eggs"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Blanch beans",
+      "detail": "Drop green beans into the same boiling water for 90 sec; transfer to ice water to keep them green.",
+      "duration": 120,
+      "tip": "Ice bath stops cooking instantly — bright beans, not olive-drab.",
+      "media": {
+        "src": "assets/recipes/tuna-nicoise-bowl/step-02-blanch.jpg",
+        "alt": "Blanching green beans",
+        "caption": "blanch beans"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Sear the tuna",
+      "detail": "Pat tuna dry, salt, sear in a hot pan 90 sec per side. Slice across the grain.",
+      "duration": 180,
+      "tip": "Sliced tuna shows off the rare center — that's the niçoise wow.",
+      "media": {
+        "src": "assets/recipes/tuna-nicoise-bowl/step-03-sear.jpg",
+        "alt": "Searing tuna for niçoise",
+        "caption": "sear the tuna"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Compose with vinaigrette",
+      "detail": "Whisk Dijon, vinegar, olive oil, salt. Compose bowls with potatoes, beans, halved eggs, tomatoes, olives, anchovies, sliced tuna. Drizzle vinaigrette.",
+      "duration": 240,
+      "tip": "Composed = arranged separately. Don't toss; that's a salad, not niçoise.",
+      "media": {
+        "src": "assets/recipes/tuna-nicoise-bowl/step-04-compose.jpg",
+        "alt": "Composed niçoise bowl",
+        "caption": "compose with vinaigrette"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Saucepan",
+      "essential": true
+    },
+    {
+      "name": "Skillet",
+      "essential": true
+    },
+    {
+      "name": "Mixing bowl",
+      "essential": true
+    }
+  ]
+}

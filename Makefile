@@ -30,13 +30,13 @@ sync: ## sync the python venv (after editing automation/pyproject.toml)
 status: ## list public tables and row counts
 	@$(UV) run mfc status
 
-apply-schema: ## run data/db/schema.sql
+apply-schema: ## run automation/db/schema.sql
 	@$(UV) run mfc apply-schema
 
-seed-metrics: ## run data/db/seed_metrics.sql (54-marker catalog)
+seed-metrics: ## run automation/db/seed_metrics.sql (54-marker catalog)
 	@$(UV) run mfc seed-metrics
 
-import-recipes: ## upsert ingredients, utensils, and recipes from data/recipe-bundles/
+import-recipes: ## upsert ingredients, utensils, and recipes from web/assets/recipes/
 	@$(UV) run mfc import-recipes
 
 drop-schema: ## DESTRUCTIVE — drop all public tables (prompts to confirm)
@@ -47,5 +47,5 @@ reset: ## DESTRUCTIVE — drop + apply + seed + import (one-shot reset)
 
 # ───── Local dev server ───────────────────────────────────────────────────
 
-serve: ## run the static site at http://localhost:8080
-	@python3 -m http.server 8080
+serve: ## run the static site at http://localhost:8080 (serves web/)
+	@cd web && python3 -m http.server 8080

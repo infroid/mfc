@@ -1,0 +1,143 @@
+{
+  "id": "tomato-basil-soup",
+  "name": "Tomato Basil Soup",
+  "tagline": "Roasted-tomato soup blended velvety with cream and torn basil",
+  "shortTagline": "roasted · vegetarian · nut-free · 50 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 50,
+  "tags": [
+    "vegetarian",
+    "nut-free",
+    "gluten-free"
+  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Roasting tomatoes deepens sweetness — no nuts needed for body",
+  "media": {
+    "emoji": "🍅",
+    "hero": {
+      "palette": [
+        "#E76F51",
+        "#7A9C5A",
+        "#FFFCF3"
+      ],
+      "src": "assets/recipes/tomato-basil-soup/hero.jpg",
+      "alt": "Bowl of velvety tomato soup with basil leaves and cream swirl",
+      "caption": "tomato basil — roasted and silky"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Roasting tomatoes concentrates lycopene and dispels excess water.",
+    "Pairing with olive oil increases lycopene absorption — fat-soluble carotenoid."
+  ],
+  "ingredients": [
+    {
+      "name": "Roma tomatoes",
+      "amt": "3 lb",
+      "group": "main"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 large",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic",
+      "amt": "6 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "1/4 cup",
+      "group": "fat"
+    },
+    {
+      "name": "Vegetable stock",
+      "amt": "2 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Heavy cream",
+      "amt": "1/2 cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Fresh basil",
+      "amt": "1 cup",
+      "group": "finish"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Roast the tomatoes",
+      "detail": "Halve tomatoes, scatter with onion wedges and garlic on a sheet pan. Drizzle olive oil, salt, pepper. Roast at 425°F for 30 minutes until edges are charred.",
+      "duration": 1800,
+      "tip": "Don't crowd the pan — single layer or use two pans.",
+      "media": {
+        "src": "assets/recipes/tomato-basil-soup/step-01-roast.jpg",
+        "alt": "Tomatoes roasted on sheet pan",
+        "caption": "roast the tomatoes"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Transfer and simmer",
+      "detail": "Scrape everything (juices included) into a pot. Add stock, bring to a simmer for 10 minutes.",
+      "duration": 600,
+      "tip": "Charred bits = flavor. Don't leave them on the pan.",
+      "media": {
+        "src": "assets/recipes/tomato-basil-soup/step-02-simmer.jpg",
+        "alt": "Roasted tomatoes simmering with stock",
+        "caption": "transfer and simmer"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Blend velvety",
+      "detail": "Blend in batches (or with immersion blender) until silky. For restaurant-smooth, push through a sieve.",
+      "duration": 120,
+      "tip": "Hot soup + sealed blender = explosion. Vent the lid with a towel.",
+      "media": {
+        "src": "assets/recipes/tomato-basil-soup/step-03-blend.jpg",
+        "alt": "Blended tomato soup",
+        "caption": "blend velvety"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Cream and basil",
+      "detail": "Stir in cream off heat. Tear in basil at the last second. Adjust salt. A pinch of sugar if tomatoes are sharp.",
+      "duration": 60,
+      "tip": "Adding basil off heat keeps it bright green and pungent.",
+      "media": {
+        "src": "assets/recipes/tomato-basil-soup/step-04-finish.jpg",
+        "alt": "Tomato soup with basil garnish",
+        "caption": "cream and basil"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Sheet pan",
+      "essential": true
+    },
+    {
+      "name": "Blender or immersion blender",
+      "essential": true
+    },
+    {
+      "name": "Soup pot",
+      "essential": true
+    }
+  ]
+}

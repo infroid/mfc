@@ -1,0 +1,125 @@
+{
+  "id": "masoor-dal",
+  "name": "Masoor Dal",
+  "tagline": "Quick red-lentil dal — iron, folate, and protein in 25 minutes",
+  "shortTagline": "red lentils · iron-dense · 25 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 3,
+  "totalMinutes": 25,
+  "tags": [
+    "veg",
+    "high-iron",
+    "high-folate",
+    "high-protein",
+    "garlic",
+    "onion"
+  ],
+  "color": "#C44536",
+  "colorSoft": "rgba(196,69,54,0.16)",
+  "featured": false,
+  "highlight": "Lentils + tomato + lemon — vitamin C unlocks iron absorption in one bowl",
+  "media": {
+    "emoji": "🥣",
+    "hero": {
+      "palette": [
+        "#C44536",
+        "#E76F51",
+        "#F4A261"
+      ],
+      "src": "assets/recipes/masoor-dal/hero.jpg",
+      "alt": "Reddish-brown masoor dal in a steel bowl with tomato, coriander, and a tadka of cumin",
+      "caption": "masoor dal — iron-rich red lentils with tomato"
+    }
+  },
+  "healthFacts": [
+    "Red lentils deliver ~3.3mg iron per cooked cup — one of the highest plant-iron foods.",
+    "Pairing with tomato and a final lemon squeeze raises non-heme iron absorption 2–3×.",
+    "Folate content (~180µg per cup) supports DNA synthesis and homocysteine clearance.",
+    "Cooks in 15 minutes without soaking — the fastest pulse on the shelf."
+  ],
+  "ingredients": [
+    {
+      "name": "Red lentils (masoor dal)",
+      "amt": "1 cup",
+      "group": "main"
+    },
+    {
+      "name": "Tomato (chopped)",
+      "amt": "1 large",
+      "group": "base"
+    },
+    {
+      "name": "Onion (chopped)",
+      "amt": "1 medium",
+      "group": "base"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1 tbsp",
+      "group": "base"
+    },
+    {
+      "name": "Turmeric powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Cumin seeds",
+      "amt": "1 tsp",
+      "group": "tadka"
+    },
+    {
+      "name": "Ghee",
+      "amt": "1 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Lemon juice",
+      "amt": "1 tbsp",
+      "group": "finish"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil the lentils",
+      "detail": "Rinse the masoor dal until water runs clear. Pressure-cook with 3 cups water, turmeric, and salt for 3 whistles. Mash slightly with the back of a ladle.",
+      "duration": 900,
+      "tip": "Skim any foam in the first minute — gives a cleaner, less starchy finish."
+    },
+    {
+      "id": 2,
+      "title": "Cook the masala",
+      "detail": "Heat ghee in a pan. Crackle cumin, sauté onion until golden, add ginger-garlic paste, then tomatoes. Cook 6–7 minutes until oil leaves the sides.",
+      "duration": 480,
+      "tip": "Cook tomatoes till they break down — undercooked tomato makes the dal taste raw."
+    },
+    {
+      "id": 3,
+      "title": "Combine and finish",
+      "detail": "Pour the masala into the boiled dal. Simmer 3 minutes to marry the flavors. Off-heat, stir in lemon juice. Taste, adjust salt, garnish with coriander.",
+      "duration": 240,
+      "tip": "Add lemon at the end — heat destroys vitamin C, the iron-absorption helper."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Pressure cooker",
+      "essential": true
+    },
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": false
+    }
+  ]
+}

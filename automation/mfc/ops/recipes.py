@@ -87,7 +87,7 @@ def _build_recipe_row(detail: dict) -> dict:
         "media": {
             "emoji": media.get("emoji"),
             "hero": media.get("hero"),
-            "image": f"data/recipe-bundles/{rid}/hero.jpg",
+            "image": f"assets/recipes/{rid}/hero.jpg",
         },
         "color": detail.get("color"),
         "color_soft": detail.get("colorSoft"),
@@ -174,7 +174,7 @@ def import_all(config: Config) -> None:
 
     bundles = [files.load_recipe_json(p) for p in files.iter_recipe_bundles(config.repo_root)]
     if not bundles:
-        log.warn("no recipe bundles found under data/recipe-bundles/")
+        log.warn("no recipe bundles found under web/assets/recipes/")
         return
 
     log.step(f"pass 1/3 · collecting library rows from {len(bundles)} bundle(s)")

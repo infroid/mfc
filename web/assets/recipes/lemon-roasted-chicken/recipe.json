@@ -1,0 +1,139 @@
+{
+  "id": "lemon-roasted-chicken",
+  "name": "Lemon Roasted Chicken",
+  "tagline": "Whole chicken, lemon halves, garlic, thyme — high heat, golden skin",
+  "shortTagline": "whole bird · nut-free · gluten-free · 75 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 75,
+  "tags": [
+    "non-veg",
+    "high-protein",
+    "nut-free",
+    "gluten-free"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "Crackly lemon-perfumed skin, juicy thighs, no nuts anywhere",
+  "media": {
+    "emoji": "🍗",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#F4D67A",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/lemon-roasted-chicken/hero.jpg",
+      "alt": "Golden roast chicken with charred lemon halves and thyme",
+      "caption": "lemon roast chicken — golden, herby"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free — only chicken, citrus, herbs, and olive oil.",
+    "A 4-lb chicken yields ~120g of cooked protein per quarter portion.",
+    "Roasting at high heat (425°F) renders fat outward and crisps the skin without drying the breast."
+  ],
+  "ingredients": [
+    {
+      "name": "Whole chicken",
+      "amt": "4 lb",
+      "group": "main"
+    },
+    {
+      "name": "Lemons",
+      "amt": "2 whole",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic head",
+      "amt": "1, halved",
+      "group": "aromatics"
+    },
+    {
+      "name": "Fresh thyme",
+      "amt": "8 sprigs",
+      "group": "aromatics"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "1 tsp",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Dry-brine the bird",
+      "detail": "Pat chicken bone-dry with paper towels. Salt all over and inside the cavity. Rest uncovered in the fridge 30 minutes — this is what gets you crisp skin.",
+      "duration": 1800,
+      "tip": "If you have time, dry-brine overnight. The skin only gets crisper.",
+      "media": {
+        "src": "assets/recipes/lemon-roasted-chicken/step-01-brine.jpg",
+        "alt": "Salted whole chicken resting on a rack",
+        "caption": "dry-brine the bird"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Stuff and oil",
+      "detail": "Halve the lemons and the garlic head. Stuff cavity with lemon halves, garlic, and thyme sprigs. Rub the bird with olive oil and a generous grind of pepper.",
+      "duration": 180,
+      "tip": "Tie the legs together with kitchen twine — it makes the breast cook more evenly.",
+      "media": {
+        "src": "assets/recipes/lemon-roasted-chicken/step-02-stuff.jpg",
+        "alt": "Chicken cavity stuffed with lemon and garlic",
+        "caption": "stuff and oil"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Roast hot",
+      "detail": "Roast breast-side-up at 425°F (220°C) for 55–65 minutes, until thigh meat reads 165°F (74°C). The lemons in the cavity will steam-perfume the meat from the inside.",
+      "duration": 3600,
+      "tip": "Pan looking dry? Pour a half cup of water in the bottom partway through to keep drippings from burning.",
+      "media": {
+        "src": "assets/recipes/lemon-roasted-chicken/step-03-roast.jpg",
+        "alt": "Golden roast chicken in a cast iron pan",
+        "caption": "roast hot"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rest and carve",
+      "detail": "Tent loosely with foil and rest 15 minutes — non-negotiable. Carve, squeeze a roasted lemon half over, and serve with the pan juices.",
+      "duration": 900,
+      "tip": "Cutting into a hot bird flushes out the juices. Patience = juicy chicken.",
+      "media": {
+        "src": "assets/recipes/lemon-roasted-chicken/step-04-carve.jpg",
+        "alt": "Carved chicken with pan juices",
+        "caption": "rest and carve"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Roasting pan or cast iron skillet",
+      "essential": true
+    },
+    {
+      "name": "Instant-read thermometer",
+      "essential": true
+    },
+    {
+      "name": "Kitchen twine",
+      "essential": false
+    }
+  ]
+}

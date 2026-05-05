@@ -1,0 +1,145 @@
+{
+  "id": "gambas-al-ajillo",
+  "name": "Gambas al Ajillo",
+  "tagline": "Spanish garlic shrimp sizzling in olive oil with chili and sherry",
+  "shortTagline": "tapas · soy-free · 15 min",
+  "cuisine": "Spanish",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 15,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "gluten-free",
+    "mediterranean",
+    "quick"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "Tapas-bar classic — ten minutes, no soy, no compromise",
+  "media": {
+    "emoji": "🍤",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#E76F51",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/gambas-al-ajillo/hero.jpg",
+      "alt": "Sizzling shrimp in olive oil with garlic and parsley",
+      "caption": "gambas al ajillo — tapas-bar"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Shrimp = lean protein, rich in selenium and iodine.",
+    "The garlic-infused olive oil is medicinal-meets-delicious."
+  ],
+  "ingredients": [
+    {
+      "name": "Shrimp (peeled, deveined)",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Garlic (sliced)",
+      "amt": "8 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Dried red chilies",
+      "amt": "2, broken",
+      "group": "spice"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "1/2 cup",
+      "group": "fat"
+    },
+    {
+      "name": "Dry sherry",
+      "amt": "2 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Smoked paprika",
+      "amt": "1/2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Lemon",
+      "amt": "1/2",
+      "group": "finish"
+    },
+    {
+      "name": "Parsley",
+      "amt": "2 tbsp chopped",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Salt the shrimp",
+      "detail": "Pat shrimp dry. Season with salt. Resting 10 min builds flavor; skip if you're hungry.",
+      "duration": 600,
+      "tip": "Dry shrimp = sear, not steam.",
+      "media": {
+        "src": "assets/recipes/gambas-al-ajillo/step-01-salt.jpg",
+        "alt": "Shrimp drying with salt",
+        "caption": "salt the shrimp"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Slow-bloom the garlic",
+      "detail": "Pour olive oil into a small skillet over medium-low. Add sliced garlic and chili; cook 4 min until garlic just turns pale gold.",
+      "duration": 240,
+      "tip": "If your garlic looks brown, it's about to be bitter. Pull it.",
+      "media": {
+        "src": "assets/recipes/gambas-al-ajillo/step-02-garlic.jpg",
+        "alt": "Garlic and chili in olive oil",
+        "caption": "slow-bloom the garlic"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Crank and add shrimp",
+      "detail": "Crank heat to medium-high. Slide shrimp into the oil; toss 90 sec on each side until just pink.",
+      "duration": 180,
+      "tip": "Overcooked shrimp curls into a tight C; perfect shrimp curls into a J.",
+      "media": {
+        "src": "assets/recipes/gambas-al-ajillo/step-03-shrimp.jpg",
+        "alt": "Shrimp cooking in garlic oil",
+        "caption": "crank and add shrimp"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Sherry and serve",
+      "detail": "Splash sherry, sprinkle paprika, squeeze lemon. Toss 15 sec. Off heat, scatter parsley. Serve sizzling with bread for the oil.",
+      "duration": 60,
+      "tip": "The garlic oil at the bottom is the prize. Have crusty bread ready.",
+      "media": {
+        "src": "assets/recipes/gambas-al-ajillo/step-04-sherry.jpg",
+        "alt": "Gambas with parsley and bread",
+        "caption": "sherry and serve"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Small heavy skillet or cazuela",
+      "essential": true
+    },
+    {
+      "name": "Tongs",
+      "essential": true
+    },
+    {
+      "name": "Knife",
+      "essential": true
+    }
+  ]
+}

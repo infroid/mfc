@@ -1,0 +1,139 @@
+{
+  "id": "spaghetti-carbonara",
+  "name": "Spaghetti Carbonara",
+  "tagline": "Roman pasta with guanciale, egg, pecorino, black pepper — no cream",
+  "shortTagline": "roman · nut-free · 25 min",
+  "cuisine": "Italian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 25,
+  "tags": [
+    "non-veg",
+    "nut-free",
+    "italian",
+    "high-protein"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Real carbonara: egg, pork, cheese, pepper. No cream. Ever.",
+  "media": {
+    "emoji": "🍝",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#A0522D",
+        "#3A332A"
+      ],
+      "src": "assets/recipes/spaghetti-carbonara/hero.jpg",
+      "alt": "Carbonara coated with creamy egg sauce and crisp guanciale",
+      "caption": "carbonara — egg-yolk creamy"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Carbonara's creaminess comes from emulsified egg yolk and pasta water — no cream needed.",
+    "Pecorino is sharper and saltier than parmesan — a little goes far."
+  ],
+  "ingredients": [
+    {
+      "name": "Spaghetti",
+      "amt": "400 g",
+      "group": "main"
+    },
+    {
+      "name": "Guanciale",
+      "amt": "150 g, diced",
+      "group": "main"
+    },
+    {
+      "name": "Egg yolks",
+      "amt": "4",
+      "group": "main"
+    },
+    {
+      "name": "Whole egg",
+      "amt": "1",
+      "group": "main"
+    },
+    {
+      "name": "Pecorino Romano",
+      "amt": "1 cup grated",
+      "group": "main"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "lots, freshly cracked",
+      "group": "spice"
+    },
+    {
+      "name": "Salt",
+      "amt": "for pasta water",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Render guanciale slowly",
+      "detail": "Cold pan, diced guanciale, medium heat. Render 8 minutes, stirring, until fat melts and the pieces are crisp on the edges.",
+      "duration": 480,
+      "tip": "Cold start is key — high heat torches the meat before fat releases.",
+      "media": {
+        "src": "assets/recipes/spaghetti-carbonara/step-01-render.jpg",
+        "alt": "Guanciale rendering in pan",
+        "caption": "render guanciale slowly"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Boil and whisk",
+      "detail": "Boil spaghetti in salted water. Meanwhile whisk egg yolks, whole egg, and most of the pecorino with copious black pepper.",
+      "duration": 540,
+      "tip": "More pepper than feels reasonable. That's the dish.",
+      "media": {
+        "src": "assets/recipes/spaghetti-carbonara/step-02-whisk.jpg",
+        "alt": "Egg-cheese mix being whisked",
+        "caption": "boil and whisk"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Combine off heat",
+      "detail": "Drain pasta (save water!). Off heat, toss pasta in the guanciale fat. Pour in egg-cheese mix and stir vigorously, splashing in pasta water until silky.",
+      "duration": 90,
+      "tip": "OFF heat. Hot pan = scrambled eggs. The pasta provides the heat.",
+      "media": {
+        "src": "assets/recipes/spaghetti-carbonara/step-03-combine.jpg",
+        "alt": "Carbonara being tossed off heat",
+        "caption": "combine off heat"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Serve immediately",
+      "detail": "Plate, top with the crisped guanciale and remaining pecorino. Eat now — carbonara waits for no one.",
+      "duration": 30,
+      "tip": "If your sauce thickens too much sitting on the plate, add a tablespoon of pasta water at the table.",
+      "media": {
+        "src": "assets/recipes/spaghetti-carbonara/step-04-serve.jpg",
+        "alt": "Carbonara plated with guanciale",
+        "caption": "serve immediately"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide saute pan",
+      "essential": true
+    },
+    {
+      "name": "Pasta pot",
+      "essential": true
+    },
+    {
+      "name": "Mixing bowl",
+      "essential": true
+    }
+  ]
+}

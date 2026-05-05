@@ -1,0 +1,144 @@
+{
+  "id": "honey-roasted-carrots",
+  "name": "Honey Roasted Carrots",
+  "tagline": "Whole carrots roasted dark with honey, thyme, and butter",
+  "shortTagline": "side · soy-free · 35 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 35,
+  "tags": [
+    "vegetarian",
+    "soy-free",
+    "gluten-free",
+    "quick"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "Caramelized edges, tender middles — naturally soy-free",
+  "media": {
+    "emoji": "🥕",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#F4D67A",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/honey-roasted-carrots/hero.jpg",
+      "alt": "Roasted whole carrots with honey glaze and thyme",
+      "caption": "honey carrots — caramelized whole"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Carrots' beta-carotene becomes more available with cooking and fat.",
+    "Honey caramelizes around 320°F, faster than sugar — risk of burn at high heat."
+  ],
+  "ingredients": [
+    {
+      "name": "Whole young carrots",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Butter",
+      "amt": "2 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Honey",
+      "amt": "2 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Fresh thyme",
+      "amt": "4 sprigs",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic (smashed)",
+      "amt": "3 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    },
+    {
+      "name": "Cracked pepper",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Trim and dry",
+      "detail": "Scrub carrots; trim greens to a stub. Halve thicker carrots lengthwise so all are even.",
+      "duration": 240,
+      "tip": "Whole carrots roast prettier; halve only the fat ones.",
+      "media": {
+        "src": "assets/recipes/honey-roasted-carrots/step-01-trim.jpg",
+        "alt": "Trimmed carrots on board",
+        "caption": "trim and dry"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Toss and roast",
+      "detail": "Toss carrots with olive oil, salt, pepper. Spread on a sheet pan with smashed garlic and thyme. Roast at 425°F for 20 min, tossing once.",
+      "duration": 1200,
+      "tip": "Don't crowd. One layer; otherwise they steam.",
+      "media": {
+        "src": "assets/recipes/honey-roasted-carrots/step-02-roast.jpg",
+        "alt": "Carrots roasting on sheet pan",
+        "caption": "toss and roast"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Honey-butter glaze",
+      "detail": "Whisk honey and butter in a small pan over low until melted. Drizzle over carrots; toss.",
+      "duration": 60,
+      "tip": "Glaze at the end — honey burns if added at the start of roasting.",
+      "media": {
+        "src": "assets/recipes/honey-roasted-carrots/step-03-glaze.jpg",
+        "alt": "Honey butter glaze drizzling",
+        "caption": "honey-butter glaze"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Roast 5 more, finish",
+      "detail": "Return to the oven 5 min for the glaze to caramelize. Plate with the pan juices and a fresh thyme sprig.",
+      "duration": 300,
+      "tip": "A pinch of flaky salt over the glaze hits all the right notes.",
+      "media": {
+        "src": "assets/recipes/honey-roasted-carrots/step-04-finish.jpg",
+        "alt": "Finished honey carrots",
+        "caption": "roast 5 more, finish"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Sheet pan",
+      "essential": true
+    },
+    {
+      "name": "Small saucepan",
+      "essential": true
+    },
+    {
+      "name": "Tongs",
+      "essential": false
+    }
+  ]
+}

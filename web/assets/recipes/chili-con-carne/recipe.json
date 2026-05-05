@@ -1,0 +1,155 @@
+{
+  "id": "chili-con-carne",
+  "name": "Chili con Carne",
+  "tagline": "Slow-simmered Texas-style chili with chuck, dried chilies, beer",
+  "shortTagline": "slow chili · soy-free · 2 hr",
+  "cuisine": "Tex-Mex",
+  "difficulty": "Medium",
+  "servings": 6,
+  "totalMinutes": 120,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "mexican",
+    "high-protein",
+    "one-pot"
+  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "No beans (Texas style), no soy — just beef, chili, and time",
+  "media": {
+    "emoji": "🌶️",
+    "hero": {
+      "palette": [
+        "#A0522D",
+        "#C84B5A",
+        "#F4A261"
+      ],
+      "src": "assets/recipes/chili-con-carne/hero.jpg",
+      "alt": "Chili con carne with cheese and onion",
+      "caption": "chili — Texas slow"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Slow-cooked chuck breaks collagen down to gelatin — silky body.",
+    "Dried chilies provide capsaicin (anti-inflammatory) and carotenoids."
+  ],
+  "ingredients": [
+    {
+      "name": "Beef chuck (cubed)",
+      "amt": "2.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Onion (diced)",
+      "amt": "1 large",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic",
+      "amt": "6 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Ancho chilies (dried)",
+      "amt": "4",
+      "group": "spice"
+    },
+    {
+      "name": "Guajillo chilies (dried)",
+      "amt": "2",
+      "group": "spice"
+    },
+    {
+      "name": "Cumin",
+      "amt": "1 tbsp",
+      "group": "spice"
+    },
+    {
+      "name": "Oregano",
+      "amt": "2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Tomato paste",
+      "amt": "2 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Mexican lager beer",
+      "amt": "1 bottle",
+      "group": "liquid"
+    },
+    {
+      "name": "Beef stock",
+      "amt": "3 cups",
+      "group": "liquid"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Toast and rehydrate",
+      "detail": "Toast chilies in a dry pot 30 sec per side. Cover with hot water 15 min, then blend with the soaking liquid into a smooth paste.",
+      "duration": 1080,
+      "tip": "Use the soak liquid in the blend — that's where the chili water-soluble flavor lives.",
+      "media": {
+        "src": "assets/recipes/chili-con-carne/step-01-toast.jpg",
+        "alt": "Toasting dried chilies in pot",
+        "caption": "toast and rehydrate"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Brown the beef",
+      "detail": "In a heavy pot, brown beef in batches over high. Set aside. Sweat onion 5 min, garlic 1 min in the rendered fat.",
+      "duration": 1200,
+      "tip": "Crowding = steaming. Take batches seriously.",
+      "media": {
+        "src": "assets/recipes/chili-con-carne/step-02-brown.jpg",
+        "alt": "Beef browning in pot",
+        "caption": "brown the beef"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Bloom and deglaze",
+      "detail": "Stir in tomato paste, cumin, oregano; cook 2 min. Pour in beer and scrape the fond. Add chili paste and stock.",
+      "duration": 240,
+      "tip": "Deglazing is non-negotiable — those brown bits ARE the flavor.",
+      "media": {
+        "src": "assets/recipes/chili-con-carne/step-03-deglaze.jpg",
+        "alt": "Deglazing pot with beer",
+        "caption": "bloom and deglaze"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Slow simmer",
+      "detail": "Return beef. Cover, simmer 90 min until beef shreds with a fork. Last 20 min uncovered to thicken.",
+      "duration": 5400,
+      "tip": "Better the next day. Make ahead if you can.",
+      "media": {
+        "src": "assets/recipes/chili-con-carne/step-04-simmer.jpg",
+        "alt": "Chili simmering long",
+        "caption": "slow simmer"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy pot or Dutch oven",
+      "essential": true
+    },
+    {
+      "name": "Blender",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    }
+  ]
+}

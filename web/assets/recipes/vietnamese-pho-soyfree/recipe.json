@@ -1,0 +1,160 @@
+{
+  "id": "vietnamese-pho-soyfree",
+  "name": "Vietnamese Beef Pho (Soy-Free)",
+  "tagline": "Charred-aromatic beef pho with rice noodles and herb plate",
+  "shortTagline": "phở bò · soy-free · 3 hr",
+  "cuisine": "Vietnamese",
+  "difficulty": "Medium",
+  "servings": 6,
+  "totalMinutes": 180,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "asian",
+    "gluten-free",
+    "high-protein"
+  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Fish sauce + bone broth — pho without soy",
+  "media": {
+    "emoji": "🍜",
+    "hero": {
+      "palette": [
+        "#A0522D",
+        "#7A9C5A",
+        "#E76F51"
+      ],
+      "src": "assets/recipes/vietnamese-pho-soyfree/hero.jpg",
+      "alt": "Bowl of pho with rare beef, rice noodles, and herb plate",
+      "caption": "phở bò — bone-broth deep"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Bone broth is collagen-rich — supportive of gut and joint health.",
+    "Char-roasting onion and ginger gives pho its signature smoke."
+  ],
+  "ingredients": [
+    {
+      "name": "Beef bones (mixed)",
+      "amt": "4 lb",
+      "group": "main"
+    },
+    {
+      "name": "Beef brisket",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Onion (halved)",
+      "amt": "1 large",
+      "group": "aromatics"
+    },
+    {
+      "name": "Ginger (halved)",
+      "amt": "4 inch piece",
+      "group": "aromatics"
+    },
+    {
+      "name": "Star anise",
+      "amt": "5 pods",
+      "group": "spice"
+    },
+    {
+      "name": "Cinnamon stick",
+      "amt": "1",
+      "group": "spice"
+    },
+    {
+      "name": "Cloves",
+      "amt": "4",
+      "group": "spice"
+    },
+    {
+      "name": "Fish sauce",
+      "amt": "1/4 cup",
+      "group": "sauce"
+    },
+    {
+      "name": "Rice noodles (banh pho)",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Eye of round (sliced thin)",
+      "amt": "8 oz",
+      "group": "main"
+    },
+    {
+      "name": "Herb plate (basil, mint, cilantro, lime, chili)",
+      "amt": "for serving",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Blanch the bones",
+      "detail": "Cover bones with cold water, bring to a boil for 5 min, drain, rinse. Removes scum so the broth stays clear.",
+      "duration": 600,
+      "tip": "Skipping = murky pho. Worth the extra step.",
+      "media": {
+        "src": "assets/recipes/vietnamese-pho-soyfree/step-01-blanch.jpg",
+        "alt": "Bones blanching in pot",
+        "caption": "blanch the bones"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Char aromatics",
+      "detail": "Char halved onion and ginger directly on a flame or under a broiler until blackened. Toast spices in a dry pan 1 min.",
+      "duration": 480,
+      "tip": "Char until it looks ruined. That's where the smoke comes from.",
+      "media": {
+        "src": "assets/recipes/vietnamese-pho-soyfree/step-02-char.jpg",
+        "alt": "Charred onion and ginger",
+        "caption": "char aromatics"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Long simmer",
+      "detail": "Combine bones, brisket, charred aromatics, spices, salt in a large pot with 4 quarts water. Simmer covered, very low, 2.5 hours, skimming foam. Pull brisket at 1.5 hr; slice when cool.",
+      "duration": 9000,
+      "tip": "If it boils, you get cloudy broth. Bare bubbles only.",
+      "media": {
+        "src": "assets/recipes/vietnamese-pho-soyfree/step-03-simmer.jpg",
+        "alt": "Pho broth simmering",
+        "caption": "long simmer"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Strain and assemble",
+      "detail": "Strain broth, return to clean pot. Stir in fish sauce. Cook noodles per package. Pile noodles in bowls with sliced brisket and raw eye of round; ladle hot broth over to cook the rare beef. Herb plate alongside.",
+      "duration": 600,
+      "tip": "Boiling broth poured over thin raw beef cooks it perfectly — pho's classic move.",
+      "media": {
+        "src": "assets/recipes/vietnamese-pho-soyfree/step-04-assemble.jpg",
+        "alt": "Pho assembled with herbs",
+        "caption": "strain and assemble"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Large stockpot",
+      "essential": true
+    },
+    {
+      "name": "Strainer",
+      "essential": true
+    },
+    {
+      "name": "Sharp slicing knife",
+      "essential": true
+    }
+  ]
+}

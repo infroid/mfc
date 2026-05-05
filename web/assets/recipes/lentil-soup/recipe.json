@@ -1,0 +1,155 @@
+{
+  "id": "lentil-soup",
+  "name": "Lentil Soup",
+  "tagline": "Brown lentil soup with carrot, celery, lemon, parsley",
+  "shortTagline": "fiber-rich · egg-free · vegan · 45 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 45,
+  "tags": [
+    "vegetarian",
+    "vegan",
+    "egg-free",
+    "high-protein",
+    "one-pot"
+  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Plant protein under $5 a pot, no eggs anywhere",
+  "media": {
+    "emoji": "🍲",
+    "hero": {
+      "palette": [
+        "#7A9C5A",
+        "#A0522D",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/lentil-soup/hero.jpg",
+      "alt": "Bowl of lentil soup with carrots, parsley, and lemon wedge",
+      "caption": "lentil soup — bright, fiber-rich"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Brown lentils have ~18g protein and 16g fiber per cooked cup.",
+    "Lemon at the end boosts iron absorption from the lentils."
+  ],
+  "ingredients": [
+    {
+      "name": "Brown lentils",
+      "amt": "1.5 cups",
+      "group": "main"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 large",
+      "group": "aromatics"
+    },
+    {
+      "name": "Carrots",
+      "amt": "2",
+      "group": "main"
+    },
+    {
+      "name": "Celery",
+      "amt": "2 stalks",
+      "group": "main"
+    },
+    {
+      "name": "Garlic",
+      "amt": "4 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Cumin",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Vegetable stock",
+      "amt": "6 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Lemon",
+      "amt": "1",
+      "group": "finish"
+    },
+    {
+      "name": "Parsley",
+      "amt": "small handful",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Soffritto",
+      "detail": "Sweat onion, carrot, celery in olive oil over medium 8 minutes. Add garlic, cook 1 minute more.",
+      "duration": 540,
+      "tip": "Dice everything to lentil size — visual harmony matters.",
+      "media": {
+        "src": "assets/recipes/lentil-soup/step-01-soffritto.jpg",
+        "alt": "Soffritto cooking",
+        "caption": "soffritto"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Bloom the cumin",
+      "detail": "Stir in cumin and cook 30 seconds until fragrant — toasting unlocks the oil-soluble flavors.",
+      "duration": 30,
+      "tip": "Fresh-ground cumin smells night-and-day better than pre-ground.",
+      "media": {
+        "src": "assets/recipes/lentil-soup/step-02-cumin.jpg",
+        "alt": "Cumin blooming with vegetables",
+        "caption": "bloom the cumin"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Simmer with stock",
+      "detail": "Stir in lentils and stock. Bring to a boil, then simmer 25 minutes until lentils are tender but still hold shape.",
+      "duration": 1500,
+      "tip": "No salt yet — it slows lentil softening. Salt at the end.",
+      "media": {
+        "src": "assets/recipes/lentil-soup/step-03-simmer.jpg",
+        "alt": "Lentils simmering in stock",
+        "caption": "simmer with stock"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Brighten and serve",
+      "detail": "Salt to taste. Squeeze in lemon and stir in chopped parsley off heat.",
+      "duration": 60,
+      "tip": "Lemon wakes the soup up — without it the soup tastes flat.",
+      "media": {
+        "src": "assets/recipes/lentil-soup/step-04-brighten.jpg",
+        "alt": "Lentil soup with lemon and parsley",
+        "caption": "brighten and serve"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Soup pot",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    },
+    {
+      "name": "Ladle",
+      "essential": false
+    }
+  ]
+}

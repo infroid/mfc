@@ -1,0 +1,114 @@
+{
+  "id": "almond-burfi",
+  "name": "Almond Burfi",
+  "tagline": "Almond-flour fudge with cardamom — vitamin E, magnesium, healthy fats",
+  "shortTagline": "almond fudge · vitamin E · 30 min",
+  "cuisine": "Indian",
+  "difficulty": "Medium",
+  "servings": 16,
+  "totalMinutes": 30,
+  "tags": [
+    "veg",
+    "high-vitamin-e",
+    "high-magnesium",
+    "low-glycemic",
+    "dessert"
+  ],
+  "color": "#E9DAC1",
+  "colorSoft": "rgba(233,218,193,0.4)",
+  "featured": false,
+  "highlight": "Sugar at 'one-string consistency' is the only way to a clean-cut burfi",
+  "media": {
+    "emoji": "🟤",
+    "hero": {
+      "palette": [
+        "#E9DAC1",
+        "#FBF7EE",
+        "#8B4513"
+      ],
+      "src": "assets/recipes/almond-burfi/hero.jpg",
+      "alt": "Off-white diamond-cut almond burfi pieces with silver leaf and crushed pistachios",
+      "caption": "almond burfi — cardamom-scented fudge"
+    }
+  },
+  "healthFacts": [
+    "Almonds deliver 25mg vitamin E per 100g — among the richest food sources.",
+    "Magnesium and mono-unsaturated fats support blood sugar and lipid profile.",
+    "Almond skins carry polyphenols that lower oxidised LDL.",
+    "Lower glycemic than wheat-flour halwa — a smarter celebration sweet."
+  ],
+  "ingredients": [
+    {
+      "name": "Almonds (blanched, peeled)",
+      "amt": "2 cups",
+      "group": "main"
+    },
+    {
+      "name": "Sugar",
+      "amt": "1 cup",
+      "group": "sweetener"
+    },
+    {
+      "name": "Water",
+      "amt": "½ cup",
+      "group": "syrup"
+    },
+    {
+      "name": "Ghee",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Cardamom powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Saffron (optional)",
+      "amt": "1 pinch",
+      "group": "spice"
+    },
+    {
+      "name": "Pistachios (slivered)",
+      "amt": "2 tbsp",
+      "group": "garnish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make almond meal",
+      "detail": "Blanch almonds (boil 2 min, peel, dry). Pulse in a grinder to a fine flour — don't over-blend or it turns into nut butter.",
+      "duration": 600,
+      "tip": "Pulse in 5-second bursts and check between each."
+    },
+    {
+      "id": 2,
+      "title": "Cook the sugar syrup",
+      "detail": "Combine sugar and water in a heavy pan. Bring to a boil and simmer 4 minutes till you reach one-string consistency (a drop between thumb and finger pulls a single thread). Add saffron if using.",
+      "duration": 300,
+      "tip": "Test syrup early and often — overshooting makes the burfi crumbly."
+    },
+    {
+      "id": 3,
+      "title": "Combine and set",
+      "detail": "Lower the heat. Stir almond flour and ghee into the syrup. Stir continuously for 4–5 minutes until it leaves the pan sides. Add cardamom. Pour onto a greased tray, smooth with a spatula, top with pistachios. Cool, score, cut into diamonds.",
+      "duration": 360,
+      "tip": "Score while warm; cut clean once fully cool."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan",
+      "essential": true
+    },
+    {
+      "name": "Grinder / food processor",
+      "essential": true
+    },
+    {
+      "name": "Greased tray",
+      "essential": true
+    }
+  ]
+}

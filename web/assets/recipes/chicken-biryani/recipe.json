@@ -1,0 +1,217 @@
+{
+  "id": "chicken-biryani",
+  "name": "Chicken Biryani",
+  "tagline": "Hyderabadi dum-style, layered, fragrant, and earthy",
+  "shortTagline": "hyderabadi dum · saffron · layered · 90 min",
+  "cuisine": "Hyderabadi",
+  "difficulty": "Hard",
+  "servings": 6,
+  "totalMinutes": 90,
+  "tags": [
+    "non-veg",
+    "high-protein",
+    "halal",
+    "onion",
+    "garlic",
+    "nuts",
+    "batch-cook"
+  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.16)",
+  "featured": true,
+  "highlight": "Real dum sealing = steam-cooked perfection",
+  "media": {
+    "emoji": "🍚",
+    "hero": {
+      "palette": [
+        "#E76F51",
+        "#F4A261",
+        "#D4A017"
+      ],
+      "src": "assets/recipes/chicken-biryani/hero.jpg",
+      "alt": "Chicken biryani in a cream ceramic bowl with saffron rice, chicken, birista, mint, and coriander",
+      "caption": "chicken biryani — saffron rice, birista"
+    }
+  },
+  "healthFacts": [
+    "Aged basmati has a lower glycemic index than regular white rice — a slower glucose spike.",
+    "Whole spices (cloves, cinnamon, cardamom) are anti-inflammatory — not just for flavor.",
+    "Saffron contains crocin, studied for antioxidant activity and mood support.",
+    "Chicken provides ~25g protein per serving in this recipe.",
+    "Caramelized birista (fried onions) develop Maillard antioxidants and deep umami.",
+    "Mint and coriander in biryani act as natural digestive aids for a rich meal."
+  ],
+  "ingredients": [
+    {
+      "name": "Chicken (bone-in, curry cut)",
+      "amt": "1 kg",
+      "group": "main"
+    },
+    {
+      "name": "Aged basmati rice",
+      "amt": "2 cups",
+      "group": "main"
+    },
+    {
+      "name": "Yogurt",
+      "amt": "¾ cup",
+      "group": "marinade"
+    },
+    {
+      "name": "Onions (for birista)",
+      "amt": "3 large",
+      "group": "main"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "2.5 tbsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "2 tsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Biryani masala",
+      "amt": "2 tbsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Mint leaves",
+      "amt": "1 bunch",
+      "group": "layer"
+    },
+    {
+      "name": "Coriander leaves",
+      "amt": "1 bunch",
+      "group": "layer"
+    },
+    {
+      "name": "Saffron strands",
+      "amt": "generous pinch",
+      "group": "layer"
+    },
+    {
+      "name": "Warm milk",
+      "amt": "3 tbsp",
+      "group": "layer"
+    },
+    {
+      "name": "Ghee",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Whole spices (bay, cardamom, cinnamon, cloves)",
+      "amt": "as needed",
+      "group": "spice"
+    },
+    {
+      "name": "Lemon juice",
+      "amt": "2 tbsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make the birista",
+      "detail": "Slice onions thin and even. Deep-fry in oil on medium heat, stirring constantly, until deep golden-brown and crispy. Drain on paper — they crisp up more as they cool. Use half for marinade, half for layering.",
+      "duration": 1200,
+      "tip": "Don't rush. Pale onions = no flavor. Burnt = bitter. Deep golden-brown is the target.",
+      "media": {
+        "src": "assets/recipes/chicken-biryani/step-01-make-birista.jpg",
+        "alt": "Thin sliced onions frying to deep golden birista with crispy onions draining beside the pan",
+        "caption": "Deep-golden birista"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Marinate the chicken",
+      "detail": "Mix yogurt, ginger-garlic paste, Kashmiri chili, biryani masala, lemon juice, salt, and half the crushed birista. Score the chicken and coat deeply. Marinate for at least 1 hour — 4 hours is the real move.",
+      "duration": 3600,
+      "tip": "Yogurt + lemon acid breaks down the meat fibers. More time = noticeably more tender.",
+      "media": {
+        "src": "assets/recipes/chicken-biryani/step-02-marinate-chicken.jpg",
+        "alt": "Scored bone-in chicken pieces coated in orange-red yogurt marinade with crushed birista",
+        "caption": "Yogurt-spice chicken"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Parboil the rice",
+      "detail": "Soak rice 30 minutes. Boil a large pot of very salty water (like pasta water) with whole spices. Cook rice until exactly 70% done — grains should have a firm, chalky center when pressed. Drain immediately.",
+      "duration": 600,
+      "tip": "70% cooked = breaks with slight resistance, not a snap. Watch closely — it moves fast.",
+      "media": {
+        "src": "assets/recipes/chicken-biryani/step-03-parboil-rice.jpg",
+        "alt": "Parboiled basmati rice draining in a steel colander with whole spices visible among the grains",
+        "caption": "70% cooked rice"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Layer the biryani",
+      "detail": "Heavy pot: spread raw marinated chicken at the base. Add half the parboiled rice. Scatter mint, coriander, and half the birista. Drizzle saffron milk and 2 tbsp ghee. Repeat with remaining rice, herbs, ghee, and saffron on top.",
+      "duration": 300,
+      "tip": "Saffron goes on top — it slowly seeps down, creating yellow-orange streaks through the rice.",
+      "media": {
+        "src": "assets/recipes/chicken-biryani/step-04-layer-biryani.jpg",
+        "alt": "Raw marinated chicken and parboiled rice layered with herbs, birista, saffron milk, and ghee in a black pot",
+        "caption": "Layered for dum"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Dum cook (steam seal)",
+      "detail": "Seal the pot with foil pressed tight, then place the lid. Cook on high heat for 5 minutes to build steam pressure, then drop to the absolute lowest heat setting for 25–30 minutes. Do not lift the lid during dum.",
+      "duration": 1800,
+      "tip": "Place a flat tawa under the pot to diffuse heat and protect the bottom layer.",
+      "media": {
+        "src": "assets/recipes/chicken-biryani/step-05-dum-cook.jpg",
+        "alt": "Black biryani pot sealed tightly with foil under a heavy lid on a flat tawa",
+        "caption": "Tight steam seal"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Rest, unseal, and serve",
+      "detail": "Turn off heat. Let rest sealed for 10 minutes — the steam continues to cook gently. Unseal carefully (hot steam). Mix gently from the sides with a wide spatula, folding rather than stirring. Serve immediately.",
+      "duration": 600,
+      "tip": "Fold gently — biryani rice should be separate grains, never clumped or broken.",
+      "media": {
+        "src": "assets/recipes/chicken-biryani/step-06-rest-serve.jpg",
+        "alt": "Rested chicken biryani unsealed with foil pulled back, steam rising, and a wooden spatula folding separate grains",
+        "caption": "Folded after rest"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Large heavy-bottomed pot with tight lid",
+      "essential": true
+    },
+    {
+      "name": "Deep pan for frying onions",
+      "essential": true
+    },
+    {
+      "name": "Foil or dough for sealing (dum)",
+      "essential": true
+    },
+    {
+      "name": "Colander",
+      "essential": true
+    },
+    {
+      "name": "Flat tawa (griddle) for base heat",
+      "essential": false
+    }
+  ]
+}

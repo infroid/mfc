@@ -23,9 +23,9 @@ All targets sit at the repo root in the `Makefile`:
 ```bash
 make                  # list all targets
 make status           # public table list + row counts
-make apply-schema     # run data/db/schema.sql
-make seed-metrics     # run data/db/seed_metrics.sql
-make import-recipes   # upsert data/recipe-bundles/*
+make apply-schema     # run automation/db/schema.sql
+make seed-metrics     # run automation/db/seed_metrics.sql
+make import-recipes   # upsert web/assets/recipes/*
 make drop-schema      # destructive — type "wipe" to confirm
 make reset            # destructive — drop + apply + seed + import
 ```

@@ -1,0 +1,133 @@
+{
+  "id": "kadhi-pakora",
+  "name": "Kadhi Pakora",
+  "tagline": "Yogurt-besan curry with gram-flour fritters — sour, golden, calming",
+  "shortTagline": "yogurt curry · calcium · 45 min",
+  "cuisine": "North Indian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 45,
+  "tags": [
+    "veg",
+    "dairy",
+    "high-calcium",
+    "fermented",
+    "garlic"
+  ],
+  "color": "#F4C430",
+  "colorSoft": "rgba(244,196,48,0.18)",
+  "featured": false,
+  "highlight": "Long simmer takes the raw bite off the gram flour and turns yogurt silky",
+  "media": {
+    "emoji": "🍛",
+    "hero": {
+      "palette": [
+        "#F4C430",
+        "#E76F51",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/kadhi-pakora/hero.jpg",
+      "alt": "Golden yogurt-besan curry with floating onion pakoras and a red-chili tempering",
+      "caption": "kadhi pakora — yogurt curry with onion fritters"
+    }
+  },
+  "healthFacts": [
+    "Yogurt provides calcium, B2, B12, and gut-friendly probiotic strains.",
+    "Slow simmer denatures yogurt protein gently — no curdling, full digestibility.",
+    "Besan (gram flour) adds plant protein and slow-release carbs.",
+    "Fenugreek and curry leaves add iron and subtle blood-sugar regulation."
+  ],
+  "ingredients": [
+    {
+      "name": "Yogurt (sour, whisked)",
+      "amt": "2 cups",
+      "group": "kadhi"
+    },
+    {
+      "name": "Gram flour (besan)",
+      "amt": "5 tbsp",
+      "group": "kadhi"
+    },
+    {
+      "name": "Turmeric powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Onion (sliced)",
+      "amt": "1 large",
+      "group": "pakora"
+    },
+    {
+      "name": "Green chili (chopped)",
+      "amt": "2",
+      "group": "pakora"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1 tbsp",
+      "group": "tadka"
+    },
+    {
+      "name": "Mustard seeds",
+      "amt": "1 tsp",
+      "group": "tadka"
+    },
+    {
+      "name": "Curry leaves",
+      "amt": "8",
+      "group": "tadka"
+    },
+    {
+      "name": "Mustard oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make the kadhi base",
+      "detail": "Whisk yogurt, 3 tbsp besan, turmeric, salt, and 4 cups water until smooth — no lumps. Pour into a heavy pot and bring to a gentle boil, stirring constantly to prevent splitting.",
+      "duration": 600,
+      "tip": "Constant stirring for the first 5 minutes is non-negotiable — that's when yogurt curdles."
+    },
+    {
+      "id": 2,
+      "title": "Fry the pakoras",
+      "detail": "Mix onion, green chili, 2 tbsp besan, salt, and a splash of water into a thick batter. Heat oil to 180°C and drop spoonfuls of batter to fry till golden (3–4 min per batch). Drain on paper.",
+      "duration": 600,
+      "tip": "Pakora batter should be thick — runny batter spreads and absorbs oil."
+    },
+    {
+      "id": 3,
+      "title": "Tadka and finish",
+      "detail": "Simmer the kadhi on low for 25 minutes, stirring occasionally. Heat mustard oil in a small pan, crackle mustard seeds, add curry leaves and ginger-garlic paste. Pour the tadka over the kadhi, drop in the pakoras, and let them soak for 5 minutes before serving.",
+      "duration": 1800,
+      "tip": "The longer the simmer, the silkier the kadhi — never rush below 20 minutes."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pot",
+      "essential": true
+    },
+    {
+      "name": "Whisk",
+      "essential": true
+    },
+    {
+      "name": "Frying pan",
+      "essential": true
+    },
+    {
+      "name": "Slotted spoon",
+      "essential": false
+    }
+  ]
+}

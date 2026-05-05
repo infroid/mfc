@@ -42,7 +42,7 @@ make sync              # creates automation/.venv and installs deps
 Then, from the repo root:
 
 ```bash
-make apply-schema      # runs data/db/schema.sql
+make apply-schema      # runs automation/db/schema.sql
 make seed-metrics      # loads the 54-marker catalog
 make status            # prints table list + row counts to verify
 ```
@@ -57,8 +57,8 @@ make reset             # prompts "type 'reset' to confirm"
 
 ### Option B — Studio SQL Editor
 
-1. Paste the entire contents of [data/db/schema.sql](data/db/schema.sql) and run.
-2. Paste the entire contents of [data/db/seed_metrics.sql](data/db/seed_metrics.sql) and run.
+1. Paste the entire contents of [automation/db/schema.sql](automation/db/schema.sql) and run.
+2. Paste the entire contents of [automation/db/seed_metrics.sql](automation/db/seed_metrics.sql) and run.
 
 Verify in **Table Editor**:
 
@@ -95,9 +95,9 @@ In **Authentication → URL Configuration**:
 ## 4. Grant yourself the admin role
 
 The admin pages are gated by `app_metadata.role = 'admin'` on your Supabase
-user, enforced both in the UI ([shared/admin-gate.js](shared/admin-gate.js))
+user, enforced both in the UI ([web/assets/js/lib/admin-gate.js](web/assets/js/lib/admin-gate.js))
 and at the database level via the RLS predicate `public.is_admin()` (defined
-in [data/db/schema.sql](data/db/schema.sql) §8).
+in [automation/db/schema.sql](automation/db/schema.sql) §8).
 
 > **Why `app_metadata` and not `user_metadata`?** `user_metadata` can be
 > written by the user themselves via the Supabase client — it is **not safe**
@@ -195,8 +195,8 @@ role.
 
 ## 5. Paste credentials into the HTML pages
 
-In each of [index.html](index.html), [recipe-search.html](recipe-search.html),
-[recipe.html](recipe.html), find the meta tags in `<head>`:
+In each of [index.html](web/index.html), [recipe-search.html](web/recipe-search.html),
+[recipe.html](web/recipe.html), find the meta tags in `<head>`:
 
 ```html
 <meta name="mfc-supabase-url" content="" />
@@ -218,7 +218,7 @@ user-owned tables.
 ## 6. Import the recipes (one-time)
 
 The recipe catalog lives in Supabase, seeded from
-`data/recipe-bundles/*/recipe.json`.
+`web/assets/recipes/*/recipe.json`.
 
 From the repo root:
 

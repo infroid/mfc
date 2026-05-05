@@ -1,0 +1,149 @@
+{
+  "id": "risotto-milanese",
+  "name": "Risotto alla Milanese",
+  "tagline": "Saffron risotto from Milan — bone marrow optional, parmesan mandatory",
+  "shortTagline": "saffron · vegetarian · nut-free · 35 min",
+  "cuisine": "Italian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 35,
+  "tags": [
+    "vegetarian",
+    "nut-free",
+    "italian",
+    "gluten-free"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.20)",
+  "featured": false,
+  "highlight": "Saffron-gold, creamy without cream, naturally nut-free",
+  "media": {
+    "emoji": "🍚",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#E76F51",
+        "#FFFCF3"
+      ],
+      "src": "assets/recipes/risotto-milanese/hero.jpg",
+      "alt": "Saffron-yellow risotto with parmesan and gold sheen",
+      "caption": "risotto milanese — saffron and parmesan"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free, gluten-free.",
+    "Saffron contains crocin — antioxidant pigment with antidepressant effects in studies.",
+    "Risotto rice (carnaroli) releases starch slowly — silkier than arborio."
+  ],
+  "ingredients": [
+    {
+      "name": "Carnaroli or arborio rice",
+      "amt": "1.5 cups",
+      "group": "main"
+    },
+    {
+      "name": "Saffron threads",
+      "amt": "1/2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Vegetable or chicken stock",
+      "amt": "5 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Onion (finely diced)",
+      "amt": "1 small",
+      "group": "aromatics"
+    },
+    {
+      "name": "White wine",
+      "amt": "1/2 cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Butter",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Parmesan (grated)",
+      "amt": "3/4 cup",
+      "group": "main"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "1 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Bloom the saffron",
+      "detail": "Warm stock in a saucepan. Steep saffron in a ladle of warm stock 10 minutes — releases full color and aroma.",
+      "duration": 600,
+      "tip": "Saffron straight into rice is wasteful — bloom it first.",
+      "media": {
+        "src": "assets/recipes/risotto-milanese/step-01-saffron.jpg",
+        "alt": "Saffron blooming in stock",
+        "caption": "bloom the saffron"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Toast the rice",
+      "detail": "Sweat onion in 1 tbsp butter and oil over medium 4 minutes. Add rice; toast 2 minutes until edges turn translucent.",
+      "duration": 360,
+      "tip": "Toasting the grain seals it so it cooks creamy on the outside, al dente in.",
+      "media": {
+        "src": "assets/recipes/risotto-milanese/step-02-toast.jpg",
+        "alt": "Rice toasting with onion",
+        "caption": "toast the rice"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Wine, then stock by ladle",
+      "detail": "Pour in wine and stir until absorbed. Add saffron stock first, then plain stock one ladle at a time, stirring constantly. ~18 minutes total.",
+      "duration": 1080,
+      "tip": "Stirring releases starch — that's where the creaminess comes from.",
+      "media": {
+        "src": "assets/recipes/risotto-milanese/step-03-stock.jpg",
+        "alt": "Stock being added to risotto",
+        "caption": "wine, then stock by ladle"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Mantecare",
+      "detail": "Off heat, beat in remaining butter and parmesan vigorously. Rest 1 minute, covered. Plate — should pool, not pile.",
+      "duration": 120,
+      "tip": "Mantecare = beat in cold butter for a glossy emulsion. The signature Italian finish.",
+      "media": {
+        "src": "assets/recipes/risotto-milanese/step-04-mantecare.jpg",
+        "alt": "Beating butter into risotto",
+        "caption": "mantecare"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide heavy pot",
+      "essential": true
+    },
+    {
+      "name": "Ladle",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    }
+  ]
+}

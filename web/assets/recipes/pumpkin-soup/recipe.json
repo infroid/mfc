@@ -1,0 +1,129 @@
+{
+  "id": "pumpkin-soup",
+  "name": "Spiced Pumpkin Soup",
+  "tagline": "Roasted pumpkin and ginger purée — beta-carotene and potassium in a bowl",
+  "shortTagline": "pumpkin · vitamin A · 35 min",
+  "cuisine": "Indo-Western",
+  "difficulty": "Easy",
+  "servings": 3,
+  "totalMinutes": 35,
+  "tags": [
+    "veg",
+    "vegan",
+    "high-vitamin-a",
+    "high-potassium",
+    "low-calorie"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "Roasting concentrates flavour — boiled pumpkin gives a watery, flat soup",
+  "media": {
+    "emoji": "🎃",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#E76F51",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/pumpkin-soup/hero.jpg",
+      "alt": "Bright orange pumpkin soup in a bowl with a swirl of cream and pumpkin seeds",
+      "caption": "pumpkin soup — roasted, spiced, swirled"
+    }
+  },
+  "healthFacts": [
+    "Pumpkin: 8500µg beta-carotene per cup — converts to vitamin A in the body.",
+    "Potassium content (~560mg per cup) supports blood pressure and fluid balance.",
+    "Beta-carotene absorption needs fat — the olive oil and cream are functional, not just garnish.",
+    "Low energy density (only ~50 kcal per cup) — keeps appetite satisfied without calorie load."
+  ],
+  "ingredients": [
+    {
+      "name": "Pumpkin (peeled, cubed)",
+      "amt": "600g",
+      "group": "main"
+    },
+    {
+      "name": "Onion (chopped)",
+      "amt": "1 medium",
+      "group": "base"
+    },
+    {
+      "name": "Garlic",
+      "amt": "4 cloves",
+      "group": "base"
+    },
+    {
+      "name": "Ginger (grated)",
+      "amt": "1 tbsp",
+      "group": "base"
+    },
+    {
+      "name": "Cumin powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Vegetable stock",
+      "amt": "3 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "2 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Pumpkin seeds (toasted)",
+      "amt": "2 tbsp",
+      "group": "garnish"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Roast the pumpkin",
+      "detail": "Toss pumpkin cubes with 1 tbsp olive oil, salt, and pepper. Spread on a baking tray with whole garlic cloves. Roast at 200°C for 20 minutes till caramelised at the edges.",
+      "duration": 1200,
+      "tip": "Caramelised edges are non-negotiable — that's where 80% of the flavour comes from."
+    },
+    {
+      "id": 2,
+      "title": "Sauté the aromatics",
+      "detail": "Heat remaining oil in a pot. Sauté onion till soft, add ginger and cumin powder. Cook 1 minute.",
+      "duration": 240,
+      "tip": "Don't brown the onion here — you want sweet, not roasted."
+    },
+    {
+      "id": 3,
+      "title": "Blend and simmer",
+      "detail": "Add roasted pumpkin and garlic to the pot. Pour in stock, simmer 5 minutes. Blend with a stick blender till silky. Adjust salt and pepper. Top with toasted pumpkin seeds.",
+      "duration": 480,
+      "tip": "A dollop of yogurt or coconut cream adds richness without overpowering."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Baking tray",
+      "essential": true
+    },
+    {
+      "name": "Heavy-bottomed pot",
+      "essential": true
+    },
+    {
+      "name": "Stick blender",
+      "essential": true
+    }
+  ]
+}

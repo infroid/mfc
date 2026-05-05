@@ -1,0 +1,211 @@
+{
+  "id": "butter-chicken",
+  "name": "Butter Chicken",
+  "tagline": "The world's most-ordered Indian dish, made properly",
+  "shortTagline": "murgh makhani · smoky · creamy · 50 min",
+  "cuisine": "North Indian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 50,
+  "tags": [
+    "non-veg",
+    "high-protein",
+    "halal",
+    "dairy",
+    "onion",
+    "garlic"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": true,
+  "highlight": "Smoky char from high-heat sear before sauce",
+  "media": {
+    "emoji": "🍗",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#E76F51",
+        "#E2531A"
+      ],
+      "src": "assets/recipes/butter-chicken/hero.jpg",
+      "alt": "Butter chicken in a cream ceramic bowl with charred chicken pieces, cream swirl, and kasuri methi",
+      "caption": "butter chicken — charred chicken, makhani sauce"
+    }
+  },
+  "healthFacts": [
+    "Chicken provides ~31g protein per 100g — one of the most complete animal protein sources.",
+    "Yogurt marinade tenderizes the meat and contributes gut-friendly probiotics.",
+    "Kashmiri chili gives the signature red color with minimal capsaicin heat — lycopene-rich.",
+    "Tomatoes cooked in fat release more lycopene — one of the few cases where cooking helps.",
+    "Swap heavy cream for Greek yogurt stirred in off-heat to cut saturated fat by ~50%.",
+    "Kasuri methi helps regulate blood sugar and adds a fenugreek depth the sauce needs."
+  ],
+  "ingredients": [
+    {
+      "name": "Chicken (bone-in or boneless)",
+      "amt": "750g",
+      "group": "main"
+    },
+    {
+      "name": "Yogurt",
+      "amt": "½ cup",
+      "group": "marinade"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "2 tsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "2 tbsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Lemon juice",
+      "amt": "1 tbsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "1 tsp",
+      "group": "marinade"
+    },
+    {
+      "name": "Tomatoes (ripe)",
+      "amt": "5 medium",
+      "group": "gravy"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 large",
+      "group": "gravy"
+    },
+    {
+      "name": "Cashews",
+      "amt": "10 whole",
+      "group": "gravy"
+    },
+    {
+      "name": "Butter",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Heavy cream",
+      "amt": "4 tbsp",
+      "group": "finish"
+    },
+    {
+      "name": "Kasuri methi",
+      "amt": "1.5 tsp",
+      "group": "finish"
+    },
+    {
+      "name": "Sugar",
+      "amt": "1 tsp",
+      "group": "finish"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate the chicken",
+      "detail": "Score the chicken pieces deeply with a knife. Mix yogurt, Kashmiri chili, ginger-garlic paste, lemon juice, garam masala, and salt. Coat the chicken thoroughly and marinate for at least 30 minutes — overnight in the fridge is the real move.",
+      "duration": 1800,
+      "tip": "Cold marinade = tighter texture at first. Pull chicken out 20 min before cooking for even heat.",
+      "media": {
+        "src": "assets/recipes/butter-chicken/step-01-marinate.jpg",
+        "alt": "Scored chicken pieces coated in orange-red yogurt marinade",
+        "caption": "Yogurt-spice marinade"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Sear the chicken",
+      "detail": "Grill on a hot grill pan (or broil at 220°C) for 12–15 minutes, turning once. You want char marks and slightly smoky edges. This 'tandoor effect' is what separates butter chicken from just tomato-cream chicken.",
+      "duration": 900,
+      "tip": "Don't crowd the pan. Space = steam escape = char, not steam.",
+      "media": {
+        "src": "assets/recipes/butter-chicken/step-02-sear.jpg",
+        "alt": "Marinated chicken searing with char marks on a cast-iron grill pan",
+        "caption": "High-heat sear"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Build the makhani base",
+      "detail": "In 2 tbsp butter, sauté onion until deep golden (8–9 min). Add soaked cashews, tomatoes, and 1 tbsp ginger-garlic paste. Cook down for 10 minutes until tomatoes are jammy and the oil starts to separate.",
+      "duration": 1080,
+      "tip": "The key is patience — underdone tomatoes make the gravy taste raw and sharp.",
+      "media": {
+        "src": "assets/recipes/butter-chicken/step-03-makhani-base.jpg",
+        "alt": "Tomatoes, golden onions, cashews, and ginger-garlic paste cooking in butter",
+        "caption": "Jammy makhani base"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Blend and strain",
+      "detail": "Cool the base slightly. Blend until completely smooth. Strain through a fine mesh for restaurant-silk texture. This step is optional but transforms the dish.",
+      "duration": 300,
+      "tip": "A high-speed blender makes straining optional — just blend very smooth.",
+      "media": {
+        "src": "assets/recipes/butter-chicken/step-04-blend-strain.jpg",
+        "alt": "Smooth makhani sauce being strained through a fine mesh sieve",
+        "caption": "Silky strained sauce"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Simmer the gravy",
+      "detail": "In 2 tbsp butter, cook the strained gravy on low heat for 8 minutes. Add sugar and salt. The gravy should reduce and deepen to a rich tomato-red that coats a spoon.",
+      "duration": 480,
+      "tip": "Low and slow is the key. High heat makes it splatter and burns the butter.",
+      "media": {
+        "src": "assets/recipes/butter-chicken/step-05-simmer-gravy.jpg",
+        "alt": "Smooth tomato-cashew makhani gravy simmering with butter in a kadhai",
+        "caption": "Glossy simmered gravy"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Add chicken and finish",
+      "detail": "Add the grilled chicken pieces to the gravy. Pour in cream. Crush kasuri methi between your palms and add — this activates its essential oils. Simmer gently for 5 more minutes.",
+      "duration": 300,
+      "tip": "If gravy is too thick, add a splash of warm water — never cold, it'll break the sauce.",
+      "media": {
+        "src": "assets/recipes/butter-chicken/step-06-finish.jpg",
+        "alt": "Charred chicken pieces simmering in makhani gravy with cream and kasuri methi",
+        "caption": "Cream and kasuri methi finish"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Blender or mixie",
+      "essential": true
+    },
+    {
+      "name": "Grill pan or oven",
+      "essential": true
+    },
+    {
+      "name": "Fine mesh strainer",
+      "essential": false
+    },
+    {
+      "name": "Wooden spatula",
+      "essential": false
+    }
+  ]
+}

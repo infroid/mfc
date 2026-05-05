@@ -1,0 +1,223 @@
+{
+  "id": "paneer-butter-masala",
+  "name": "Paneer Butter Masala",
+  "tagline": "Silky tomato-cashew gravy, restaurant-style at home",
+  "shortTagline": "creamy · tomato · 35 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 35,
+  "tags": [
+    "vegetarian",
+    "gluten-free",
+    "high-protein",
+    "dairy",
+    "nuts",
+    "onion",
+    "garlic"
+  ],
+  "color": "#FF6D2E",
+  "colorSoft": "rgba(255,109,46,0.15)",
+  "featured": true,
+  "highlight": "14g protein per serving from paneer",
+  "media": {
+    "emoji": "🧀",
+    "hero": {
+      "palette": [
+        "#FF6D2E",
+        "#F4D67A",
+        "#E2531A"
+      ],
+      "src": "assets/recipes/paneer-butter-masala/hero.jpg",
+      "alt": "Paneer butter masala in a cream ceramic bowl with paneer cubes, cream swirl, and kasuri methi",
+      "caption": "paneer butter masala — silky makhani gravy"
+    }
+  },
+  "healthFacts": [
+    "Paneer adds ~14g protein per 100g — a near-complete source for vegetarians.",
+    "Cashews thicken the gravy without flour — adds magnesium + healthy fats.",
+    "Tomatoes deliver lycopene, an antioxidant that's MORE bioavailable when cooked.",
+    "Kasuri methi (dried fenugreek) is linked to better blood sugar response.",
+    "Swap cream for cashew paste to keep richness while cutting saturated fat by ~40%.",
+    "Ginger aids digestion — especially handy with rich, dairy-forward dishes."
+  ],
+  "ingredients": [
+    {
+      "name": "Paneer",
+      "amt": "300g",
+      "group": "main"
+    },
+    {
+      "name": "Tomatoes (ripe)",
+      "amt": "5 medium",
+      "group": "main"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 large",
+      "group": "main"
+    },
+    {
+      "name": "Cashews",
+      "amt": "12–15 whole",
+      "group": "main"
+    },
+    {
+      "name": "Heavy cream",
+      "amt": "3 tbsp",
+      "group": "main"
+    },
+    {
+      "name": "Butter",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1.5 tbsp",
+      "group": "aromatics"
+    },
+    {
+      "name": "Green chili",
+      "amt": "1 (optional)",
+      "group": "aromatics"
+    },
+    {
+      "name": "Kasuri methi",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Sugar",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Soak the cashews",
+      "detail": "Drop cashews in ½ cup hot water. Let them sit while you prep — they need to soften so the gravy stays silky, not gritty.",
+      "duration": 300,
+      "tip": "Hot tap water works. Boiling = 5 min. Room temp = 30 min.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-01-soak-cashews.jpg",
+        "alt": "Cashews soaking in hot water beside chopped onion and tomatoes",
+        "caption": "Hot-water cashew soak"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Sauté onion + tomato",
+      "detail": "Roughly chop onion and tomatoes. In 1 tbsp butter, sauté onion for 3 min until translucent, then add tomatoes, ginger-garlic paste, and chili. Cook 6–7 min until tomatoes break down completely.",
+      "duration": 600,
+      "tip": "Don't rush this. Tomatoes should look jammy and oil should separate slightly.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-02-saute-onion-tomato.jpg",
+        "alt": "Onion and tomato cooking down with green chili in a black kadhai",
+        "caption": "Jammy onion-tomato base"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Blend the gravy base",
+      "detail": "Cool slightly, then blend the onion-tomato mix with the soaked cashews and ½ cup water until completely smooth. Pass through a fine strainer back into the pan — this is what makes restaurant-style silky.",
+      "duration": 240,
+      "tip": "Skip the strainer and you'll get a rustic, homestyle texture. Both are valid.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-03-blend-gravy-base.jpg",
+        "alt": "Orange tomato-cashew gravy being strained through a fine mesh sieve",
+        "caption": "Blend and strain smooth"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Bloom the spices",
+      "detail": "Add 2 tbsp butter to the pan. Once melted, add red chili powder and stir for 10 seconds — just long enough to bloom, not burn. Pour the strained gravy back in.",
+      "duration": 120,
+      "tip": "Kashmiri chili is mild + gives the signature red color without heat.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-04-bloom-spices.jpg",
+        "alt": "Strained gravy pouring into butter bloomed with Kashmiri chili powder",
+        "caption": "Bloomed chili butter"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Simmer the gravy",
+      "detail": "Add salt, sugar, and ¼ cup water if needed. Simmer covered on low for 8 minutes, stirring once or twice. The gravy should gloss up and reduce slightly.",
+      "duration": 480,
+      "tip": "Sugar isn't for sweetness — it balances tomato acidity. Don't skip.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-05-simmer-gravy.jpg",
+        "alt": "Smooth orange-red makhani gravy bubbling gently in a black kadhai",
+        "caption": "Glossy simmered gravy"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Add paneer + finish",
+      "detail": "Cube paneer (1-inch). Slip it into the gravy, add cream, garam masala, and crushed kasuri methi. Simmer 2 more minutes. Don't stir aggressively — paneer breaks easily.",
+      "duration": 180,
+      "tip": "Soak paneer cubes in warm water for 10 min beforehand for extra-soft texture.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-06-add-paneer-finish.jpg",
+        "alt": "Paneer cubes in tomato-cashew gravy with cream and kasuri methi",
+        "caption": "Paneer and cream finish"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Rest, then serve",
+      "detail": "Turn off the heat and let it sit covered for 5 minutes. The flavors marry in this window. Garnish with a swirl of cream and a pinch of methi. Serve with naan or jeera rice.",
+      "duration": 300,
+      "tip": "This rest step is what separates 'good' from 'great'. Try it.",
+      "media": {
+        "src": "assets/recipes/paneer-butter-masala/step-07-rest-serve.jpg",
+        "alt": "Finished paneer butter masala served with cream, kasuri methi, naan, and jeera rice",
+        "caption": "Rested and ready to serve"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Blender or mixie",
+      "essential": true
+    },
+    {
+      "name": "Fine strainer",
+      "essential": true
+    },
+    {
+      "name": "Wooden spatula",
+      "essential": false
+    },
+    {
+      "name": "Measuring spoons",
+      "essential": false
+    },
+    {
+      "name": "Small bowl for soaking cashews",
+      "essential": false
+    }
+  ]
+}

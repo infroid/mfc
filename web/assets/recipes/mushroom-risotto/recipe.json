@@ -1,0 +1,154 @@
+{
+  "id": "mushroom-risotto",
+  "name": "Mushroom Risotto",
+  "tagline": "Carnaroli risotto with cremini, porcini, parmesan, butter",
+  "shortTagline": "umami-bomb · egg-free · 35 min",
+  "cuisine": "Italian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 35,
+  "tags": [
+    "vegetarian",
+    "egg-free",
+    "gluten-free",
+    "italian"
+  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Dried porcini broth gives forest-floor depth, no eggs",
+  "media": {
+    "emoji": "🍄",
+    "hero": {
+      "palette": [
+        "#A0522D",
+        "#F4D67A",
+        "#3A332A"
+      ],
+      "src": "assets/recipes/mushroom-risotto/hero.jpg",
+      "alt": "Mushroom risotto with seared mushrooms and parmesan",
+      "caption": "mushroom risotto — porcini-deep"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free, gluten-free.",
+    "Mushrooms are one of few plant sources of vitamin D when sun-exposed.",
+    "Porcini are rich in umami glutamates — savory boost without meat."
+  ],
+  "ingredients": [
+    {
+      "name": "Carnaroli or arborio rice",
+      "amt": "1.5 cups",
+      "group": "main"
+    },
+    {
+      "name": "Cremini mushrooms (sliced)",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Dried porcini",
+      "amt": "1/4 cup",
+      "group": "main"
+    },
+    {
+      "name": "Hot water",
+      "amt": "1 cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Vegetable stock",
+      "amt": "4 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Onion (finely diced)",
+      "amt": "1 small",
+      "group": "aromatics"
+    },
+    {
+      "name": "White wine",
+      "amt": "1/2 cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Butter",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Parmesan",
+      "amt": "3/4 cup grated",
+      "group": "main"
+    },
+    {
+      "name": "Thyme",
+      "amt": "2 sprigs",
+      "group": "aromatics"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Steep the porcini",
+      "detail": "Rinse porcini, soak in hot water 15 minutes. Drain and chop, reserving the steeping liquid (strain through cloth to catch grit).",
+      "duration": 900,
+      "tip": "Porcini liquor is the secret weapon — never throw it out.",
+      "media": {
+        "src": "assets/recipes/mushroom-risotto/step-01-porcini.jpg",
+        "alt": "Dried porcini steeping in water",
+        "caption": "steep the porcini"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Sear the cremini",
+      "detail": "Heat 2 tbsp butter over high. Sear cremini in batches until deeply browned, 6 minutes per batch. Set aside.",
+      "duration": 720,
+      "tip": "High heat, no salt yet — salt pulls water and steams instead of browning.",
+      "media": {
+        "src": "assets/recipes/mushroom-risotto/step-02-cremini.jpg",
+        "alt": "Browning cremini mushrooms",
+        "caption": "sear the cremini"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Toast and ladle",
+      "detail": "Sweat onion 4 min. Add rice, toast 2 min. Wine, then porcini-liquid + stock by ladle, stirring, ~18 minutes total. Stir in chopped porcini halfway.",
+      "duration": 1200,
+      "tip": "Don't add cold stock — it shocks the rice. Keep the stock warming on a back burner.",
+      "media": {
+        "src": "assets/recipes/mushroom-risotto/step-03-ladle.jpg",
+        "alt": "Risotto absorbing stock",
+        "caption": "toast and ladle"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Mantecare and top",
+      "detail": "Off heat, beat in remaining butter and parmesan. Top each bowl with seared cremini and thyme.",
+      "duration": 60,
+      "tip": "Should ripple into a wave when you shake the bowl — that's all'onda, the wave.",
+      "media": {
+        "src": "assets/recipes/mushroom-risotto/step-04-mantecare.jpg",
+        "alt": "Risotto plated with seared mushrooms",
+        "caption": "mantecare and top"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide heavy pot",
+      "essential": true
+    },
+    {
+      "name": "Large skillet",
+      "essential": true
+    },
+    {
+      "name": "Ladle",
+      "essential": true
+    }
+  ]
+}

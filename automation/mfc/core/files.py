@@ -1,4 +1,9 @@
-"""Repo filesystem access — SQL files and recipe bundles."""
+"""Repo filesystem access — SQL files and recipe bundles.
+
+After the v2 layout move:
+  automation/db/*.sql       — Python tooling only
+  web/assets/recipes/<id>/  — recipe bundles served by the browser
+"""
 
 from __future__ import annotations
 
@@ -8,15 +13,15 @@ from typing import Iterator
 
 
 def schema_sql(repo_root: Path) -> Path:
-    return repo_root / "data" / "db" / "schema.sql"
+    return repo_root / "automation" / "db" / "schema.sql"
 
 
 def seed_metrics_sql(repo_root: Path) -> Path:
-    return repo_root / "data" / "db" / "seed_metrics.sql"
+    return repo_root / "automation" / "db" / "seed_metrics.sql"
 
 
 def recipe_bundles_root(repo_root: Path) -> Path:
-    return repo_root / "data" / "recipe-bundles"
+    return repo_root / "web" / "assets" / "recipes"
 
 
 def read_sql(path: Path) -> str:
@@ -26,7 +31,7 @@ def read_sql(path: Path) -> str:
 
 
 def iter_recipe_bundles(repo_root: Path) -> Iterator[Path]:
-    """Yield each `recipe.json` under data/recipe-bundles/, sorted by id."""
+    """Yield each `recipe.json` under web/assets/recipes/, sorted by id."""
     root = recipe_bundles_root(repo_root)
     if not root.exists():
         return

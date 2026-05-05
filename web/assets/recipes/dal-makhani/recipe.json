@@ -1,0 +1,197 @@
+{
+  "id": "dal-makhani",
+  "name": "Dal Makhani",
+  "tagline": "Slow-simmered black lentils, butter-kissed and rich",
+  "shortTagline": "slow-simmered · butter-kissed · 45 min active",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 45,
+  "tags": [
+    "vegetarian",
+    "high-protein",
+    "high-fiber",
+    "dairy",
+    "onion",
+    "garlic"
+  ],
+  "color": "#8B5E3C",
+  "colorSoft": "rgba(139,94,60,0.14)",
+  "featured": false,
+  "highlight": "18g plant protein per bowl",
+  "media": {
+    "emoji": "🫘",
+    "hero": {
+      "palette": [
+        "#8B5E3C",
+        "#C9813A",
+        "#F4A261"
+      ],
+      "src": "assets/recipes/dal-makhani/hero.jpg",
+      "alt": "Dal makhani in a cream ceramic bowl with cream swirl and melting butter",
+      "caption": "dal makhani — slow-simmered lentils, cream, butter"
+    }
+  },
+  "healthFacts": [
+    "Black urad dal delivers ~18g plant protein per cup — higher than most other lentils.",
+    "The slow simmer breaks down phytates, making the iron in lentils more bioavailable.",
+    "Kidney beans (rajma) add fiber that feeds beneficial gut bacteria.",
+    "Butter contains butyrate — a short-chain fatty acid that supports gut lining health.",
+    "Ginger and cumin in the tempering have well-documented anti-inflammatory properties.",
+    "A lower-fat version: use 1 tbsp butter instead of 3 and stir in 2 tbsp yogurt off-heat."
+  ],
+  "ingredients": [
+    {
+      "name": "Black urad dal (whole)",
+      "amt": "¾ cup",
+      "group": "main"
+    },
+    {
+      "name": "Red kidney beans (rajma)",
+      "amt": "¼ cup",
+      "group": "main"
+    },
+    {
+      "name": "Tomatoes (ripe)",
+      "amt": "3 medium",
+      "group": "gravy"
+    },
+    {
+      "name": "Onion",
+      "amt": "1 medium",
+      "group": "gravy"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1.5 tbsp",
+      "group": "aromatics"
+    },
+    {
+      "name": "Butter",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Heavy cream",
+      "amt": "3 tbsp",
+      "group": "finish"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Cumin seeds",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Garam masala",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Coriander powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Soak overnight",
+      "detail": "Wash the urad dal and rajma. Soak together in 3 cups of water for at least 8 hours, or overnight. They'll roughly double in size. Drain and rinse before cooking.",
+      "duration": 28800,
+      "tip": "Soaking reduces cooking time significantly and breaks down gas-causing compounds.",
+      "media": {
+        "src": "assets/recipes/dal-makhani/step-01-soak-overnight.jpg",
+        "alt": "Black urad dal and rajma soaking together in water",
+        "caption": "Overnight soak"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Pressure cook the lentils",
+      "detail": "Add soaked dal + rajma to a pressure cooker with 3 cups fresh water and 1 tsp salt. Cook on high for 6–7 whistles (or Instant Pot: 30 min high pressure). Dal should be completely soft and mushy — mash a grain between your fingers to check.",
+      "duration": 2400,
+      "tip": "Dal Makhani's creaminess comes from partially mashed dal. Don't drain the cooking water.",
+      "media": {
+        "src": "assets/recipes/dal-makhani/step-02-pressure-cook.jpg",
+        "alt": "Soft pressure-cooked urad dal and rajma in starchy cooking water",
+        "caption": "Soft cooked lentils"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Make the tomato base",
+      "detail": "In butter, temper cumin seeds until they splutter. Add finely chopped onion and cook 7 minutes until golden. Add ginger-garlic paste and cook 2 minutes. Add pureed tomatoes, chili powder, coriander powder, and cook until the masala deepens in color and oil separates.",
+      "duration": 720,
+      "tip": "The masala is ready when you see the fat pooling at the edges of the pan.",
+      "media": {
+        "src": "assets/recipes/dal-makhani/step-03-tomato-base.jpg",
+        "alt": "Tomato-onion masala reducing in butter with oil separating at the edges",
+        "caption": "Jammy tomato base"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Combine and simmer",
+      "detail": "Add the cooked dal (with all its water) to the masala. Mix gently. The dal should look like a thick, dark soup. Partially mash some of the lentils with the back of the ladle against the pot wall for creaminess.",
+      "duration": 180,
+      "tip": "The more you mash, the creamier the final texture. Aim for about 30% mashed.",
+      "media": {
+        "src": "assets/recipes/dal-makhani/step-04-combine-simmer.jpg",
+        "alt": "Cooked lentils and rajma stirred into tomato masala with a ladle",
+        "caption": "Dal folded into masala"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Low and slow",
+      "detail": "Bring to a boil, then reduce heat to the lowest possible setting. Simmer uncovered for 20–25 minutes, stirring every 5 minutes to prevent sticking. The dal thickens and gets darker and more complex as it cooks.",
+      "duration": 1500,
+      "tip": "Restaurant dal makhani simmers for 4–6 hours. 20 minutes is the home minimum.",
+      "media": {
+        "src": "assets/recipes/dal-makhani/step-05-low-and-slow.jpg",
+        "alt": "Dal makhani simmering uncovered with slow bubbles in a black kadhai",
+        "caption": "Low, slow simmer"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Butter and cream finish",
+      "detail": "Stir in 1 tbsp cold butter and the cream. Add garam masala. Taste and adjust salt. Let it sit covered for 5 minutes before serving. Garnish with a swirl of cream and a small nub of butter.",
+      "duration": 300,
+      "tip": "Cold butter stirred in off-heat gives a glossy, restaurant-like finish.",
+      "media": {
+        "src": "assets/recipes/dal-makhani/step-06-butter-cream-finish.jpg",
+        "alt": "Glossy dal makhani finished with cream, butter, and a brass ladle",
+        "caption": "Butter and cream finish"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Pressure cooker or Instant Pot",
+      "essential": true
+    },
+    {
+      "name": "Heavy-bottomed pan",
+      "essential": true
+    },
+    {
+      "name": "Wooden spatula",
+      "essential": false
+    },
+    {
+      "name": "Ladle",
+      "essential": false
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "id": "seared-tuna-steak",
+  "name": "Seared Tuna Steak",
+  "tagline": "Sesame-crusted tuna seared rare, sliced thin, no shellfish anywhere",
+  "shortTagline": "rare-seared · shellfish-free · 15 min",
+  "cuisine": "Japanese",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 15,
+  "tags": [
+    "pescatarian",
+    "shellfish-free",
+    "asian",
+    "high-protein",
+    "quick"
+  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
+  "featured": false,
+  "highlight": "Hot pan, 90 seconds per side — rare ruby center",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": [
+        "#C84B5A",
+        "#3A332A",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/seared-tuna-steak/hero.jpg",
+      "alt": "Sliced sesame-crusted seared tuna steak",
+      "caption": "seared tuna — rare sesame crust"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Ahi tuna is high in lean protein and selenium.",
+    "Black sesame seeds carry calcium and lignans — antioxidant compounds."
+  ],
+  "ingredients": [
+    {
+      "name": "Sushi-grade tuna steaks",
+      "amt": "12 oz",
+      "group": "main"
+    },
+    {
+      "name": "Black sesame seeds",
+      "amt": "2 tbsp",
+      "group": "spice"
+    },
+    {
+      "name": "White sesame seeds",
+      "amt": "2 tbsp",
+      "group": "spice"
+    },
+    {
+      "name": "Soy sauce",
+      "amt": "2 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Rice vinegar",
+      "amt": "1 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Sesame oil",
+      "amt": "1 tsp",
+      "group": "finish"
+    },
+    {
+      "name": "Neutral oil (for searing)",
+      "amt": "1 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Mix sesame seeds",
+      "detail": "Combine black and white sesame seeds with a pinch of salt on a plate.",
+      "duration": 30,
+      "tip": "A 50/50 mix gives the prettiest crust.",
+      "media": {
+        "src": "assets/recipes/seared-tuna-steak/step-01-seeds.jpg",
+        "alt": "Black and white sesame seeds on plate",
+        "caption": "mix sesame seeds"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Crust the tuna",
+      "detail": "Pat tuna dry. Season lightly with salt. Press all sides into sesame seeds.",
+      "duration": 120,
+      "tip": "Press hard — seeds need to stick or they fall off in the pan.",
+      "media": {
+        "src": "assets/recipes/seared-tuna-steak/step-02-crust.jpg",
+        "alt": "Tuna pressed into sesame seeds",
+        "caption": "crust the tuna"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Sear blazing hot",
+      "detail": "Heat neutral oil in a non-stick or cast iron pan until just smoking. Sear tuna 60–90 sec per side. Pull at the first sign of doneness on the edge.",
+      "duration": 180,
+      "tip": "Center should still be ruby-red. This is sear, not cook-through.",
+      "media": {
+        "src": "assets/recipes/seared-tuna-steak/step-03-sear.jpg",
+        "alt": "Tuna searing in hot pan",
+        "caption": "sear blazing hot"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Slice thin, dip",
+      "detail": "Rest 1 min. Slice 1/4-inch thick across the grain. Whisk soy, vinegar, sesame oil for dipping.",
+      "duration": 120,
+      "tip": "A sharp knife is mandatory — dull saws push the rare center out.",
+      "media": {
+        "src": "assets/recipes/seared-tuna-steak/step-04-slice.jpg",
+        "alt": "Sliced seared tuna",
+        "caption": "slice thin, dip"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Cast iron or non-stick pan",
+      "essential": true
+    },
+    {
+      "name": "Sharp knife",
+      "essential": true
+    },
+    {
+      "name": "Plate for crusting",
+      "essential": true
+    }
+  ]
+}

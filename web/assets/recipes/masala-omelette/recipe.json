@@ -1,0 +1,119 @@
+{
+  "id": "masala-omelette",
+  "name": "Masala Omelette",
+  "tagline": "Indian-style omelette — onion, chili, coriander, golden fold",
+  "shortTagline": "omelette · B12 + protein · 8 min",
+  "cuisine": "Indian",
+  "difficulty": "Easy",
+  "servings": 1,
+  "totalMinutes": 8,
+  "tags": [
+    "non-veg",
+    "egg",
+    "high-protein",
+    "high-b12",
+    "high-d3"
+  ],
+  "color": "#F4C430",
+  "colorSoft": "rgba(244,196,48,0.18)",
+  "featured": false,
+  "highlight": "Pour the eggs over fully-cooked masala, not the other way round — clean fold",
+  "media": {
+    "emoji": "🍳",
+    "hero": {
+      "palette": [
+        "#F4C430",
+        "#7A9C5A",
+        "#E76F51"
+      ],
+      "src": "assets/recipes/masala-omelette/hero.jpg",
+      "alt": "Folded golden omelette flecked with green chili, onion, and coriander on a plate",
+      "caption": "masala omelette — folded, soft-set, fragrant"
+    }
+  },
+  "healthFacts": [
+    "Three eggs hit 18g protein, 2.5µg B12, and 1µg vitamin D — breakfast bedrock.",
+    "Selenium and biotin from yolks support thyroid hormone activation.",
+    "Lutein and zeaxanthin in yolks protect macular pigment in eyes.",
+    "Choline supports phosphatidylcholine synthesis — liver and brain need it daily."
+  ],
+  "ingredients": [
+    {
+      "name": "Eggs",
+      "amt": "3 large",
+      "group": "main"
+    },
+    {
+      "name": "Onion (finely chopped)",
+      "amt": "2 tbsp",
+      "group": "filling"
+    },
+    {
+      "name": "Tomato (finely chopped)",
+      "amt": "2 tbsp",
+      "group": "filling"
+    },
+    {
+      "name": "Green chili (chopped)",
+      "amt": "1",
+      "group": "filling"
+    },
+    {
+      "name": "Coriander leaves",
+      "amt": "2 tbsp",
+      "group": "filling"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "¼ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Ghee or butter",
+      "amt": "1 tsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Whisk and prep",
+      "detail": "Whisk the eggs with salt and pepper for 30 seconds — until pale yellow and frothy. Have all chopped vegetables ready before the pan goes on.",
+      "duration": 60,
+      "tip": "Whisking incorporates air — fluffier omelette."
+    },
+    {
+      "id": 2,
+      "title": "Quick-sauté the filling",
+      "detail": "Heat ghee in a non-stick pan. Toss in onion, green chili, and tomato. Cook 60 seconds till tomato softens. Stir in coriander.",
+      "duration": 60,
+      "tip": "Pre-cook the filling — raw onion in a folded omelette stays crunchy and watery."
+    },
+    {
+      "id": 3,
+      "title": "Pour, set, fold",
+      "detail": "Pour the whisked eggs over the masala. Tilt the pan to spread evenly. Cook on low for 90 seconds till just set on top. Slide a spatula and fold in half. Serve immediately.",
+      "duration": 120,
+      "tip": "Pull off the heat the moment the top loses its sheen — carryover heat finishes the centre."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Non-stick pan",
+      "essential": true
+    },
+    {
+      "name": "Whisk",
+      "essential": true
+    },
+    {
+      "name": "Silicone spatula",
+      "essential": false
+    }
+  ]
+}

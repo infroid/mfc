@@ -1,0 +1,154 @@
+{
+  "id": "black-bean-veggie-burger",
+  "name": "Black Bean Veggie Burger",
+  "tagline": "Smoky black bean patties with oats, no eggs, holds together cleanly",
+  "shortTagline": "patty · egg-free · vegan · 35 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 35,
+  "tags": [
+    "vegetarian",
+    "vegan",
+    "egg-free",
+    "high-protein"
+  ],
+  "color": "#3A332A",
+  "colorSoft": "rgba(58,51,42,0.16)",
+  "featured": false,
+  "highlight": "Oats + flax bind without eggs; smoky paprika + cumin do the heavy lifting",
+  "media": {
+    "emoji": "🍔",
+    "hero": {
+      "palette": [
+        "#3A332A",
+        "#E76F51",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/black-bean-veggie-burger/hero.jpg",
+      "alt": "Black bean burger on bun with lettuce and pickled onion",
+      "caption": "black bean burger — smoky"
+    }
+  },
+  "healthFacts": [
+    "No eggs — flax egg + oats bind.",
+    "Black beans + oats together provide a complete plant protein profile.",
+    "Smoked paprika replaces bacon flavor with no animal products."
+  ],
+  "ingredients": [
+    {
+      "name": "Black beans (drained)",
+      "amt": "2 (15oz) cans",
+      "group": "main"
+    },
+    {
+      "name": "Rolled oats",
+      "amt": "3/4 cup",
+      "group": "main"
+    },
+    {
+      "name": "Ground flax",
+      "amt": "2 tbsp",
+      "group": "main"
+    },
+    {
+      "name": "Hot water",
+      "amt": "5 tbsp",
+      "group": "liquid"
+    },
+    {
+      "name": "Onion (finely diced)",
+      "amt": "1 small",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic",
+      "amt": "3 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Smoked paprika",
+      "amt": "2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Cumin",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Soy sauce",
+      "amt": "1 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Burger buns",
+      "amt": "4",
+      "group": "main"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make flax egg, dry beans",
+      "detail": "Stir flax with hot water, rest 8 min. Spread beans on a tray and dry in a 350°F oven 12 min — patties hold up better when beans aren't wet.",
+      "duration": 720,
+      "tip": "Skipping the dry-out is the #1 reason burger patties fall apart.",
+      "media": {
+        "src": "assets/recipes/black-bean-veggie-burger/step-01-dry.jpg",
+        "alt": "Beans drying in oven",
+        "caption": "make flax egg, dry beans"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Mash and mix",
+      "detail": "Pulse oats to a coarse meal in a food processor. Add beans, flax egg, sautéed onion-garlic-spices, soy. Pulse to a chunky paste — leave texture.",
+      "duration": 240,
+      "tip": "Over-processing makes a paste that bakes flat. Pulse, don't puree.",
+      "media": {
+        "src": "assets/recipes/black-bean-veggie-burger/step-02-mix.jpg",
+        "alt": "Bean burger mixture in processor",
+        "caption": "mash and mix"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Form and chill",
+      "detail": "Form 4 patties. Chill 15 min — they firm up and brown better.",
+      "duration": 900,
+      "tip": "Wet hands prevent the mix from sticking. Form thicker than you think — they don't shrink like beef.",
+      "media": {
+        "src": "assets/recipes/black-bean-veggie-burger/step-03-form.jpg",
+        "alt": "Bean patties on a tray",
+        "caption": "form and chill"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Sear or bake",
+      "detail": "Pan-fry 4 min per side in oil over medium, or bake at 400°F for 18 min, flipping once. Build on toasted buns.",
+      "duration": 480,
+      "tip": "Crisp crust = sear. Tender all the way through = bake. Both work.",
+      "media": {
+        "src": "assets/recipes/black-bean-veggie-burger/step-04-cook.jpg",
+        "alt": "Bean burger cooking in skillet",
+        "caption": "sear or bake"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Food processor",
+      "essential": true
+    },
+    {
+      "name": "Skillet or sheet pan",
+      "essential": true
+    },
+    {
+      "name": "Mixing bowl",
+      "essential": true
+    }
+  ]
+}

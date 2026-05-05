@@ -1,0 +1,154 @@
+{
+  "id": "thai-coconut-chicken-soup",
+  "name": "Thai Coconut Chicken Soup",
+  "tagline": "Tom kha gai — coconut, galangal, lemongrass, lime, fish sauce",
+  "shortTagline": "tom kha · soy-free · 30 min",
+  "cuisine": "Thai",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "asian",
+    "gluten-free"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Fish sauce, not soy — depth without soybeans",
+  "media": {
+    "emoji": "🍲",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#7A9C5A",
+        "#E76F51"
+      ],
+      "src": "assets/recipes/thai-coconut-chicken-soup/hero.jpg",
+      "alt": "Tom kha gai with coconut broth, mushrooms, and cilantro",
+      "caption": "tom kha gai — coconut, lime"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free — fish sauce is the umami source.",
+    "Galangal (related to ginger) has gingerol-like anti-inflammatory compounds.",
+    "Lemongrass essential oils have antimicrobial activity in vitro studies."
+  ],
+  "ingredients": [
+    {
+      "name": "Chicken thighs (sliced)",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Coconut milk",
+      "amt": "2 (13.5oz) cans",
+      "group": "liquid"
+    },
+    {
+      "name": "Chicken stock",
+      "amt": "2 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Galangal (sliced)",
+      "amt": "5 thick coins",
+      "group": "aromatics"
+    },
+    {
+      "name": "Lemongrass (smashed)",
+      "amt": "2 stalks",
+      "group": "aromatics"
+    },
+    {
+      "name": "Kaffir lime leaves",
+      "amt": "5",
+      "group": "aromatics"
+    },
+    {
+      "name": "Mushrooms (sliced)",
+      "amt": "8 oz",
+      "group": "main"
+    },
+    {
+      "name": "Fish sauce",
+      "amt": "3 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Lime juice",
+      "amt": "3 tbsp",
+      "group": "finish"
+    },
+    {
+      "name": "Cilantro and bird's eye chili",
+      "amt": "to finish",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Bruise the aromatics",
+      "detail": "Smash lemongrass, slice galangal in coins, tear lime leaves. Bruising releases volatile oils.",
+      "duration": 240,
+      "tip": "Frozen galangal/leaves work fine — keep a stash.",
+      "media": {
+        "src": "assets/recipes/thai-coconut-chicken-soup/step-01-bruise.jpg",
+        "alt": "Smashing lemongrass with knife",
+        "caption": "bruise the aromatics"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Steep the broth",
+      "detail": "Pour coconut milk and stock into a pot. Add aromatics. Bring to a gentle simmer; steep 8 min.",
+      "duration": 480,
+      "tip": "Don't boil coconut milk hard — it splits.",
+      "media": {
+        "src": "assets/recipes/thai-coconut-chicken-soup/step-02-steep.jpg",
+        "alt": "Coconut broth steeping with aromatics",
+        "caption": "steep the broth"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Cook chicken and mushrooms",
+      "detail": "Add chicken and mushrooms; simmer 8 min until chicken is just cooked through. Stir in fish sauce.",
+      "duration": 480,
+      "tip": "Slice chicken thin against the grain — cooks fast and stays tender.",
+      "media": {
+        "src": "assets/recipes/thai-coconut-chicken-soup/step-03-chicken.jpg",
+        "alt": "Chicken simmering in coconut broth",
+        "caption": "cook chicken and mushrooms"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Lime and herbs",
+      "detail": "Off heat, stir in lime juice. Top with cilantro and sliced bird's eye chili. Eat hot — diners pluck out aromatics as they go.",
+      "duration": 60,
+      "tip": "Lime always at the end — heat destroys its brightness.",
+      "media": {
+        "src": "assets/recipes/thai-coconut-chicken-soup/step-04-finish.jpg",
+        "alt": "Tom kha bowl with cilantro and chili",
+        "caption": "lime and herbs"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Soup pot",
+      "essential": true
+    },
+    {
+      "name": "Sharp knife",
+      "essential": true
+    },
+    {
+      "name": "Ladle",
+      "essential": false
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "id": "cajun-jambalaya",
+  "name": "Cajun Jambalaya",
+  "tagline": "Smoked sausage, chicken, and rice in a smoky cajun base",
+  "shortTagline": "one-pot · soy-free · 60 min",
+  "cuisine": "Cajun",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 60,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "high-protein",
+    "one-pot"
+  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "One-pot Louisiana classic — no soy, all smoke",
+  "media": {
+    "emoji": "🍚",
+    "hero": {
+      "palette": [
+        "#A0522D",
+        "#E76F51",
+        "#F4D67A"
+      ],
+      "src": "assets/recipes/cajun-jambalaya/hero.jpg",
+      "alt": "Cajun jambalaya with sausage, chicken, and rice",
+      "caption": "jambalaya — Louisiana spice"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Andouille sausage is smoky and pork-based — no soy fillers when you buy quality.",
+    "The 'holy trinity' (onion, celery, bell pepper) is Cajun mirepoix."
+  ],
+  "ingredients": [
+    {
+      "name": "Andouille sausage (sliced)",
+      "amt": "12 oz",
+      "group": "main"
+    },
+    {
+      "name": "Chicken thighs (cubed)",
+      "amt": "1 lb",
+      "group": "main"
+    },
+    {
+      "name": "Long-grain white rice",
+      "amt": "2 cups",
+      "group": "main"
+    },
+    {
+      "name": "Onion (diced)",
+      "amt": "1 large",
+      "group": "aromatics"
+    },
+    {
+      "name": "Celery (diced)",
+      "amt": "3 stalks",
+      "group": "aromatics"
+    },
+    {
+      "name": "Green bell pepper",
+      "amt": "1, diced",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic",
+      "amt": "5 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Diced tomatoes",
+      "amt": "1 (15oz) can",
+      "group": "sauce"
+    },
+    {
+      "name": "Cajun seasoning",
+      "amt": "2 tbsp",
+      "group": "spice"
+    },
+    {
+      "name": "Chicken stock",
+      "amt": "3.5 cups",
+      "group": "liquid"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Brown the meat",
+      "detail": "Brown andouille in a Dutch oven 4 min. Set aside. Brown chicken in the rendered fat 6 min. Set aside.",
+      "duration": 600,
+      "tip": "Andouille fat is your seasoning — leave it in the pot.",
+      "media": {
+        "src": "assets/recipes/cajun-jambalaya/step-01-meat.jpg",
+        "alt": "Browning andouille and chicken",
+        "caption": "brown the meat"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Holy trinity",
+      "detail": "Add onion, celery, bell pepper to the pot. Cook 8 min until softened. Add garlic and cajun seasoning, cook 1 min.",
+      "duration": 540,
+      "tip": "Cajun seasoning is salt-heavy — don't add more salt yet.",
+      "media": {
+        "src": "assets/recipes/cajun-jambalaya/step-02-trinity.jpg",
+        "alt": "Holy trinity cooking",
+        "caption": "holy trinity"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Tomato, rice, stock",
+      "detail": "Stir in tomatoes; cook 3 min. Add rice; toast 2 min. Pour in stock; return meat. Bring to a boil.",
+      "duration": 360,
+      "tip": "Toasting the rice keeps each grain separate.",
+      "media": {
+        "src": "assets/recipes/cajun-jambalaya/step-03-rice.jpg",
+        "alt": "Adding rice and stock",
+        "caption": "tomato, rice, stock"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Cover and cook",
+      "detail": "Cover, drop heat to low, cook 20 min undisturbed. Rest 10 min covered off heat. Fluff with a fork.",
+      "duration": 1800,
+      "tip": "Don't peek — rice steaming requires trapped heat.",
+      "media": {
+        "src": "assets/recipes/cajun-jambalaya/step-04-cover.jpg",
+        "alt": "Jambalaya finished and fluffed",
+        "caption": "cover and cook"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Dutch oven",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    },
+    {
+      "name": "Fork",
+      "essential": false
+    }
+  ]
+}

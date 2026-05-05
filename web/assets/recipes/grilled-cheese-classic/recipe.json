@@ -1,0 +1,123 @@
+{
+  "id": "grilled-cheese-classic",
+  "name": "Classic Grilled Cheese",
+  "tagline": "Buttered sourdough, sharp cheddar, crisp gold crust",
+  "shortTagline": "comfort · vegetarian · nut-free · 12 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 1,
+  "totalMinutes": 12,
+  "tags": [
+    "vegetarian",
+    "nut-free",
+    "quick"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Two heats, three minutes — the science of crisp",
+  "media": {
+    "emoji": "🧀",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#A0522D",
+        "#FFFCF3"
+      ],
+      "src": "assets/recipes/grilled-cheese-classic/hero.jpg",
+      "alt": "Grilled cheese with golden crust and stretchy cheddar pull",
+      "caption": "grilled cheese — buttered, sharp"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "A blend of cheeses melts more evenly than a single one — try cheddar + gruyère.",
+    "Mayo on the outside crisps better than butter at the same temperature — pick your fight."
+  ],
+  "ingredients": [
+    {
+      "name": "Sourdough bread",
+      "amt": "2 thick slices",
+      "group": "main"
+    },
+    {
+      "name": "Sharp cheddar",
+      "amt": "3 oz, sliced",
+      "group": "main"
+    },
+    {
+      "name": "Butter",
+      "amt": "1.5 tbsp, softened",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "pinch",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Butter both sides of one slice",
+      "detail": "Butter generously on the outside (what'll touch pan). On the inside, a thin smear too — helps the cheese cling.",
+      "duration": 60,
+      "tip": "Butter must be soft. Cold butter tears the bread.",
+      "media": {
+        "src": "assets/recipes/grilled-cheese-classic/step-01-butter.jpg",
+        "alt": "Buttered sourdough slices",
+        "caption": "butter both sides"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Layer the cheese",
+      "detail": "Pile cheddar evenly to the edges. Top with the second slice (also buttered outside).",
+      "duration": 30,
+      "tip": "Slice the cheese thin — thick slices won't melt before the bread burns.",
+      "media": {
+        "src": "assets/recipes/grilled-cheese-classic/step-02-cheese.jpg",
+        "alt": "Cheese piled on sourdough",
+        "caption": "layer the cheese"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Slow to start, hot to finish",
+      "detail": "Cook in a dry skillet over medium-low for 4 minutes — slow start melts the cheese without scorching the bread. Then bump to medium for the last 90 seconds per side for color.",
+      "duration": 540,
+      "tip": "If the cheese isn't melted but the crust is, slap the lid on briefly.",
+      "media": {
+        "src": "assets/recipes/grilled-cheese-classic/step-03-cook.jpg",
+        "alt": "Grilled cheese cooking in skillet",
+        "caption": "slow to start, hot to finish"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rest, then cut",
+      "detail": "Rest 30 seconds — the cheese needs to settle so it doesn't slide. Cut on a diagonal for the longest pull.",
+      "duration": 30,
+      "tip": "A sprinkle of flaky salt on the buttered crust right after cooking is criminally good.",
+      "media": {
+        "src": "assets/recipes/grilled-cheese-classic/step-04-cut.jpg",
+        "alt": "Grilled cheese cut showing cheese pull",
+        "caption": "rest, then cut"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Cast iron skillet",
+      "essential": true
+    },
+    {
+      "name": "Spatula",
+      "essential": true
+    },
+    {
+      "name": "Butter knife",
+      "essential": false
+    }
+  ]
+}

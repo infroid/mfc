@@ -1,4 +1,4 @@
-"""`mfc apply-schema` — runs data/db/schema.sql top-to-bottom (idempotent)."""
+"""`mfc apply-schema` — runs automation/db/schema.sql top-to-bottom (idempotent)."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from ..ops import schema
 def register(subparsers: argparse._SubParsersAction) -> None:
     p = subparsers.add_parser(
         "apply-schema",
-        help="Run data/db/schema.sql against the configured database",
+        help="Run automation/db/schema.sql against the configured database",
     )
     p.set_defaults(handler=run)
 

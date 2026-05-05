@@ -1,0 +1,125 @@
+{
+  "id": "spinach-soup",
+  "name": "Cream of Spinach Soup",
+  "tagline": "Smooth wilted-spinach soup with garlic and pepper — iron + folate + K",
+  "shortTagline": "spinach soup · folate + iron · 25 min",
+  "cuisine": "Indo-Western",
+  "difficulty": "Easy",
+  "servings": 3,
+  "totalMinutes": 25,
+  "tags": [
+    "veg",
+    "high-iron",
+    "high-folate",
+    "vitamin-k",
+    "low-calorie",
+    "garlic"
+  ],
+  "color": "#4A7C2A",
+  "colorSoft": "rgba(74,124,42,0.18)",
+  "featured": false,
+  "highlight": "Wilt the spinach for 60 seconds, then blend hot — keeps the bright green colour",
+  "media": {
+    "emoji": "🥬",
+    "hero": {
+      "palette": [
+        "#4A7C2A",
+        "#7A9C5A",
+        "#FBF7EE"
+      ],
+      "src": "assets/recipes/spinach-soup/hero.jpg",
+      "alt": "Vivid green spinach soup in a bowl with cracked black pepper and a swirl of cream",
+      "caption": "spinach soup — bright, smooth, peppery"
+    }
+  },
+  "healthFacts": [
+    "Spinach: 6.4mg iron and 260µg folate per 200g — both at clinically meaningful levels.",
+    "Vitamin K (~888µg/cup) supports bone and clotting health.",
+    "Lemon at the finish doubles iron absorption from the meal.",
+    "Low-calorie (~80 kcal serving) — fits any cardiac-protection plan."
+  ],
+  "ingredients": [
+    {
+      "name": "Spinach (washed)",
+      "amt": "400g",
+      "group": "main"
+    },
+    {
+      "name": "Onion (chopped)",
+      "amt": "1 small",
+      "group": "base"
+    },
+    {
+      "name": "Garlic",
+      "amt": "4 cloves",
+      "group": "base"
+    },
+    {
+      "name": "Vegetable stock",
+      "amt": "2.5 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Milk",
+      "amt": "½ cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Butter",
+      "amt": "1 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Lemon juice",
+      "amt": "1 tsp",
+      "group": "finish"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Sauté and wilt",
+      "detail": "Melt butter in a pot. Sauté onion and garlic till soft (3 min). Add spinach in batches, wilting 1 minute total — don't overcook.",
+      "duration": 240,
+      "tip": "Hot, fast wilt = bright green soup. Slow simmering turns it brown."
+    },
+    {
+      "id": 2,
+      "title": "Add stock, blend hot",
+      "detail": "Pour in stock, simmer 2 minutes. Off heat. Carefully blend in a high-speed blender (or with a stick blender) till silky smooth.",
+      "duration": 240,
+      "tip": "Vent the blender lid — hot soup builds pressure."
+    },
+    {
+      "id": 3,
+      "title": "Finish creamy",
+      "detail": "Return to pot, stir in milk, salt, and pepper. Warm gently — don't boil. Squeeze lemon at the table for the iron-absorption boost.",
+      "duration": 120,
+      "tip": "A drizzle of olive oil on top adds vitamin E and richness without dairy."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pot",
+      "essential": true
+    },
+    {
+      "name": "Stick blender",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": false
+    }
+  ]
+}

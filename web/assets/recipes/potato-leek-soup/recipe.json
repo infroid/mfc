@@ -1,0 +1,143 @@
+{
+  "id": "potato-leek-soup",
+  "name": "Potato Leek Soup",
+  "tagline": "Silky French potato soup with sweet sweated leeks and cream",
+  "shortTagline": "silky · vegetarian · nut-free · 40 min",
+  "cuisine": "French",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 40,
+  "tags": [
+    "vegetarian",
+    "nut-free",
+    "gluten-free"
+  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Three vegetables, silken texture, naturally nut-free",
+  "media": {
+    "emoji": "🥣",
+    "hero": {
+      "palette": [
+        "#7A9C5A",
+        "#F4D67A",
+        "#FFFCF3"
+      ],
+      "src": "assets/recipes/potato-leek-soup/hero.jpg",
+      "alt": "Bowl of potato leek soup with chive garnish and cream swirl",
+      "caption": "potato leek — silky and pale"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free, gluten-free, vegetarian.",
+    "Leeks are rich in inulin — prebiotic fiber that feeds gut bacteria.",
+    "Yukon gold potatoes blend smoother than russets thanks to their lower starch content."
+  ],
+  "ingredients": [
+    {
+      "name": "Leeks (white and pale green)",
+      "amt": "3 large",
+      "group": "main"
+    },
+    {
+      "name": "Yukon gold potatoes",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Butter",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Vegetable stock",
+      "amt": "5 cups",
+      "group": "liquid"
+    },
+    {
+      "name": "Heavy cream",
+      "amt": "1/2 cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Bay leaf",
+      "amt": "1",
+      "group": "aromatics"
+    },
+    {
+      "name": "Chives",
+      "amt": "small handful",
+      "group": "finish"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Clean and slice leeks",
+      "detail": "Trim leeks. Halve lengthwise and rinse out grit. Slice thin. Soak in cold water 5 minutes; lift out so dirt stays behind.",
+      "duration": 480,
+      "tip": "Leeks hide grit between layers. Two-stage washing saves the soup.",
+      "media": {
+        "src": "assets/recipes/potato-leek-soup/step-01-clean.jpg",
+        "alt": "Sliced leeks soaking in water",
+        "caption": "clean and slice leeks"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Sweat the leeks",
+      "detail": "Melt butter over medium-low. Add leeks and a pinch of salt. Cook 10 minutes, stirring, until soft but not browned.",
+      "duration": 600,
+      "tip": "No color — you want sweet, not toasty.",
+      "media": {
+        "src": "assets/recipes/potato-leek-soup/step-02-sweat.jpg",
+        "alt": "Leeks sweating in butter",
+        "caption": "sweat the leeks"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Simmer with potatoes",
+      "detail": "Add diced potatoes, stock, and bay leaf. Simmer 20 minutes until potatoes break apart with a fork.",
+      "duration": 1200,
+      "tip": "Don't boil hard — broken cells release excess starch and turn the soup gluey.",
+      "media": {
+        "src": "assets/recipes/potato-leek-soup/step-03-simmer.jpg",
+        "alt": "Potato leek simmering",
+        "caption": "simmer with potatoes"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Blend and finish",
+      "detail": "Fish out bay leaf. Blend until silky. Stir in cream off heat. Adjust salt. Top with chives.",
+      "duration": 120,
+      "tip": "Immersion blender works fine; for restaurant-smooth, pass through a fine sieve.",
+      "media": {
+        "src": "assets/recipes/potato-leek-soup/step-04-blend.jpg",
+        "alt": "Blended soup with chives",
+        "caption": "blend and finish"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Soup pot",
+      "essential": true
+    },
+    {
+      "name": "Immersion blender",
+      "essential": true
+    },
+    {
+      "name": "Fine sieve",
+      "essential": false
+    }
+  ]
+}

@@ -18,17 +18,17 @@ GitHub Pages, dynamic data from Supabase.
 
 | File | Purpose |
 |---|---|
-| [index.html](index.html) | Landing · craving picker · personalize panel (blood markers + recommendations when logged in) |
-| [recipe-search.html](recipe-search.html) | Recipe grid · search · filter chips · save heart |
-| [recipe.html](recipe.html) | Full recipe + guided cooking · session resume · meal log |
+| [index.html](web/index.html) | Landing · craving picker · personalize panel (blood markers + recommendations when logged in) |
+| [recipe-search.html](web/recipe-search.html) | Recipe grid · search · filter chips · save heart |
+| [recipe.html](web/recipe.html) | Full recipe + guided cooking · session resume · meal log |
 
 ## Shared
 
 | File | Purpose |
 |---|---|
-| [shared/supabase.js](shared/supabase.js) | Creates `window.MFC.supabase` from `<meta>` tags |
-| [shared/auth.js](shared/auth.js) | `window.MFC.auth`: magic link + Google OAuth via Supabase |
-| [shared/db.js](shared/db.js) | `window.MFC.db`: thin wrappers for every table |
+| [web/assets/js/lib/supabase.js](web/assets/js/lib/supabase.js) | Creates `window.MFC.supabase` from `<meta>` tags |
+| [web/assets/js/lib/auth.js](web/assets/js/lib/auth.js) | `window.MFC.auth`: magic link + Google OAuth via Supabase |
+| [web/assets/js/lib/db.js](web/assets/js/lib/db.js) | `window.MFC.db`: thin wrappers for every table |
 | [recipe-base.css](recipe-base.css) | CSS custom properties (design tokens) |
 | [recipe-styles.css](recipe-styles.css) | Recipe page styles |
 | [recipe-app.jsx](recipe-app.jsx), [recipe-components.jsx](recipe-components.jsx) | Recipe page React components |
@@ -38,9 +38,9 @@ GitHub Pages, dynamic data from Supabase.
 
 | Path | Purpose |
 |---|---|
-| [data/db/schema.sql](data/db/schema.sql) | 13-table schema with `COMMENT ON` docs |
-| [data/db/seed_metrics.sql](data/db/seed_metrics.sql) | ~21 baseline blood markers |
-| [data/recipe-bundles/](data/recipe-bundles/) | Import seed for the catalog (one self-contained `recipe.json` per recipe) |
+| [automation/db/schema.sql](automation/db/schema.sql) | 13-table schema with `COMMENT ON` docs |
+| [automation/db/seed_metrics.sql](automation/db/seed_metrics.sql) | ~21 baseline blood markers |
+| [web/assets/recipes/](web/assets/recipes/) | Import seed for the catalog (one self-contained `recipe.json` per recipe) |
 | [scripts/import_recipes.mjs](scripts/import_recipes.mjs) | One-shot importer (recipe JSON → Supabase) |
 
 ## Dev

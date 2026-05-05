@@ -1,0 +1,149 @@
+{
+  "id": "cod-piccata",
+  "name": "Cod Piccata",
+  "tagline": "Pan-seared cod in lemon-caper butter sauce — Italian-American classic",
+  "shortTagline": "lemon-caper · shellfish-free · 25 min",
+  "cuisine": "Italian-American",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 25,
+  "tags": [
+    "pescatarian",
+    "shellfish-free",
+    "italian",
+    "quick"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Lemon, capers, butter — bright and salty, no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#7A9C5A",
+        "#FFFCF3"
+      ],
+      "src": "assets/recipes/cod-piccata/hero.jpg",
+      "alt": "Cod piccata in lemon caper sauce with parsley",
+      "caption": "cod piccata — lemon-caper-butter"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Cod is among the leanest fish — ~20g protein per fillet, low fat.",
+    "Capers are fermented; small dose of probiotic compounds."
+  ],
+  "ingredients": [
+    {
+      "name": "Cod fillets",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Flour (for dredging)",
+      "amt": "1/2 cup",
+      "group": "thickener"
+    },
+    {
+      "name": "Olive oil",
+      "amt": "2 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Butter",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Garlic",
+      "amt": "3 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Capers (drained)",
+      "amt": "3 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "White wine",
+      "amt": "1/2 cup",
+      "group": "liquid"
+    },
+    {
+      "name": "Lemon",
+      "amt": "1, juiced",
+      "group": "sauce"
+    },
+    {
+      "name": "Parsley",
+      "amt": "2 tbsp chopped",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Dredge and sear",
+      "detail": "Pat cod dry, salt and pepper. Dredge in flour, shake excess. Sear in olive oil + 1 tbsp butter over medium-high 3 min per side until just cooked. Set aside.",
+      "duration": 360,
+      "tip": "Flour gives crust + thickens sauce later. Don't skip.",
+      "media": {
+        "src": "assets/recipes/cod-piccata/step-01-sear.jpg",
+        "alt": "Cod searing in pan",
+        "caption": "dredge and sear"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Bloom garlic",
+      "detail": "In the same pan, add 1 tbsp butter, sliced garlic. Cook 30 sec until just fragrant.",
+      "duration": 30,
+      "tip": "Don't brown the garlic. Pale gold = right.",
+      "media": {
+        "src": "assets/recipes/cod-piccata/step-02-garlic.jpg",
+        "alt": "Garlic in butter",
+        "caption": "bloom garlic"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Deglaze and reduce",
+      "detail": "Pour in wine and lemon juice; scrape the fond. Add capers; reduce 2 min until slightly syrupy.",
+      "duration": 120,
+      "tip": "Capers carry their own salt — taste before adding more.",
+      "media": {
+        "src": "assets/recipes/cod-piccata/step-03-deglaze.jpg",
+        "alt": "Lemon caper sauce reducing",
+        "caption": "deglaze and reduce"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Mount with butter",
+      "detail": "Off heat, swirl in remaining 2 tbsp butter. Return fish briefly to coat. Shower with parsley.",
+      "duration": 60,
+      "tip": "Off heat is critical — boiling makes butter sauce break.",
+      "media": {
+        "src": "assets/recipes/cod-piccata/step-04-mount.jpg",
+        "alt": "Cod piccata plated with parsley",
+        "caption": "mount with butter"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Wide skillet",
+      "essential": true
+    },
+    {
+      "name": "Plate for dredging",
+      "essential": true
+    },
+    {
+      "name": "Spatula",
+      "essential": true
+    }
+  ]
+}

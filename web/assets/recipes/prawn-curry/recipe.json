@@ -1,0 +1,135 @@
+{
+  "id": "prawn-curry",
+  "name": "Coconut Prawn Curry",
+  "tagline": "Quick prawn curry in coconut gravy — zinc, copper, selenium, B12",
+  "shortTagline": "prawns · zinc + B12 · 30 min",
+  "cuisine": "Kerala",
+  "difficulty": "Medium",
+  "servings": 3,
+  "totalMinutes": 30,
+  "tags": [
+    "non-veg",
+    "seafood",
+    "high-zinc",
+    "high-b12",
+    "coconut",
+    "garlic"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "Add prawns last and cook just 4 minutes — they go rubbery in seconds past that",
+  "media": {
+    "emoji": "🦐",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#E76F51",
+        "#FBF7EE"
+      ],
+      "src": "assets/recipes/prawn-curry/hero.jpg",
+      "alt": "Pink prawns in a creamy yellow coconut curry with curry leaves",
+      "caption": "prawn curry — coconut, curry leaf, light"
+    }
+  },
+  "healthFacts": [
+    "100g prawns: 1.6mg zinc, 0.4mg copper, 38µg selenium — trace minerals fully covered.",
+    "Vitamin B12 content (1.5µg/100g) supports nerves and red blood cells.",
+    "Iodine from shellfish supports thyroid hormone synthesis (TSH-relevant).",
+    "Astaxanthin (the pink pigment) is a potent antioxidant; survives gentle cooking."
+  ],
+  "ingredients": [
+    {
+      "name": "Prawns (deveined, peeled)",
+      "amt": "400g",
+      "group": "main"
+    },
+    {
+      "name": "Coconut milk",
+      "amt": "1 cup",
+      "group": "gravy"
+    },
+    {
+      "name": "Onion (chopped)",
+      "amt": "1 medium",
+      "group": "base"
+    },
+    {
+      "name": "Tomato (chopped)",
+      "amt": "1 medium",
+      "group": "base"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1 tbsp",
+      "group": "base"
+    },
+    {
+      "name": "Curry leaves",
+      "amt": "10",
+      "group": "tadka"
+    },
+    {
+      "name": "Mustard seeds",
+      "amt": "1 tsp",
+      "group": "tadka"
+    },
+    {
+      "name": "Turmeric powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Coconut oil",
+      "amt": "2 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate the prawns",
+      "detail": "Toss prawns with ¼ tsp turmeric, ¼ tsp salt, ¼ tsp Kashmiri chili. Set aside while you make the gravy.",
+      "duration": 60,
+      "tip": "Pre-seasoned prawns hold flavour better than seasoning the gravy alone."
+    },
+    {
+      "id": 2,
+      "title": "Build the gravy",
+      "detail": "Heat coconut oil. Crackle mustard seeds, add curry leaves, then onion. Cook till golden. Add ginger-garlic, then tomato, remaining turmeric and chili. Cook 5 minutes till tomato breaks down.",
+      "duration": 540,
+      "tip": "Cook the masala dry first — adding coconut milk to under-cooked masala = flat curry."
+    },
+    {
+      "id": 3,
+      "title": "Add coconut milk and prawns",
+      "detail": "Pour in coconut milk, bring to a gentle simmer. Slip in the prawns and cook on low for 3–4 minutes till they just turn pink and curl. Pull off the heat. Serve with steamed rice.",
+      "duration": 240,
+      "tip": "Don't boil coconut milk — it splits. Keep it on the lowest simmer."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    },
+    {
+      "name": "Sharp knife",
+      "essential": false
+    }
+  ]
+}

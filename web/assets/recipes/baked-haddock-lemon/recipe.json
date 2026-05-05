@@ -1,0 +1,149 @@
+{
+  "id": "baked-haddock-lemon",
+  "name": "Baked Lemon Haddock",
+  "tagline": "Haddock baked under buttery lemon-garlic crumb",
+  "shortTagline": "British baked · shellfish-free · 25 min",
+  "cuisine": "British",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 25,
+  "tags": [
+    "pescatarian",
+    "shellfish-free",
+    "high-protein",
+    "quick"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Crumb-topped white fish — pantry-easy, no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#FFFCF3",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/baked-haddock-lemon/hero.jpg",
+      "alt": "Baked haddock with golden crumb topping",
+      "caption": "haddock — lemon crumb"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Haddock is mild and low-fat — almost identical nutritional profile to cod.",
+    "A crumb topping shields the fish from drying out."
+  ],
+  "ingredients": [
+    {
+      "name": "Haddock fillets",
+      "amt": "1.5 lb",
+      "group": "main"
+    },
+    {
+      "name": "Panko breadcrumbs",
+      "amt": "1 cup",
+      "group": "main"
+    },
+    {
+      "name": "Butter (melted)",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Garlic",
+      "amt": "3 cloves, grated",
+      "group": "aromatics"
+    },
+    {
+      "name": "Lemon zest",
+      "amt": "1",
+      "group": "aromatics"
+    },
+    {
+      "name": "Lemon juice",
+      "amt": "2 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Parsley",
+      "amt": "2 tbsp chopped",
+      "group": "finish"
+    },
+    {
+      "name": "Dijon mustard",
+      "amt": "1 tbsp",
+      "group": "sauce"
+    },
+    {
+      "name": "Salt and pepper",
+      "amt": "to taste",
+      "group": "spice"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make the crumb",
+      "detail": "Stir panko with melted butter, grated garlic, lemon zest, parsley, salt, pepper.",
+      "duration": 120,
+      "tip": "Crumb should clump when pressed — that means enough butter.",
+      "media": {
+        "src": "assets/recipes/baked-haddock-lemon/step-01-crumb.jpg",
+        "alt": "Lemon herb crumb in bowl",
+        "caption": "make the crumb"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Mustard and lemon",
+      "detail": "Place haddock in a buttered baking dish. Brush with Dijon and squeeze lemon juice over.",
+      "duration": 60,
+      "tip": "Dijon helps the crumb cling without flour or egg.",
+      "media": {
+        "src": "assets/recipes/baked-haddock-lemon/step-02-mustard.jpg",
+        "alt": "Haddock brushed with Dijon",
+        "caption": "mustard and lemon"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Crumb-top",
+      "detail": "Press crumb onto each fillet, covering completely.",
+      "duration": 60,
+      "tip": "Use the back of a spoon to press — keeps it from falling off.",
+      "media": {
+        "src": "assets/recipes/baked-haddock-lemon/step-03-top.jpg",
+        "alt": "Haddock topped with crumb",
+        "caption": "crumb-top"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Bake until gold",
+      "detail": "Bake at 400°F for 14 min until crumb is golden and fish flakes. Squeeze fresh lemon over.",
+      "duration": 840,
+      "tip": "If crumb browns too fast, tent with foil for the last few minutes.",
+      "media": {
+        "src": "assets/recipes/baked-haddock-lemon/step-04-bake.jpg",
+        "alt": "Baked haddock with golden crumb",
+        "caption": "bake until gold"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Baking dish",
+      "essential": true
+    },
+    {
+      "name": "Mixing bowl",
+      "essential": true
+    },
+    {
+      "name": "Microplane",
+      "essential": false
+    }
+  ]
+}

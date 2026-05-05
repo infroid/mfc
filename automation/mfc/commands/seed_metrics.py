@@ -11,7 +11,7 @@ from ..ops import seed
 def register(subparsers: argparse._SubParsersAction) -> None:
     p = subparsers.add_parser(
         "seed-metrics",
-        help="Run data/db/seed_metrics.sql (idempotent ON CONFLICT upsert)",
+        help="Run automation/db/seed_metrics.sql (idempotent ON CONFLICT upsert)",
     )
     p.set_defaults(handler=run)
 

@@ -1,0 +1,212 @@
+{
+  "id": "chole-bhature",
+  "name": "Chole Bhature",
+  "tagline": "Spiced chickpea curry with cloud-light fried bread",
+  "shortTagline": "spiced chickpea curry · fried bread · 60 min",
+  "cuisine": "North Indian",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 60,
+  "tags": [
+    "vegetarian",
+    "high-fiber",
+    "high-protein",
+    "gluten",
+    "dairy",
+    "onion",
+    "garlic"
+  ],
+  "color": "#FF8C00",
+  "colorSoft": "rgba(255,140,0,0.15)",
+  "featured": false,
+  "highlight": "Chickpeas deliver 15g fiber per bowl",
+  "media": {
+    "emoji": "🫙",
+    "hero": {
+      "palette": [
+        "#FF8C00",
+        "#F4A261",
+        "#E76F51"
+      ],
+      "src": "assets/recipes/chole-bhature/hero.jpg",
+      "alt": "Chole bhature on a cream ceramic plate with dark chole, puffed bhature, onion, and lemon",
+      "caption": "chole bhature — dark chole, puffed bhatura"
+    }
+  },
+  "healthFacts": [
+    "Chickpeas deliver 15g fiber and 12g protein per cup — one of the most filling legumes.",
+    "Amchur (dried mango powder) adds vitamin C, which boosts iron absorption from chickpeas.",
+    "Pomegranate seeds in chole are a traditional garnish rich in antioxidant punicalagins.",
+    "The tangy, acidic cooking environment (amchur + tomatoes) helps reduce lectin content.",
+    "Bhature uses yogurt — the lactic acid makes the bread tender and partially fermented.",
+    "Tea bag trick: cooking chole with a black tea bag gives deeper color and mild tannins."
+  ],
+  "ingredients": [
+    {
+      "name": "Chickpeas (kabuli chana, dried)",
+      "amt": "1.5 cups",
+      "group": "main"
+    },
+    {
+      "name": "Tomatoes (ripe)",
+      "amt": "3 medium",
+      "group": "gravy"
+    },
+    {
+      "name": "Onion",
+      "amt": "2 medium",
+      "group": "gravy"
+    },
+    {
+      "name": "Ginger-garlic paste",
+      "amt": "1.5 tbsp",
+      "group": "aromatics"
+    },
+    {
+      "name": "Chole masala",
+      "amt": "2 tbsp",
+      "group": "spice"
+    },
+    {
+      "name": "Amchur (dry mango powder)",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Kashmiri chili powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Black tea bag",
+      "amt": "1",
+      "group": "spice"
+    },
+    {
+      "name": "Oil",
+      "amt": "3 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Salt",
+      "amt": "to taste",
+      "group": "spice"
+    },
+    {
+      "name": "Maida (all-purpose flour)",
+      "amt": "2 cups",
+      "group": "bhature"
+    },
+    {
+      "name": "Yogurt",
+      "amt": "⅓ cup",
+      "group": "bhature"
+    },
+    {
+      "name": "Baking powder",
+      "amt": "½ tsp",
+      "group": "bhature"
+    },
+    {
+      "name": "Oil (for dough)",
+      "amt": "2 tsp",
+      "group": "bhature"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Soak the chickpeas",
+      "detail": "Wash and soak dried chickpeas in 4 cups of water for 8 hours or overnight. They'll nearly double. Drain and rinse. If using canned, rinse well and skip to step 3.",
+      "duration": 28800,
+      "tip": "Soaking reduces oligosaccharides that cause bloating. Worth the overnight wait.",
+      "media": {
+        "src": "assets/recipes/chole-bhature/step-01-soak-chickpeas.jpg",
+        "alt": "Soaked kabuli chana in a steel bowl with clear water",
+        "caption": "Overnight-soaked chickpeas"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Make the bhature dough",
+      "detail": "Mix flour, baking powder, and salt. Add yogurt and oil. Knead into a soft, pliable dough, adding water tablespoon by tablespoon. Cover with a damp cloth and rest for 30 minutes — this is when the gluten relaxes for puffing.",
+      "duration": 1800,
+      "tip": "Softer dough = better puff. The dough should feel like soft earlobe texture.",
+      "media": {
+        "src": "assets/recipes/chole-bhature/step-02-bhature-dough.jpg",
+        "alt": "Soft bhature dough resting under a damp cloth in a steel bowl",
+        "caption": "Soft rested dough"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Pressure cook the chole",
+      "detail": "Add soaked chickpeas to a pressure cooker with fresh water (just covering), salt, and a tea bag. Cook for 5–6 whistles until completely soft but holding shape. Discard the tea bag. Reserve the cooking water.",
+      "duration": 1200,
+      "tip": "The black tea bag gives chole that characteristic deep brownish color. It's not optional.",
+      "media": {
+        "src": "assets/recipes/chole-bhature/step-03-pressure-cook.jpg",
+        "alt": "Cooked chickpeas in a pressure cooker with tea-stained cooking water",
+        "caption": "Tea-stained cooked chole"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Build the masala",
+      "detail": "Heat oil in a kadhai. Add finely chopped onions and cook 8–10 minutes until deep golden. Add ginger-garlic paste and cook 2 minutes. Add pureed tomatoes, chole masala, Kashmiri chili, and amchur. Cook until oil separates — about 8 minutes.",
+      "duration": 1200,
+      "tip": "The masala must be cooked down until it's dark, thick, and jammy. Don't cut this short.",
+      "media": {
+        "src": "assets/recipes/chole-bhature/step-04-build-masala.jpg",
+        "alt": "Dark onion-tomato chole masala in a black kadhai with oil separating",
+        "caption": "Jammy masala base"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Simmer the chole",
+      "detail": "Add cooked chickpeas to the masala with 1 cup of the reserved cooking water. Mix, mash a few chickpeas against the side of the pan for body. Simmer uncovered 15–20 minutes until the gravy is thick and dark.",
+      "duration": 1200,
+      "tip": "Good chole is dry-ish and dark. If it looks watery and pale, keep simmering.",
+      "media": {
+        "src": "assets/recipes/chole-bhature/step-05-simmer-chole.jpg",
+        "alt": "Chickpeas simmering in thick dark masala gravy in a black kadhai",
+        "caption": "Thick simmered chole"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Fry the bhature",
+      "detail": "Roll bhature dough into balls. Flatten each into an oval, 5–6mm thick. Heat oil to 180°C. Slide in one bhatura — press gently with a slotted spoon, it will puff. Flip once, fry 30 seconds more. Drain and serve immediately with hot chole.",
+      "duration": 600,
+      "tip": "Oil must be hot enough — test with a small dough piece; it should rise immediately.",
+      "media": {
+        "src": "assets/recipes/chole-bhature/step-06-fry-bhature.jpg",
+        "alt": "A puffed bhatura frying in hot oil under a slotted spoon",
+        "caption": "Puffed bhatura fry"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Pressure cooker or Instant Pot",
+      "essential": true
+    },
+    {
+      "name": "Heavy-bottomed wok (kadhai)",
+      "essential": true
+    },
+    {
+      "name": "Deep pan for frying bhature",
+      "essential": true
+    },
+    {
+      "name": "Rolling pin",
+      "essential": true
+    },
+    {
+      "name": "Spider / slotted spoon",
+      "essential": false
+    }
+  ]
+}

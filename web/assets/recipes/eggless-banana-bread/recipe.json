@@ -1,0 +1,153 @@
+{
+  "id": "eggless-banana-bread",
+  "name": "Eggless Banana Bread",
+  "tagline": "Tender banana loaf bound with yogurt and flax — no eggs",
+  "shortTagline": "egg-free · vegetarian · 65 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 8,
+  "totalMinutes": 65,
+  "tags": [
+    "vegetarian",
+    "egg-free",
+    "nut-free"
+  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Yogurt + flax stand in for eggs — moist, springy crumb",
+  "media": {
+    "emoji": "🍌",
+    "hero": {
+      "palette": [
+        "#F4D67A",
+        "#A0522D",
+        "#FFFCF3"
+      ],
+      "src": "assets/recipes/eggless-banana-bread/hero.jpg",
+      "alt": "Sliced banana bread on a board with golden top",
+      "caption": "eggless banana bread — tender crumb"
+    }
+  },
+  "healthFacts": [
+    "No eggs — replaced by yogurt and ground flax for binding.",
+    "Ripe bananas provide enough natural sugar to halve the added sugar.",
+    "Ground flax adds ~2g omega-3 ALA per tablespoon."
+  ],
+  "ingredients": [
+    {
+      "name": "Very ripe bananas",
+      "amt": "3 large, mashed",
+      "group": "main"
+    },
+    {
+      "name": "All-purpose flour",
+      "amt": "1.75 cups",
+      "group": "main"
+    },
+    {
+      "name": "Plain yogurt",
+      "amt": "1/3 cup",
+      "group": "main"
+    },
+    {
+      "name": "Ground flax",
+      "amt": "2 tbsp",
+      "group": "main"
+    },
+    {
+      "name": "Hot water",
+      "amt": "5 tbsp",
+      "group": "liquid"
+    },
+    {
+      "name": "Brown sugar",
+      "amt": "1/2 cup",
+      "group": "sweetener"
+    },
+    {
+      "name": "Melted butter",
+      "amt": "1/2 cup",
+      "group": "fat"
+    },
+    {
+      "name": "Baking soda",
+      "amt": "1 tsp",
+      "group": "leavening"
+    },
+    {
+      "name": "Salt",
+      "amt": "1/2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Vanilla",
+      "amt": "1 tsp",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Make the flax egg",
+      "detail": "Whisk ground flax with hot water; let sit 8 minutes until gel-like. This is your egg replacer.",
+      "duration": 480,
+      "tip": "Hot water (not cold) speeds gelling — works in minutes.",
+      "media": {
+        "src": "assets/recipes/eggless-banana-bread/step-01-flax.jpg",
+        "alt": "Flax and water gelling in a bowl",
+        "caption": "make the flax egg"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Mash and mix wet",
+      "detail": "Mash bananas thoroughly. Whisk in melted butter, brown sugar, yogurt, vanilla, flax gel.",
+      "duration": 180,
+      "tip": "The riper the banana, the deeper the flavor — black-spotted skins are ideal.",
+      "media": {
+        "src": "assets/recipes/eggless-banana-bread/step-02-wet.jpg",
+        "alt": "Mashed bananas in mixing bowl",
+        "caption": "mash and mix wet"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Fold in dry",
+      "detail": "Sift flour, baking soda, salt into the wet. Fold gently — just until combined. Lumps are fine.",
+      "duration": 120,
+      "tip": "Overmixing develops gluten and toughens the loaf.",
+      "media": {
+        "src": "assets/recipes/eggless-banana-bread/step-03-fold.jpg",
+        "alt": "Folding flour into batter",
+        "caption": "fold in dry"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Bake low and slow",
+      "detail": "Pour into a greased 9x5 loaf pan. Bake 350°F for 50 minutes — toothpick should come out clean. Cool 15 minutes before slicing.",
+      "duration": 3000,
+      "tip": "Slicing hot tears the crumb. Wait or you'll regret it.",
+      "media": {
+        "src": "assets/recipes/eggless-banana-bread/step-04-bake.jpg",
+        "alt": "Baked banana bread in loaf pan",
+        "caption": "bake low and slow"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "9x5 loaf pan",
+      "essential": true
+    },
+    {
+      "name": "Mixing bowl",
+      "essential": true
+    },
+    {
+      "name": "Whisk",
+      "essential": false
+    }
+  ]
+}

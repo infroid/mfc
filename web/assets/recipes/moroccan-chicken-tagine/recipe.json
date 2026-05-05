@@ -1,0 +1,154 @@
+{
+  "id": "moroccan-chicken-tagine",
+  "name": "Moroccan Chicken Tagine",
+  "tagline": "Slow-braised chicken with preserved lemon, olives, saffron, ginger",
+  "shortTagline": "tagine · soy-free · 75 min",
+  "cuisine": "Moroccan",
+  "difficulty": "Medium",
+  "servings": 4,
+  "totalMinutes": 75,
+  "tags": [
+    "non-veg",
+    "soy-free",
+    "high-protein",
+    "gluten-free"
+  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "No soy, no nuts (just olives) — Morocco's iconic Friday dish",
+  "media": {
+    "emoji": "🍗",
+    "hero": {
+      "palette": [
+        "#F4A261",
+        "#F4D67A",
+        "#7A9C5A"
+      ],
+      "src": "assets/recipes/moroccan-chicken-tagine/hero.jpg",
+      "alt": "Chicken tagine with preserved lemon and green olives",
+      "caption": "tagine — preserved lemon and olive"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Preserved lemon undergoes lacto-fermentation — flavors deepen, vitamin C drops, but probiotics develop.",
+    "Saffron's crocin is a fat-soluble carotenoid — a little goes far."
+  ],
+  "ingredients": [
+    {
+      "name": "Bone-in chicken thighs",
+      "amt": "8",
+      "group": "main"
+    },
+    {
+      "name": "Onion (sliced)",
+      "amt": "1 large",
+      "group": "aromatics"
+    },
+    {
+      "name": "Garlic",
+      "amt": "5 cloves",
+      "group": "aromatics"
+    },
+    {
+      "name": "Ginger (grated)",
+      "amt": "1 tbsp",
+      "group": "aromatics"
+    },
+    {
+      "name": "Saffron threads",
+      "amt": "1/2 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Cumin",
+      "amt": "1.5 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Coriander",
+      "amt": "1.5 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Preserved lemon (chopped)",
+      "amt": "1",
+      "group": "sauce"
+    },
+    {
+      "name": "Green olives (cracked)",
+      "amt": "1 cup",
+      "group": "main"
+    },
+    {
+      "name": "Cilantro and parsley",
+      "amt": "to finish",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate briefly",
+      "detail": "Pat chicken dry. Rub with cumin, coriander, ginger, garlic paste, salt, olive oil. Rest 20 min.",
+      "duration": 1200,
+      "tip": "Even 20 min lets the spices wake up; longer never hurts.",
+      "media": {
+        "src": "assets/recipes/moroccan-chicken-tagine/step-01-marinate.jpg",
+        "alt": "Chicken rubbed with spices",
+        "caption": "marinate briefly"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Brown chicken",
+      "detail": "In a tagine or Dutch oven, brown chicken skin-down in olive oil 6 min. Flip 3 min. Set aside.",
+      "duration": 540,
+      "tip": "Skin-down first sets up the schmaltz that flavors the whole pot.",
+      "media": {
+        "src": "assets/recipes/moroccan-chicken-tagine/step-02-brown.jpg",
+        "alt": "Chicken browning in tagine",
+        "caption": "brown chicken"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Soften onion, bloom saffron",
+      "detail": "Sweat onion 8 min in chicken fat. Bloom saffron in 1/2 cup hot water; pour into pot with onion.",
+      "duration": 480,
+      "tip": "Saffron in cold liquid fades; hot water unlocks its color.",
+      "media": {
+        "src": "assets/recipes/moroccan-chicken-tagine/step-03-onion.jpg",
+        "alt": "Onions with saffron broth",
+        "caption": "soften onion, bloom saffron"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Slow braise",
+      "detail": "Return chicken with juices. Tuck olives and preserved lemon around. Cover, simmer low 35 min until chicken slips off the bone. Shower with herbs.",
+      "duration": 2100,
+      "tip": "Couscous is the classic side — soaks up that golden sauce.",
+      "media": {
+        "src": "assets/recipes/moroccan-chicken-tagine/step-04-braise.jpg",
+        "alt": "Finished tagine with herbs",
+        "caption": "slow braise"
+      }
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Tagine or Dutch oven",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": true
+    },
+    {
+      "name": "Tongs",
+      "essential": false
+    }
+  ]
+}

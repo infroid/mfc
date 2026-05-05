@@ -1,0 +1,118 @@
+{
+  "id": "gajar-ka-halwa",
+  "name": "Gajar ka Halwa",
+  "tagline": "Slow-cooked carrot dessert with milk and ghee — vitamin A and calcium",
+  "shortTagline": "carrot halwa · vitamin A · 60 min",
+  "cuisine": "North Indian",
+  "difficulty": "Medium",
+  "servings": 5,
+  "totalMinutes": 60,
+  "tags": [
+    "veg",
+    "dairy",
+    "dessert",
+    "high-vitamin-a"
+  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Cook the grated carrot in milk first — the milk reduces and clings to every shred",
+  "media": {
+    "emoji": "🥕",
+    "hero": {
+      "palette": [
+        "#E76F51",
+        "#F4A261",
+        "#FBF7EE"
+      ],
+      "src": "assets/recipes/gajar-ka-halwa/hero.jpg",
+      "alt": "Orange-red carrot halwa garnished with slivered almonds and pistachios in a brass katori",
+      "caption": "gajar ka halwa — winter pudding, slow-reduced"
+    }
+  },
+  "healthFacts": [
+    "Red carrots are loaded with beta-carotene — converts to vitamin A for vision and skin.",
+    "Milk concentration adds calcium, B2, and B12.",
+    "Ghee and nuts deliver vitamin E and healthy mono-unsaturated fats.",
+    "Best made in winter when red Delhi carrots are sweet — natural sugar reduces."
+  ],
+  "ingredients": [
+    {
+      "name": "Red carrots (grated)",
+      "amt": "1 kg",
+      "group": "main"
+    },
+    {
+      "name": "Whole milk",
+      "amt": "1 litre",
+      "group": "main"
+    },
+    {
+      "name": "Sugar",
+      "amt": "¾ cup",
+      "group": "sweetener"
+    },
+    {
+      "name": "Ghee",
+      "amt": "4 tbsp",
+      "group": "fat"
+    },
+    {
+      "name": "Cardamom powder",
+      "amt": "½ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Almonds (slivered)",
+      "amt": "2 tbsp",
+      "group": "garnish"
+    },
+    {
+      "name": "Pistachios (slivered)",
+      "amt": "2 tbsp",
+      "group": "garnish"
+    },
+    {
+      "name": "Khoya / mawa (optional)",
+      "amt": "100g",
+      "group": "enrich"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Reduce in milk",
+      "detail": "Combine grated carrot and milk in a heavy pan. Bring to a boil, then simmer on medium-low for 30–35 minutes, stirring every 4 minutes, till the milk is fully absorbed.",
+      "duration": 2100,
+      "tip": "This step cannot be hurried — the long reduction is what makes halwa taste like halwa."
+    },
+    {
+      "id": 2,
+      "title": "Add sugar and ghee",
+      "detail": "Once the milk is gone, add sugar and stir 5 minutes — sugar releases more water that cooks off. Add ghee a tablespoon at a time, stirring till the halwa stops sticking to the pan.",
+      "duration": 480,
+      "tip": "Ghee at the end gives gloss; ghee at the start gets absorbed and disappears."
+    },
+    {
+      "id": 3,
+      "title": "Finish with khoya and nuts",
+      "detail": "Stir in crumbled khoya (if using) and cardamom. Cook 3 more minutes till thick and glossy. Garnish with slivered almonds and pistachios. Serve warm.",
+      "duration": 240,
+      "tip": "Tastes even better the next day — cardamom needs time to settle."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Heavy-bottomed pan / kadhai",
+      "essential": true
+    },
+    {
+      "name": "Box grater",
+      "essential": true
+    },
+    {
+      "name": "Wooden spoon",
+      "essential": false
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "aam-panna",
+  "name": "Aam Panna",
+  "tagline": "Raw mango cooler with roasted cumin and mint — heat-stroke remedy",
+  "shortTagline": "raw mango · electrolyte · 30 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": [
+    "veg",
+    "vegan",
+    "drink",
+    "high-vitamin-c",
+    "summer",
+    "electrolyte"
+  ],
+  "color": "#A4C268",
+  "colorSoft": "rgba(164,194,104,0.18)",
+  "featured": false,
+  "highlight": "Roast or boil the raw mango first — lifts the harsh acidity and develops sweetness",
+  "media": {
+    "emoji": "🥭",
+    "hero": {
+      "palette": [
+        "#A4C268",
+        "#7A9C5A",
+        "#E9C46A"
+      ],
+      "src": "assets/recipes/aam-panna/hero.jpg",
+      "alt": "Murky-green raw mango drink in a tall glass with mint leaves and roasted cumin dust",
+      "caption": "aam panna — green mango, mint, cumin"
+    }
+  },
+  "healthFacts": [
+    "Raw mango is exceptionally high in vitamin C — supports skin and iron absorption.",
+    "Natural electrolyte blend: potassium from mango, sodium from black salt.",
+    "Used traditionally to prevent heat-stroke and rehydrate after long sun exposure.",
+    "Low glycemic when made with minimal added sugar — choose jaggery over white sugar."
+  ],
+  "ingredients": [
+    {
+      "name": "Raw green mango (large)",
+      "amt": "2",
+      "group": "main"
+    },
+    {
+      "name": "Jaggery (grated)",
+      "amt": "½ cup",
+      "group": "sweetener"
+    },
+    {
+      "name": "Roasted cumin powder",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Black salt",
+      "amt": "1 tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Black pepper",
+      "amt": "¼ tsp",
+      "group": "spice"
+    },
+    {
+      "name": "Mint leaves",
+      "amt": "20",
+      "group": "finish"
+    },
+    {
+      "name": "Cold water",
+      "amt": "5 cups",
+      "group": "finish"
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil the raw mango",
+      "detail": "Pressure cook the whole raw mangoes with 1 cup water for 3 whistles. Cool, peel, and squeeze the pulp off the seed. (Or roast the mangoes directly on a flame until soft inside, ~10 min.)",
+      "duration": 1200,
+      "tip": "Roasting gives a smokier, deeper aam panna; boiling keeps it bright."
+    },
+    {
+      "id": 2,
+      "title": "Blend with seasonings",
+      "detail": "Blend the pulp with jaggery, roasted cumin, black salt, black pepper, mint leaves, and 1 cup water until smooth. This is your concentrate — store in the fridge.",
+      "duration": 180,
+      "tip": "Concentrate keeps for 2 weeks refrigerated — make once, drink for days."
+    },
+    {
+      "id": 3,
+      "title": "Dilute and serve",
+      "detail": "Mix 3 tbsp concentrate with 1 cup chilled water per glass. Top with ice and a sprig of mint. Stir and serve.",
+      "duration": 60,
+      "tip": "Stronger or weaker? Adjust the concentrate ratio — that's the joy of homemade panna."
+    }
+  ],
+  "utensils": [
+    {
+      "name": "Pressure cooker or flame",
+      "essential": true
+    },
+    {
+      "name": "Blender",
+      "essential": true
+    },
+    {
+      "name": "Mesh sieve",
+      "essential": false
+    }
+  ]
+}

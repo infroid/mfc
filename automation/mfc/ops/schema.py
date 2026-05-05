@@ -7,7 +7,7 @@ from ..core import files, log
 from ..core.config import Config
 
 
-# Same DROP block that lives commented at the top of data/db/schema.sql.
+# Same DROP block that lives commented at the top of automation/db/schema.sql.
 # Listed here so commands can wipe without uncomment-edit-recomment churn.
 DROP_ALL_SQL = """
 DROP TABLE IF EXISTS public.meal_logs, public.cooking_sessions, public.saved_recipes,
