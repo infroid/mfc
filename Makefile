@@ -14,7 +14,7 @@ UV := uv --project automation
 
 .DEFAULT_GOAL := help
 
-.PHONY: help sync doctor status apply-schema seed-metrics import-recipes \
+.PHONY: help sync status apply-schema seed-metrics import-recipes \
         drop-schema reset serve
 
 help: ## list all targets
@@ -26,14 +26,6 @@ help: ## list all targets
 
 sync: ## sync the python venv (reinstalls all packages — safe across layout moves)
 	@$(UV) sync --reinstall
-
-doctor: ## nuke automation/.venv + stale __pycache__ and rebuild from scratch
-	@echo "  · removing automation/.venv"
-	@rm -rf automation/.venv
-	@echo "  · clearing __pycache__ trees under automation/mfc/"
-	@find automation/mfc -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true
-	@$(UV) sync
-	@echo "  ✓ rebuilt — try `make status`"
 
 status: ## list public tables and row counts
 	@$(UV) run mfc status
@@ -50,7 +42,11 @@ import-recipes: ## upsert ingredients, utensils, and recipes from web/assets/rec
 drop-schema: ## DESTRUCTIVE — drop all public tables (prompts to confirm)
 	@$(UV) run mfc drop-schema
 
-reset: ## DESTRUCTIVE — drop + apply + seed + import (one-shot reset)
+reset: ## DESTRUCTIVE — rebuild venv + drop + apply + seed + import (one-shot reset)
+	@echo "  · clearing automation/.venv and __pycache__ caches"
+	@rm -rf automation/.venv
+	@find automation/mfc -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true
+	@$(UV) sync
 	@$(UV) run mfc reset
 
 # ───── Local dev server ───────────────────────────────────────────────────
