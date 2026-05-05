@@ -1,0 +1,70 @@
+{
+  "id": "chana-masala",
+  "name": "Chana Masala",
+  "tagline": "Punjabi chickpea curry — fiber, plant protein, slow-burn carbs",
+  "shortTagline": "chickpeas · fiber · 40 min",
+  "cuisine": "Punjabi",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 40,
+  "tags": ["veg", "vegan", "high-protein", "high-fiber", "low-glycemic", "garlic", "onion"],
+  "color": "#8B4513",
+  "colorSoft": "rgba(139,69,19,0.18)",
+  "featured": false,
+  "highlight": "Black tea bag during pressure cook gives the dark, restaurant-style colour",
+  "media": {
+    "emoji": "🥘",
+    "hero": {
+      "palette": ["#8B4513", "#C44536", "#E9C46A"],
+      "src": "data/recipe-bundles/chana-masala/hero.jpg",
+      "alt": "Dark spiced chickpeas with onion-tomato gravy, ginger juliennes on top",
+      "caption": "chana masala — dark, tangy, ginger-finished"
+    }
+  },
+  "healthFacts": [
+    "Chickpeas deliver ~15g protein and 13g fiber per cooked cup — strongest plant duo.",
+    "Soluble fiber (galactans) lowers LDL cholesterol; resistant starch feeds gut bacteria.",
+    "Glycemic index ~28 — among the lowest of all carb sources.",
+    "Iron, folate, manganese, and copper all hit double-digit DV per serving."
+  ],
+  "ingredients": [
+    {"name": "Chickpeas (kabuli chana, soaked overnight)", "amt": "1 cup dry", "group": "main"},
+    {"name": "Onion (chopped fine)", "amt": "2 medium", "group": "base"},
+    {"name": "Tomato (puréed)", "amt": "3 medium", "group": "base"},
+    {"name": "Ginger-garlic paste", "amt": "2 tbsp", "group": "base"},
+    {"name": "Black tea bag", "amt": "1", "group": "spice"},
+    {"name": "Chana masala powder", "amt": "1.5 tbsp", "group": "spice"},
+    {"name": "Cumin seeds", "amt": "1 tsp", "group": "tadka"},
+    {"name": "Oil", "amt": "3 tbsp", "group": "fat"},
+    {"name": "Lemon juice", "amt": "1 tbsp", "group": "finish"},
+    {"name": "Salt", "amt": "to taste", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Pressure-cook the chana",
+      "detail": "Pressure cook the soaked chickpeas with 4 cups water, salt, and a black tea bag (tied in muslin) for 6–7 whistles. Discard the tea bag — it's done its colour job.",
+      "duration": 1500,
+      "tip": "Skip the tea bag and the gravy stays beige; it's the secret behind the deep black colour."
+    },
+    {
+      "id": 2,
+      "title": "Make the masala",
+      "detail": "Heat oil, crackle cumin. Sauté onion till deep brown, add ginger-garlic, then tomato purée. Cook till oil rises (8 min). Add chana masala and cook 1 minute.",
+      "duration": 600,
+      "tip": "Brown the onion well — it builds the dish's umami depth."
+    },
+    {
+      "id": 3,
+      "title": "Combine and simmer",
+      "detail": "Tip in the cooked chickpeas with their cooking liquid. Simmer 15 minutes. Mash a few chickpeas against the side to thicken the gravy. Finish with lemon and ginger juliennes.",
+      "duration": 900,
+      "tip": "Serve with bhature for the indulgent version, or with brown rice for the daily version."
+    }
+  ],
+  "utensils": [
+    {"name": "Pressure cooker", "essential": true},
+    {"name": "Heavy-bottomed pan / kadhai", "essential": true},
+    {"name": "Wooden spoon", "essential": false}
+  ]
+}

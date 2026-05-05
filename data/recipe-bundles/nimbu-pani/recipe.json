@@ -1,0 +1,67 @@
+{
+  "id": "nimbu-pani",
+  "name": "Nimbu Pani",
+  "tagline": "Indian lemonade with rock salt and mint — hydration plus vitamin C",
+  "shortTagline": "lemon water · vitamin C · 5 min",
+  "cuisine": "Indian",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 5,
+  "tags": ["veg", "vegan", "drink", "high-vitamin-c", "low-calorie", "electrolyte"],
+  "color": "#E9C46A",
+  "colorSoft": "rgba(233,196,106,0.18)",
+  "featured": false,
+  "highlight": "Black salt + roasted cumin = rehydration + digestion in one glass",
+  "media": {
+    "emoji": "🍋",
+    "hero": {
+      "palette": ["#E9C46A", "#A4C268", "#FBF7EE"],
+      "src": "data/recipe-bundles/nimbu-pani/hero.jpg",
+      "alt": "Tall glass of lemon water with mint leaves and ice cubes",
+      "caption": "nimbu pani — minted, salted, ice-cold"
+    }
+  },
+  "healthFacts": [
+    "One large lemon = 30mg vitamin C — about 30% of daily target.",
+    "Black salt adds sulfur compounds and trace minerals; less sodium than table salt.",
+    "Cumin seed water aids digestion and supports gut motility.",
+    "Sugar-free version (just salt + lemon) is ideal for blood sugar control."
+  ],
+  "ingredients": [
+    {"name": "Lemon", "amt": "2", "group": "main"},
+    {"name": "Cold water", "amt": "3 cups", "group": "main"},
+    {"name": "Black salt", "amt": "¼ tsp", "group": "seasoning"},
+    {"name": "Roasted cumin powder", "amt": "¼ tsp", "group": "seasoning"},
+    {"name": "Sugar or jaggery (optional)", "amt": "1 tsp", "group": "seasoning"},
+    {"name": "Mint leaves", "amt": "8", "group": "finish"},
+    {"name": "Ice cubes", "amt": "as needed", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Squeeze the lemons",
+      "detail": "Roll the lemons firmly on the counter to break the membranes — gives more juice. Cut and squeeze into a jug.",
+      "duration": 60,
+      "tip": "Strain the seeds out — but keep some pulp for vitamin C and fiber."
+    },
+    {
+      "id": 2,
+      "title": "Mix and balance",
+      "detail": "Add cold water, black salt, roasted cumin, and sugar/jaggery if using. Stir well. Taste and adjust — should be tangy with a savoury edge.",
+      "duration": 60,
+      "tip": "Skip sugar entirely if making for daily/diabetic-friendly drinking."
+    },
+    {
+      "id": 3,
+      "title": "Mint and ice",
+      "detail": "Crush mint leaves between your palms to release oils. Drop into the jug along with ice. Pour and serve immediately.",
+      "duration": 30,
+      "tip": "Pre-make and refrigerate without ice — top up with ice when serving."
+    }
+  ],
+  "utensils": [
+    {"name": "Glass jug", "essential": true},
+    {"name": "Citrus juicer", "essential": true},
+    {"name": "Mixing spoon", "essential": false}
+  ]
+}

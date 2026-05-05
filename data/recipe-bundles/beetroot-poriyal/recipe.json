@@ -1,0 +1,69 @@
+{
+  "id": "beetroot-poriyal",
+  "name": "Beetroot Poriyal",
+  "tagline": "Tamil-style coconut beet stir-fry — folate, nitrates, and a deep ruby colour",
+  "shortTagline": "beet stir-fry · folate · 25 min",
+  "cuisine": "Tamil",
+  "difficulty": "Easy",
+  "servings": 3,
+  "totalMinutes": 25,
+  "tags": ["veg", "vegan", "high-folate", "high-nitrates", "coconut"],
+  "color": "#7B2D26",
+  "colorSoft": "rgba(123,45,38,0.18)",
+  "featured": false,
+  "highlight": "Dietary nitrates from beets convert to nitric oxide — relax blood vessels",
+  "media": {
+    "emoji": "🟣",
+    "hero": {
+      "palette": ["#7B2D26", "#C44536", "#FBF7EE"],
+      "src": "data/recipe-bundles/beetroot-poriyal/hero.jpg",
+      "alt": "Magenta-red diced beetroot stir-fry topped with grated coconut and curry leaves",
+      "caption": "beetroot poriyal — coconut, curry leaf, crackle"
+    }
+  },
+  "healthFacts": [
+    "Beets supply 110µg folate per cup — strong support for homocysteine clearance.",
+    "Dietary nitrates lower systolic blood pressure by 4–10 mmHg in clinical studies.",
+    "Betalain pigments are anti-inflammatory and protect liver cells.",
+    "Pairing with coconut adds healthy fat and improves absorption of fat-soluble nutrients."
+  ],
+  "ingredients": [
+    {"name": "Beetroot (peeled, diced small)", "amt": "500g", "group": "main"},
+    {"name": "Onion (chopped)", "amt": "1 small", "group": "base"},
+    {"name": "Green chili (chopped)", "amt": "1", "group": "base"},
+    {"name": "Grated coconut (fresh)", "amt": "½ cup", "group": "finish"},
+    {"name": "Mustard seeds", "amt": "1 tsp", "group": "tadka"},
+    {"name": "Urad dal", "amt": "1 tsp", "group": "tadka"},
+    {"name": "Curry leaves", "amt": "10", "group": "tadka"},
+    {"name": "Coconut oil", "amt": "1.5 tbsp", "group": "fat"},
+    {"name": "Salt", "amt": "to taste", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Tadka first",
+      "detail": "Heat coconut oil in a wide pan. Crackle mustard seeds, then add urad dal — cook till golden. Add curry leaves, onion, and green chili. Sauté 3 minutes till soft.",
+      "duration": 240,
+      "tip": "Urad dal in the tadka adds a toasty crunch — south Indian signature."
+    },
+    {
+      "id": 2,
+      "title": "Cook the beetroot",
+      "detail": "Add diced beetroot and salt. Stir well. Cover and cook on medium-low for 12 minutes, stirring every 3 minutes — the beet releases moisture and steams itself.",
+      "duration": 720,
+      "tip": "Dice the beet small (5mm) — anything bigger takes too long."
+    },
+    {
+      "id": 3,
+      "title": "Finish with coconut",
+      "detail": "Uncover, stir in fresh grated coconut, cook 2 more minutes till the coconut is slightly toasted. Off heat. Serve with steamed rice and sambar.",
+      "duration": 120,
+      "tip": "Don't add coconut early — it stays soft and clumps."
+    }
+  ],
+  "utensils": [
+    {"name": "Wide pan with lid", "essential": true},
+    {"name": "Sharp knife", "essential": true},
+    {"name": "Wooden spoon", "essential": false}
+  ]
+}

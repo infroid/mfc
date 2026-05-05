@@ -1,0 +1,62 @@
+{
+  "id": "dahi",
+  "name": "Dahi (Set Yogurt)",
+  "tagline": "Homemade set curd — calcium, B12, and live probiotics",
+  "shortTagline": "set yogurt · probiotics · 8 hr",
+  "cuisine": "Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 480,
+  "tags": ["veg", "dairy", "fermented", "probiotic", "high-calcium"],
+  "color": "#FBF7EE",
+  "colorSoft": "rgba(251,247,238,0.6)",
+  "featured": false,
+  "highlight": "Indian dahi cultures (Lactobacillus + Streptococcus) thrive at 38–42°C overnight",
+  "media": {
+    "emoji": "🥛",
+    "hero": {
+      "palette": ["#FBF7EE", "#E9DAC1", "#7A9C5A"],
+      "src": "data/recipe-bundles/dahi/hero.jpg",
+      "alt": "Snow-white set yogurt in a clay matka with a thick layer of malai on top",
+      "caption": "dahi — set in a clay matka overnight"
+    }
+  },
+  "healthFacts": [
+    "Live cultures (Lactobacillus, Streptococcus thermophilus) support gut microbiota.",
+    "200g serving delivers ~250mg calcium, 1.5µg B12, and 0.4mg riboflavin.",
+    "Fermented dairy is better tolerated than fresh milk in mild lactose intolerance.",
+    "Iodine from dairy supports thyroid function (TSH-relevant)."
+  ],
+  "ingredients": [
+    {"name": "Whole milk", "amt": "1 litre", "group": "main"},
+    {"name": "Plain yogurt (live culture starter)", "amt": "1 tbsp", "group": "starter"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil and cool the milk",
+      "detail": "Bring milk to a rolling boil, then let it simmer for 5 minutes (this kills any wild bacteria and concentrates the milk). Cool to lukewarm — about 42°C, or warm enough that your finger can stay in for 5 seconds without discomfort.",
+      "duration": 1800,
+      "tip": "Hotter than 45°C kills the starter; colder than 38°C and it won't set."
+    },
+    {
+      "id": 2,
+      "title": "Add the starter",
+      "detail": "Whisk the starter yogurt with 2 tbsp of the warm milk in a small bowl until smooth, then stir back into the rest of the milk. Pour into your final setting vessel — earthen matka or steel bowl.",
+      "duration": 60,
+      "tip": "A clay matka draws moisture out and gives a thicker, more traditional set."
+    },
+    {
+      "id": 3,
+      "title": "Set in a warm spot",
+      "detail": "Cover and leave undisturbed in a warm corner (oven with light on, or kitchen counter in summer) for 6–8 hours. When it's set, refrigerate at least 2 hours before serving.",
+      "duration": 28800,
+      "tip": "Don't shake it during setting — it'll break the curds."
+    }
+  ],
+  "utensils": [
+    {"name": "Heavy-bottomed pot", "essential": true},
+    {"name": "Setting vessel (matka or bowl)", "essential": true},
+    {"name": "Whisk", "essential": false}
+  ]
+}

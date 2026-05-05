@@ -1,0 +1,69 @@
+{
+  "id": "grilled-salmon",
+  "name": "Tandoori Grilled Salmon",
+  "tagline": "Yogurt-marinated salmon with Indian spice — clinical omega-3 dose per fillet",
+  "shortTagline": "salmon · omega-3 + D · 25 min",
+  "cuisine": "Indo-Western",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 25,
+  "tags": ["non-veg", "fish", "omega-3", "high-protein", "high-d3", "high-b12"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "120 seconds on each side over very high heat — moist centre, charred crust",
+  "media": {
+    "emoji": "🍣",
+    "hero": {
+      "palette": ["#E76F51", "#F4A261", "#7A9C5A"],
+      "src": "data/recipe-bundles/grilled-salmon/hero.jpg",
+      "alt": "Orange-pink salmon fillet with tandoori marinade char marks, lemon wedge alongside",
+      "caption": "tandoori salmon — yogurt-marinated, high-heat grilled"
+    }
+  },
+  "healthFacts": [
+    "150g salmon = 2.5g EPA+DHA — by itself doubles a typical day's omega-3 intake.",
+    "Vitamin D content (~570IU per fillet) covers daily needs in a single meal.",
+    "Astaxanthin (the pink pigment) is a strong antioxidant that survives cooking.",
+    "Selenium (35µg) supports thyroid hormone activation and antioxidant glutathione."
+  ],
+  "ingredients": [
+    {"name": "Salmon fillet (skin-on)", "amt": "300g", "group": "main"},
+    {"name": "Greek yogurt", "amt": "3 tbsp", "group": "marinade"},
+    {"name": "Ginger-garlic paste", "amt": "1 tbsp", "group": "marinade"},
+    {"name": "Kashmiri chili powder", "amt": "1 tsp", "group": "marinade"},
+    {"name": "Garam masala", "amt": "½ tsp", "group": "marinade"},
+    {"name": "Turmeric", "amt": "¼ tsp", "group": "marinade"},
+    {"name": "Mustard oil", "amt": "1 tbsp", "group": "fat"},
+    {"name": "Lemon juice", "amt": "1 tbsp", "group": "finish"},
+    {"name": "Salt", "amt": "to taste", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate",
+      "detail": "Pat salmon dry. Whisk yogurt with all marinade ingredients and salt. Coat the salmon and rest 15 minutes at room temperature.",
+      "duration": 900,
+      "tip": "15 minutes is the sweet spot — too long and the yogurt's acid starts breaking down the fish."
+    },
+    {
+      "id": 2,
+      "title": "Sear hot",
+      "detail": "Heat a cast-iron pan or grill pan with mustard oil till it just smokes. Place salmon skin-side down. Cook 3 minutes without moving, flip, cook 2 more minutes till just opaque in the middle.",
+      "duration": 300,
+      "tip": "Salmon at 50–52°C internal is perfect — dry salmon is a tragedy."
+    },
+    {
+      "id": 3,
+      "title": "Rest and serve",
+      "detail": "Move to a plate and let it rest 2 minutes — juices redistribute. Squeeze lemon, sprinkle salt and chaat masala. Serve with sautéed greens and a wedge of lime.",
+      "duration": 120,
+      "tip": "If using oven: 220°C for 10 min on a foil-lined tray works well too."
+    }
+  ],
+  "utensils": [
+    {"name": "Cast-iron or grill pan", "essential": true},
+    {"name": "Mixing bowl", "essential": true},
+    {"name": "Fish spatula", "essential": false}
+  ]
+}
