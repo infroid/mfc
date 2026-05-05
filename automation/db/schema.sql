@@ -534,8 +534,9 @@ CREATE POLICY "recommendations_owner_read" ON public.recommendations
 
 -- =============================================================================
 -- 8. ADMIN — role gate + write policies for catalog and library
--- JWT app_metadata.role = 'admin' grants write access.
--- See USER-TODO.md §4 for how to grant the admin role.
+-- JWT app_metadata.role ∈ {'admin','chef'} (or absent for default 'user').
+-- is_admin()/is_chef() helpers + list_app_users() for the admin UI.
+-- See USER-TODO.md §4 for how to grant a role.
 -- =============================================================================
 
 CREATE OR REPLACE FUNCTION public.is_admin() RETURNS boolean AS $$
@@ -544,6 +545,70 @@ $$ LANGUAGE sql STABLE;
 
 COMMENT ON FUNCTION public.is_admin() IS
   'Returns true when the calling JWT has app_metadata.role = "admin". Used by admin RLS policies.';
+
+-- ── role helper for sub-project #2 ─────────────────────────────────────
+CREATE OR REPLACE FUNCTION public.is_chef() RETURNS boolean AS $$
+  SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'chef', false);
+$$ LANGUAGE sql STABLE;
+
+COMMENT ON FUNCTION public.is_chef() IS
+  'Returns true when the calling JWT has app_metadata.role = "chef". Used by chef-ownership RLS policies (sub-project #2).';
+
+-- ── browser-callable admin user listing ────────────────────────────────
+CREATE OR REPLACE FUNCTION public.list_app_users(
+  p_role     text DEFAULT 'all',
+  p_q        text DEFAULT NULL,
+  p_page     int  DEFAULT 1,
+  p_per_page int  DEFAULT 50
+) RETURNS TABLE (
+  id              uuid,
+  email           text,
+  full_name       text,
+  role            text,
+  created_at      timestamptz,
+  last_sign_in_at timestamptz,
+  provider        text,
+  total_count     bigint
+) LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $$
+DECLARE
+  v_offset int;
+  v_per    int := least(greatest(p_per_page, 1), 200);
+  v_role   text := lower(coalesce(p_role, 'all'));
+  v_q      text := nullif(trim(coalesce(p_q, '')), '');
+BEGIN
+  IF NOT public.is_admin() THEN
+    RAISE EXCEPTION 'forbidden' USING ERRCODE = '42501';
+  END IF;
+
+  v_offset := greatest(p_page - 1, 0) * v_per;
+
+  RETURN QUERY
+  WITH base AS (
+    SELECT
+      u.id,
+      u.email::text                                                              AS email,
+      coalesce(u.raw_user_meta_data ->> 'full_name', u.raw_user_meta_data ->> 'name') AS full_name,
+      coalesce(u.raw_app_meta_data  ->> 'role',     'user')                      AS role,
+      u.created_at,
+      u.last_sign_in_at,
+      coalesce(u.raw_app_meta_data  ->> 'provider', 'email')                     AS provider
+    FROM auth.users u
+    WHERE
+      (v_role = 'all' OR coalesce(u.raw_app_meta_data ->> 'role', 'user') = v_role)
+      AND (v_q IS NULL OR u.email ILIKE '%' || v_q || '%')
+  ),
+  counted AS (SELECT count(*)::bigint AS n FROM base)
+  SELECT b.id, b.email, b.full_name, b.role, b.created_at, b.last_sign_in_at, b.provider, c.n
+  FROM base b CROSS JOIN counted c
+  ORDER BY b.created_at DESC
+  LIMIT v_per OFFSET v_offset;
+END $$;
+
+REVOKE ALL ON FUNCTION public.list_app_users(text, text, int, int) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.list_app_users(text, text, int, int) TO authenticated;
+
+COMMENT ON FUNCTION public.list_app_users(text, text, int, int) IS
+  'Admin-only browser-callable. Returns auth.users with role normalised. SECURITY DEFINER; body asserts is_admin().';
 
 DROP POLICY IF EXISTS "ingredients_admin_write"         ON public.ingredients;
 DROP POLICY IF EXISTS "utensils_admin_write"            ON public.utensils;
