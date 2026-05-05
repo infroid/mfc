@@ -6,3 +6,6 @@ automation/.env
 automation/.venv/
 __pycache__/
 *.pyc
+
+# Codex
+.codex/
