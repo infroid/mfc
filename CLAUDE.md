@@ -103,8 +103,8 @@ Schema layers:
   `(user_id, metric_id, measured_at)` PK).
 - **Recommendations** — `recommendations`. Written by the offline data pipeline
   (secret key bypass); user reads only their own rows.
-- **User-owned** — `saved_recipes`, `cooking_sessions`, `user_prefs`,
-  `user_profiles`, `meal_logs`. RLS scoped to `auth.uid() = user_id`.
+- **User-owned** — `saved_recipes`, `cooking_sessions`, `user_profiles`,
+  `meal_logs`. RLS scoped to `auth.uid() = user_id`.
   `user_profiles` (one row per user) holds typed columns the recommender
   pipeline joins on: `date_of_birth`, `diet_tags[]`, `allergies[]`, `goals[]`,
   `units`. Display name and biological sex live separately on
@@ -205,9 +205,8 @@ render there, so no soft-pref treatment.
 ## Anonymous → authed handoff
 
 On first sign-in, [shared/auth.js](shared/auth.js) calls
-`window.MFC.db.handoffAnonymous(user)` which migrates any pre-auth tweaks
-(`localStorage.mfc_tweaks`) and in-progress cooking sessions
-(`localStorage.mfc_session_<recipeId>`) into `user_prefs` / `cooking_sessions`,
+`window.MFC.db.handoffAnonymous(user)` which migrates any in-progress cooking
+sessions (`localStorage.mfc_session_<recipeId>`) into `cooking_sessions`,
 then clears the local copies.
 
 ## Shared assets

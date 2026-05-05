@@ -20,8 +20,7 @@
 -- =============================================================================
 -- DESTRUCTIVE: uncomment to wipe everything before re-applying the schema.
 -- DROP TABLE IF EXISTS public.meal_logs, public.cooking_sessions, public.saved_recipes,
---   public.recommendations, public.user_health_markers, public.user_prefs,
---   public.user_profiles,
+--   public.recommendations, public.user_health_markers, public.user_profiles,
 --   public.recipe_health_facts, public.recipe_tags, public.recipe_utensils,
 --   public.recipe_steps, public.recipe_ingredients, public.utensil_buy_links,
 --   public.recipes, public.utensils, public.ingredients, public.metric_definitions
@@ -374,21 +373,6 @@ COMMENT ON COLUMN public.cooking_sessions.updated_at  IS 'Auto-updated via touch
 COMMENT ON COLUMN public.cooking_sessions.completed_at IS 'Set when the user completes all steps. NULL = still in progress.';
 
 
-CREATE TABLE IF NOT EXISTS public.user_prefs (
-  user_id    uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  key        text NOT NULL,
-  value      jsonb NOT NULL,
-  updated_at timestamptz NOT NULL DEFAULT now(),
-  PRIMARY KEY (user_id, key)
-);
-
-COMMENT ON TABLE  public.user_prefs            IS 'Generic per-user key/value preference store.';
-COMMENT ON COLUMN public.user_prefs.user_id    IS 'FK → auth.users.id.';
-COMMENT ON COLUMN public.user_prefs.key        IS 'Pref name: "tweaks", "default_servings", "voiceover_voice".';
-COMMENT ON COLUMN public.user_prefs.value      IS 'JSONB blob — shape owned by consumer code.';
-COMMENT ON COLUMN public.user_prefs.updated_at IS 'Auto-updated via touch_updated_at trigger on UPDATE.';
-
-
 CREATE TABLE IF NOT EXISTS public.user_profiles (
   user_id       uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   date_of_birth date,
@@ -452,7 +436,6 @@ DROP TRIGGER IF EXISTS trg_utensils_updated_at            ON public.utensils;
 DROP TRIGGER IF EXISTS trg_recipes_updated_at             ON public.recipes;
 DROP TRIGGER IF EXISTS trg_user_health_markers_updated_at ON public.user_health_markers;
 DROP TRIGGER IF EXISTS trg_cooking_sessions_updated_at    ON public.cooking_sessions;
-DROP TRIGGER IF EXISTS trg_user_prefs_updated_at          ON public.user_prefs;
 DROP TRIGGER IF EXISTS trg_user_profiles_updated_at       ON public.user_profiles;
 
 CREATE TRIGGER trg_ingredients_updated_at
@@ -473,10 +456,6 @@ CREATE TRIGGER trg_user_health_markers_updated_at
 
 CREATE TRIGGER trg_cooking_sessions_updated_at
   BEFORE UPDATE ON public.cooking_sessions
-  FOR EACH ROW EXECUTE FUNCTION public.touch_updated_at();
-
-CREATE TRIGGER trg_user_prefs_updated_at
-  BEFORE UPDATE ON public.user_prefs
   FOR EACH ROW EXECUTE FUNCTION public.touch_updated_at();
 
 CREATE TRIGGER trg_user_profiles_updated_at
@@ -526,14 +505,12 @@ CREATE POLICY "metric_definitions_public_read"  ON public.metric_definitions  FO
 ALTER TABLE public.user_health_markers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.saved_recipes       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cooking_sessions    ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.user_prefs          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_profiles       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.meal_logs           ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "user_health_markers_owner_all" ON public.user_health_markers;
 DROP POLICY IF EXISTS "saved_recipes_owner_all"       ON public.saved_recipes;
 DROP POLICY IF EXISTS "cooking_sessions_owner_all"    ON public.cooking_sessions;
-DROP POLICY IF EXISTS "user_prefs_owner_all"          ON public.user_prefs;
 DROP POLICY IF EXISTS "user_profiles_owner_all"       ON public.user_profiles;
 DROP POLICY IF EXISTS "meal_logs_owner_all"           ON public.meal_logs;
 
@@ -542,8 +519,6 @@ CREATE POLICY "user_health_markers_owner_all" ON public.user_health_markers
 CREATE POLICY "saved_recipes_owner_all"       ON public.saved_recipes
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "cooking_sessions_owner_all"    ON public.cooking_sessions
-  FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "user_prefs_owner_all"          ON public.user_prefs
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "user_profiles_owner_all"       ON public.user_profiles
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);

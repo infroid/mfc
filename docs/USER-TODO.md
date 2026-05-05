@@ -28,7 +28,7 @@ In **SQL Editor**, run these in order:
 
 Verify in **Table Editor**:
 
-- 17 tables exist under `public` schema (catalog, library, health markers,
+- 16 tables exist under `public` schema (catalog, library, health markers,
   recommendations, user-owned including `user_profiles`).
 - `metric_definitions` has 54 rows across 10 categories (lipid, metabolic,
   iron-panel, inflammation, liver, kidney, vitamin, mineral, thyroid, other).

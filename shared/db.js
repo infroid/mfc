@@ -173,25 +173,6 @@ window.MFC.db = (function () {
     return data;
   }
 
-  // ---------- Prefs ----------
-
-  async function getPref(key) {
-    if (!sb) return null;
-    const uid = userId(); if (!uid) return null;
-    const { data, error } = await sb.from('user_prefs')
-      .select('value').eq('user_id', uid).eq('key', key).maybeSingle();
-    if (error) { console.warn('[db.getPref]', error); return null; }
-    return data?.value ?? null;
-  }
-
-  async function setPref(key, value) {
-    if (!sb) return false;
-    const uid = userId(); if (!uid) return false;
-    const { error } = await sb.from('user_prefs').upsert({ user_id: uid, key, value });
-    if (error) { console.warn('[db.setPref]', error); return false; }
-    return true;
-  }
-
   // ---------- Profile ----------
 
   async function getUserProfile() {
@@ -331,17 +312,7 @@ window.MFC.db = (function () {
     if (!sb) return;
     const uid = userId(); if (!uid) return;
 
-    // 1. Tweaks panel (if anything was persisted to localStorage under 'mfc_tweaks').
-    try {
-      const raw = localStorage.getItem('mfc_tweaks');
-      if (raw) {
-        const value = JSON.parse(raw);
-        await setPref('tweaks', value);
-        localStorage.removeItem('mfc_tweaks');
-      }
-    } catch (e) { console.warn('[handoff tweaks]', e); }
-
-    // 2. In-progress cooking sessions (keys like 'mfc_session_<recipeId>').
+    // In-progress cooking sessions (keys like 'mfc_session_<recipeId>').
     try {
       const sessionKeys = Object.keys(localStorage).filter((k) => k.startsWith('mfc_session_'));
       for (const k of sessionKeys) {
@@ -363,7 +334,6 @@ window.MFC.db = (function () {
     getRecipes, getRecipe,
     saveRecipe, unsaveRecipe, getSaved,
     upsertSession, getSession,
-    getPref, setPref,
     getUserProfile, upsertUserProfile,
     getMetricDefinitions, getHealthMarkers, upsertHealthMarker,
     getRecommendations,
