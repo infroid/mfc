@@ -1,11 +1,18 @@
-"""Recipe catalog import — port of scripts/import_recipes.mjs.
+"""Recipe catalog import — bulk-batched upsert.
 
-Three passes:
-  1. Walk recipe.json bundles, collect unique ingredients + utensils
-  2. Upsert library tables (ingredients, utensils)
-  3. Upsert each recipe row, then replace its child rows
-     (recipe_tags, recipe_ingredients, recipe_steps, recipe_utensils,
-     recipe_health_facts)
+Strategy:
+  1. Walk recipe.json bundles, collect unique ingredients + utensils.
+  2. Upsert library tables (one round-trip per table).
+  3. Upsert recipes table (one round-trip).
+  4. For each child join table (recipe_tags, recipe_ingredients,
+     recipe_steps, recipe_utensils, recipe_health_facts):
+        - DELETE WHERE recipe_id IN (all bundle ids)   — one round-trip
+        - INSERT all collected rows                    — one round-trip
+
+Total round-trips: ~13, regardless of recipe count. Per-recipe
+isolation is gone (a malformed row aborts that table's batch); for
+this dataset that's a worthwhile trade. The previous per-recipe
+approach was ~11 round-trips per bundle which scaled badly.
 
 Idempotent — a re-run reconciles to the same end state.
 """
@@ -45,7 +52,7 @@ def _guess_unit(amount: str | None) -> str:
 
 @dataclass
 class _LibraryRows:
-    ingredients: dict[str, dict]   # slug -> row
+    ingredients: dict[str, dict]
     utensils: dict[str, dict]
 
 
@@ -97,79 +104,83 @@ def _build_recipe_row(detail: dict) -> dict:
     }
 
 
-def _replace_children(sb, table: str, recipe_id: str, rows: list[dict]) -> None:
-    """Delete-then-insert pattern: cleanest way to reconcile join tables."""
-    sb.table(table).delete().eq("recipe_id", recipe_id).execute()
+def _build_child_rows(bundles: list[dict]) -> dict[str, list[dict]]:
+    """Flatten all child rows (across every bundle) into one list per table."""
+    tags: list[dict] = []
+    ingredients: list[dict] = []
+    steps: list[dict] = []
+    utensils: list[dict] = []
+    health_facts: list[dict] = []
+
+    for detail in bundles:
+        rid = detail["id"]
+
+        for t in detail.get("tags") or []:
+            tags.append({"recipe_id": rid, "tag": t})
+
+        for i, ing in enumerate(detail.get("ingredients") or []):
+            if not ing.get("name"):
+                continue
+            ingredients.append({
+                "recipe_id": rid,
+                "sort_order": i,
+                "ingredient_id": _slugify(ing["name"]),
+                "group_name": ing.get("group"),
+                "amount": ing.get("amt"),
+                "unit": None,
+            })
+
+        for i, step in enumerate(detail.get("steps") or []):
+            steps.append({
+                "recipe_id": rid,
+                "sort_order": step["id"] if isinstance(step.get("id"), int) else (i + 1),
+                "title": step["title"],
+                "detail": step["detail"],
+                "duration_seconds": step.get("duration"),
+                "tip": step.get("tip"),
+                "media_caption": (step.get("media") or {}).get("caption"),
+            })
+
+        # Utensils — dedupe slugs per recipe; recipes occasionally list the
+        # same tool twice (e.g. "knife" used in multiple steps).
+        seen_u: set[str] = set()
+        ord_u = 0
+        for u in detail.get("utensils") or []:
+            if not u.get("name"):
+                continue
+            slug = _slugify(u["name"])
+            if slug in seen_u:
+                continue
+            seen_u.add(slug)
+            utensils.append({
+                "recipe_id": rid,
+                "sort_order": ord_u,
+                "utensil_id": slug,
+                "essential": bool(u.get("essential")),
+            })
+            ord_u += 1
+
+        for i, fact in enumerate(detail.get("healthFacts") or []):
+            health_facts.append({"recipe_id": rid, "sort_order": i, "fact": fact})
+
+    return {
+        "recipe_tags":         tags,
+        "recipe_ingredients":  ingredients,
+        "recipe_steps":        steps,
+        "recipe_utensils":     utensils,
+        "recipe_health_facts": health_facts,
+    }
+
+
+def _bulk_replace_children(sb, table: str, rows: list[dict], recipe_ids: list[str]) -> None:
+    """Replace all child rows for the given recipes in two round-trips."""
+    sb.table(table).delete().in_("recipe_id", recipe_ids).execute()
     if rows:
         sb.table(table).insert(rows).execute()
-
-
-def _upsert_recipe(sb, detail: dict) -> None:
-    rid = detail["id"]
-    sb.table("recipes").upsert(_build_recipe_row(detail), on_conflict="id").execute()
-
-    # Tags
-    tags = detail.get("tags") or []
-    _replace_children(sb, "recipe_tags", rid,
-        [{"recipe_id": rid, "tag": t} for t in tags])
-
-    # Ingredients (FK join via slugified ingredient_id)
-    ings = detail.get("ingredients") or []
-    _replace_children(sb, "recipe_ingredients", rid, [
-        {
-            "recipe_id": rid,
-            "sort_order": i,
-            "ingredient_id": _slugify(ing["name"]),
-            "group_name": ing.get("group"),
-            "amount": ing.get("amt"),
-            "unit": None,
-        }
-        for i, ing in enumerate(ings) if ing.get("name")
-    ])
-
-    # Steps — preserve numeric step.id when present, else 1-based fallback
-    steps = detail.get("steps") or []
-    _replace_children(sb, "recipe_steps", rid, [
-        {
-            "recipe_id": rid,
-            "sort_order": step["id"] if isinstance(step.get("id"), int) else (i + 1),
-            "title": step["title"],
-            "detail": step["detail"],
-            "duration_seconds": step.get("duration"),
-            "tip": step.get("tip"),
-            "media_caption": (step.get("media") or {}).get("caption"),
-        }
-        for i, step in enumerate(steps)
-    ])
-
-    # Utensils (FK join, dedup by slug — same recipe sometimes lists the same tool twice)
-    utensils = detail.get("utensils") or []
-    seen_u: set[str] = set()
-    util_rows: list[dict] = []
-    for u in utensils:
-        if not u.get("name"):
-            continue
-        slug = _slugify(u["name"])
-        if slug in seen_u:
-            continue
-        seen_u.add(slug)
-        util_rows.append({
-            "recipe_id": rid,
-            "sort_order": len(util_rows),
-            "utensil_id": slug,
-            "essential": bool(u.get("essential")),
-        })
-    _replace_children(sb, "recipe_utensils", rid, util_rows)
-
-    # Health facts
-    facts = detail.get("healthFacts") or []
-    _replace_children(sb, "recipe_health_facts", rid,
-        [{"recipe_id": rid, "sort_order": i, "fact": f} for i, f in enumerate(facts)])
+    log.ok(f"{table}: {len(rows)} row(s)")
 
 
 def import_all(config: Config) -> None:
-    """Run all three passes. Errors per-recipe surface as warnings; the
-    overall command continues so one bad bundle doesn't block the others."""
     sb = sb_client.service_client(config)
 
     bundles = [files.load_recipe_json(p) for p in files.iter_recipe_bundles(config.repo_root)]
@@ -177,32 +188,38 @@ def import_all(config: Config) -> None:
         log.warn("no recipe bundles found under web/assets/recipes/")
         return
 
-    log.step(f"pass 1/3 · collecting library rows from {len(bundles)} bundle(s)")
-    lib = _collect_library(bundles)
-    log.info(f"unique ingredients: {len(lib.ingredients)} · utensils: {len(lib.utensils)}")
+    # Drop any bundle missing required fields rather than aborting the whole run.
+    valid: list[dict] = []
+    for d in bundles:
+        if not d.get("id") or not d.get("name") or not d.get("cuisine"):
+            log.warn(f"skipping bundle missing id/name/cuisine: {d.get('id') or '<no-id>'}")
+            continue
+        valid.append(d)
 
-    log.step("pass 2/3 · upserting library tables")
+    log.step(f"pass 1/4 · collected {len(valid)} bundle(s) (skipped {len(bundles) - len(valid)})")
+
+    log.step("pass 2/4 · library upsert")
+    lib = _collect_library(valid)
     if lib.ingredients:
         sb.table("ingredients").upsert(
             list(lib.ingredients.values()), on_conflict="id"
         ).execute()
-        log.ok(f"ingredients populated ({len(lib.ingredients)})")
+        log.ok(f"ingredients: {len(lib.ingredients)}")
     if lib.utensils:
         sb.table("utensils").upsert(
             list(lib.utensils.values()), on_conflict="id"
         ).execute()
-        log.ok(f"utensils populated ({len(lib.utensils)})")
+        log.ok(f"utensils: {len(lib.utensils)}")
 
-    log.step(f"pass 3/3 · upserting {len(bundles)} recipe(s)")
-    failed: list[str] = []
-    for detail in bundles:
-        rid = detail.get("id", "<unknown>")
-        try:
-            _upsert_recipe(sb, detail)
-            log.ok(rid)
-        except Exception as e:  # noqa: BLE001 — per-recipe isolation is intentional
-            log.error(f"{rid}: {e}")
-            failed.append(rid)
+    log.step(f"pass 3/4 · recipes upsert ({len(valid)} rows)")
+    sb.table("recipes").upsert(
+        [_build_recipe_row(d) for d in valid], on_conflict="id"
+    ).execute()
+    log.ok(f"recipes: {len(valid)}")
 
-    if failed:
-        raise RuntimeError(f"{len(failed)} recipe(s) failed: {', '.join(failed)}")
+    log.step("pass 4/4 · child tables (delete-then-insert per table)")
+    children = _build_child_rows(valid)
+    recipe_ids = [d["id"] for d in valid]
+    for table in ("recipe_tags", "recipe_ingredients", "recipe_steps",
+                  "recipe_utensils", "recipe_health_facts"):
+        _bulk_replace_children(sb, table, children[table], recipe_ids)
