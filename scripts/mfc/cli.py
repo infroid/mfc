@@ -12,7 +12,7 @@ from __future__ import annotations
 import argparse
 from typing import Sequence
 
-from .commands import apply_schema, seed_metrics, status
+from .commands import apply_schema, import_recipes, seed_metrics, status
 from .core import log
 from .core.config import Config, ConfigError
 
@@ -22,6 +22,7 @@ COMMAND_MODULES = [
     status,
     apply_schema,
     seed_metrics,
+    import_recipes,
 ]
 
 
