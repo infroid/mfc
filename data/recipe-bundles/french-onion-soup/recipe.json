@@ -1,0 +1,79 @@
+{
+  "id": "french-onion-soup",
+  "name": "French Onion Soup",
+  "tagline": "Caramelized onions, beef broth, gruyère-crowned crouton",
+  "shortTagline": "deep caramel · nut-free · 90 min",
+  "cuisine": "French",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 90,
+  "tags": ["non-veg", "nut-free"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Forty minutes of patient stirring = mahogany onions",
+  "media": {
+    "emoji": "🧅",
+    "hero": {
+      "palette": ["#A0522D", "#F4D67A", "#3A332A"],
+      "src": "data/recipe-bundles/french-onion-soup/hero.jpg",
+      "alt": "French onion soup with bubbling cheese-topped crouton",
+      "caption": "french onion — caramel and gruyère"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free; built on onions, broth, bread, and cheese.",
+    "Onions release quercetin during long, slow cooking — anti-inflammatory.",
+    "Gruyère is naturally low in lactose due to long aging."
+  ],
+  "ingredients": [
+    { "name": "Yellow onions", "amt": "3 lb, sliced thin", "group": "main" },
+    { "name": "Butter", "amt": "3 tbsp", "group": "fat" },
+    { "name": "Olive oil", "amt": "1 tbsp", "group": "fat" },
+    { "name": "Beef stock", "amt": "6 cups", "group": "liquid" },
+    { "name": "Dry white wine", "amt": "1/2 cup", "group": "liquid" },
+    { "name": "Bay leaf", "amt": "1", "group": "aromatics" },
+    { "name": "Thyme", "amt": "4 sprigs", "group": "aromatics" },
+    { "name": "Baguette slices", "amt": "8, toasted", "group": "garnish" },
+    { "name": "Gruyère (grated)", "amt": "2 cups", "group": "garnish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Slow caramelize",
+      "detail": "Melt butter and oil in a heavy pot. Add onions and a pinch of salt. Cook over medium-low 40 minutes, stirring every few minutes, until deep mahogany.",
+      "duration": 2400,
+      "tip": "Brown bits sticking? Splash water and scrape — that's flavor.",
+      "media": { "src": "data/recipe-bundles/french-onion-soup/step-01-caramelize.jpg", "alt": "Onions deep brown in pot", "caption": "slow caramelize" }
+    },
+    {
+      "id": 2,
+      "title": "Deglaze with wine",
+      "detail": "Pour in wine, scrape the fond, and reduce until nearly dry, ~3 minutes.",
+      "duration": 180,
+      "tip": "Use a dry white you'd drink — sweet wine will throw off the balance.",
+      "media": { "src": "data/recipe-bundles/french-onion-soup/step-02-deglaze.jpg", "alt": "Wine deglazing onions", "caption": "deglaze with wine" }
+    },
+    {
+      "id": 3,
+      "title": "Simmer with broth",
+      "detail": "Add stock, bay leaf, thyme. Bring to a simmer and cook gently 30 minutes. Salt to taste.",
+      "duration": 1800,
+      "tip": "Use the best stock you can — it's the bulk of the flavor.",
+      "media": { "src": "data/recipe-bundles/french-onion-soup/step-03-simmer.jpg", "alt": "Onion soup simmering", "caption": "simmer with broth" }
+    },
+    {
+      "id": 4,
+      "title": "Crouton and broil",
+      "detail": "Ladle into oven-safe bowls. Top each with toast and a heap of gruyère. Broil 2–3 minutes until cheese is bubbly and browned.",
+      "duration": 180,
+      "tip": "Set bowls on a sheet pan — overflowing cheese is real.",
+      "media": { "src": "data/recipe-bundles/french-onion-soup/step-04-broil.jpg", "alt": "Cheese broiling on soup", "caption": "crouton and broil" }
+    }
+  ],
+  "utensils": [
+    { "name": "Heavy soup pot", "essential": true },
+    { "name": "Oven-safe soup bowls", "essential": true },
+    { "name": "Wooden spoon", "essential": true }
+  ]
+}

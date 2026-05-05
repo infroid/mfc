@@ -1,0 +1,80 @@
+{
+  "id": "salmon-quinoa-salad",
+  "name": "Salmon Quinoa Salad",
+  "tagline": "Flaked salmon on quinoa with cucumber, herbs, lemon-tahini",
+  "shortTagline": "lunch bowl · shellfish-free · 35 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 35,
+  "tags": ["pescatarian", "shellfish-free", "high-protein", "gluten-free", "mediterranean"],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Make-ahead lunch bowl — improves overnight, no shellfish",
+  "media": {
+    "emoji": "🥗",
+    "hero": {
+      "palette": ["#7A9C5A", "#E76F51", "#F4D67A"],
+      "src": "data/recipe-bundles/salmon-quinoa-salad/hero.jpg",
+      "alt": "Quinoa salad with flaked salmon, cucumber, herbs",
+      "caption": "salmon quinoa — bright bowl"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Salmon + quinoa = complete protein with omega-3s and slow carbs.",
+    "Tahini adds calcium and rounds out the lemon's brightness."
+  ],
+  "ingredients": [
+    { "name": "Salmon fillet", "amt": "1 lb", "group": "main" },
+    { "name": "Quinoa (rinsed)", "amt": "1 cup", "group": "main" },
+    { "name": "Cucumber (diced)", "amt": "1 small", "group": "main" },
+    { "name": "Cherry tomatoes (halved)", "amt": "1 cup", "group": "main" },
+    { "name": "Red onion (diced)", "amt": "1/4", "group": "aromatics" },
+    { "name": "Fresh dill and parsley", "amt": "1/2 cup combined", "group": "finish" },
+    { "name": "Tahini", "amt": "1/4 cup", "group": "sauce" },
+    { "name": "Lemon", "amt": "1.5", "group": "sauce" },
+    { "name": "Garlic (grated)", "amt": "1 clove", "group": "aromatics" },
+    { "name": "Olive oil", "amt": "2 tbsp", "group": "fat" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Cook quinoa",
+      "detail": "Combine quinoa with 2 cups water and a pinch of salt. Bring to a boil; simmer covered 15 min. Rest 5 min, fluff. Cool slightly.",
+      "duration": 1200,
+      "tip": "Rinsing quinoa first removes saponins (the bitter coating).",
+      "media": { "src": "data/recipe-bundles/salmon-quinoa-salad/step-01-quinoa.jpg", "alt": "Cooking quinoa in pan", "caption": "cook quinoa" }
+    },
+    {
+      "id": 2,
+      "title": "Cook the salmon",
+      "detail": "Brush salmon with olive oil, salt, pepper. Roast at 400°F for 12 min, or pan-sear, until just cooked. Let cool, flake into chunks.",
+      "duration": 720,
+      "tip": "Cooked salmon flakes cleanly if you push parallel to the lines, not across.",
+      "media": { "src": "data/recipe-bundles/salmon-quinoa-salad/step-02-salmon.jpg", "alt": "Cooking salmon for flaking", "caption": "cook the salmon" }
+    },
+    {
+      "id": 3,
+      "title": "Whisk lemon-tahini",
+      "detail": "Whisk tahini, lemon juice, grated garlic, salt, and 3–4 tbsp water until pourable.",
+      "duration": 120,
+      "tip": "Tahini will seize, then loosen with more water — don't panic.",
+      "media": { "src": "data/recipe-bundles/salmon-quinoa-salad/step-03-tahini.jpg", "alt": "Lemon tahini sauce", "caption": "whisk lemon-tahini" }
+    },
+    {
+      "id": 4,
+      "title": "Fold and finish",
+      "detail": "Toss quinoa with cucumber, tomatoes, onion, herbs, half the tahini sauce. Gently fold in flaked salmon. Drizzle remaining sauce on top.",
+      "duration": 180,
+      "tip": "Hold dressing back when packing for tomorrow's lunch — wait until eating.",
+      "media": { "src": "data/recipe-bundles/salmon-quinoa-salad/step-04-fold.jpg", "alt": "Salmon quinoa salad mixed", "caption": "fold and finish" }
+    }
+  ],
+  "utensils": [
+    { "name": "Saucepan with lid", "essential": true },
+    { "name": "Sheet pan or skillet", "essential": true },
+    { "name": "Mixing bowl", "essential": true }
+  ]
+}

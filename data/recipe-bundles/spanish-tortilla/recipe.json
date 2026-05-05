@@ -1,0 +1,75 @@
+{
+  "id": "spanish-tortilla",
+  "name": "Spanish Tortilla",
+  "tagline": "Slow-cooked potato and onion omelette — bar-stand classic",
+  "shortTagline": "tapas · soy-free · 50 min",
+  "cuisine": "Spanish",
+  "difficulty": "Medium",
+  "servings": 6,
+  "totalMinutes": 50,
+  "tags": ["vegetarian", "soy-free", "gluten-free", "mediterranean"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Three ingredients — potato, onion, eggs. No soy.",
+  "media": {
+    "emoji": "🥚",
+    "hero": {
+      "palette": ["#F4D67A", "#FFFCF3", "#3A332A"],
+      "src": "data/recipe-bundles/spanish-tortilla/hero.jpg",
+      "alt": "Sliced Spanish tortilla showing layered potato and egg",
+      "caption": "tortilla española — three ingredients"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Egg + potato together provide complete protein and slow carbs.",
+    "Olive oil cooked low retains polyphenols — frying poaches the potato."
+  ],
+  "ingredients": [
+    { "name": "Yukon gold potatoes", "amt": "1.5 lb", "group": "main" },
+    { "name": "Onion", "amt": "1 large", "group": "aromatics" },
+    { "name": "Olive oil", "amt": "1 cup", "group": "fat" },
+    { "name": "Eggs", "amt": "8 large", "group": "main" },
+    { "name": "Salt", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Slice paper-thin",
+      "detail": "Slice potato 1/8-inch thick. Slice onion thin. Salt both — it'll start releasing water.",
+      "duration": 360,
+      "tip": "A mandoline gives even slices — even cooking.",
+      "media": { "src": "data/recipe-bundles/spanish-tortilla/step-01-slice.jpg", "alt": "Thinly sliced potatoes and onion", "caption": "slice paper-thin" }
+    },
+    {
+      "id": 2,
+      "title": "Slow-poach in olive oil",
+      "detail": "Heat olive oil in a 10-inch non-stick pan over medium-low. Slip in potatoes and onion. Cook 25 min, turning occasionally — they should soften but not crisp.",
+      "duration": 1500,
+      "tip": "It's not frying, it's confiting. Bubbles should be gentle.",
+      "media": { "src": "data/recipe-bundles/spanish-tortilla/step-02-poach.jpg", "alt": "Potatoes confiting in olive oil", "caption": "slow-poach in olive oil" }
+    },
+    {
+      "id": 3,
+      "title": "Mix with eggs",
+      "detail": "Whisk eggs with salt. Drain potato-onion mix (save oil), fold into eggs. Rest 10 min — flavors meld.",
+      "duration": 600,
+      "tip": "Resting lets eggs absorb potato starch — that's the silky texture.",
+      "media": { "src": "data/recipe-bundles/spanish-tortilla/step-03-mix.jpg", "alt": "Egg mixture with potatoes", "caption": "mix with eggs" }
+    },
+    {
+      "id": 4,
+      "title": "Cook and flip",
+      "detail": "Heat 2 tbsp of the reserved oil in the pan. Pour in mixture. Cook 5 min until edges set. Cover with a plate, invert, slide back in. Cook 3 min more.",
+      "duration": 480,
+      "tip": "Flip is dramatic but works. Confidence beats hesitation.",
+      "media": { "src": "data/recipe-bundles/spanish-tortilla/step-04-flip.jpg", "alt": "Flipping the tortilla onto plate", "caption": "cook and flip" }
+    }
+  ],
+  "utensils": [
+    { "name": "10-inch non-stick pan", "essential": true },
+    { "name": "Large flat plate", "essential": true },
+    { "name": "Whisk", "essential": true }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "split-pea-soup",
+  "name": "Split Pea Soup",
+  "tagline": "Slow-cooked split pea soup with carrot, ham hock, and thyme",
+  "shortTagline": "slow-cooked · egg-free · 90 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 90,
+  "tags": ["non-veg", "egg-free", "high-protein", "one-pot"],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.20)",
+  "featured": false,
+  "highlight": "Pantry-cheap, dense protein, no eggs ever",
+  "media": {
+    "emoji": "🥣",
+    "hero": {
+      "palette": ["#7A9C5A", "#A0522D", "#FFFCF3"],
+      "src": "data/recipe-bundles/split-pea-soup/hero.jpg",
+      "alt": "Thick split pea soup with ham and croutons",
+      "caption": "split pea — thick and savory"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Split peas pack ~16g protein and 16g fiber per cooked cup.",
+    "A ham hock adds collagen-rich gelatin during the slow simmer — gut-friendly."
+  ],
+  "ingredients": [
+    { "name": "Green split peas", "amt": "1 lb", "group": "main" },
+    { "name": "Smoked ham hock", "amt": "1", "group": "main" },
+    { "name": "Onion", "amt": "1 large", "group": "aromatics" },
+    { "name": "Carrots (diced)", "amt": "3", "group": "main" },
+    { "name": "Celery (diced)", "amt": "3 stalks", "group": "main" },
+    { "name": "Garlic", "amt": "3 cloves", "group": "aromatics" },
+    { "name": "Bay leaves", "amt": "2", "group": "aromatics" },
+    { "name": "Thyme", "amt": "4 sprigs", "group": "aromatics" },
+    { "name": "Water or stock", "amt": "8 cups", "group": "liquid" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Sweat the mirepoix",
+      "detail": "Cook onion, carrot, celery in 2 tbsp olive oil 10 minutes until soft. Add garlic, cook 1 minute.",
+      "duration": 660,
+      "tip": "The trinity of soup. Don't rush it — soft veg = smoother soup.",
+      "media": { "src": "data/recipe-bundles/split-pea-soup/step-01-mirepoix.jpg", "alt": "Mirepoix cooking in pot", "caption": "sweat the mirepoix" }
+    },
+    {
+      "id": 2,
+      "title": "Add peas and hock",
+      "detail": "Stir in split peas, ham hock, bay, thyme. Pour in water/stock. Bring to a boil, then drop to a low simmer.",
+      "duration": 180,
+      "tip": "Rinse split peas first to remove any grit.",
+      "media": { "src": "data/recipe-bundles/split-pea-soup/step-02-peas.jpg", "alt": "Peas and ham hock in pot", "caption": "add peas and hock" }
+    },
+    {
+      "id": 3,
+      "title": "Long simmer",
+      "detail": "Cover and simmer 70 minutes, stirring occasionally, until peas have broken down and soup has thickened.",
+      "duration": 4200,
+      "tip": "Lid askew — fully covered traps too much steam, fully open thickens too much.",
+      "media": { "src": "data/recipe-bundles/split-pea-soup/step-03-simmer.jpg", "alt": "Split pea soup simmering", "caption": "long simmer" }
+    },
+    {
+      "id": 4,
+      "title": "Pull hock, salt, finish",
+      "detail": "Pull the hock out, dice the meat off the bone, return meat to pot. Discard bay. Salt to taste — wait until the end since the hock is salty.",
+      "duration": 240,
+      "tip": "Soup will thicken further on cooling — thin with stock if reheating.",
+      "media": { "src": "data/recipe-bundles/split-pea-soup/step-04-finish.jpg", "alt": "Finished split pea soup with ham", "caption": "pull hock, salt, finish" }
+    }
+  ],
+  "utensils": [
+    { "name": "Heavy soup pot", "essential": true },
+    { "name": "Wooden spoon", "essential": true },
+    { "name": "Tongs", "essential": false }
+  ]
+}

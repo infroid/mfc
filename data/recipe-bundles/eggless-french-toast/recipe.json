@@ -1,0 +1,78 @@
+{
+  "id": "eggless-french-toast",
+  "name": "Eggless French Toast",
+  "tagline": "Cinnamon-soaked thick-cut bread, fried golden — no eggs in the custard",
+  "shortTagline": "no-egg custard · 20 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 20,
+  "tags": ["vegetarian", "egg-free", "quick"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Cornstarch milk + cinnamon = silky no-egg custard",
+  "media": {
+    "emoji": "🍞",
+    "hero": {
+      "palette": ["#F4D67A", "#A0522D", "#FFFCF3"],
+      "src": "data/recipe-bundles/eggless-french-toast/hero.jpg",
+      "alt": "Stack of golden French toast with maple syrup pour",
+      "caption": "eggless french toast — golden, cinnamon-spiked"
+    }
+  },
+  "healthFacts": [
+    "No eggs — milk thickened with cornstarch coats and crisps just as well.",
+    "Day-old bread absorbs more without falling apart — perfect texture.",
+    "Cinnamon spike helps blunt blood-sugar swings from the bread."
+  ],
+  "ingredients": [
+    { "name": "Thick-cut bread (challah or brioche-style egg-free)", "amt": "8 slices", "group": "main" },
+    { "name": "Whole milk", "amt": "1.5 cups", "group": "liquid" },
+    { "name": "Cornstarch", "amt": "3 tbsp", "group": "thickener" },
+    { "name": "Sugar", "amt": "2 tbsp", "group": "sweetener" },
+    { "name": "Cinnamon", "amt": "1 tsp", "group": "spice" },
+    { "name": "Vanilla", "amt": "1 tsp", "group": "finish" },
+    { "name": "Salt", "amt": "pinch", "group": "spice" },
+    { "name": "Butter", "amt": "for griddle", "group": "fat" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Whisk the custard",
+      "detail": "Whisk milk, cornstarch, sugar, cinnamon, vanilla, salt until cornstarch dissolves completely.",
+      "duration": 120,
+      "tip": "Strain if you see lumps — cornstarch curdles on a hot griddle.",
+      "media": { "src": "data/recipe-bundles/eggless-french-toast/step-01-custard.jpg", "alt": "Whisking custard", "caption": "whisk the custard" }
+    },
+    {
+      "id": 2,
+      "title": "Soak briefly",
+      "detail": "Dip bread for 8–10 seconds per side — long enough to coat, not soak through.",
+      "duration": 120,
+      "tip": "Stale bread absorbs more cleanly than fresh; toast slices first if your bread is too soft.",
+      "media": { "src": "data/recipe-bundles/eggless-french-toast/step-02-soak.jpg", "alt": "Bread soaking in custard", "caption": "soak briefly" }
+    },
+    {
+      "id": 3,
+      "title": "Sizzle in butter",
+      "detail": "Heat butter in a non-stick skillet over medium. Cook bread 2–3 minutes per side until golden.",
+      "duration": 360,
+      "tip": "Wipe the pan between batches — butter solids burn after the first round.",
+      "media": { "src": "data/recipe-bundles/eggless-french-toast/step-03-cook.jpg", "alt": "French toast frying in butter", "caption": "sizzle in butter" }
+    },
+    {
+      "id": 4,
+      "title": "Serve hot",
+      "detail": "Stack and serve immediately with maple syrup, fresh berries, or a dusting of powdered sugar.",
+      "duration": 60,
+      "tip": "Holding warm in a 200°F oven on a rack keeps slices crisp without sweating.",
+      "media": { "src": "data/recipe-bundles/eggless-french-toast/step-04-serve.jpg", "alt": "Serving French toast with syrup", "caption": "serve hot" }
+    }
+  ],
+  "utensils": [
+    { "name": "Wide non-stick skillet", "essential": true },
+    { "name": "Wide bowl for soaking", "essential": true },
+    { "name": "Whisk", "essential": true }
+  ]
+}

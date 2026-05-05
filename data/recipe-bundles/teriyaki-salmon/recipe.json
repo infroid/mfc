@@ -1,0 +1,79 @@
+{
+  "id": "teriyaki-salmon",
+  "name": "Teriyaki Salmon",
+  "tagline": "Lacquered teriyaki salmon with rice and steamed greens",
+  "shortTagline": "weeknight · shellfish-free · 25 min",
+  "cuisine": "Japanese",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 25,
+  "tags": ["pescatarian", "shellfish-free", "asian", "high-protein", "quick"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Glaze reduces in the pan — no shellfish, no fuss",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": ["#A0522D", "#7A9C5A", "#F4D67A"],
+      "src": "data/recipe-bundles/teriyaki-salmon/hero.jpg",
+      "alt": "Teriyaki salmon glazed dark over rice",
+      "caption": "teriyaki salmon — lacquered"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Salmon's omega-3s reduce inflammation; pairing with greens supports the protective effect.",
+    "Mirin's sweetness offsets soy's salt without added sugar."
+  ],
+  "ingredients": [
+    { "name": "Salmon fillets (skin-on)", "amt": "4 (6oz)", "group": "main" },
+    { "name": "Soy sauce", "amt": "1/3 cup", "group": "sauce" },
+    { "name": "Mirin", "amt": "1/4 cup", "group": "sauce" },
+    { "name": "Sake", "amt": "2 tbsp", "group": "sauce" },
+    { "name": "Brown sugar", "amt": "2 tbsp", "group": "sweetener" },
+    { "name": "Ginger (grated)", "amt": "1 tbsp", "group": "aromatics" },
+    { "name": "Garlic (grated)", "amt": "2 cloves", "group": "aromatics" },
+    { "name": "Neutral oil", "amt": "1 tbsp", "group": "fat" },
+    { "name": "Toasted sesame seeds and scallions", "amt": "to garnish", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Whisk the teriyaki",
+      "detail": "Whisk soy, mirin, sake, brown sugar, ginger, garlic in a small bowl until sugar dissolves.",
+      "duration": 60,
+      "tip": "Don't pre-cook the sauce — reducing in the pan builds layers.",
+      "media": { "src": "data/recipe-bundles/teriyaki-salmon/step-01-sauce.jpg", "alt": "Teriyaki sauce in a bowl", "caption": "whisk the teriyaki" }
+    },
+    {
+      "id": 2,
+      "title": "Sear skin-down",
+      "detail": "Pat salmon dry. Heat oil in a non-stick pan over medium-high. Lay salmon skin-down; press 30 sec. Cook 4 min undisturbed.",
+      "duration": 240,
+      "tip": "Pressing the skin against the pan stops it from curling up.",
+      "media": { "src": "data/recipe-bundles/teriyaki-salmon/step-02-sear.jpg", "alt": "Salmon searing skin-down", "caption": "sear skin-down" }
+    },
+    {
+      "id": 3,
+      "title": "Flip and glaze",
+      "detail": "Flip salmon. Pour in teriyaki; tilt pan to bring sauce to one side and spoon over fish. Cook 2 min as sauce thickens to a glaze.",
+      "duration": 120,
+      "tip": "Glaze should syrup, not boil dry. Pull just before it tightens fully.",
+      "media": { "src": "data/recipe-bundles/teriyaki-salmon/step-03-glaze.jpg", "alt": "Salmon being glazed in teriyaki", "caption": "flip and glaze" }
+    },
+    {
+      "id": 4,
+      "title": "Plate and shower",
+      "detail": "Plate salmon over rice; spoon remaining glaze over. Top with sesame seeds and scallions.",
+      "duration": 60,
+      "tip": "Steamed greens (broccoli, bok choy) on the side soak up the glaze beautifully.",
+      "media": { "src": "data/recipe-bundles/teriyaki-salmon/step-04-plate.jpg", "alt": "Teriyaki salmon plated with rice", "caption": "plate and shower" }
+    }
+  ],
+  "utensils": [
+    { "name": "Non-stick skillet", "essential": true },
+    { "name": "Spatula", "essential": true },
+    { "name": "Mixing bowl", "essential": true }
+  ]
+}

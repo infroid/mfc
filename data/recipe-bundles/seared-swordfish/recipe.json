@@ -1,0 +1,78 @@
+{
+  "id": "seared-swordfish",
+  "name": "Seared Swordfish",
+  "tagline": "Thick-cut swordfish steaks seared with olive oil, lemon, oregano",
+  "shortTagline": "mediterranean · shellfish-free · 20 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 20,
+  "tags": ["pescatarian", "shellfish-free", "mediterranean", "high-protein", "quick"],
+  "color": "#FFFCF3",
+  "colorSoft": "rgba(255,252,243,0.5)",
+  "featured": false,
+  "highlight": "Steak-thick fish — sears like beef, no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": ["#FFFCF3", "#7A9C5A", "#F4D67A"],
+      "src": "data/recipe-bundles/seared-swordfish/hero.jpg",
+      "alt": "Seared swordfish steak with lemon and oregano",
+      "caption": "swordfish — steak-thick"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Swordfish is dense and meaty — eat occasionally as it's higher-mercury.",
+    "Pairing with lemon adds vitamin C; helps the iron from the fish absorb."
+  ],
+  "ingredients": [
+    { "name": "Swordfish steaks (1.5 inch)", "amt": "4", "group": "main" },
+    { "name": "Olive oil", "amt": "1/4 cup", "group": "fat" },
+    { "name": "Lemon", "amt": "1", "group": "finish" },
+    { "name": "Garlic", "amt": "3 cloves", "group": "aromatics" },
+    { "name": "Fresh oregano", "amt": "1 tbsp chopped", "group": "aromatics" },
+    { "name": "Capers", "amt": "1 tbsp", "group": "sauce" },
+    { "name": "Salt", "amt": "to taste", "group": "spice" },
+    { "name": "Cracked pepper", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Season generously",
+      "detail": "Pat fish dry. Salt and pepper both sides. Rest 10 min at room temp.",
+      "duration": 600,
+      "tip": "Cold fish in a hot pan = mealy texture. Temper.",
+      "media": { "src": "data/recipe-bundles/seared-swordfish/step-01-season.jpg", "alt": "Salted swordfish steaks", "caption": "season generously" }
+    },
+    {
+      "id": 2,
+      "title": "Sear hard",
+      "detail": "Heat 2 tbsp olive oil in a wide skillet until just smoking. Sear swordfish 3 min per side, not moving, until deep golden.",
+      "duration": 360,
+      "tip": "Swordfish is dense — undercooked is fine, overcooked is sawdust.",
+      "media": { "src": "data/recipe-bundles/seared-swordfish/step-02-sear.jpg", "alt": "Swordfish searing in pan", "caption": "sear hard" }
+    },
+    {
+      "id": 3,
+      "title": "Pan sauce",
+      "detail": "Pull fish to a plate. Lower heat. Add remaining oil, garlic, oregano, capers; sizzle 30 sec. Squeeze lemon.",
+      "duration": 60,
+      "tip": "Hot pan + lemon = sauce that pulls up everything stuck to the bottom.",
+      "media": { "src": "data/recipe-bundles/seared-swordfish/step-03-sauce.jpg", "alt": "Lemon caper pan sauce", "caption": "pan sauce" }
+    },
+    {
+      "id": 4,
+      "title": "Spoon and rest",
+      "detail": "Spoon sauce over fish. Rest 2 min before serving — fish needs to settle.",
+      "duration": 120,
+      "tip": "Serve with a slick of olive oil over the top to round things out.",
+      "media": { "src": "data/recipe-bundles/seared-swordfish/step-04-rest.jpg", "alt": "Swordfish plated with caper sauce", "caption": "spoon and rest" }
+    }
+  ],
+  "utensils": [
+    { "name": "Wide skillet", "essential": true },
+    { "name": "Spatula", "essential": true },
+    { "name": "Tongs", "essential": false }
+  ]
+}

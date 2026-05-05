@@ -1,0 +1,80 @@
+{
+  "id": "polenta-mushrooms",
+  "name": "Creamy Polenta with Mushrooms",
+  "tagline": "Slow-stirred polenta under garlicky seared wild mushrooms",
+  "shortTagline": "creamy · egg-free · gluten-free · 40 min",
+  "cuisine": "Italian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 40,
+  "tags": ["vegetarian", "egg-free", "gluten-free", "italian"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Polenta is naturally egg-free, gluten-free comfort",
+  "media": {
+    "emoji": "🌽",
+    "hero": {
+      "palette": ["#F4D67A", "#A0522D", "#7A9C5A"],
+      "src": "data/recipe-bundles/polenta-mushrooms/hero.jpg",
+      "alt": "Creamy polenta topped with seared mushrooms and parsley",
+      "caption": "polenta — creamy with mushrooms"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free, gluten-free.",
+    "Stone-ground polenta retains the corn germ — fiber and B vitamins intact.",
+    "Mushrooms add umami and B-vitamins, especially riboflavin."
+  ],
+  "ingredients": [
+    { "name": "Polenta (stone-ground)", "amt": "1 cup", "group": "main" },
+    { "name": "Water or stock", "amt": "4.5 cups", "group": "liquid" },
+    { "name": "Whole milk", "amt": "1/2 cup", "group": "liquid" },
+    { "name": "Butter", "amt": "3 tbsp", "group": "fat" },
+    { "name": "Parmesan", "amt": "1/2 cup grated", "group": "main" },
+    { "name": "Mixed mushrooms", "amt": "1 lb", "group": "main" },
+    { "name": "Garlic", "amt": "3 cloves", "group": "aromatics" },
+    { "name": "Thyme", "amt": "2 sprigs", "group": "aromatics" },
+    { "name": "Olive oil", "amt": "3 tbsp", "group": "fat" },
+    { "name": "Parsley", "amt": "small handful", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Bring liquid to a boil",
+      "detail": "In a heavy pot, bring water and salt to a boil. Slowly stream in polenta, whisking constantly to prevent lumps.",
+      "duration": 240,
+      "tip": "Stream the polenta with one hand, whisk with the other — like making a roux.",
+      "media": { "src": "data/recipe-bundles/polenta-mushrooms/step-01-stream.jpg", "alt": "Pouring polenta into boiling water", "caption": "bring liquid to a boil" }
+    },
+    {
+      "id": 2,
+      "title": "Stir slow",
+      "detail": "Reduce heat to low. Stir every minute or two for 25–30 minutes until polenta is thick and pulls from the sides. Add milk halfway.",
+      "duration": 1800,
+      "tip": "Quick polenta is a lie. Real polenta is a half-hour ritual.",
+      "media": { "src": "data/recipe-bundles/polenta-mushrooms/step-02-stir.jpg", "alt": "Polenta thickening in pot", "caption": "stir slow" }
+    },
+    {
+      "id": 3,
+      "title": "Sear mushrooms",
+      "detail": "Heat olive oil in a wide skillet over high. Sear mushrooms in a single layer 5 min undisturbed, then toss. Add garlic and thyme last 60 sec.",
+      "duration": 480,
+      "tip": "Mushrooms release water — let it cook off before adding salt.",
+      "media": { "src": "data/recipe-bundles/polenta-mushrooms/step-03-mushrooms.jpg", "alt": "Seared mushrooms in pan", "caption": "sear mushrooms" }
+    },
+    {
+      "id": 4,
+      "title": "Finish polenta and plate",
+      "detail": "Beat butter and parmesan into polenta off heat. Spoon into shallow bowls, pile mushrooms on top, scatter parsley.",
+      "duration": 120,
+      "tip": "Polenta tightens as it cools — serve immediately or thin with a splash of hot stock.",
+      "media": { "src": "data/recipe-bundles/polenta-mushrooms/step-04-plate.jpg", "alt": "Polenta plated with mushrooms", "caption": "finish polenta and plate" }
+    }
+  ],
+  "utensils": [
+    { "name": "Heavy pot", "essential": true },
+    { "name": "Wide skillet", "essential": true },
+    { "name": "Whisk", "essential": true }
+  ]
+}

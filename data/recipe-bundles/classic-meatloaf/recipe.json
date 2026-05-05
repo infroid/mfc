@@ -1,0 +1,80 @@
+{
+  "id": "classic-meatloaf",
+  "name": "Classic Meatloaf",
+  "tagline": "Beef-pork loaf with glazy ketchup top and crisp edges",
+  "shortTagline": "comfort · nut-free · 75 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 75,
+  "tags": ["non-veg", "nut-free", "high-protein"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Tender, juicy, gloriously nut-free",
+  "media": {
+    "emoji": "🍞",
+    "hero": {
+      "palette": ["#A0522D", "#E76F51", "#F4D67A"],
+      "src": "data/recipe-bundles/classic-meatloaf/hero.jpg",
+      "alt": "Sliced meatloaf with caramelized ketchup glaze",
+      "caption": "meatloaf — glazed top, juicy slice"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Mixing beef and pork balances flavor and fat — pure beef is too lean and dense.",
+    "Soaked breadcrumbs (panade) hold moisture and prevent a tough loaf."
+  ],
+  "ingredients": [
+    { "name": "Ground beef (80/20)", "amt": "1.5 lb", "group": "main" },
+    { "name": "Ground pork", "amt": "1/2 lb", "group": "main" },
+    { "name": "Breadcrumbs", "amt": "1 cup", "group": "main" },
+    { "name": "Whole milk", "amt": "1/2 cup", "group": "liquid" },
+    { "name": "Egg", "amt": "1", "group": "main" },
+    { "name": "Onion (finely diced)", "amt": "1 medium", "group": "aromatics" },
+    { "name": "Garlic", "amt": "3 cloves", "group": "aromatics" },
+    { "name": "Worcestershire sauce", "amt": "1 tbsp", "group": "sauce" },
+    { "name": "Ketchup", "amt": "1/2 cup", "group": "sauce" },
+    { "name": "Brown sugar", "amt": "2 tbsp", "group": "sauce" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Soak the panade",
+      "detail": "Stir breadcrumbs into milk in a large bowl; rest 5 minutes until completely soft. This is the key to tender meatloaf.",
+      "duration": 300,
+      "tip": "Without soaked bread, you have meatloaf-shaped meatball.",
+      "media": { "src": "data/recipe-bundles/classic-meatloaf/step-01-panade.jpg", "alt": "Breadcrumbs soaking in milk", "caption": "soak the panade" }
+    },
+    {
+      "id": 2,
+      "title": "Mix gently",
+      "detail": "Add beef, pork, egg, onion, garlic, Worcestershire, salt, pepper. Mix with hands until just combined — overmixing = tough.",
+      "duration": 180,
+      "tip": "Pinch off and microwave a small piece to taste-check seasoning before baking.",
+      "media": { "src": "data/recipe-bundles/classic-meatloaf/step-02-mix.jpg", "alt": "Meatloaf mixture being combined", "caption": "mix gently" }
+    },
+    {
+      "id": 3,
+      "title": "Shape and glaze",
+      "detail": "Form into a free-form loaf on a lined sheet pan. Whisk ketchup with brown sugar and slather over the top.",
+      "duration": 240,
+      "tip": "Free-form on a sheet pan beats a loaf pan — more crust, less greasy.",
+      "media": { "src": "data/recipe-bundles/classic-meatloaf/step-03-glaze.jpg", "alt": "Shaped and glazed meatloaf on sheet pan", "caption": "shape and glaze" }
+    },
+    {
+      "id": 4,
+      "title": "Bake to 160°F",
+      "detail": "Bake 350°F for 55–65 minutes until internal temp reads 160°F (71°C). Rest 10 minutes before slicing.",
+      "duration": 3300,
+      "tip": "Cutting hot floods the slice with juice — rest is mandatory.",
+      "media": { "src": "data/recipe-bundles/classic-meatloaf/step-04-bake.jpg", "alt": "Baked meatloaf with caramelized glaze", "caption": "bake to 160°F" }
+    }
+  ],
+  "utensils": [
+    { "name": "Sheet pan with rack", "essential": true },
+    { "name": "Mixing bowl", "essential": true },
+    { "name": "Instant-read thermometer", "essential": true }
+  ]
+}

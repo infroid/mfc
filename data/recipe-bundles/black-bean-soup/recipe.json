@@ -1,0 +1,79 @@
+{
+  "id": "black-bean-soup",
+  "name": "Black Bean Soup",
+  "tagline": "Smoky cumin black bean soup, lime crema, and crisp tortilla",
+  "shortTagline": "smoky · egg-free · vegan-able · 40 min",
+  "cuisine": "Mexican",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 40,
+  "tags": ["vegetarian", "egg-free", "mexican", "high-protein", "one-pot"],
+  "color": "#3A332A",
+  "colorSoft": "rgba(58,51,42,0.16)",
+  "featured": false,
+  "highlight": "Pantry beans, smoky depth, no eggs needed",
+  "media": {
+    "emoji": "🥣",
+    "hero": {
+      "palette": ["#3A332A", "#E76F51", "#7A9C5A"],
+      "src": "data/recipe-bundles/black-bean-soup/hero.jpg",
+      "alt": "Bowl of black bean soup with crema, lime, and cilantro",
+      "caption": "black bean soup — smoky and bright"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Black beans deliver ~15g protein and 15g fiber per cup, with iron and folate.",
+    "Cumin + smoked paprika = the smoke flavor without bacon."
+  ],
+  "ingredients": [
+    { "name": "Black beans (canned)", "amt": "3 (15oz) cans", "group": "main" },
+    { "name": "Onion", "amt": "1 large", "group": "aromatics" },
+    { "name": "Garlic", "amt": "4 cloves", "group": "aromatics" },
+    { "name": "Cumin", "amt": "2 tsp", "group": "spice" },
+    { "name": "Smoked paprika", "amt": "1 tsp", "group": "spice" },
+    { "name": "Chipotle in adobo", "amt": "1, minced", "group": "spice" },
+    { "name": "Vegetable stock", "amt": "4 cups", "group": "liquid" },
+    { "name": "Lime", "amt": "2", "group": "finish" },
+    { "name": "Cilantro", "amt": "handful", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Soften aromatics",
+      "detail": "Sweat onion in olive oil 6 minutes. Add garlic, cook 1 minute. Stir in cumin, paprika, chipotle; bloom 30 seconds.",
+      "duration": 420,
+      "tip": "A whole chipotle pepper from the can = smoky punch without overpowering heat.",
+      "media": { "src": "data/recipe-bundles/black-bean-soup/step-01-aromatics.jpg", "alt": "Onion and spices in pot", "caption": "soften aromatics" }
+    },
+    {
+      "id": 2,
+      "title": "Add beans and stock",
+      "detail": "Stir in 2 cans of beans (drained), the third with its liquid, and stock. Bring to a simmer for 15 minutes.",
+      "duration": 900,
+      "tip": "The bean liquid (aquafaba) thickens the soup naturally.",
+      "media": { "src": "data/recipe-bundles/black-bean-soup/step-02-beans.jpg", "alt": "Beans simmering with stock", "caption": "add beans and stock" }
+    },
+    {
+      "id": 3,
+      "title": "Partial blend",
+      "detail": "Blend half the soup until smooth (immersion blender or carefully in batches). Stir back in for body + texture.",
+      "duration": 120,
+      "tip": "Half-blending is the trick to soup that's both creamy and chunky.",
+      "media": { "src": "data/recipe-bundles/black-bean-soup/step-03-blend.jpg", "alt": "Partially blended bean soup", "caption": "partial blend" }
+    },
+    {
+      "id": 4,
+      "title": "Lime and finish",
+      "detail": "Stir in lime juice off heat. Salt to taste. Top with cilantro, sour cream or vegan crema, and tortilla strips.",
+      "duration": 60,
+      "tip": "Tortilla strips: cut tortillas, toss in oil, oven 400°F for 8 minutes.",
+      "media": { "src": "data/recipe-bundles/black-bean-soup/step-04-finish.jpg", "alt": "Black bean soup with crema and lime", "caption": "lime and finish" }
+    }
+  ],
+  "utensils": [
+    { "name": "Soup pot", "essential": true },
+    { "name": "Immersion blender", "essential": true },
+    { "name": "Ladle", "essential": false }
+  ]
+}

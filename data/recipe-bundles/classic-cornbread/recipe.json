@@ -1,0 +1,79 @@
+{
+  "id": "classic-cornbread",
+  "name": "Classic Cornbread",
+  "tagline": "Cast-iron cornbread, crisp crust, tender crumb — Southern style",
+  "shortTagline": "cast iron · soy-free · 30 min",
+  "cuisine": "Southern American",
+  "difficulty": "Easy",
+  "servings": 8,
+  "totalMinutes": 30,
+  "tags": ["vegetarian", "soy-free", "quick"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.20)",
+  "featured": false,
+  "highlight": "Hot pan, cold batter — crackly crust every time",
+  "media": {
+    "emoji": "🌽",
+    "hero": {
+      "palette": ["#F4D67A", "#A0522D", "#FFFCF3"],
+      "src": "data/recipe-bundles/classic-cornbread/hero.jpg",
+      "alt": "Wedge of cornbread with crisp crust in cast iron",
+      "caption": "cornbread — cast-iron crisp"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Whole-grain cornmeal retains the germ — fiber and antioxidants intact.",
+    "Buttermilk's acid activates leavening for tall, tender cornbread."
+  ],
+  "ingredients": [
+    { "name": "Yellow cornmeal", "amt": "1.5 cups", "group": "main" },
+    { "name": "All-purpose flour", "amt": "1/2 cup", "group": "main" },
+    { "name": "Buttermilk", "amt": "1.25 cups", "group": "liquid" },
+    { "name": "Eggs", "amt": "2", "group": "main" },
+    { "name": "Melted butter", "amt": "1/3 cup", "group": "fat" },
+    { "name": "Sugar", "amt": "2 tbsp (optional)", "group": "sweetener" },
+    { "name": "Baking powder", "amt": "1.5 tsp", "group": "leavening" },
+    { "name": "Baking soda", "amt": "1/2 tsp", "group": "leavening" },
+    { "name": "Salt", "amt": "1 tsp", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Preheat cast iron",
+      "detail": "Place a 10-inch cast iron skillet in a 425°F oven. Heat 10 minutes — the pan must be searing hot.",
+      "duration": 600,
+      "tip": "Cold pan = sad bottom. Hot pan = crackly crust.",
+      "media": { "src": "data/recipe-bundles/classic-cornbread/step-01-preheat.jpg", "alt": "Cast iron preheating in oven", "caption": "preheat cast iron" }
+    },
+    {
+      "id": 2,
+      "title": "Whisk dry, then wet",
+      "detail": "Whisk cornmeal, flour, baking powder, soda, salt, sugar (if using). In a separate bowl, whisk buttermilk, eggs, melted butter (cooled).",
+      "duration": 120,
+      "tip": "Hot melted butter scrambles the eggs — let it cool.",
+      "media": { "src": "data/recipe-bundles/classic-cornbread/step-02-mix.jpg", "alt": "Mixing cornbread batter", "caption": "whisk dry, then wet" }
+    },
+    {
+      "id": 3,
+      "title": "Combine, leave lumpy",
+      "detail": "Pour wet into dry; fold gently. Stop while lumps remain.",
+      "duration": 60,
+      "tip": "Smooth = chewy. Lumpy = tender.",
+      "media": { "src": "data/recipe-bundles/classic-cornbread/step-03-combine.jpg", "alt": "Cornbread batter in bowl", "caption": "combine, leave lumpy" }
+    },
+    {
+      "id": 4,
+      "title": "Pour into screaming pan",
+      "detail": "Pull skillet from oven. Add 1 tbsp butter, swirl to coat. Pour batter — should sizzle. Bake 22 min until top is golden and a toothpick comes clean.",
+      "duration": 1320,
+      "tip": "The sizzle when the batter hits the pan is the sound of victory.",
+      "media": { "src": "data/recipe-bundles/classic-cornbread/step-04-bake.jpg", "alt": "Cornbread baking in cast iron", "caption": "pour into screaming pan" }
+    }
+  ],
+  "utensils": [
+    { "name": "10-inch cast iron skillet", "essential": true },
+    { "name": "Whisk", "essential": true },
+    { "name": "Mixing bowls", "essential": true }
+  ]
+}

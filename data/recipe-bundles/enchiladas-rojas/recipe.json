@@ -1,0 +1,80 @@
+{
+  "id": "enchiladas-rojas",
+  "name": "Enchiladas Rojas",
+  "tagline": "Chicken enchiladas drowned in dried-chili red sauce, cheese, baked",
+  "shortTagline": "comfort · soy-free · 60 min",
+  "cuisine": "Mexican",
+  "difficulty": "Medium",
+  "servings": 6,
+  "totalMinutes": 60,
+  "tags": ["non-veg", "soy-free", "mexican", "high-protein"],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
+  "featured": false,
+  "highlight": "Real red sauce from dried chilies — no soy, no canned shortcut",
+  "media": {
+    "emoji": "🌶️",
+    "hero": {
+      "palette": ["#C84B5A", "#F4A261", "#7A9C5A"],
+      "src": "data/recipe-bundles/enchiladas-rojas/hero.jpg",
+      "alt": "Enchiladas rojas with bubbling cheese and crema",
+      "caption": "enchiladas rojas — drowned in chili"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Dried guajillo and ancho chilies are mild — color and depth, not heat.",
+    "Toasting chilies before soaking deepens their fruit-and-tobacco notes."
+  ],
+  "ingredients": [
+    { "name": "Cooked shredded chicken", "amt": "3 cups", "group": "main" },
+    { "name": "Corn tortillas", "amt": "12", "group": "main" },
+    { "name": "Guajillo chilies (dried)", "amt": "6", "group": "spice" },
+    { "name": "Ancho chilies (dried)", "amt": "2", "group": "spice" },
+    { "name": "Onion", "amt": "1 medium", "group": "aromatics" },
+    { "name": "Garlic", "amt": "5 cloves", "group": "aromatics" },
+    { "name": "Cumin", "amt": "1 tsp", "group": "spice" },
+    { "name": "Oregano", "amt": "1 tsp", "group": "spice" },
+    { "name": "Chicken stock", "amt": "2 cups", "group": "liquid" },
+    { "name": "Queso fresco (crumbled)", "amt": "1 cup", "group": "main" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Toast and soak chilies",
+      "detail": "Stem and seed chilies. Toast in a dry pan 30 sec per side. Soak in hot water 15 min until pliable.",
+      "duration": 1080,
+      "tip": "Chilies that look leathery soak; chilies that crumble were burnt.",
+      "media": { "src": "data/recipe-bundles/enchiladas-rojas/step-01-toast.jpg", "alt": "Toasting dried chilies", "caption": "toast and soak chilies" }
+    },
+    {
+      "id": 2,
+      "title": "Blend the sauce",
+      "detail": "Drain chilies. Blend with onion, garlic, cumin, oregano, salt, and 1 cup hot stock until very smooth.",
+      "duration": 240,
+      "tip": "Strain through a sieve for restaurant-smooth — chili skins can be stringy.",
+      "media": { "src": "data/recipe-bundles/enchiladas-rojas/step-02-blend.jpg", "alt": "Blending red chili sauce", "caption": "blend the sauce" }
+    },
+    {
+      "id": 3,
+      "title": "Cook sauce, fill tortillas",
+      "detail": "Pour sauce into a pan over medium 8 min until darkened and oil separates. Dip each tortilla in warm sauce, fill with chicken, roll, place in baking dish.",
+      "duration": 720,
+      "tip": "Warming the tortillas in the sauce keeps them flexible — cold ones tear.",
+      "media": { "src": "data/recipe-bundles/enchiladas-rojas/step-03-fill.jpg", "alt": "Rolling tortillas with chicken", "caption": "cook sauce, fill tortillas" }
+    },
+    {
+      "id": 4,
+      "title": "Pour, top, bake",
+      "detail": "Pour remaining sauce over the rolls. Crumble queso on top. Bake 375°F for 18 min until bubbling. Top with crema and onion.",
+      "duration": 1080,
+      "tip": "Don't over-bake — tortillas turn to mush past 20 min.",
+      "media": { "src": "data/recipe-bundles/enchiladas-rojas/step-04-bake.jpg", "alt": "Baked enchiladas with cheese", "caption": "pour, top, bake" }
+    }
+  ],
+  "utensils": [
+    { "name": "Blender", "essential": true },
+    { "name": "Wide pan", "essential": true },
+    { "name": "Baking dish", "essential": true }
+  ]
+}

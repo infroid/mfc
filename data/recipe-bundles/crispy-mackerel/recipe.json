@@ -1,0 +1,78 @@
+{
+  "id": "crispy-mackerel",
+  "name": "Crispy Mackerel",
+  "tagline": "Crisp-skinned mackerel with ponzu, scallion, and grated daikon",
+  "shortTagline": "crisp-skin · shellfish-free · 20 min",
+  "cuisine": "Japanese",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 20,
+  "tags": ["pescatarian", "shellfish-free", "asian", "high-protein", "quick"],
+  "color": "#3A332A",
+  "colorSoft": "rgba(58,51,42,0.16)",
+  "featured": false,
+  "highlight": "Crackly fish skin, ponzu acid, daikon foam — no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": ["#3A332A", "#7A9C5A", "#F4D67A"],
+      "src": "data/recipe-bundles/crispy-mackerel/hero.jpg",
+      "alt": "Crispy-skin mackerel with grated daikon and ponzu",
+      "caption": "mackerel — crisp skin"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Mackerel is omega-3 dense and budget-friendly — undervalued fish.",
+    "Daikon's enzymes (myrosinase) aid digestion of oily fish."
+  ],
+  "ingredients": [
+    { "name": "Mackerel fillets", "amt": "2", "group": "main" },
+    { "name": "Soy sauce", "amt": "2 tbsp", "group": "sauce" },
+    { "name": "Yuzu or lemon juice", "amt": "2 tbsp", "group": "sauce" },
+    { "name": "Mirin", "amt": "1 tbsp", "group": "sauce" },
+    { "name": "Daikon (grated)", "amt": "1/2 cup", "group": "finish" },
+    { "name": "Scallions (sliced)", "amt": "2", "group": "finish" },
+    { "name": "Neutral oil", "amt": "1 tbsp", "group": "fat" },
+    { "name": "Salt", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Score the skin",
+      "detail": "Pat mackerel dry. Score skin in 3–4 shallow diagonals — prevents curling. Salt skin-side; rest 5 min, pat off moisture.",
+      "duration": 360,
+      "tip": "Salt draws water out for the crispiest skin imaginable.",
+      "media": { "src": "data/recipe-bundles/crispy-mackerel/step-01-score.jpg", "alt": "Scored mackerel skin", "caption": "score the skin" }
+    },
+    {
+      "id": 2,
+      "title": "Whisk ponzu",
+      "detail": "Whisk soy, yuzu juice, mirin in a small bowl.",
+      "duration": 30,
+      "tip": "Bottled ponzu is fine — but homemade is brighter.",
+      "media": { "src": "data/recipe-bundles/crispy-mackerel/step-02-ponzu.jpg", "alt": "Ponzu sauce in small dish", "caption": "whisk ponzu" }
+    },
+    {
+      "id": 3,
+      "title": "Sear skin-down hard",
+      "detail": "Heat oil in a non-stick pan over medium-high. Place mackerel skin-down; press flat 30 sec. Cook 4 min skin-side until crisp; flip 90 sec.",
+      "duration": 360,
+      "tip": "Don't move the fish during the skin sear. Movement = stuck.",
+      "media": { "src": "data/recipe-bundles/crispy-mackerel/step-03-sear.jpg", "alt": "Mackerel searing skin-down", "caption": "sear skin-down hard" }
+    },
+    {
+      "id": 4,
+      "title": "Plate with daikon",
+      "detail": "Plate mackerel skin-up. Squeeze excess water from grated daikon; pile alongside. Top with scallions; drizzle ponzu.",
+      "duration": 120,
+      "tip": "Daikon takes the edge off oily fish — that's Japanese balance.",
+      "media": { "src": "data/recipe-bundles/crispy-mackerel/step-04-plate.jpg", "alt": "Crispy mackerel plated with daikon", "caption": "plate with daikon" }
+    }
+  ],
+  "utensils": [
+    { "name": "Non-stick pan", "essential": true },
+    { "name": "Microplane grater", "essential": true },
+    { "name": "Spatula", "essential": true }
+  ]
+}

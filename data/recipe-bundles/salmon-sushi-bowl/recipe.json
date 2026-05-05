@@ -1,0 +1,80 @@
+{
+  "id": "salmon-sushi-bowl",
+  "name": "Salmon Sushi Bowl",
+  "tagline": "Cubed sushi-grade salmon with rice, avocado, cucumber, soy-ginger drizzle",
+  "shortTagline": "deconstructed sushi · shellfish-free · 25 min",
+  "cuisine": "Japanese",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 25,
+  "tags": ["pescatarian", "shellfish-free", "asian", "high-protein", "quick"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Sushi at home, no rolling required, no shellfish",
+  "media": {
+    "emoji": "🍣",
+    "hero": {
+      "palette": ["#E76F51", "#7A9C5A", "#3A332A"],
+      "src": "data/recipe-bundles/salmon-sushi-bowl/hero.jpg",
+      "alt": "Salmon sushi bowl with cubed fish, avocado, and rice",
+      "caption": "salmon sushi bowl — deconstructed"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Salmon offers omega-3s; pairing with rice gives slow carbs and B-vitamins.",
+    "Avocado adds monounsaturated fat that aids vitamin absorption."
+  ],
+  "ingredients": [
+    { "name": "Sushi-grade salmon", "amt": "12 oz", "group": "main" },
+    { "name": "Sushi rice (cooked, seasoned)", "amt": "2 cups", "group": "main" },
+    { "name": "Soy sauce", "amt": "3 tbsp", "group": "sauce" },
+    { "name": "Mirin", "amt": "1 tbsp", "group": "sauce" },
+    { "name": "Toasted sesame oil", "amt": "1 tsp", "group": "fat" },
+    { "name": "Ginger (grated)", "amt": "1 tsp", "group": "aromatics" },
+    { "name": "Avocado", "amt": "1, sliced", "group": "main" },
+    { "name": "Cucumber (sliced)", "amt": "1/2", "group": "main" },
+    { "name": "Pickled ginger", "amt": "to taste", "group": "finish" },
+    { "name": "Sesame seeds and scallions", "amt": "to garnish", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Cube the salmon",
+      "detail": "With a sharp knife, cube salmon into 1/2-inch pieces. Keep cold.",
+      "duration": 240,
+      "tip": "Pin-bone first; tweezers make quick work of it.",
+      "media": { "src": "data/recipe-bundles/salmon-sushi-bowl/step-01-cube.jpg", "alt": "Cubed sushi-grade salmon", "caption": "cube the salmon" }
+    },
+    {
+      "id": 2,
+      "title": "Whisk the dressing",
+      "detail": "Whisk soy, mirin, sesame oil, grated ginger.",
+      "duration": 60,
+      "tip": "A pinch of sugar rounds it out if your soy is salt-forward.",
+      "media": { "src": "data/recipe-bundles/salmon-sushi-bowl/step-02-dress.jpg", "alt": "Soy ginger dressing", "caption": "whisk the dressing" }
+    },
+    {
+      "id": 3,
+      "title": "Quick-marinate",
+      "detail": "Toss salmon with half the dressing; rest 5 min.",
+      "duration": 300,
+      "tip": "Hold back half the dressing to drizzle at serving — bright tops up the marinated fish.",
+      "media": { "src": "data/recipe-bundles/salmon-sushi-bowl/step-03-marinate.jpg", "alt": "Salmon marinating with soy", "caption": "quick-marinate" }
+    },
+    {
+      "id": 4,
+      "title": "Build the bowl",
+      "detail": "Scoop rice into bowls. Top with salmon, fan of avocado and cucumber. Drizzle remaining dressing. Top with sesame, scallions, pickled ginger.",
+      "duration": 240,
+      "tip": "Wasabi paste on the side for those who want kick.",
+      "media": { "src": "data/recipe-bundles/salmon-sushi-bowl/step-04-build.jpg", "alt": "Salmon sushi bowl built", "caption": "build the bowl" }
+    }
+  ],
+  "utensils": [
+    { "name": "Very sharp knife", "essential": true },
+    { "name": "Mixing bowl", "essential": true },
+    { "name": "Cutting board", "essential": true }
+  ]
+}

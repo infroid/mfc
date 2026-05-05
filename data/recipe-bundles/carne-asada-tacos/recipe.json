@@ -1,0 +1,80 @@
+{
+  "id": "carne-asada-tacos",
+  "name": "Carne Asada Tacos",
+  "tagline": "Citrus-marinated grilled steak in warm corn tortillas",
+  "shortTagline": "tacos · soy-free · 45 min",
+  "cuisine": "Mexican",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 45,
+  "tags": ["non-veg", "soy-free", "mexican", "high-protein", "gluten-free"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "No soy in marinade — citrus and chili do the lift",
+  "media": {
+    "emoji": "🌮",
+    "hero": {
+      "palette": ["#E76F51", "#7A9C5A", "#F4D67A"],
+      "src": "data/recipe-bundles/carne-asada-tacos/hero.jpg",
+      "alt": "Carne asada tacos with onion and cilantro",
+      "caption": "carne asada — citrus-charred"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Lime and orange marinade gives flavor while tenderizing.",
+    "Corn tortillas are gluten-free and lower-glycemic than wheat."
+  ],
+  "ingredients": [
+    { "name": "Skirt or flank steak", "amt": "1.5 lb", "group": "main" },
+    { "name": "Lime juice", "amt": "1/3 cup", "group": "sauce" },
+    { "name": "Orange juice", "amt": "1/2 cup", "group": "sauce" },
+    { "name": "Garlic", "amt": "5 cloves", "group": "aromatics" },
+    { "name": "Cilantro", "amt": "1/2 cup", "group": "aromatics" },
+    { "name": "Chili powder", "amt": "1 tbsp", "group": "spice" },
+    { "name": "Cumin", "amt": "1 tsp", "group": "spice" },
+    { "name": "Olive oil", "amt": "1/4 cup", "group": "fat" },
+    { "name": "Corn tortillas", "amt": "12, warmed", "group": "main" },
+    { "name": "White onion (diced) and cilantro", "amt": "for serving", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Marinate the steak",
+      "detail": "Whisk citrus, garlic, cilantro, spices, olive oil, salt. Submerge steak; refrigerate 30 min (up to 4 hours).",
+      "duration": 1800,
+      "tip": "Don't go past 4 hours — citrus turns the meat mealy.",
+      "media": { "src": "data/recipe-bundles/carne-asada-tacos/step-01-marinate.jpg", "alt": "Steak in citrus marinade", "caption": "marinate the steak" }
+    },
+    {
+      "id": 2,
+      "title": "Sear hard",
+      "detail": "Get a cast iron blazing hot. Pat steak dry; sear 3 min per side for medium-rare.",
+      "duration": 360,
+      "tip": "Wet steak from marinade = steam, not crust. Pat. Dry. Down.",
+      "media": { "src": "data/recipe-bundles/carne-asada-tacos/step-02-sear.jpg", "alt": "Steak searing in cast iron", "caption": "sear hard" }
+    },
+    {
+      "id": 3,
+      "title": "Rest then dice",
+      "detail": "Rest steak 5 min. Slice thin across the grain, then dice — taco-sized.",
+      "duration": 300,
+      "tip": "Dicing happens after slicing — get the grain right first.",
+      "media": { "src": "data/recipe-bundles/carne-asada-tacos/step-03-dice.jpg", "alt": "Diced carne asada", "caption": "rest then dice" }
+    },
+    {
+      "id": 4,
+      "title": "Warm and assemble",
+      "detail": "Char tortillas over a flame or in a dry skillet 30 sec per side. Pile meat on top with diced onion, cilantro, lime wedge.",
+      "duration": 300,
+      "tip": "Two tortillas per taco — one breaks, the other catches.",
+      "media": { "src": "data/recipe-bundles/carne-asada-tacos/step-04-assemble.jpg", "alt": "Built carne asada tacos", "caption": "warm and assemble" }
+    }
+  ],
+  "utensils": [
+    { "name": "Cast iron skillet", "essential": true },
+    { "name": "Sharp knife", "essential": true },
+    { "name": "Mixing bowl", "essential": true }
+  ]
+}

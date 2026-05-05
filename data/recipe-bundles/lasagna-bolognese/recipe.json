@@ -1,0 +1,82 @@
+{
+  "id": "lasagna-bolognese",
+  "name": "Lasagna Bolognese",
+  "tagline": "Rich beef-pork ragù layered with pasta, béchamel, parmesan",
+  "shortTagline": "ragù · nut-free · 3 hr",
+  "cuisine": "Italian",
+  "difficulty": "Hard",
+  "servings": 8,
+  "totalMinutes": 180,
+  "tags": ["non-veg", "high-protein", "nut-free", "italian"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Six layers of slow-built ragù, béchamel, and parm",
+  "media": {
+    "emoji": "🍝",
+    "hero": {
+      "palette": ["#A0522D", "#F4D67A", "#E76F51"],
+      "src": "data/recipe-bundles/lasagna-bolognese/hero.jpg",
+      "alt": "Slice of layered lasagna with ragù and béchamel",
+      "caption": "lasagna bolognese — layered slow ragù"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "A real bolognese has very little tomato — it's mostly meat, milk, and stock.",
+    "Béchamel uses fat-soluble nutmeg traditionally; even a hint adds depth."
+  ],
+  "ingredients": [
+    { "name": "Lasagna sheets", "amt": "1 lb", "group": "main" },
+    { "name": "Ground beef", "amt": "1 lb", "group": "main" },
+    { "name": "Ground pork", "amt": "1/2 lb", "group": "main" },
+    { "name": "Pancetta (diced)", "amt": "4 oz", "group": "main" },
+    { "name": "Soffritto (onion-carrot-celery)", "amt": "2 cups", "group": "aromatics" },
+    { "name": "Whole milk", "amt": "1 cup + 3 cups", "group": "liquid" },
+    { "name": "Tomato paste", "amt": "1/4 cup", "group": "sauce" },
+    { "name": "Beef stock", "amt": "1 cup", "group": "liquid" },
+    { "name": "Butter", "amt": "1/4 cup", "group": "fat" },
+    { "name": "Flour", "amt": "1/4 cup", "group": "thickener" },
+    { "name": "Parmesan", "amt": "1.5 cups", "group": "main" },
+    { "name": "Nutmeg", "amt": "pinch", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Slow-build the ragù",
+      "detail": "Render pancetta. Add soffritto, cook 10 minutes. Add beef and pork, brown deeply. Stir in tomato paste; cook 3 minutes. Pour in 1 cup milk; reduce. Add stock and simmer 90 minutes.",
+      "duration": 6000,
+      "tip": "Milk first, then tomato — milk tenderizes the meat before acid would tighten it.",
+      "media": { "src": "data/recipe-bundles/lasagna-bolognese/step-01-ragu.jpg", "alt": "Bolognese ragù simmering", "caption": "slow-build the ragù" }
+    },
+    {
+      "id": 2,
+      "title": "Whisk the béchamel",
+      "detail": "Melt butter, whisk in flour to form a roux. Cook 2 minutes. Slowly whisk in 3 cups warm milk; cook until thick. Season with salt and a tiny grate of nutmeg.",
+      "duration": 600,
+      "tip": "Warm milk into a hot roux — cold milk equals lumps.",
+      "media": { "src": "data/recipe-bundles/lasagna-bolognese/step-02-bechamel.jpg", "alt": "Béchamel sauce in pot", "caption": "whisk the béchamel" }
+    },
+    {
+      "id": 3,
+      "title": "Layer six high",
+      "detail": "Pasta, ragù, béchamel, parmesan — repeat six times. Finish with béchamel and a heavy parmesan layer for the crust.",
+      "duration": 600,
+      "tip": "Boil fresh pasta sheets 30 seconds before layering; dried no-boil are fine but soak up more sauce.",
+      "media": { "src": "data/recipe-bundles/lasagna-bolognese/step-03-layer.jpg", "alt": "Lasagna being layered", "caption": "layer six high" }
+    },
+    {
+      "id": 4,
+      "title": "Bake and rest",
+      "detail": "Bake at 375°F for 40 minutes covered, then 15 uncovered for color. Rest 20 minutes before cutting — the layers need to set.",
+      "duration": 3300,
+      "tip": "Lasagna eaten the next day is even better. Letting it set overnight in the fridge tightens the layers.",
+      "media": { "src": "data/recipe-bundles/lasagna-bolognese/step-04-bake.jpg", "alt": "Baked lasagna with golden top", "caption": "bake and rest" }
+    }
+  ],
+  "utensils": [
+    { "name": "Heavy pot", "essential": true },
+    { "name": "Saucepan", "essential": true },
+    { "name": "9x13 lasagna pan", "essential": true }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "chicken-noodle-soup",
+  "name": "Chicken Noodle Soup",
+  "tagline": "Bone-broth chicken soup with egg noodles, carrot, celery, dill",
+  "shortTagline": "bone broth · nut-free · 60 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 60,
+  "tags": ["non-veg", "nut-free", "high-protein"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "From-scratch broth, tender chicken, no nuts ever",
+  "media": {
+    "emoji": "🍜",
+    "hero": {
+      "palette": ["#F4D67A", "#7A9C5A", "#E76F51"],
+      "src": "data/recipe-bundles/chicken-noodle-soup/hero.jpg",
+      "alt": "Bowl of chicken noodle soup with carrots and dill",
+      "caption": "chicken noodle — broth and dill"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Chicken bones release glycine and gelatin during simmering — gut-friendly.",
+    "Carrots provide beta-carotene; combining with the soup's fat aids absorption."
+  ],
+  "ingredients": [
+    { "name": "Bone-in chicken thighs", "amt": "2 lb", "group": "main" },
+    { "name": "Egg noodles", "amt": "2 cups", "group": "main" },
+    { "name": "Carrots", "amt": "3", "group": "main" },
+    { "name": "Celery", "amt": "3 stalks", "group": "main" },
+    { "name": "Onion", "amt": "1 large", "group": "aromatics" },
+    { "name": "Garlic", "amt": "4 cloves", "group": "aromatics" },
+    { "name": "Bay leaf", "amt": "2", "group": "aromatics" },
+    { "name": "Fresh dill", "amt": "small handful", "group": "finish" },
+    { "name": "Lemon", "amt": "1/2", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Build the broth",
+      "detail": "Place chicken, halved onion, carrot ends, celery tops, bay, and 8 cups of cold water in a pot. Bring up gently to a bare simmer. Skim the gray foam.",
+      "duration": 600,
+      "tip": "Cold-water start releases more flavor than dropping into hot water.",
+      "media": { "src": "data/recipe-bundles/chicken-noodle-soup/step-01-broth.jpg", "alt": "Chicken simmering with aromatics", "caption": "build the broth" }
+    },
+    {
+      "id": 2,
+      "title": "Simmer low",
+      "detail": "Cover and simmer 35 minutes — tiny lazy bubbles, never a boil. Lift chicken out and let cool. Strain broth.",
+      "duration": 2100,
+      "tip": "Boiling makes cloudy broth. Patience equals clarity.",
+      "media": { "src": "data/recipe-bundles/chicken-noodle-soup/step-02-strain.jpg", "alt": "Straining chicken broth", "caption": "simmer low" }
+    },
+    {
+      "id": 3,
+      "title": "Build soup base",
+      "detail": "Return broth to clean pot. Add diced carrot, celery, garlic. Simmer 10 minutes until veg are tender. Salt to taste.",
+      "duration": 600,
+      "tip": "Now is when you actually salt — concentrating an under-seasoned broth fixes it; over-salting can't be undone.",
+      "media": { "src": "data/recipe-bundles/chicken-noodle-soup/step-03-base.jpg", "alt": "Vegetables simmering in broth", "caption": "build soup base" }
+    },
+    {
+      "id": 4,
+      "title": "Noodles, chicken, finish",
+      "detail": "Add noodles and cook to package time. Shred chicken meat off the bones and stir back in to warm through. Off heat, dill and a squeeze of lemon.",
+      "duration": 480,
+      "tip": "Cooking noodles separately if you'll have leftovers — they bloat overnight.",
+      "media": { "src": "data/recipe-bundles/chicken-noodle-soup/step-04-finish.jpg", "alt": "Bowl of chicken noodle soup with dill", "caption": "noodles, chicken, finish" }
+    }
+  ],
+  "utensils": [
+    { "name": "Stockpot", "essential": true },
+    { "name": "Fine strainer", "essential": true },
+    { "name": "Tongs", "essential": false }
+  ]
+}
