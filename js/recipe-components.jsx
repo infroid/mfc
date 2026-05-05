@@ -337,36 +337,151 @@ function HealthMarquee({ facts }) {
 }
 
 // ============================================================
-// PREMIUM PLAYER — segment-per-step timeline w/ live timing
+// PREMIUM PLAYER — segment-per-step timeline w/ live timing + TTS
 // ============================================================
+const SYNTH_SUPPORTED = typeof window !== 'undefined' && 'speechSynthesis' in window;
+
+function pickVoice() {
+  if (!SYNTH_SUPPORTED) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  if (!voices.length) return null;
+  const en = voices.filter(v => /^en/i.test(v.lang));
+  const pool = en.length ? en : voices;
+  return (
+    pool.find(v => /natural|google|samantha|jenny|aria/i.test(v.name)) ||
+    pool.find(v => v.default) ||
+    pool[0]
+  );
+}
+
 function CookingPlayer({ recipe, stepIdx, setStepIdx, doneSteps, setDoneSteps }) {
   const total = recipe.steps.length;
   const step = recipe.steps[stepIdx];
 
   const [running, setRunning] = useState(false);
   const [elapsed, setElapsed] = useState(0);
+  const [speechDoneAt, setSpeechDoneAt] = useState(null);
 
-  useEffect(() => { setElapsed(0); }, [stepIdx]);
+  const elapsedRef = useRef(0);
+  useEffect(() => { elapsedRef.current = elapsed; }, [elapsed]);
 
+  const utterRef = useRef(null);
+  const runningRef = useRef(running);
+  useEffect(() => { runningRef.current = running; }, [running]);
+
+  const stepText = useMemo(
+    () => [step.title, step.detail].filter(Boolean).join('. ').trim(),
+    [stepIdx, step.title, step.detail]
+  );
+
+  const speechEstimate = useMemo(() => {
+    const words = stepText.split(/\s+/).filter(Boolean).length || 1;
+    return Math.max(3, Math.ceil(words / 2.5)); // ~150 wpm baseline
+  }, [stepText]);
+
+  const effectiveDuration = Math.max(
+    step.duration || 0,
+    speechDoneAt != null ? speechDoneAt : Math.max(speechEstimate, elapsed + 1)
+  );
+
+  function speakCurrentStep() {
+    if (!SYNTH_SUPPORTED || !stepText) return;
+    utterRef.current = null;
+    try { window.speechSynthesis.cancel(); } catch (_) {}
+    const u = new SpeechSynthesisUtterance(stepText);
+    u.lang = 'en-US';
+    u.rate = 0.95;
+    u.pitch = 1;
+    const voice = pickVoice();
+    if (voice) u.voice = voice;
+    u.onend = () => {
+      if (utterRef.current !== u) return;
+      setSpeechDoneAt(elapsedRef.current);
+    };
+    u.onerror = () => {
+      if (utterRef.current !== u) return;
+      setSpeechDoneAt(elapsedRef.current);
+    };
+    utterRef.current = u;
+    window.speechSynthesis.speak(u);
+  }
+
+  // Voices may load async; trigger a re-pick once available
+  useEffect(() => {
+    if (!SYNTH_SUPPORTED) return;
+    const handler = () => {};
+    window.speechSynthesis.addEventListener?.('voiceschanged', handler);
+    return () => window.speechSynthesis.removeEventListener?.('voiceschanged', handler);
+  }, []);
+
+  // Reset on step change; carry over speaking state if running
+  useEffect(() => {
+    setElapsed(0);
+    setSpeechDoneAt(null);
+    if (SYNTH_SUPPORTED) {
+      utterRef.current = null;
+      try { window.speechSynthesis.cancel(); } catch (_) {}
+    }
+    if (runningRef.current) speakCurrentStep();
+  }, [stepIdx]);
+
+  // Cancel speech on unmount
+  useEffect(() => () => {
+    if (SYNTH_SUPPORTED) {
+      utterRef.current = null;
+      try { window.speechSynthesis.cancel(); } catch (_) {}
+    }
+  }, []);
+
+  // Drive speech with running toggle
+  useEffect(() => {
+    if (!SYNTH_SUPPORTED) return;
+    const synth = window.speechSynthesis;
+    if (running) {
+      if (synth.paused) {
+        synth.resume();
+      } else if (!synth.speaking && speechDoneAt == null && stepText) {
+        speakCurrentStep();
+      }
+    } else if (synth.speaking && !synth.paused) {
+      synth.pause();
+    }
+  }, [running]);
+
+  // Chrome cuts speech off near 15s — pulse pause/resume to keep it alive
+  useEffect(() => {
+    if (!SYNTH_SUPPORTED || !running) return;
+    const id = setInterval(() => {
+      const synth = window.speechSynthesis;
+      if (synth.speaking && !synth.paused) {
+        synth.pause();
+        synth.resume();
+      }
+    }, 10000);
+    return () => clearInterval(id);
+  }, [running]);
+
+  // Tick — wait for both step.duration and speech to complete before advancing
   useEffect(() => {
     if (!running) return;
     const id = setInterval(() => {
       setElapsed(e => {
-        if (e + 1 >= step.duration) {
-          clearInterval(id);
+        const next = e + 1;
+        const stepDone = next >= (step.duration || 0);
+        const speechDone = !SYNTH_SUPPORTED || !stepText || speechDoneAt != null;
+        if (stepDone && speechDone) {
           setDoneSteps(prev => new Set([...prev, stepIdx]));
           if (stepIdx < total - 1) {
             setTimeout(() => setStepIdx(stepIdx + 1), 400);
           } else {
             setRunning(false);
           }
-          return step.duration;
         }
-        return e + 1;
+        return next;
       });
     }, 1000);
     return () => clearInterval(id);
-  }, [running, step.duration, stepIdx, total]);
+  }, [running, step.duration, speechDoneAt, stepText, stepIdx, total]);
 
   function jump(delta) {
     const next = stepIdx + delta;
@@ -385,7 +500,8 @@ function CookingPlayer({ recipe, stepIdx, setStepIdx, doneSteps, setDoneSteps })
     setStepIdx(i);
   }
 
-  const segProgress = (elapsed / step.duration) * 100;
+  const displayElapsed = Math.min(elapsed, effectiveDuration);
+  const segProgress = (displayElapsed / Math.max(effectiveDuration, 1)) * 100;
 
   return (
     <div className={"r-player" + (running ? " playing" : "")}>
@@ -414,15 +530,15 @@ function CookingPlayer({ recipe, stepIdx, setStepIdx, doneSteps, setDoneSteps })
           <div className="r-pl-bar" onClick={(e) => {
             const r = e.currentTarget.getBoundingClientRect();
             const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-            setElapsed(Math.round(pct * step.duration));
+            setElapsed(Math.round(pct * effectiveDuration));
           }}>
             <div className="r-pl-bar-fill" style={{ width: `${segProgress}%` }} />
             <div className="r-pl-bar-knob" style={{ left: `${segProgress}%` }} />
           </div>
           <div className="r-pl-meta-row">
             <span className="r-pl-time">{fmtTime(elapsed)}</span>
-            <span className="r-pl-status">{running ? "● cooking" : doneSteps.has(stepIdx) ? "✓ done" : "ready"}</span>
-            <span className="r-pl-time end">{fmtTime(step.duration)}</span>
+            <span className="r-pl-status">{running ? (SYNTH_SUPPORTED && stepText && speechDoneAt == null ? "● narrating" : "● cooking") : doneSteps.has(stepIdx) ? "✓ done" : "ready"}</span>
+            <span className="r-pl-time end">{fmtTime(effectiveDuration)}</span>
           </div>
         </div>
 
