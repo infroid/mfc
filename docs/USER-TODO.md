@@ -21,7 +21,38 @@ section is independent — do them in order.
 
 ## 2. Apply the schema
 
-In **SQL Editor**, run these in order:
+Two paths — pick one. The Python CLI is the recommended path.
+
+### Option A — Python CLI (recommended)
+
+One-time setup:
+
+```bash
+cp .env.sample .env
+# Open .env and fill in:
+#   SUPABASE_DB_URL          (Studio → Database → Connection string → URI; direct port 5432)
+#   SUPABASE_URL             (Studio → API)
+#   SUPABASE_SECRET_KEY      (Studio → API → service_role)
+pip install -r requirements.txt
+```
+
+Then, from the repo root:
+
+```bash
+scripts/mfc.sh apply-schema    # runs data/db/schema.sql
+scripts/mfc.sh seed-metrics    # loads the 54-marker catalog
+scripts/mfc.sh status          # prints table list + row counts to verify
+```
+
+Useful one-shot for a clean slate (drops everything, re-applies, re-seeds, re-imports):
+
+```bash
+scripts/mfc.sh reset           # prompts "type 'reset' to confirm"
+```
+
+`scripts/mfc.sh --help` lists all commands. See §6 for `import-recipes`.
+
+### Option B — Studio SQL Editor
 
 1. Paste the entire contents of [data/db/schema.sql](data/db/schema.sql) and run.
 2. Paste the entire contents of [data/db/seed_metrics.sql](data/db/seed_metrics.sql) and run.
@@ -184,25 +215,40 @@ user-owned tables.
 ## 6. Import the recipes (one-time)
 
 The recipe catalog lives in Supabase, seeded from
-`data/recipe-bundles/*/recipe.json`. Run from the repo root:
+`data/recipe-bundles/*/recipe.json`.
+
+### Recommended — Python CLI
 
 ```bash
-# install supabase-js once
-npm i @supabase/supabase-js
-
-# run the import (idempotent — safe to re-run after editing source JSON)
-SUPABASE_URL="https://<your-project>.supabase.co" \
-SUPABASE_SECRET_KEY="<secret key>" \
-node scripts/import_recipes.mjs
+scripts/mfc.sh import-recipes
 ```
+
+Idempotent — re-running after editing source JSON reconciles to the same state.
+Reads credentials from `.env` (set up in §2).
 
 Expected output:
 
 ```
-✓ paneer-butter-masala
-✓ butter-chicken
-…
-recipes table now has 10 rows.
+→ pass 1/3 · collecting library rows from 10 bundle(s)
+  unique ingredients: 63 · utensils: 38
+→ pass 2/3 · upserting library tables
+  ✓ ingredients populated (63)
+  ✓ utensils populated (38)
+→ pass 3/3 · upserting 10 recipe(s)
+  ✓ aloo-gobi
+  ✓ butter-chicken
+  …
+```
+
+### Legacy — Node.js script
+
+`scripts/import_recipes.mjs` is the original Node version. Same behaviour,
+kept around for environments without Python. Requires `npm i @supabase/supabase-js`.
+
+```bash
+SUPABASE_URL="https://<your-project>.supabase.co" \
+SUPABASE_SECRET_KEY="<secret key>" \
+node scripts/import_recipes.mjs
 ```
 
 The secret key bypasses RLS — keep it out of the browser, out of the repo,
