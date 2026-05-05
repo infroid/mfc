@@ -12,17 +12,27 @@ from __future__ import annotations
 import argparse
 from typing import Sequence
 
-from .commands import apply_schema, import_recipes, seed_metrics, status
+from .commands import (
+    apply_schema,
+    drop_schema,
+    import_recipes,
+    reset,
+    seed_metrics,
+    status,
+)
 from .core import log
 from .core.config import Config, ConfigError
 
 
 # Order here defines the order in `--help`.
+# Read-only first, builders next, destructive last.
 COMMAND_MODULES = [
     status,
     apply_schema,
     seed_metrics,
     import_recipes,
+    drop_schema,
+    reset,
 ]
 
 
