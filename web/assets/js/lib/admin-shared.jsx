@@ -28,6 +28,9 @@ function AdminSidebar({ active, counts = {} }) {
       { id: "ingredients", icon: "◐", label: "Ingredients", href: "ingredients.html", count: counts.ingredients },
       { id: "utensils",    icon: "▣", label: "Utensils",    href: "utensils.html",    count: counts.utensils },
     ]},
+    { group: "People", entries: [
+      { id: "users",       icon: "◉", label: "Users",       href: "users.html",       count: counts.users },
+    ]},
     { group: "Site", entries: [
       { id: "view-site", icon: "↗", label: "View site",  href: "../index.html" },
       { id: "search",    icon: "⌕", label: "Recipe search", href: "../recipe-search.html" },
