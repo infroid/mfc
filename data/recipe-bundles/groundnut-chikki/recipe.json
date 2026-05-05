@@ -1,0 +1,64 @@
+{
+  "id": "groundnut-chikki",
+  "name": "Groundnut Chikki",
+  "tagline": "Peanut-jaggery brittle — niacin, magnesium, copper, plant protein",
+  "shortTagline": "peanut chikki · B3 + magnesium · 25 min",
+  "cuisine": "Indian",
+  "difficulty": "Medium",
+  "servings": 8,
+  "totalMinutes": 25,
+  "tags": ["veg", "vegan", "high-protein", "magnesium", "snack"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.18)",
+  "featured": false,
+  "highlight": "Hard-crack jaggery sugar (148°C) is the difference between brittle chikki and chewy mess",
+  "media": {
+    "emoji": "🥜",
+    "hero": {
+      "palette": ["#A0522D", "#E9C46A", "#8B4513"],
+      "src": "data/recipe-bundles/groundnut-chikki/hero.jpg",
+      "alt": "Glossy amber peanut brittle slabs cut into rectangles on a wooden board",
+      "caption": "groundnut chikki — peanut-jaggery brittle"
+    }
+  },
+  "healthFacts": [
+    "Peanuts: 25g protein and 16mg niacin (B3) per 100g — strong vegetarian sources.",
+    "Magnesium and copper content per serving easily exceeds 20% of DV.",
+    "Resveratrol and p-coumaric acid in peanuts support cardiovascular health.",
+    "Jaggery has a slower glycemic curve than refined sugar but portion still matters."
+  ],
+  "ingredients": [
+    {"name": "Raw peanuts", "amt": "1 cup", "group": "main"},
+    {"name": "Jaggery (grated)", "amt": "¾ cup", "group": "main"},
+    {"name": "Ghee", "amt": "1 tbsp", "group": "fat"},
+    {"name": "Cardamom powder", "amt": "¼ tsp", "group": "spice"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Roast and skin the peanuts",
+      "detail": "Dry-roast peanuts on medium for 6–7 minutes till skins crackle and nuts are toasty. Cool slightly. Rub between palms or in a tea towel to remove skins. Roughly crush half.",
+      "duration": 420,
+      "tip": "Skinned peanuts give a cleaner finish; leave skin on if you don't mind the rustic look."
+    },
+    {
+      "id": 2,
+      "title": "Melt the jaggery",
+      "detail": "Heat ghee in a heavy pan. Add jaggery and stir on low heat until fully melted and smooth (3–4 min). Test: drop a tiny bit into cold water — it should set hard and crack.",
+      "duration": 240,
+      "tip": "Pull from heat the moment the cold-water test passes; over-cook makes the chikki taste burnt."
+    },
+    {
+      "id": 3,
+      "title": "Combine and set",
+      "detail": "Stir cardamom and peanuts into the molten jaggery quickly. Pour onto a greased flat surface or parchment. Roll smooth with a greased rolling pin while still hot. Score into rectangles. Cool completely before breaking.",
+      "duration": 600,
+      "tip": "Work fast — molten jaggery sets in 60 seconds at room temp."
+    }
+  ],
+  "utensils": [
+    {"name": "Heavy-bottomed pan", "essential": true},
+    {"name": "Greased rolling pin", "essential": true},
+    {"name": "Greased parchment / flat surface", "essential": true}
+  ]
+}

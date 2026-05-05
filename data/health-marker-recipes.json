@@ -1,0 +1,68 @@
+{
+  "_comment": "Maps each metric_definitions.id to 10 recipe-bundle IDs. Recipes can appear under multiple markers.",
+  "iron":                   ["dal-makhani", "palak-paneer", "sarson-saag", "rajma-chawal", "mutton-curry", "liver-fry", "masoor-dal", "beetroot-poriyal", "chana-masala", "methi-thepla"],
+  "ferritin":               ["mutton-curry", "liver-fry", "dal-makhani", "palak-paneer", "rajma-chawal", "sarson-saag", "masoor-dal", "chana-masala", "fish-curry", "moong-sprouts-chaat"],
+  "tibc":                   ["dal-makhani", "palak-paneer", "sarson-saag", "rajma-chawal", "masoor-dal", "chana-masala", "beetroot-poriyal", "moong-sprouts-chaat", "spinach-soup", "methi-thepla"],
+  "transferrin_saturation": ["liver-fry", "mutton-curry", "fish-curry", "dal-makhani", "palak-paneer", "rajma-chawal", "sarson-saag", "masoor-dal", "chana-masala", "moong-sprouts-chaat"],
+  "hemoglobin":             ["palak-paneer", "sarson-saag", "dal-makhani", "rajma-chawal", "mutton-curry", "liver-fry", "beetroot-poriyal", "masoor-dal", "moong-sprouts-chaat", "spinach-soup"],
+
+  "hs_crp":                 ["fish-curry", "grilled-salmon", "haldi-doodh", "oats-upma", "pomegranate-raita", "walnut-paratha", "tulsi-kadha", "broccoli-stir-fry", "sarson-saag", "masala-oats"],
+  "homocysteine":           ["spinach-soup", "palak-paneer", "sarson-saag", "beetroot-poriyal", "masoor-dal", "egg-bhurji", "fish-curry", "sprout-salad", "masala-omelette", "moong-sprouts-chaat"],
+  "uric_acid":              ["aloo-gobi", "dahi", "cucumber-raita", "kadhi-pakora", "oats-upma", "fruit-chaat", "nimbu-pani", "bhindi-masala", "moong-dal-khichdi", "banana-smoothie"],
+
+  "cholesterol":            ["oats-upma", "masala-oats", "dal-makhani", "rajma-chawal", "chana-masala", "walnut-paratha", "almond-burfi", "fish-curry", "grilled-salmon", "methi-thepla"],
+  "ldl":                    ["oats-upma", "masala-oats", "walnut-paratha", "almond-burfi", "fish-curry", "grilled-salmon", "chana-masala", "dal-makhani", "rajma-chawal", "broccoli-stir-fry"],
+  "hdl":                    ["avocado-toast", "walnut-paratha", "fish-curry", "grilled-salmon", "almond-burfi", "oats-upma", "mackerel-fry", "broccoli-stir-fry", "til-laddu", "pomegranate-raita"],
+  "non_hdl":                ["oats-upma", "masala-oats", "walnut-paratha", "fish-curry", "chana-masala", "rajma-chawal", "dal-makhani", "almond-burfi", "broccoli-stir-fry", "grilled-salmon"],
+  "triglycerides":          ["oats-upma", "fish-curry", "grilled-salmon", "walnut-paratha", "brown-rice-pulao", "dal-makhani", "chana-masala", "broccoli-stir-fry", "masala-oats", "sarson-saag"],
+  "vldl":                   ["oats-upma", "masala-oats", "fish-curry", "grilled-salmon", "walnut-paratha", "brown-rice-pulao", "chana-masala", "dal-makhani", "broccoli-stir-fry", "sarson-saag"],
+  "apo_b":                  ["oats-upma", "masala-oats", "walnut-paratha", "almond-burfi", "fish-curry", "grilled-salmon", "chana-masala", "dal-makhani", "broccoli-stir-fry", "brown-rice-pulao"],
+  "lp_a":                   ["oats-upma", "walnut-paratha", "almond-burfi", "fish-curry", "grilled-salmon", "chana-masala", "dal-makhani", "broccoli-stir-fry", "masala-oats", "rajma-chawal"],
+
+  "hba1c":                  ["masala-oats", "oats-upma", "methi-thepla", "ragi-dosa", "jowar-roti", "chana-masala", "dal-makhani", "sarson-saag", "broccoli-stir-fry", "sprout-salad"],
+  "glucose":                ["methi-thepla", "masala-oats", "ragi-dosa", "jowar-roti", "chana-masala", "dal-makhani", "broccoli-stir-fry", "bhindi-masala", "sprout-salad", "palak-paneer"],
+  "fasting_insulin":        ["masala-oats", "oats-upma", "methi-thepla", "ragi-dosa", "jowar-roti", "broccoli-stir-fry", "sarson-saag", "chana-masala", "sprout-salad", "palak-paneer"],
+  "c_peptide":              ["masala-oats", "oats-upma", "methi-thepla", "ragi-dosa", "jowar-roti", "broccoli-stir-fry", "chana-masala", "dal-makhani", "sprout-salad", "palak-paneer"],
+
+  "alt":                    ["haldi-doodh", "broccoli-stir-fry", "sarson-saag", "oats-upma", "fish-curry", "beetroot-poriyal", "palak-paneer", "chana-masala", "masala-oats", "tulsi-kadha"],
+  "ast":                    ["haldi-doodh", "broccoli-stir-fry", "sarson-saag", "oats-upma", "fish-curry", "beetroot-poriyal", "palak-paneer", "chana-masala", "masala-oats", "tulsi-kadha"],
+  "ggt":                    ["haldi-doodh", "broccoli-stir-fry", "sarson-saag", "oats-upma", "tulsi-kadha", "beetroot-poriyal", "palak-paneer", "fish-curry", "masala-oats", "chana-masala"],
+  "alp":                    ["palak-paneer", "sarson-saag", "fish-curry", "dahi", "paneer-butter-masala", "broccoli-stir-fry", "almond-burfi", "til-laddu", "masala-oats", "egg-bhurji"],
+
+  "albumin":                ["paneer-butter-masala", "dal-makhani", "egg-bhurji", "masala-omelette", "fish-curry", "chicken-biryani", "rajma-chawal", "chana-masala", "palak-paneer", "moong-dal-khichdi"],
+  "total_protein":          ["paneer-butter-masala", "dal-makhani", "egg-bhurji", "masala-omelette", "fish-curry", "chicken-biryani", "rajma-chawal", "chana-masala", "tandoori-chicken", "butter-chicken"],
+  "bun":                    ["moong-dal-khichdi", "fruit-chaat", "oats-upma", "dahi", "cucumber-raita", "banana-smoothie", "kadhi-pakora", "aloo-gobi", "bhindi-masala", "masala-oats"],
+  "creatinine":             ["moong-dal-khichdi", "fruit-chaat", "oats-upma", "dahi", "cucumber-raita", "banana-smoothie", "kadhi-pakora", "aloo-gobi", "bhindi-masala", "masala-oats"],
+
+  "vitamin_a":              ["liver-fry", "gajar-ka-halwa", "palak-paneer", "sarson-saag", "egg-bhurji", "paneer-butter-masala", "masala-omelette", "pumpkin-soup", "dahi", "spinach-soup"],
+  "d3":                     ["fish-curry", "grilled-salmon", "mackerel-fry", "egg-bhurji", "masala-omelette", "mushroom-curry", "haldi-doodh", "paneer-butter-masala", "prawn-curry", "dahi"],
+  "vitamin_e":              ["almond-burfi", "walnut-paratha", "til-laddu", "groundnut-chikki", "palak-paneer", "sarson-saag", "oats-upma", "broccoli-stir-fry", "methi-thepla", "sprout-salad"],
+  "vitamin_k":              ["sarson-saag", "palak-paneer", "broccoli-stir-fry", "cabbage-thoran", "methi-thepla", "spinach-soup", "sprout-salad", "masala-dosa", "dahi", "kadhi-pakora"],
+
+  "b1":                     ["brown-rice-pulao", "dal-makhani", "rajma-chawal", "chana-masala", "masoor-dal", "jowar-roti", "ragi-dosa", "sprout-salad", "masala-dosa", "oats-upma"],
+  "b2":                     ["paneer-butter-masala", "palak-paneer", "dahi", "cucumber-raita", "almond-burfi", "kadhi-pakora", "egg-bhurji", "masala-omelette", "banana-smoothie", "haldi-doodh"],
+  "b3":                     ["chicken-biryani", "butter-chicken", "fish-curry", "grilled-salmon", "mutton-curry", "groundnut-chikki", "brown-rice-pulao", "tandoori-chicken", "prawn-curry", "mackerel-fry"],
+  "b5":                     ["egg-bhurji", "masala-omelette", "mushroom-curry", "broccoli-stir-fry", "avocado-toast", "chicken-biryani", "oats-upma", "sprout-salad", "brown-rice-pulao", "banana-smoothie"],
+  "b6":                     ["chicken-biryani", "butter-chicken", "tandoori-chicken", "fish-curry", "grilled-salmon", "banana-smoothie", "aloo-gobi", "masala-dosa", "chana-masala", "sprout-salad"],
+  "b7":                     ["egg-bhurji", "masala-omelette", "almond-burfi", "walnut-paratha", "grilled-salmon", "fish-curry", "til-laddu", "groundnut-chikki", "sprout-salad", "banana-smoothie"],
+  "folate":                 ["palak-paneer", "sarson-saag", "spinach-soup", "dal-makhani", "rajma-chawal", "chana-masala", "moong-sprouts-chaat", "masoor-dal", "beetroot-poriyal", "fruit-chaat"],
+  "b12":                    ["butter-chicken", "chicken-biryani", "mutton-curry", "liver-fry", "fish-curry", "grilled-salmon", "mackerel-fry", "prawn-curry", "egg-bhurji", "masala-omelette"],
+  "vitamin_c":              ["nimbu-pani", "aam-panna", "fruit-chaat", "pomegranate-raita", "broccoli-stir-fry", "cabbage-thoran", "sarson-saag", "methi-thepla", "chana-masala", "sprout-salad"],
+
+  "calcium":                ["paneer-butter-masala", "palak-paneer", "dahi", "cucumber-raita", "kadhi-pakora", "ragi-dosa", "til-laddu", "almond-burfi", "sarson-saag", "haldi-doodh"],
+  "magnesium":              ["almond-burfi", "walnut-paratha", "til-laddu", "groundnut-chikki", "palak-paneer", "sarson-saag", "oats-upma", "brown-rice-pulao", "banana-smoothie", "dal-makhani"],
+  "phosphorus":             ["paneer-butter-masala", "dahi", "dal-makhani", "rajma-chawal", "chana-masala", "chicken-biryani", "oats-upma", "brown-rice-pulao", "fish-curry", "almond-burfi"],
+  "potassium":              ["aloo-gobi", "banana-smoothie", "rajma-chawal", "dal-makhani", "palak-paneer", "sarson-saag", "masala-dosa", "baingan-bharta", "beetroot-poriyal", "pumpkin-soup"],
+  "sodium":                 ["nimbu-pani", "cucumber-raita", "dahi", "banana-smoothie", "fruit-chaat", "oats-upma", "aam-panna", "kadhi-pakora", "moong-dal-khichdi", "spinach-soup"],
+
+  "zinc":                   ["mutton-curry", "liver-fry", "prawn-curry", "dal-makhani", "chana-masala", "rajma-chawal", "til-laddu", "groundnut-chikki", "masoor-dal", "fish-curry"],
+  "copper":                 ["liver-fry", "prawn-curry", "walnut-paratha", "almond-burfi", "til-laddu", "groundnut-chikki", "mushroom-curry", "mutton-curry", "fish-curry", "sprout-salad"],
+  "selenium":               ["fish-curry", "grilled-salmon", "mackerel-fry", "prawn-curry", "egg-bhurji", "masala-omelette", "mushroom-curry", "almond-burfi", "walnut-paratha", "chicken-biryani"],
+  "iodine":                 ["dahi", "cucumber-raita", "paneer-butter-masala", "kadhi-pakora", "egg-bhurji", "masala-omelette", "fish-curry", "prawn-curry", "mackerel-fry", "palak-paneer"],
+  "manganese":              ["brown-rice-pulao", "oats-upma", "ragi-dosa", "jowar-roti", "dal-makhani", "palak-paneer", "sarson-saag", "walnut-paratha", "almond-burfi", "masala-oats"],
+  "chromium":               ["broccoli-stir-fry", "oats-upma", "masala-oats", "brown-rice-pulao", "ragi-dosa", "jowar-roti", "sprout-salad", "methi-thepla", "sarson-saag", "palak-paneer"],
+
+  "tsh":                    ["fish-curry", "grilled-salmon", "mackerel-fry", "prawn-curry", "dahi", "cucumber-raita", "paneer-butter-masala", "egg-bhurji", "masala-omelette", "kadhi-pakora"],
+
+  "omega3_index":           ["fish-curry", "grilled-salmon", "mackerel-fry", "prawn-curry", "walnut-paratha", "til-laddu", "methi-thepla", "oats-upma", "avocado-toast", "almond-burfi"]
+}

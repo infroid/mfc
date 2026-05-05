@@ -1,0 +1,69 @@
+{
+  "id": "sprout-salad",
+  "name": "Mixed Sprout Salad",
+  "tagline": "Live-sprouted moong + chana with onion, tomato, and lime",
+  "shortTagline": "raw sprouts · B-vitamins · 10 min",
+  "cuisine": "Indian",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 10,
+  "tags": ["veg", "raw", "high-fiber", "high-protein", "vegan", "low-glycemic"],
+  "color": "#A4C268",
+  "colorSoft": "rgba(164,194,104,0.18)",
+  "featured": false,
+  "highlight": "Sprouting multiplies B-vitamins, vitamin C, and bioavailable minerals",
+  "media": {
+    "emoji": "🌱",
+    "hero": {
+      "palette": ["#A4C268", "#E76F51", "#FBF7EE"],
+      "src": "data/recipe-bundles/sprout-salad/hero.jpg",
+      "alt": "Bowl of pale-green moong sprouts mixed with diced tomato, onion, and lemon",
+      "caption": "sprout salad — raw, crunchy, lemon-bright"
+    }
+  },
+  "healthFacts": [
+    "Sprouting raises B1, B6, folate, and vitamin C content by 2–10× vs the dry seed.",
+    "Phytate breakdown during sprouting boosts iron, zinc, and magnesium absorption.",
+    "Raw, low-glycemic, and high-fiber — gentle on insulin and HbA1c.",
+    "Lemon provides vitamin C that further unlocks the iron in the sprouts."
+  ],
+  "ingredients": [
+    {"name": "Moong sprouts", "amt": "1 cup", "group": "main"},
+    {"name": "Chana sprouts", "amt": "½ cup", "group": "main"},
+    {"name": "Onion (finely chopped)", "amt": "1 small", "group": "salad"},
+    {"name": "Tomato (chopped)", "amt": "1 small", "group": "salad"},
+    {"name": "Cucumber (diced)", "amt": "½ cup", "group": "salad"},
+    {"name": "Green chili (chopped)", "amt": "1", "group": "salad"},
+    {"name": "Lemon juice", "amt": "1 tbsp", "group": "dressing"},
+    {"name": "Black salt", "amt": "¼ tsp", "group": "dressing"},
+    {"name": "Coriander leaves", "amt": "2 tbsp", "group": "finish"}
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Steam-blanch the sprouts (optional)",
+      "detail": "Steam sprouts for 2 minutes if you want them softer or food-safety conscious — raw is fine for healthy adults. Cool fully before mixing.",
+      "duration": 120,
+      "tip": "Steaming kills any surface bacteria but keeps 90% of the sprouting nutrient gain."
+    },
+    {
+      "id": 2,
+      "title": "Chop and combine",
+      "detail": "Toss sprouts with onion, tomato, cucumber, green chili, and coriander in a wide bowl.",
+      "duration": 180,
+      "tip": "Cut the vegetables fine — same size as the sprouts so each spoonful is balanced."
+    },
+    {
+      "id": 3,
+      "title": "Dress and serve",
+      "detail": "Squeeze in lemon juice, sprinkle black salt and a pinch of roasted cumin powder. Toss and serve immediately.",
+      "duration": 60,
+      "tip": "Don't dress in advance — vegetables release water and the salad goes limp."
+    }
+  ],
+  "utensils": [
+    {"name": "Mixing bowl", "essential": true},
+    {"name": "Sharp knife", "essential": true},
+    {"name": "Steamer (optional)", "essential": false}
+  ]
+}
