@@ -1,0 +1,78 @@
+{
+  "id": "roast-beef-sandwich",
+  "name": "Roast Beef Sandwich",
+  "tagline": "Pink-roasted top round on a Kaiser roll with horseradish cream",
+  "shortTagline": "deli classic · nut-free · 25 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 25,
+  "tags": ["non-veg", "nut-free", "high-protein", "quick"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Sliced thin, piled tall, sharpened by horseradish",
+  "media": {
+    "emoji": "🥪",
+    "hero": {
+      "palette": ["#A0522D", "#F4D67A", "#7A9C5A"],
+      "src": "data/recipe-bundles/roast-beef-sandwich/hero.jpg",
+      "alt": "Tall roast beef sandwich on Kaiser roll with horseradish",
+      "caption": "roast beef — sliced thin, piled tall"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Top round is one of the leanest beef cuts — ~26g protein per 3oz, low saturated fat.",
+    "Horseradish contains glucosinolates similar to broccoli — pungent and clearing."
+  ],
+  "ingredients": [
+    { "name": "Sliced rare roast beef", "amt": "1/2 lb", "group": "main" },
+    { "name": "Kaiser rolls", "amt": "2", "group": "main" },
+    { "name": "Sour cream", "amt": "1/4 cup", "group": "sauce" },
+    { "name": "Prepared horseradish", "amt": "2 tbsp", "group": "sauce" },
+    { "name": "Dijon mustard", "amt": "1 tsp", "group": "sauce" },
+    { "name": "Red onion", "amt": "1/4, sliced thin", "group": "main" },
+    { "name": "Arugula", "amt": "1 cup", "group": "finish" },
+    { "name": "Salt and pepper", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Whisk the horseradish cream",
+      "detail": "Stir sour cream, horseradish, mustard, salt, and pepper together. Taste — it should kick.",
+      "duration": 60,
+      "tip": "Make this an hour ahead if you can — flavors round out.",
+      "media": { "src": "data/recipe-bundles/roast-beef-sandwich/step-01-sauce.jpg", "alt": "Horseradish cream in a bowl", "caption": "whisk the horseradish cream" }
+    },
+    {
+      "id": 2,
+      "title": "Toast the rolls",
+      "detail": "Split rolls, toast cut-side until just golden. Adds structure to hold the meat juices.",
+      "duration": 180,
+      "tip": "A toasted roll = 50% less sog after assembly.",
+      "media": { "src": "data/recipe-bundles/roast-beef-sandwich/step-02-toast.jpg", "alt": "Toasted Kaiser roll halves", "caption": "toast the rolls" }
+    },
+    {
+      "id": 3,
+      "title": "Quick-warm the beef",
+      "detail": "Optional: warm sliced beef in a dry skillet 30 seconds — just to take the chill off. Don't cook further.",
+      "duration": 60,
+      "tip": "Cold roast beef is fine. Hot roast beef is better.",
+      "media": { "src": "data/recipe-bundles/roast-beef-sandwich/step-03-warm.jpg", "alt": "Roast beef warming in skillet", "caption": "quick-warm the beef" }
+    },
+    {
+      "id": 4,
+      "title": "Build and serve",
+      "detail": "Slather both halves with horseradish cream. Pile beef tall, top with red onion and arugula. Press lightly, slice, and serve.",
+      "duration": 120,
+      "tip": "Don't squash — air between slices is what makes a deli sandwich crave-worthy.",
+      "media": { "src": "data/recipe-bundles/roast-beef-sandwich/step-04-build.jpg", "alt": "Built roast beef sandwich", "caption": "build and serve" }
+    }
+  ],
+  "utensils": [
+    { "name": "Skillet", "essential": false },
+    { "name": "Bread knife", "essential": true },
+    { "name": "Mixing bowl", "essential": true }
+  ]
+}

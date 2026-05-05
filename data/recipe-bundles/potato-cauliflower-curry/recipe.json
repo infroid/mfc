@@ -1,0 +1,80 @@
+{
+  "id": "potato-cauliflower-curry",
+  "name": "Potato Cauliflower Curry",
+  "tagline": "Tomato-based potato and cauliflower curry with ginger and cumin",
+  "shortTagline": "homestyle · egg-free · vegan · 40 min",
+  "cuisine": "Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 40,
+  "tags": ["vegetarian", "vegan", "egg-free", "indian", "gluten-free"],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
+  "featured": false,
+  "highlight": "Pantry-staple curry, no eggs, all warmth",
+  "media": {
+    "emoji": "🥔",
+    "hero": {
+      "palette": ["#F4A261", "#F4D67A", "#7A9C5A"],
+      "src": "data/recipe-bundles/potato-cauliflower-curry/hero.jpg",
+      "alt": "Aloo gobi with potato, cauliflower, and tomato gravy",
+      "caption": "potato cauliflower — gravy version"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Cauliflower is a cruciferous source of glucosinolates — anti-inflammatory.",
+    "Cooking turmeric with black pepper boosts curcumin absorption ~20×."
+  ],
+  "ingredients": [
+    { "name": "Potatoes (cubed)", "amt": "3 medium", "group": "main" },
+    { "name": "Cauliflower (florets)", "amt": "1 head", "group": "main" },
+    { "name": "Onion", "amt": "1 large", "group": "aromatics" },
+    { "name": "Garlic-ginger paste", "amt": "2 tbsp", "group": "aromatics" },
+    { "name": "Tomato puree", "amt": "1 cup", "group": "sauce" },
+    { "name": "Cumin seeds", "amt": "1 tsp", "group": "spice" },
+    { "name": "Turmeric", "amt": "1/2 tsp", "group": "spice" },
+    { "name": "Coriander powder", "amt": "1.5 tsp", "group": "spice" },
+    { "name": "Garam masala", "amt": "1 tsp", "group": "spice" },
+    { "name": "Cilantro", "amt": "small handful", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Temper cumin",
+      "detail": "Heat 3 tbsp oil in a wide pan. Add cumin seeds and let them splutter, ~20 sec.",
+      "duration": 60,
+      "tip": "Hot oil first, then seeds — cold-oil-cold-seeds gives weak flavor.",
+      "media": { "src": "data/recipe-bundles/potato-cauliflower-curry/step-01-temper.jpg", "alt": "Cumin seeds in hot oil", "caption": "temper cumin" }
+    },
+    {
+      "id": 2,
+      "title": "Brown onion and bloom spices",
+      "detail": "Add onion, cook 8 min until golden. Stir in ginger-garlic paste 1 min. Add turmeric, coriander, salt — bloom 30 sec.",
+      "duration": 600,
+      "tip": "Onions should look mahogany before tomato goes in — that depth carries the curry.",
+      "media": { "src": "data/recipe-bundles/potato-cauliflower-curry/step-02-onion.jpg", "alt": "Browned onions with spices", "caption": "brown onion and bloom spices" }
+    },
+    {
+      "id": 3,
+      "title": "Tomato then potato",
+      "detail": "Add tomato puree; cook 5 min until oil separates. Add potatoes and 1 cup water. Cover, simmer 8 min.",
+      "duration": 780,
+      "tip": "Watch for the oil to ooze to the surface — that's the sign your masala is cooked.",
+      "media": { "src": "data/recipe-bundles/potato-cauliflower-curry/step-03-tomato.jpg", "alt": "Tomato base with potatoes", "caption": "tomato then potato" }
+    },
+    {
+      "id": 4,
+      "title": "Cauliflower and finish",
+      "detail": "Add cauliflower, cover, cook 12 min until both veg are fork-tender. Finish with garam masala and cilantro.",
+      "duration": 720,
+      "tip": "Garam masala goes at the end so its volatile aromatics don't burn off.",
+      "media": { "src": "data/recipe-bundles/potato-cauliflower-curry/step-04-finish.jpg", "alt": "Finished potato cauliflower curry", "caption": "cauliflower and finish" }
+    }
+  ],
+  "utensils": [
+    { "name": "Wide pan or kadhai with lid", "essential": true },
+    { "name": "Spatula", "essential": true },
+    { "name": "Knife and cutting board", "essential": true }
+  ]
+}

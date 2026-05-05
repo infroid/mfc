@@ -1,0 +1,80 @@
+{
+  "id": "tilapia-veracruz",
+  "name": "Tilapia Veracruz",
+  "tagline": "Tilapia braised in tomato-olive-caper sauce — Veracruz coast classic",
+  "shortTagline": "tomato-olive · shellfish-free · 30 min",
+  "cuisine": "Mexican",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": ["pescatarian", "shellfish-free", "mexican", "high-protein", "quick"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Tomatoes, olives, capers — Spanish-Mexican coastal, no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": ["#E76F51", "#7A9C5A", "#F4D67A"],
+      "src": "data/recipe-bundles/tilapia-veracruz/hero.jpg",
+      "alt": "Tilapia in red Veracruz sauce with olives and capers",
+      "caption": "veracruz — tomato, olive, caper"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Tilapia is mild and lean — takes on whatever sauce surrounds it.",
+    "Olives + capers contribute polyphenols and salt without added sodium."
+  ],
+  "ingredients": [
+    { "name": "Tilapia fillets", "amt": "1.5 lb", "group": "main" },
+    { "name": "Diced tomatoes (canned)", "amt": "1 (28oz)", "group": "sauce" },
+    { "name": "Onion (sliced)", "amt": "1 medium", "group": "aromatics" },
+    { "name": "Garlic", "amt": "4 cloves", "group": "aromatics" },
+    { "name": "Green olives (pitted, halved)", "amt": "1/2 cup", "group": "main" },
+    { "name": "Capers", "amt": "2 tbsp", "group": "sauce" },
+    { "name": "Pickled jalapeños", "amt": "2 tbsp sliced", "group": "spice" },
+    { "name": "Bay leaf", "amt": "1", "group": "aromatics" },
+    { "name": "Olive oil", "amt": "3 tbsp", "group": "fat" },
+    { "name": "Cilantro", "amt": "small handful", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Build the sauce",
+      "detail": "Heat olive oil in a wide pan. Sweat onion 6 min. Add garlic 1 min. Pour in tomatoes; simmer 8 min until thickened.",
+      "duration": 900,
+      "tip": "Cook off some of the canned tomato sharpness before adding fish.",
+      "media": { "src": "data/recipe-bundles/tilapia-veracruz/step-01-sauce.jpg", "alt": "Veracruz sauce simmering", "caption": "build the sauce" }
+    },
+    {
+      "id": 2,
+      "title": "Olives, capers, jalapeño",
+      "detail": "Stir in olives, capers, jalapeños, bay leaf. Simmer 3 min.",
+      "duration": 180,
+      "tip": "Saltiness builds: taste before adding any extra salt.",
+      "media": { "src": "data/recipe-bundles/tilapia-veracruz/step-02-olives.jpg", "alt": "Olives and capers added to sauce", "caption": "olives, capers, jalapeño" }
+    },
+    {
+      "id": 3,
+      "title": "Nestle the fish",
+      "detail": "Salt tilapia. Slip fillets into the sauce. Spoon sauce over the tops. Cover, simmer 6–8 min until fish flakes.",
+      "duration": 480,
+      "tip": "Don't flip — the fish breaks. Just spoon sauce over.",
+      "media": { "src": "data/recipe-bundles/tilapia-veracruz/step-03-nestle.jpg", "alt": "Tilapia poaching in sauce", "caption": "nestle the fish" }
+    },
+    {
+      "id": 4,
+      "title": "Cilantro and serve",
+      "detail": "Discard bay leaf. Scatter cilantro over the top. Serve with rice or warm tortillas.",
+      "duration": 60,
+      "tip": "A dose of lime over each portion sharpens the whole dish.",
+      "media": { "src": "data/recipe-bundles/tilapia-veracruz/step-04-serve.jpg", "alt": "Tilapia veracruz with cilantro", "caption": "cilantro and serve" }
+    }
+  ],
+  "utensils": [
+    { "name": "Wide skillet with lid", "essential": true },
+    { "name": "Wooden spoon", "essential": true },
+    { "name": "Spatula", "essential": false }
+  ]
+}

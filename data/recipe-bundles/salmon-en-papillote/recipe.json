@@ -1,0 +1,80 @@
+{
+  "id": "salmon-en-papillote",
+  "name": "Salmon en Papillote",
+  "tagline": "Salmon and vegetables steamed in parchment with herbs and lemon",
+  "shortTagline": "parchment-steamed · shellfish-free · 25 min",
+  "cuisine": "French",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 25,
+  "tags": ["pescatarian", "shellfish-free", "high-protein", "gluten-free", "quick"],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Salmon plus veg in a sealed parchment — silky and clean",
+  "media": {
+    "emoji": "📦",
+    "hero": {
+      "palette": ["#7A9C5A", "#E76F51", "#F4D67A"],
+      "src": "data/recipe-bundles/salmon-en-papillote/hero.jpg",
+      "alt": "Salmon en papillote opened to reveal salmon and vegetables",
+      "caption": "papillote — steamed in parchment"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Steaming in parchment locks in moisture and aromatics — no fat needed.",
+    "Vegetables released their juices to steam-poach the salmon."
+  ],
+  "ingredients": [
+    { "name": "Salmon fillets", "amt": "2 (6oz)", "group": "main" },
+    { "name": "Zucchini (sliced)", "amt": "1 small", "group": "main" },
+    { "name": "Cherry tomatoes (halved)", "amt": "1 cup", "group": "main" },
+    { "name": "Shallot (sliced)", "amt": "1", "group": "aromatics" },
+    { "name": "Garlic", "amt": "2 cloves, sliced", "group": "aromatics" },
+    { "name": "Lemon", "amt": "1, sliced", "group": "aromatics" },
+    { "name": "Fresh thyme", "amt": "4 sprigs", "group": "aromatics" },
+    { "name": "Olive oil", "amt": "2 tbsp", "group": "fat" },
+    { "name": "White wine", "amt": "2 tbsp", "group": "liquid" },
+    { "name": "Salt and pepper", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Cut parchment hearts",
+      "detail": "Fold parchment in half; cut a large heart shape — when opened it'll be a circle. Two hearts for two portions.",
+      "duration": 240,
+      "tip": "Heart shape gives you a long crimping edge — fewer leaks.",
+      "media": { "src": "data/recipe-bundles/salmon-en-papillote/step-01-paper.jpg", "alt": "Heart-shaped parchment paper", "caption": "cut parchment hearts" }
+    },
+    {
+      "id": 2,
+      "title": "Layer the bed",
+      "detail": "On one half of each heart, layer zucchini, tomatoes, shallot, garlic. Place salmon on top, salt, pepper. Top with lemon, thyme, drizzle olive oil and wine.",
+      "duration": 240,
+      "tip": "Veg under fish acts as both flavor and rack.",
+      "media": { "src": "data/recipe-bundles/salmon-en-papillote/step-02-layer.jpg", "alt": "Salmon layered on parchment", "caption": "layer the bed" }
+    },
+    {
+      "id": 3,
+      "title": "Crimp into a packet",
+      "detail": "Fold the empty half over. Crimp the edges by folding small pleats all around to seal — must be airtight.",
+      "duration": 240,
+      "tip": "Brush edges with water before crimping for a tighter seal.",
+      "media": { "src": "data/recipe-bundles/salmon-en-papillote/step-03-crimp.jpg", "alt": "Crimping parchment packet", "caption": "crimp into a packet" }
+    },
+    {
+      "id": 4,
+      "title": "Bake and serve",
+      "detail": "Place packets on a sheet pan. Bake at 400°F for 12 min — they'll puff. Bring packets to the table; let diners cut them open.",
+      "duration": 720,
+      "tip": "The puffed packet release of steam is half the joy. Theatre.",
+      "media": { "src": "data/recipe-bundles/salmon-en-papillote/step-04-bake.jpg", "alt": "Puffed papillote packets", "caption": "bake and serve" }
+    }
+  ],
+  "utensils": [
+    { "name": "Parchment paper", "essential": true },
+    { "name": "Sheet pan", "essential": true },
+    { "name": "Scissors", "essential": true }
+  ]
+}

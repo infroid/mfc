@@ -1,0 +1,79 @@
+{
+  "id": "hummus-mezze",
+  "name": "Hummus Mezze Platter",
+  "tagline": "Whipped chickpea hummus with za'atar, olive oil, warm pita",
+  "shortTagline": "creamy · egg-free · vegan · 25 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 25,
+  "tags": ["vegetarian", "vegan", "egg-free", "mediterranean", "high-protein"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.20)",
+  "featured": false,
+  "highlight": "Restaurant-smooth at home — baking soda is the cheat",
+  "media": {
+    "emoji": "🫓",
+    "hero": {
+      "palette": ["#F4D67A", "#7A9C5A", "#E76F51"],
+      "src": "data/recipe-bundles/hummus-mezze/hero.jpg",
+      "alt": "Hummus swirl with olive oil, za'atar, and pita",
+      "caption": "hummus — silky and warm"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Tahini brings calcium that pairs with chickpea protein for a complete bite.",
+    "Baking soda dissolves chickpea skins for restaurant-smooth texture."
+  ],
+  "ingredients": [
+    { "name": "Chickpeas (canned)", "amt": "2 (15oz) cans", "group": "main" },
+    { "name": "Baking soda", "amt": "1/2 tsp", "group": "main" },
+    { "name": "Tahini", "amt": "1/2 cup", "group": "sauce" },
+    { "name": "Lemon juice", "amt": "1/4 cup", "group": "sauce" },
+    { "name": "Garlic", "amt": "2 cloves", "group": "aromatics" },
+    { "name": "Ice water", "amt": "3-5 tbsp", "group": "liquid" },
+    { "name": "Olive oil", "amt": "to drizzle", "group": "fat" },
+    { "name": "Za'atar", "amt": "to finish", "group": "spice" },
+    { "name": "Warm pita", "amt": "for serving", "group": "main" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil with baking soda",
+      "detail": "Drain chickpeas. Simmer in fresh water with baking soda 8 min — skins will loosen and rise. Skim them off, drain.",
+      "duration": 480,
+      "tip": "Skinless chickpeas blend twice as smooth.",
+      "media": { "src": "data/recipe-bundles/hummus-mezze/step-01-skin.jpg", "alt": "Chickpeas with loose skins", "caption": "boil with baking soda" }
+    },
+    {
+      "id": 2,
+      "title": "Whip tahini base",
+      "detail": "Process tahini, lemon, garlic, salt for 1 min until pale and thick. Slowly drip in ice water until creamy and ribboning.",
+      "duration": 120,
+      "tip": "Tahini-lemon-water emulsion comes first — it's a sauce in itself.",
+      "media": { "src": "data/recipe-bundles/hummus-mezze/step-02-tahini.jpg", "alt": "Whipped tahini base", "caption": "whip tahini base" }
+    },
+    {
+      "id": 3,
+      "title": "Add chickpeas and blend long",
+      "detail": "Add hot chickpeas (still warm = silkier). Blend 4 minutes solid, scraping down as needed.",
+      "duration": 240,
+      "tip": "If you're blending under 3 min, it's not done. Keep going.",
+      "media": { "src": "data/recipe-bundles/hummus-mezze/step-03-blend.jpg", "alt": "Hummus blending in processor", "caption": "add chickpeas and blend long" }
+    },
+    {
+      "id": 4,
+      "title": "Plate with swoops",
+      "detail": "Spoon onto a plate; use the back of a spoon to swirl a well in the center. Pool olive oil; sprinkle za'atar. Warm pita alongside.",
+      "duration": 120,
+      "tip": "Warm pita: 30 sec per side in a dry skillet, or 5 min in 350°F oven.",
+      "media": { "src": "data/recipe-bundles/hummus-mezze/step-04-plate.jpg", "alt": "Hummus plate with za'atar and pita", "caption": "plate with swoops" }
+    }
+  ],
+  "utensils": [
+    { "name": "Food processor", "essential": true },
+    { "name": "Saucepan", "essential": true },
+    { "name": "Slotted spoon", "essential": false }
+  ]
+}

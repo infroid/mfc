@@ -1,0 +1,76 @@
+{
+  "id": "classic-mashed-potatoes",
+  "name": "Classic Mashed Potatoes",
+  "tagline": "Yukon golds riced with butter and warm cream",
+  "shortTagline": "side classic · soy-free · 35 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 35,
+  "tags": ["vegetarian", "soy-free", "gluten-free"],
+  "color": "#FFFCF3",
+  "colorSoft": "rgba(255,252,243,0.5)",
+  "featured": false,
+  "highlight": "Riced for cloud-like texture — no soy, no gum, just butter and cream",
+  "media": {
+    "emoji": "🥔",
+    "hero": {
+      "palette": ["#FFFCF3", "#F4D67A", "#A0522D"],
+      "src": "data/recipe-bundles/classic-mashed-potatoes/hero.jpg",
+      "alt": "Bowl of fluffy mashed potatoes with butter pat",
+      "caption": "mashed potatoes — riced and silky"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Yukon golds have less starch than russets — silkier mash.",
+    "Warm cream + soft butter = velvet; cold dairy seizes the starch."
+  ],
+  "ingredients": [
+    { "name": "Yukon gold potatoes", "amt": "2.5 lb", "group": "main" },
+    { "name": "Butter (softened)", "amt": "8 tbsp", "group": "fat" },
+    { "name": "Heavy cream (warm)", "amt": "3/4 cup", "group": "liquid" },
+    { "name": "Whole milk (warm)", "amt": "1/4 cup", "group": "liquid" },
+    { "name": "Salt", "amt": "to taste", "group": "spice" },
+    { "name": "White pepper", "amt": "pinch", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil whole",
+      "detail": "Quarter potatoes if very large; otherwise leave whole. Cover with cold salted water; bring to a boil. Simmer 18–22 min until fork-tender.",
+      "duration": 1320,
+      "tip": "Cold-water start cooks evenly. Hot start = mushy outside, raw center.",
+      "media": { "src": "data/recipe-bundles/classic-mashed-potatoes/step-01-boil.jpg", "alt": "Potatoes boiling in salted water", "caption": "boil whole" }
+    },
+    {
+      "id": 2,
+      "title": "Drain and dry",
+      "detail": "Drain. Return to the warm pot to evaporate excess water for 30 sec.",
+      "duration": 60,
+      "tip": "Wet potatoes = watery mash. Dry first.",
+      "media": { "src": "data/recipe-bundles/classic-mashed-potatoes/step-02-dry.jpg", "alt": "Drying potatoes in pot", "caption": "drain and dry" }
+    },
+    {
+      "id": 3,
+      "title": "Rice through",
+      "detail": "Rice or push potatoes through a food mill back into the pot. Even masher works — but ricer wins.",
+      "duration": 240,
+      "tip": "No ricer? Use the largest holes of a box grater for a similar effect.",
+      "media": { "src": "data/recipe-bundles/classic-mashed-potatoes/step-03-rice.jpg", "alt": "Ricing potatoes", "caption": "rice through" }
+    },
+    {
+      "id": 4,
+      "title": "Fold in butter, then cream",
+      "detail": "Fold butter in piece by piece. Gradually fold in warm cream and milk. Salt and white pepper to taste.",
+      "duration": 240,
+      "tip": "Folding (not beating) keeps starch from over-developing. Beating = glue mash.",
+      "media": { "src": "data/recipe-bundles/classic-mashed-potatoes/step-04-fold.jpg", "alt": "Folding butter into mash", "caption": "fold in butter, then cream" }
+    }
+  ],
+  "utensils": [
+    { "name": "Heavy pot", "essential": true },
+    { "name": "Ricer or food mill", "essential": true },
+    { "name": "Wooden spoon", "essential": true }
+  ]
+}

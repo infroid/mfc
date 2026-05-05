@@ -1,0 +1,80 @@
+{
+  "id": "ratatouille",
+  "name": "Ratatouille",
+  "tagline": "Provençal stew of eggplant, zucchini, pepper, tomato — slow simmered",
+  "shortTagline": "provençal · egg-free · vegan · 60 min",
+  "cuisine": "French",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 60,
+  "tags": ["vegetarian", "vegan", "egg-free", "gluten-free", "mediterranean"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Eight vegetables, olive oil, no eggs",
+  "media": {
+    "emoji": "🍆",
+    "hero": {
+      "palette": ["#E76F51", "#7A9C5A", "#A0522D"],
+      "src": "data/recipe-bundles/ratatouille/hero.jpg",
+      "alt": "Ratatouille with eggplant, zucchini, peppers in tomato",
+      "caption": "ratatouille — slow Provençal stew"
+    }
+  },
+  "healthFacts": [
+    "Naturally egg-free, vegan, gluten-free.",
+    "Eggplant cooked in olive oil draws polyphenols out of the skin.",
+    "Bell peppers contain more vitamin C per gram than oranges."
+  ],
+  "ingredients": [
+    { "name": "Eggplant", "amt": "1 medium", "group": "main" },
+    { "name": "Zucchini", "amt": "2", "group": "main" },
+    { "name": "Yellow squash", "amt": "1", "group": "main" },
+    { "name": "Red bell pepper", "amt": "2", "group": "main" },
+    { "name": "Onion", "amt": "1 large", "group": "aromatics" },
+    { "name": "Garlic", "amt": "5 cloves", "group": "aromatics" },
+    { "name": "Crushed tomatoes", "amt": "1 (28oz) can", "group": "sauce" },
+    { "name": "Olive oil", "amt": "1/2 cup", "group": "fat" },
+    { "name": "Herbs de Provence", "amt": "2 tsp", "group": "spice" },
+    { "name": "Fresh basil", "amt": "handful", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Salt and rest eggplant",
+      "detail": "Cube eggplant. Salt heavily and rest in a colander 20 minutes. Pat dry — pulls bitter juices and prevents oil-bath later.",
+      "duration": 1200,
+      "tip": "Skipping this step makes eggplant a sponge.",
+      "media": { "src": "data/recipe-bundles/ratatouille/step-01-salt.jpg", "alt": "Salting eggplant in colander", "caption": "salt and rest eggplant" }
+    },
+    {
+      "id": 2,
+      "title": "Brown vegetables in batches",
+      "detail": "Heat olive oil in a heavy pot. Brown eggplant, then zucchini/squash, then peppers — separately so each gets color, not steam.",
+      "duration": 900,
+      "tip": "Crowding = steaming. Take the time, work in batches.",
+      "media": { "src": "data/recipe-bundles/ratatouille/step-02-brown.jpg", "alt": "Browning vegetables in pot", "caption": "brown vegetables in batches" }
+    },
+    {
+      "id": 3,
+      "title": "Build the base",
+      "detail": "In the same pot, sweat onion 5 minutes. Add garlic and herbs de Provence. Pour in tomato, simmer 5 minutes.",
+      "duration": 600,
+      "tip": "All the brown bits left from the veg deepen the tomato base.",
+      "media": { "src": "data/recipe-bundles/ratatouille/step-03-base.jpg", "alt": "Tomato base for ratatouille", "caption": "build the base" }
+    },
+    {
+      "id": 4,
+      "title": "Combine and stew",
+      "detail": "Return all vegetables to the pot. Stir gently to coat. Simmer covered 25 minutes, then uncovered 10 minutes to thicken. Tear basil over.",
+      "duration": 2100,
+      "tip": "Better the next day — flavors meld overnight.",
+      "media": { "src": "data/recipe-bundles/ratatouille/step-04-stew.jpg", "alt": "Stewed ratatouille with basil", "caption": "combine and stew" }
+    }
+  ],
+  "utensils": [
+    { "name": "Heavy pot or Dutch oven", "essential": true },
+    { "name": "Wooden spoon", "essential": true },
+    { "name": "Colander", "essential": true }
+  ]
+}

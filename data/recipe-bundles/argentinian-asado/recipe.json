@@ -1,0 +1,72 @@
+{
+  "id": "argentinian-asado",
+  "name": "Argentinian Asado",
+  "tagline": "Grilled ribeye, salt only — Argentina's reverence for beef",
+  "shortTagline": "wood-grilled · soy-free · 30 min",
+  "cuisine": "Argentinian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": ["non-veg", "soy-free", "high-protein", "gluten-free"],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
+  "featured": false,
+  "highlight": "Two ingredients — beef and salt. The Argentine way. No soy.",
+  "media": {
+    "emoji": "🥩",
+    "hero": {
+      "palette": ["#A0522D", "#3A332A", "#F4D67A"],
+      "src": "data/recipe-bundles/argentinian-asado/hero.jpg",
+      "alt": "Charred grilled ribeye with grill marks on a wooden board",
+      "caption": "asado — beef and salt"
+    }
+  },
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Reverse-sear keeps thick steaks pink edge to edge.",
+    "Coarse salt draws moisture, then dries — perfect crust."
+  ],
+  "ingredients": [
+    { "name": "Bone-in ribeye", "amt": "2 (1.5 inch thick)", "group": "main" },
+    { "name": "Coarse salt (sal parrillera)", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Temper the beef",
+      "detail": "Pull steaks from fridge 45 min before cooking. Cold steak in a hot grill ends in raw center.",
+      "duration": 2700,
+      "tip": "Tempering is mandatory for thick steaks — otherwise the outside burns before the center warms.",
+      "media": { "src": "data/recipe-bundles/argentinian-asado/step-01-temper.jpg", "alt": "Steak resting on counter to temper", "caption": "temper the beef" }
+    },
+    {
+      "id": 2,
+      "title": "Build the fire",
+      "detail": "Light a charcoal or wood fire and let it burn down to glowing embers (no flames). You want radiant heat, not jet flame.",
+      "duration": 1800,
+      "tip": "Argentine parrillas are wood-fired — gas works but won't smell the same.",
+      "media": { "src": "data/recipe-bundles/argentinian-asado/step-02-fire.jpg", "alt": "Glowing charcoal embers under grill grate", "caption": "build the fire" }
+    },
+    {
+      "id": 3,
+      "title": "Salt and grill",
+      "detail": "Generously coat both sides with coarse salt. Lay steaks on the grate over medium-hot embers. Cook 6 min per side for medium-rare.",
+      "duration": 720,
+      "tip": "Don't move the steak — the only flip is the one to the other side.",
+      "media": { "src": "data/recipe-bundles/argentinian-asado/step-03-grill.jpg", "alt": "Steaks grilling over embers", "caption": "salt and grill" }
+    },
+    {
+      "id": 4,
+      "title": "Rest and slice",
+      "detail": "Rest steaks 10 min on a board. Slice across the grain into thick pieces. Eat with chimichurri or just bread and red wine.",
+      "duration": 600,
+      "tip": "Resting redistributes juices — slicing too soon loses them all.",
+      "media": { "src": "data/recipe-bundles/argentinian-asado/step-04-rest.jpg", "alt": "Sliced steak resting", "caption": "rest and slice" }
+    }
+  ],
+  "utensils": [
+    { "name": "Charcoal or wood grill", "essential": true },
+    { "name": "Tongs", "essential": true },
+    { "name": "Cutting board", "essential": true }
+  ]
+}

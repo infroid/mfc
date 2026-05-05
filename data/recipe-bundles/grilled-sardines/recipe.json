@@ -1,0 +1,77 @@
+{
+  "id": "grilled-sardines",
+  "name": "Grilled Sardines",
+  "tagline": "Fresh sardines grilled whole with salt, lemon, parsley",
+  "shortTagline": "rustic · shellfish-free · 20 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 20,
+  "tags": ["pescatarian", "shellfish-free", "mediterranean", "high-protein", "quick"],
+  "color": "#FFFCF3",
+  "colorSoft": "rgba(255,252,243,0.5)",
+  "featured": false,
+  "highlight": "Smoke-charred whole sardines — Mediterranean coast, no shellfish",
+  "media": {
+    "emoji": "🐟",
+    "hero": {
+      "palette": ["#FFFCF3", "#7A9C5A", "#3A332A"],
+      "src": "data/recipe-bundles/grilled-sardines/hero.jpg",
+      "alt": "Grilled whole sardines with lemon wedges and parsley",
+      "caption": "sardines — grilled whole"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Sardines are sustainable, omega-3-rich, and packed with calcium (eat the bones).",
+    "Whole-fish grilling concentrates fat at the skin for incredible char."
+  ],
+  "ingredients": [
+    { "name": "Fresh sardines (cleaned)", "amt": "12", "group": "main" },
+    { "name": "Olive oil", "amt": "3 tbsp", "group": "fat" },
+    { "name": "Sea salt", "amt": "1 tbsp", "group": "spice" },
+    { "name": "Lemon", "amt": "2", "group": "finish" },
+    { "name": "Parsley", "amt": "small handful", "group": "finish" },
+    { "name": "Garlic", "amt": "2 cloves", "group": "aromatics" },
+    { "name": "Red pepper flakes", "amt": "pinch", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Pat dry, oil",
+      "detail": "Pat sardines bone-dry inside and out. Brush with olive oil; season with sea salt.",
+      "duration": 180,
+      "tip": "Wet fish sticks to the grill. Dry doesn't.",
+      "media": { "src": "data/recipe-bundles/grilled-sardines/step-01-oil.jpg", "alt": "Sardines on a tray with olive oil", "caption": "pat dry, oil" }
+    },
+    {
+      "id": 2,
+      "title": "Hot grill",
+      "detail": "Get grill grates ripping hot and oil them. Lay sardines down on a diagonal — don't move them for 3 min.",
+      "duration": 180,
+      "tip": "Hot grates + oil = clean release every time.",
+      "media": { "src": "data/recipe-bundles/grilled-sardines/step-02-grill.jpg", "alt": "Sardines on hot grill", "caption": "hot grill" }
+    },
+    {
+      "id": 3,
+      "title": "Flip once",
+      "detail": "Flip with a fish spatula or a folded long thin spatula. Grill 2 min more until char marks deepen on the second side.",
+      "duration": 120,
+      "tip": "Eyes go opaque white when done. That's your tell.",
+      "media": { "src": "data/recipe-bundles/grilled-sardines/step-03-flip.jpg", "alt": "Flipped sardines on grill", "caption": "flip once" }
+    },
+    {
+      "id": 4,
+      "title": "Lemon and parsley",
+      "detail": "Plate. Squeeze lemon, scatter parsley, grated garlic, chili flakes, drizzle olive oil.",
+      "duration": 60,
+      "tip": "Eat with the fingers. That's the way.",
+      "media": { "src": "data/recipe-bundles/grilled-sardines/step-04-finish.jpg", "alt": "Grilled sardines plated", "caption": "lemon and parsley" }
+    }
+  ],
+  "utensils": [
+    { "name": "Grill or grill pan", "essential": true },
+    { "name": "Fish spatula", "essential": true },
+    { "name": "Tongs", "essential": false }
+  ]
+}

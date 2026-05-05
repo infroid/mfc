@@ -1,0 +1,78 @@
+{
+  "id": "eggless-zucchini-fritters",
+  "name": "Eggless Zucchini Fritters",
+  "tagline": "Crisp shredded-zucchini fritters bound with chickpea flour, no eggs",
+  "shortTagline": "no-egg fritter · 30 min",
+  "cuisine": "Mediterranean",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "tags": ["vegetarian", "vegan", "egg-free", "gluten-free"],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
+  "featured": false,
+  "highlight": "Chickpea flour is the perfect egg replacer — binds + crisps",
+  "media": {
+    "emoji": "🥒",
+    "hero": {
+      "palette": ["#7A9C5A", "#F4D67A", "#FFFCF3"],
+      "src": "data/recipe-bundles/eggless-zucchini-fritters/hero.jpg",
+      "alt": "Stack of golden zucchini fritters with yogurt dip",
+      "caption": "fritters — golden, crisp"
+    }
+  },
+  "healthFacts": [
+    "No eggs — chickpea flour binds and adds plant protein.",
+    "Squeezing the zucchini dry is the difference between fritter and pancake.",
+    "Chickpea flour adds ~6g protein per 1/4 cup."
+  ],
+  "ingredients": [
+    { "name": "Zucchini (shredded)", "amt": "3 medium", "group": "main" },
+    { "name": "Chickpea flour", "amt": "1/2 cup", "group": "main" },
+    { "name": "Scallions (sliced)", "amt": "4", "group": "aromatics" },
+    { "name": "Garlic", "amt": "2 cloves", "group": "aromatics" },
+    { "name": "Fresh dill", "amt": "2 tbsp chopped", "group": "finish" },
+    { "name": "Cumin", "amt": "1/2 tsp", "group": "spice" },
+    { "name": "Salt", "amt": "1.5 tsp (incl. squeeze salt)", "group": "spice" },
+    { "name": "Olive oil", "amt": "for frying", "group": "fat" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Shred and squeeze",
+      "detail": "Shred zucchini on the large holes of a box grater. Salt with 1 tsp salt; rest 10 min in a colander, then squeeze hard in a clean towel.",
+      "duration": 600,
+      "tip": "Volume should drop by half. Wet zucchini = soggy fritter.",
+      "media": { "src": "data/recipe-bundles/eggless-zucchini-fritters/step-01-shred.jpg", "alt": "Squeezed shredded zucchini in towel", "caption": "shred and squeeze" }
+    },
+    {
+      "id": 2,
+      "title": "Mix the batter",
+      "detail": "Combine zucchini with chickpea flour, scallions, garlic, dill, cumin, salt. Stir — should hold together when scooped.",
+      "duration": 120,
+      "tip": "Add a tablespoon of water if it's too dry; another tablespoon flour if it's too wet.",
+      "media": { "src": "data/recipe-bundles/eggless-zucchini-fritters/step-02-mix.jpg", "alt": "Zucchini fritter batter", "caption": "mix the batter" }
+    },
+    {
+      "id": 3,
+      "title": "Fry in batches",
+      "detail": "Heat 1/4 inch olive oil in a skillet over medium. Drop heaping tablespoons in, flatten gently. Fry 3 min per side until deep gold.",
+      "duration": 540,
+      "tip": "Don't crowd — cooks evenly only with space.",
+      "media": { "src": "data/recipe-bundles/eggless-zucchini-fritters/step-03-fry.jpg", "alt": "Fritters frying in oil", "caption": "fry in batches" }
+    },
+    {
+      "id": 4,
+      "title": "Drain and serve",
+      "detail": "Transfer to a paper-towel-lined rack. Salt while hot. Serve with yogurt or tahini dip.",
+      "duration": 60,
+      "tip": "Hot oil + salt = perfect adhesion.",
+      "media": { "src": "data/recipe-bundles/eggless-zucchini-fritters/step-04-drain.jpg", "alt": "Drained fritters on rack", "caption": "drain and serve" }
+    }
+  ],
+  "utensils": [
+    { "name": "Box grater", "essential": true },
+    { "name": "Skillet", "essential": true },
+    { "name": "Mixing bowl", "essential": true }
+  ]
+}

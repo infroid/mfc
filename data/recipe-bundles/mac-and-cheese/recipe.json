@@ -1,0 +1,79 @@
+{
+  "id": "mac-and-cheese",
+  "name": "Mac and Cheese",
+  "tagline": "Stovetop mac with béchamel base, three cheeses, golden crumb",
+  "shortTagline": "stovetop · vegetarian · nut-free · 35 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 6,
+  "totalMinutes": 35,
+  "tags": ["vegetarian", "nut-free"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Three cheeses, no nuts, weeknight-fast",
+  "media": {
+    "emoji": "🧀",
+    "hero": {
+      "palette": ["#F4D67A", "#E76F51", "#A0522D"],
+      "src": "data/recipe-bundles/mac-and-cheese/hero.jpg",
+      "alt": "Mac and cheese with golden breadcrumb top",
+      "caption": "mac and cheese — three-cheese béchamel"
+    }
+  },
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Béchamel-based mac (vs. Velveeta) lets you control sodium with the cheese choice.",
+    "Mixing cheeses (cheddar + gruyère + parmesan) gives meltability + flavor depth."
+  ],
+  "ingredients": [
+    { "name": "Cavatappi or elbow pasta", "amt": "1 lb", "group": "main" },
+    { "name": "Butter", "amt": "1/4 cup", "group": "fat" },
+    { "name": "Flour", "amt": "1/4 cup", "group": "thickener" },
+    { "name": "Whole milk", "amt": "3 cups", "group": "liquid" },
+    { "name": "Sharp cheddar (shredded)", "amt": "2 cups", "group": "main" },
+    { "name": "Gruyère (shredded)", "amt": "1 cup", "group": "main" },
+    { "name": "Parmesan", "amt": "1/2 cup", "group": "main" },
+    { "name": "Panko breadcrumbs", "amt": "1/2 cup", "group": "finish" },
+    { "name": "Mustard powder", "amt": "1 tsp", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil pasta al dente",
+      "detail": "Boil pasta in salted water 2 minutes less than package time. Drain.",
+      "duration": 420,
+      "tip": "Underdone pasta absorbs more sauce. Overdone goes to mush.",
+      "media": { "src": "data/recipe-bundles/mac-and-cheese/step-01-boil.jpg", "alt": "Pasta boiling for mac", "caption": "boil pasta al dente" }
+    },
+    {
+      "id": 2,
+      "title": "Build the béchamel",
+      "detail": "Melt butter in a wide pot. Whisk in flour; cook 90 seconds. Slowly whisk in milk; bring to a simmer until it coats the back of a spoon.",
+      "duration": 480,
+      "tip": "If lumpy, blast 30 seconds with an immersion blender — fixes it instantly.",
+      "media": { "src": "data/recipe-bundles/mac-and-cheese/step-02-bechamel.jpg", "alt": "Building the béchamel", "caption": "build the béchamel" }
+    },
+    {
+      "id": 3,
+      "title": "Stir in cheese",
+      "detail": "Off heat, add cheddar, gruyère, half the parmesan, mustard powder, salt, pepper. Whisk until smooth. Stir in pasta.",
+      "duration": 180,
+      "tip": "Adding cheese off heat keeps it from breaking into oily clumps.",
+      "media": { "src": "data/recipe-bundles/mac-and-cheese/step-03-cheese.jpg", "alt": "Cheese melting into béchamel", "caption": "stir in cheese" }
+    },
+    {
+      "id": 4,
+      "title": "Crumb top and bake",
+      "detail": "Pour into baking dish. Top with panko mixed with remaining parmesan and a bit of melted butter. Bake 400°F for 15 minutes until bubbly and golden.",
+      "duration": 900,
+      "tip": "Skip the bake for stovetop mac — equally good if you're in a hurry.",
+      "media": { "src": "data/recipe-bundles/mac-and-cheese/step-04-bake.jpg", "alt": "Baked mac with golden breadcrumb top", "caption": "crumb top and bake" }
+    }
+  ],
+  "utensils": [
+    { "name": "Wide pot", "essential": true },
+    { "name": "Whisk", "essential": true },
+    { "name": "Baking dish", "essential": true }
+  ]
+}

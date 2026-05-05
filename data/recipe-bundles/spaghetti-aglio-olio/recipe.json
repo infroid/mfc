@@ -1,0 +1,76 @@
+{
+  "id": "spaghetti-aglio-olio",
+  "name": "Spaghetti Aglio e Olio",
+  "tagline": "Garlic, olive oil, chili — the four-ingredient Roman classic",
+  "shortTagline": "garlic oil · vegetarian · nut-free · 20 min",
+  "cuisine": "Italian",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 20,
+  "tags": ["vegetarian", "nut-free", "italian", "quick"],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
+  "featured": false,
+  "highlight": "Four ingredients, twenty minutes, peak Italian",
+  "media": {
+    "emoji": "🍝",
+    "hero": {
+      "palette": ["#F4D67A", "#E76F51", "#7A9C5A"],
+      "src": "data/recipe-bundles/spaghetti-aglio-olio/hero.jpg",
+      "alt": "Twirl of spaghetti glossy with garlic oil, chili flakes, and parsley",
+      "caption": "aglio e olio — garlic, oil, chili"
+    }
+  },
+  "healthFacts": [
+    "No nuts, no dairy — naturally nut-free, vegan-friendly.",
+    "Garlic's allicin forms when raw garlic is crushed; gentle warming preserves more than searing.",
+    "Extra-virgin olive oil's polyphenols are stable up to about 374°F (190°C)."
+  ],
+  "ingredients": [
+    { "name": "Spaghetti", "amt": "200 g", "group": "main" },
+    { "name": "Garlic (sliced)", "amt": "6 cloves", "group": "aromatics" },
+    { "name": "Extra-virgin olive oil", "amt": "1/3 cup", "group": "fat" },
+    { "name": "Red chili flakes", "amt": "1 tsp", "group": "spice" },
+    { "name": "Flat-leaf parsley", "amt": "small handful", "group": "finish" },
+    { "name": "Salt", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil heavily salted water",
+      "detail": "Bring a large pot of water to a rolling boil. Salt it like the sea — pasta absorbs about 1 tsp of salt per portion. Drop spaghetti and cook 1 minute under package time.",
+      "duration": 540,
+      "tip": "Reserve a cup of starchy pasta water before draining; it's the emulsifier.",
+      "media": { "src": "data/recipe-bundles/spaghetti-aglio-olio/step-01-boil.jpg", "alt": "Spaghetti boiling in salted water", "caption": "boil heavily salted water" }
+    },
+    {
+      "id": 2,
+      "title": "Slowly bloom the garlic",
+      "detail": "While pasta cooks, warm olive oil in a wide pan over medium-low. Add sliced garlic and chili flakes. Cook gently 4–5 minutes until garlic turns pale gold — not brown.",
+      "duration": 300,
+      "tip": "Brown garlic is bitter garlic. Pull it off heat the moment it turns straw-yellow.",
+      "media": { "src": "data/recipe-bundles/spaghetti-aglio-olio/step-02-bloom.jpg", "alt": "Sliced garlic and chili sizzling in olive oil", "caption": "bloom the garlic" }
+    },
+    {
+      "id": 3,
+      "title": "Emulsify with pasta water",
+      "detail": "Add 1/2 cup pasta water to the garlic oil and bring to a simmer — it'll emulsify into a glossy sauce. Tongs the pasta directly in.",
+      "duration": 90,
+      "tip": "Sauce too thin? Add another splash of pasta water and toss vigorously.",
+      "media": { "src": "data/recipe-bundles/spaghetti-aglio-olio/step-03-emulsify.jpg", "alt": "Pasta water emulsifying with garlic oil", "caption": "emulsify with pasta water" }
+    },
+    {
+      "id": 4,
+      "title": "Toss and serve",
+      "detail": "Toss vigorously over heat 1 minute so the pasta finishes cooking in the sauce and absorbs flavor. Off heat, fold in chopped parsley. Plate immediately.",
+      "duration": 60,
+      "tip": "Aglio e olio waits for no one — it tightens up fast on the plate.",
+      "media": { "src": "data/recipe-bundles/spaghetti-aglio-olio/step-04-toss.jpg", "alt": "Glossy spaghetti tossed with parsley", "caption": "toss and serve" }
+    }
+  ],
+  "utensils": [
+    { "name": "Large pot", "essential": true },
+    { "name": "Wide saute pan", "essential": true },
+    { "name": "Tongs", "essential": true }
+  ]
+}

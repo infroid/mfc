@@ -1,0 +1,77 @@
+{
+  "id": "eggless-pasta-marinara",
+  "name": "Eggless Pasta Marinara",
+  "tagline": "Eggless dried pasta with garlicky tomato basil — simple weeknight",
+  "shortTagline": "vegan-able · egg-free · 25 min",
+  "cuisine": "Italian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 25,
+  "tags": ["vegetarian", "egg-free", "italian", "quick"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Dried pasta is naturally egg-free; check the label and go",
+  "media": {
+    "emoji": "🍝",
+    "hero": {
+      "palette": ["#E76F51", "#7A9C5A", "#F4D67A"],
+      "src": "data/recipe-bundles/eggless-pasta-marinara/hero.jpg",
+      "alt": "Spaghetti with marinara, basil, and a drizzle of olive oil",
+      "caption": "marinara — bright, garlicky, simple"
+    }
+  },
+  "healthFacts": [
+    "Dried pasta in the US is typically egg-free (semolina + water). Check labels for fresh pasta.",
+    "Slow-cooked tomato sauce releases more lycopene than raw tomato.",
+    "Olive oil added off-heat retains its polyphenols."
+  ],
+  "ingredients": [
+    { "name": "Spaghetti or penne", "amt": "1 lb", "group": "main" },
+    { "name": "Crushed tomatoes", "amt": "1 (28oz) can", "group": "sauce" },
+    { "name": "Garlic", "amt": "5 cloves, sliced", "group": "aromatics" },
+    { "name": "Olive oil", "amt": "1/4 cup", "group": "fat" },
+    { "name": "Red chili flakes", "amt": "1/2 tsp", "group": "spice" },
+    { "name": "Fresh basil", "amt": "handful", "group": "finish" },
+    { "name": "Salt", "amt": "to taste", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Bloom the garlic",
+      "detail": "Warm olive oil in a wide pan over medium-low. Add sliced garlic and chili flakes; cook 3 minutes until just gold.",
+      "duration": 180,
+      "tip": "Burnt garlic ruins the sauce. Pull it the moment it tans.",
+      "media": { "src": "data/recipe-bundles/eggless-pasta-marinara/step-01-bloom.jpg", "alt": "Garlic and chili in oil", "caption": "bloom the garlic" }
+    },
+    {
+      "id": 2,
+      "title": "Add tomato",
+      "detail": "Pour in crushed tomatoes (rinse the can with 1/2 cup water). Salt. Simmer 15 minutes until thickened.",
+      "duration": 900,
+      "tip": "A hand-crushed whole tomato in juice has better flavor than pre-crushed.",
+      "media": { "src": "data/recipe-bundles/eggless-pasta-marinara/step-02-tomato.jpg", "alt": "Tomato sauce simmering", "caption": "add tomato" }
+    },
+    {
+      "id": 3,
+      "title": "Boil the pasta",
+      "detail": "Boil pasta in salted water 1 minute under package time. Reserve 1 cup pasta water; drain.",
+      "duration": 600,
+      "tip": "Pasta water is liquid gold for emulsifying — never skip saving it.",
+      "media": { "src": "data/recipe-bundles/eggless-pasta-marinara/step-03-boil.jpg", "alt": "Pasta boiling", "caption": "boil the pasta" }
+    },
+    {
+      "id": 4,
+      "title": "Marry pasta and sauce",
+      "detail": "Tongs pasta into the sauce. Toss with pasta water until silky. Off heat, tear in basil; drizzle olive oil.",
+      "duration": 120,
+      "tip": "Always finish pasta in the sauce, never sauce on top — the pasta has to drink it.",
+      "media": { "src": "data/recipe-bundles/eggless-pasta-marinara/step-04-marry.jpg", "alt": "Pasta tossed with marinara and basil", "caption": "marry pasta and sauce" }
+    }
+  ],
+  "utensils": [
+    { "name": "Wide saute pan", "essential": true },
+    { "name": "Pasta pot", "essential": true },
+    { "name": "Tongs", "essential": true }
+  ]
+}

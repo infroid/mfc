@@ -1,0 +1,78 @@
+{
+  "id": "smoked-salmon-bagel",
+  "name": "Smoked Salmon Bagel",
+  "tagline": "Toasted everything bagel with cream cheese, smoked salmon, capers, red onion",
+  "shortTagline": "deli classic · shellfish-free · 10 min",
+  "cuisine": "American",
+  "difficulty": "Easy",
+  "servings": 2,
+  "totalMinutes": 10,
+  "tags": ["pescatarian", "shellfish-free", "high-protein", "quick"],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
+  "featured": false,
+  "highlight": "Five toppings, ten minutes — Sunday brunch perfection",
+  "media": {
+    "emoji": "🥯",
+    "hero": {
+      "palette": ["#E76F51", "#FFFCF3", "#7A9C5A"],
+      "src": "data/recipe-bundles/smoked-salmon-bagel/hero.jpg",
+      "alt": "Smoked salmon bagel with cream cheese and capers",
+      "caption": "lox bagel — deli sunday"
+    }
+  },
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Cold-smoked salmon retains omega-3s while adding gut-friendly cure flavors.",
+    "Pickled red onion adds digestive enzymes and bright acidity."
+  ],
+  "ingredients": [
+    { "name": "Everything bagels", "amt": "2", "group": "main" },
+    { "name": "Cream cheese", "amt": "4 oz", "group": "main" },
+    { "name": "Smoked salmon (lox)", "amt": "4 oz", "group": "main" },
+    { "name": "Red onion", "amt": "1/4, very thin", "group": "main" },
+    { "name": "Capers", "amt": "2 tbsp", "group": "finish" },
+    { "name": "Fresh dill", "amt": "small handful", "group": "finish" },
+    { "name": "Tomato (sliced)", "amt": "1 medium", "group": "main" },
+    { "name": "Lemon", "amt": "1/2", "group": "finish" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Toast bagels",
+      "detail": "Halve and toast bagels until golden but still soft inside.",
+      "duration": 240,
+      "tip": "Over-toasted bagel = scratchy palate. Aim gold, not brown.",
+      "media": { "src": "data/recipe-bundles/smoked-salmon-bagel/step-01-toast.jpg", "alt": "Toasted bagel halves", "caption": "toast bagels" }
+    },
+    {
+      "id": 2,
+      "title": "Schmear cream cheese",
+      "detail": "Spread cream cheese generously on each warm half — heat softens it for clean spreading.",
+      "duration": 60,
+      "tip": "Cream cheese taken out of the fridge 15 min ahead spreads way easier.",
+      "media": { "src": "data/recipe-bundles/smoked-salmon-bagel/step-02-schmear.jpg", "alt": "Schmearing cream cheese on bagel", "caption": "schmear cream cheese" }
+    },
+    {
+      "id": 3,
+      "title": "Layer toppings",
+      "detail": "Layer tomato slices, then drape salmon, then onion, then capers, dill, fresh pepper.",
+      "duration": 120,
+      "tip": "Don't over-stack — bagel sandwiches are open-faced for a reason.",
+      "media": { "src": "data/recipe-bundles/smoked-salmon-bagel/step-03-layer.jpg", "alt": "Building layered lox bagel", "caption": "layer toppings" }
+    },
+    {
+      "id": 4,
+      "title": "Squeeze and serve",
+      "detail": "Squeeze fresh lemon over the top. Serve open-faced or close it to take to-go.",
+      "duration": 30,
+      "tip": "A drizzle of olive oil over makes it look café-photo-ready.",
+      "media": { "src": "data/recipe-bundles/smoked-salmon-bagel/step-04-serve.jpg", "alt": "Finished smoked salmon bagel", "caption": "squeeze and serve" }
+    }
+  ],
+  "utensils": [
+    { "name": "Toaster", "essential": true },
+    { "name": "Butter knife", "essential": true },
+    { "name": "Sharp knife", "essential": true }
+  ]
+}
