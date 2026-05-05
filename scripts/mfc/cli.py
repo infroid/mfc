@@ -12,7 +12,7 @@ from __future__ import annotations
 import argparse
 from typing import Sequence
 
-from .commands import status
+from .commands import apply_schema, seed_metrics, status
 from .core import log
 from .core.config import Config, ConfigError
 
@@ -20,6 +20,8 @@ from .core.config import Config, ConfigError
 # Order here defines the order in `--help`.
 COMMAND_MODULES = [
     status,
+    apply_schema,
+    seed_metrics,
 ]
 
 
