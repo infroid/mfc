@@ -14,7 +14,7 @@ UV := uv --project automation
 
 .DEFAULT_GOAL := help
 
-.PHONY: help sync status apply-schema seed-metrics import-recipes \
+.PHONY: help sync doctor status apply-schema seed-metrics import-recipes \
         drop-schema reset serve
 
 help: ## list all targets
@@ -24,8 +24,16 @@ help: ## list all targets
 
 # ───── Python tooling (mfc CLI in automation/) ────────────────────────────
 
-sync: ## sync the python venv (force-reinstalls local mfc to survive layout moves)
-	@$(UV) sync --reinstall-package mfc
+sync: ## sync the python venv (reinstalls all packages — safe across layout moves)
+	@$(UV) sync --reinstall
+
+doctor: ## nuke automation/.venv + stale __pycache__ and rebuild from scratch
+	@echo "  · removing automation/.venv"
+	@rm -rf automation/.venv
+	@echo "  · clearing __pycache__ trees under automation/mfc/"
+	@find automation/mfc -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true
+	@$(UV) sync
+	@echo "  ✓ rebuilt — try `make status`"
 
 status: ## list public tables and row counts
 	@$(UV) run mfc status
