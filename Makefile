@@ -24,8 +24,8 @@ help: ## list all targets
 
 # ───── Python tooling (mfc CLI in automation/) ────────────────────────────
 
-sync: ## sync the python venv (after editing automation/pyproject.toml)
-	@$(UV) sync
+sync: ## sync the python venv (force-reinstalls local mfc to survive layout moves)
+	@$(UV) sync --reinstall-package mfc
 
 status: ## list public tables and row counts
 	@$(UV) run mfc status
