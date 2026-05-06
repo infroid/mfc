@@ -193,8 +193,13 @@ CREATE TABLE IF NOT EXISTS public.recipe_steps (
   duration_seconds int,
   tip              text,
   media_caption    text,
+  media_src        text,
   PRIMARY KEY (recipe_id, sort_order)
 );
+
+-- Idempotent column addition for projects upgrading without re-running CREATE TABLE.
+ALTER TABLE public.recipe_steps
+  ADD COLUMN IF NOT EXISTS media_src text;
 
 COMMENT ON TABLE  public.recipe_steps                  IS 'Ordered cooking steps per recipe. The frontend timer runs against duration_seconds.';
 COMMENT ON COLUMN public.recipe_steps.recipe_id        IS 'FK → recipes.id.';
@@ -204,6 +209,7 @@ COMMENT ON COLUMN public.recipe_steps.detail           IS 'Full step instruction
 COMMENT ON COLUMN public.recipe_steps.duration_seconds IS 'Step timer length in seconds. Nullable for steps with no countdown.';
 COMMENT ON COLUMN public.recipe_steps.tip              IS 'Optional pro-tip shown below the step detail. Nullable.';
 COMMENT ON COLUMN public.recipe_steps.media_caption    IS 'Caption for the step image at data/recipe-bundles/{recipe_id}/step-{sort_order}.jpg. Nullable.';
+COMMENT ON COLUMN public.recipe_steps.media_src        IS 'Full Supabase Storage URL of the step image (or NULL if no image). Populated by mfc migrate-image-urls for existing rows.';
 
 
 CREATE TABLE IF NOT EXISTS public.recipe_utensils (
@@ -629,3 +635,36 @@ CREATE POLICY "recipe_steps_admin_write"        ON public.recipe_steps        FO
 CREATE POLICY "recipe_utensils_admin_write"     ON public.recipe_utensils     FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 CREATE POLICY "recipe_tags_admin_write"         ON public.recipe_tags         FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 CREATE POLICY "recipe_health_facts_admin_write" ON public.recipe_health_facts FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+
+
+-- =============================================================================
+-- 9. STORAGE — recipe-images bucket + RLS
+-- Public read; admin-only writes via public.is_admin().
+-- See sub-project #2.5 spec.
+-- =============================================================================
+
+INSERT INTO storage.buckets (id, name, public)
+  VALUES ('recipe-images', 'recipe-images', true)
+  ON CONFLICT (id) DO UPDATE SET public = excluded.public;
+
+DROP POLICY IF EXISTS "recipe_images_public_read"   ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_admin_write"   ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_admin_update"  ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_admin_delete"  ON storage.objects;
+
+CREATE POLICY "recipe_images_public_read"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'recipe-images');
+
+CREATE POLICY "recipe_images_admin_write"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'recipe-images' AND public.is_admin());
+
+CREATE POLICY "recipe_images_admin_update"
+  ON storage.objects FOR UPDATE
+  USING (bucket_id = 'recipe-images' AND public.is_admin())
+  WITH CHECK (bucket_id = 'recipe-images' AND public.is_admin());
+
+CREATE POLICY "recipe_images_admin_delete"
+  ON storage.objects FOR DELETE
+  USING (bucket_id = 'recipe-images' AND public.is_admin());
