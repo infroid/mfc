@@ -15,6 +15,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help sync status apply-schema seed-metrics import-recipes \
+        sync-images migrate-image-urls \
         list-users set-role drop-schema reset serve
 
 help: ## list all targets
@@ -38,6 +39,21 @@ seed-metrics: ## run automation/db/seed_metrics.sql (54-marker catalog)
 
 import-recipes: ## upsert ingredients, utensils, and recipes from web/assets/recipes/
 	@$(UV) run mfc import-recipes
+
+sync-images: ## sync recipe images bucket↔local; prompts (or DIRECTION=pull|push|both)
+	@if [ -n "$(DIRECTION)" ]; then \
+	  $(UV) run mfc sync-images --direction $(DIRECTION); \
+	else \
+	  printf "\nPick sync direction:\n"; \
+	  printf "  pull — Storage → local. Downloads Storage-only files; overwrites local where Storage is newer.\n"; \
+	  printf "  push — local → Storage. Uploads local-only files; overwrites remote where local is newer.\n"; \
+	  printf "  both — pull then push. Last-modified wins per file. Safe when no concurrent edits.\n"; \
+	  printf "\nDirection [pull/push/both]: "; \
+	  read d && $(UV) run mfc sync-images --direction $$d; \
+	fi
+
+migrate-image-urls: ## one-shot — rewrite recipe rows to use full Storage URLs (idempotent)
+	@$(UV) run mfc migrate-image-urls
 
 list-users: ## list users; optional ROLE=user|chef|admin Q=alice
 	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
