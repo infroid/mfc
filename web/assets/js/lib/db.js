@@ -25,8 +25,8 @@ window.MFC.db = (function () {
     if (!sb) return [];
     const { data, error } = await sb
       .from('recipes')
-      .select('id,name,tagline,cuisine,difficulty,total_minutes,servings,media,color,color_soft,featured,highlight,recipe_tags(tag)')
-      .order('featured', { ascending: false })
+      .select('id,name,tagline,cuisine,difficulty,total_minutes,servings,media,color,color_soft,recipe_tags(tag)')
+      .order('updated_at', { ascending: false })
       .order('name', { ascending: true });
     if (error) { console.warn('[db.getRecipes]', error); return []; }
     return data.map((r) => ({
@@ -41,8 +41,6 @@ window.MFC.db = (function () {
       tags: (r.recipe_tags || []).map((t) => t.tag),
       color: r.color,
       colorSoft: r.color_soft,
-      featured: !!r.featured,
-      highlight: r.highlight,
     }));
   }
 

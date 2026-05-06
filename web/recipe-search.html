@@ -211,12 +211,6 @@ body::before {
 .recipe-card { position: relative; }
 .recipe-card.avoid { opacity: 0.55; box-shadow: 3px 3px 0 var(--berry); border-color: var(--berry); }
 .recipe-card.avoid:hover { opacity: 0.82; box-shadow: 5px 5px 0 var(--berry); }
-.featured-card { position: relative; }
-.featured-card .match-badge,
-.featured-card .avoid-badge { top: 12px; right: 12px; }
-.featured-card.avoid { opacity: 0.55; box-shadow: 4px 4px 0 var(--berry); border-color: var(--berry); }
-.featured-card.avoid:hover { opacity: 0.85; box-shadow: 6px 6px 0 var(--berry); }
-
 /* SECTIONS */
 .section { padding: 56px 0; position: relative; z-index: 2; }
 .section + .section { padding-top: 0; }
@@ -229,16 +223,6 @@ body::before {
   border: 1px solid var(--rule); border-radius: 999px;
   font-family: var(--mono); font-size: 12px; color: var(--ink-muted); white-space: nowrap;
 }
-
-/* FEATURED GRID — vertical cards, square hero photo on top */
-.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.featured-card {
-  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-lg);
-  overflow: hidden; box-shadow: 4px 4px 0 var(--ink);
-  transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms;
-  display: flex; flex-direction: column; position: relative;
-}
-.featured-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
 
 .fc-img-wrap {
   aspect-ratio: 1 / 1;
@@ -255,7 +239,6 @@ body::before {
   transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
   transition: transform 360ms cubic-bezier(.2,.8,.2,1);
 }
-.featured-card:hover .fc-img { transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(calc(var(--media-scale, 1) * 1.04)); }
 .fc-img-fallback { font-size: 84px; line-height: 1; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18)); }
 .fc-img-wrap::after {
   content: ""; position: absolute; inset: 0;
@@ -363,12 +346,10 @@ body::before {
 
 /* RESPONSIVE */
 @media (max-width: 960px) {
-  .featured-grid { grid-template-columns: 1fr 1fr; }
   .recipe-grid { grid-template-columns: 1fr 1fr; }
   .nav-links { display: none; }
 }
 @media (max-width: 640px) {
-  .featured-grid { grid-template-columns: 1fr; }
   .recipe-grid { grid-template-columns: 1fr; }
   .wrap { padding: 0 20px; }
   .search-hero { padding-top: 96px; }
@@ -462,61 +443,6 @@ function TagPill({ label }) {
 
 function RcTag({ label }) {
   return <span className={`rc-tag ${tagToneClass(label)}`}>{label}</span>;
-}
-
-function FeaturedCard({ recipe, classification }) {
-  const media = recipe.media || {};
-  const hero = media.hero || {};
-  const heroSrc = hero.src || "";
-  const heroFit = hero.fit || {};
-  const emoji = media.emoji || "🍽️";
-  const isAvoid = classification && classification.violations.length > 0;
-  const isMatch = !isAvoid && classification && classification.score > 0;
-  const violationReasons = classification ? classification.violations.map(v => v.reason) : [];
-  const tooltip = violationReasons.length > 1 ? violationReasons.join(' · ') : undefined;
-  const visibleTags = displayableTags(recipe.tags, 4);
-  return (
-    <a
-      href={`recipe.html?id=${recipe.id}`}
-      className={"featured-card" + (isAvoid ? " avoid" : "")}
-      title={tooltip}
-    >
-      {isAvoid && <span className="avoid-badge">{violationReasons[0]}</span>}
-      {isMatch && <span className="match-badge">{classification.score} of your prefs</span>}
-      <div className={"fc-img-wrap " + (heroSrc ? "has-media" : "no-media")}>
-        {heroSrc ? (
-          <img
-            className="fc-img"
-            src={heroSrc}
-            alt={hero.alt || recipe.name}
-            loading="lazy"
-            style={{
-              "--media-scale": heroFit.scale || 1,
-              "--media-x": heroFit.x || "0%",
-              "--media-y": heroFit.y || "0%",
-              objectPosition: heroFit.position || "50% 50%"
-            }}
-          />
-        ) : (
-          <div className="fc-img-fallback">{emoji}</div>
-        )}
-        <div className="fc-cuisine">{recipe.cuisine}</div>
-        <div className="fc-difficulty">{recipe.difficulty}</div>
-      </div>
-      <div className="fc-body">
-        <div className="fc-name">{recipe.name}</div>
-        <div className="fc-meta">
-          <span><b>{recipe.totalMinutes}</b>min</span>
-          <span><b>{recipe.servings}</b>servings</span>
-        </div>
-        {visibleTags.length > 0 && (
-          <div className="fc-tags">
-            {visibleTags.map(t => <TagPill key={t} label={t} />)}
-          </div>
-        )}
-      </div>
-    </a>
-  );
 }
 
 const HEART_STYLE = `
@@ -754,7 +680,6 @@ function App() {
   }, [query, filter, recipes]);
 
   const searching = query.trim() !== "" || filter !== "";
-  const featured        = useMemo(() => sortByPrefs(recipes.filter(r => r.featured)), [recipes, profile, respect, classifyMap]);
   const sortedFiltered  = useMemo(() => sortByPrefs(filtered),                       [filtered, profile, respect, classifyMap]);
 
   const hasAnyTags = profile && (
@@ -812,28 +737,6 @@ function App() {
           )}
         </div>
       </section>
-
-      {!searching && (
-        <section className="section">
-          <div className="wrap">
-            <div className="section-head">
-              <div>
-                <div className="section-label">// featured picks</div>
-                <h2 className="section-title">Start with <em>these.</em></h2>
-              </div>
-            </div>
-            <div className="featured-grid">
-              {featured.map(r => (
-                <FeaturedCard
-                  key={r.id}
-                  recipe={r}
-                  classification={effective(classifyMap.get(r.id))}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       <hr className="divider" />
 
