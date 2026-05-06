@@ -193,12 +193,14 @@ back in — otherwise the gate will still block you with the old token.
 Once re-authenticated, visit each admin page and expect the editor (not the
 "Not authorized" panel):
 
-- <http://localhost:8080/admin/recipes.html> — recipe list
+- <http://localhost:8080/admin/index.html> — admin dashboard
+- <http://localhost:8080/admin/users.html> — users list
 - <http://localhost:8080/admin/ingredients.html> — ingredient library
 - <http://localhost:8080/admin/utensils.html> — utensil library
-- <http://localhost:8080/admin/recipe.html?id=butter-chicken> — recipe editor
 - <http://localhost:8080/admin/ingredient.html?id=paneer> — ingredient editor
 - <http://localhost:8080/admin/utensil.html?id=kadhai-cast-iron-9> — utensil editor
+- <http://localhost:8080/chef/recipes.html> — recipes list (chef portal; admin sees all)
+- <http://localhost:8080/chef/recipe.html?id=butter-chicken> — recipe editor
 
 If any page shows "Not authorized", check the console for the user's JWT
 claims (`window.MFC.auth.getUser()`) and confirm `app_metadata.role` is
