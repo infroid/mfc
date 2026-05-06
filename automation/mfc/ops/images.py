@@ -81,6 +81,20 @@ def storage_url(config: Config, *, recipe_id: str, filename: str) -> str:
     return f"{base}/storage/v1/object/public/{BUCKET}/{recipe_id}/{filename}"
 
 
+def normalize_image_value(config: Config, *, recipe_id: str, value) -> Optional[str]:
+    """Convert legacy 'assets/...' paths to full Storage URLs. Pass through
+    full URLs and empty values unchanged. Used by push paths so a stale
+    bundle JSON doesn't reverse-migrate a row that's already on Storage URLs.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return value
+    if value.startswith("http://") or value.startswith("https://"):
+        return value
+    if value.startswith(LEGACY_PATH_PREFIX):
+        return storage_url(config, recipe_id=recipe_id, filename=Path(value).name)
+    return value
+
+
 # ─────────────────────────────────────────────────────────────────────────
 # Local enumeration
 # ─────────────────────────────────────────────────────────────────────────

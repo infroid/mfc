@@ -1,31 +1,34 @@
-"""Recipe catalog import — bulk-batched upsert.
+"""Recipe metadata sync — bidirectional between local recipe.json bundles
+and Supabase recipes + child tables.
 
-Strategy:
-  1. Walk recipe.json bundles, collect unique ingredients + utensils.
-  2. Upsert library tables (one round-trip per table).
-  3. Upsert recipes table (one round-trip).
-  4. For each child join table (recipe_tags, recipe_ingredients,
-     recipe_steps, recipe_utensils, recipe_health_facts):
-        - DELETE WHERE recipe_id IN (all bundle ids)   — one round-trip
-        - INSERT all collected rows                    — one round-trip
+Three public functions:
+  - push_bundles : local → DB (was import_all). Bulk-batched: ~13 round-trips
+                   regardless of recipe count.
+  - pull_bundles : DB → local (new). Per-recipe; rebuilds recipe.json from rows.
+  - sync         : per-recipe, last-modified wins (DB.updated_at vs file mtime).
 
-Total round-trips: ~13, regardless of recipe count. Per-recipe
-isolation is gone (a malformed row aborts that table's batch); for
-this dataset that's a worthwhile trade. The previous per-recipe
-approach was ~11 round-trips per bundle which scaled badly.
+import_all is preserved as a deprecated alias to keep mfc.commands.reset
+from breaking until Task 8 deletes the old command.
 
-Idempotent — a re-run reconciles to the same end state.
+Image-URL handling: bundle JSON may carry either legacy 'assets/...' paths
+or full Storage URLs. push routes media.image, media.hero.src, and
+step.media.src through images_ops.normalize_image_value so a stale bundle
+doesn't reverse-migrate a row that already has Storage URLs.
 """
 
 from __future__ import annotations
 
+import json
 import re
-from dataclasses import dataclass
-from typing import Iterable
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Iterable, Optional
 
 from ..clients import sb as sb_client
 from ..core import files, log
 from ..core.config import Config
+from . import images as images_ops
 
 
 _SLUG_RX = re.compile(r"[^a-z0-9]+")
@@ -48,6 +51,22 @@ def _guess_unit(amount: str | None) -> str:
     if re.search(r"\bwhole\b", a):   return "whole"
     if re.search(r"\bpinch\b", a):   return "pinch"
     return "g"
+
+
+@dataclass
+class SyncReport:
+    pushed: int = 0
+    pulled: int = 0
+    skipped: int = 0
+    failed: list[str] = field(default_factory=list)
+
+    def line(self) -> str:
+        return f"↑ {self.pushed} pushed · ↓ {self.pulled} pulled · - {self.skipped} skipped · ! {len(self.failed)} failed"
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# PUSH (local → DB)  — bulk-batched (≈13 round-trips regardless of N)
+# ─────────────────────────────────────────────────────────────────────────
 
 
 @dataclass
@@ -79,9 +98,24 @@ def _collect_library(bundles: Iterable[dict]) -> _LibraryRows:
     return _LibraryRows(ingredients=ingredients, utensils=utensils)
 
 
-def _build_recipe_row(detail: dict) -> dict:
+def _build_recipe_row(config: Config, detail: dict) -> dict:
     rid = detail["id"]
-    media = detail.get("media") or {}
+    media = dict(detail.get("media") or {})
+
+    # Normalize image fields so legacy 'assets/...' paths upgrade to Storage URLs.
+    if "image" in media:
+        media["image"] = images_ops.normalize_image_value(
+            config, recipe_id=rid, value=media.get("image")
+        )
+    hero = media.get("hero")
+    if isinstance(hero, dict):
+        new_hero = dict(hero)
+        if "src" in new_hero:
+            new_hero["src"] = images_ops.normalize_image_value(
+                config, recipe_id=rid, value=new_hero.get("src")
+            )
+        media["hero"] = new_hero
+
     return {
         "id": rid,
         "name": detail["name"],
@@ -91,11 +125,7 @@ def _build_recipe_row(detail: dict) -> dict:
         "difficulty": detail["difficulty"],
         "servings": detail["servings"],
         "total_minutes": detail["totalMinutes"],
-        "media": {
-            "emoji": media.get("emoji"),
-            "hero": media.get("hero"),
-            "image": f"assets/recipes/{rid}/hero.jpg",
-        },
+        "media": media,
         "color": detail.get("color"),
         "color_soft": detail.get("colorSoft"),
         "featured": bool(detail.get("featured")),
@@ -104,7 +134,7 @@ def _build_recipe_row(detail: dict) -> dict:
     }
 
 
-def _build_child_rows(bundles: list[dict]) -> dict[str, list[dict]]:
+def _build_child_rows(config: Config, bundles: list[dict]) -> dict[str, list[dict]]:
     """Flatten all child rows (across every bundle) into one list per table."""
     tags: list[dict] = []
     ingredients: list[dict] = []
@@ -131,6 +161,7 @@ def _build_child_rows(bundles: list[dict]) -> dict[str, list[dict]]:
             })
 
         for i, step in enumerate(detail.get("steps") or []):
+            sm = step.get("media") or {}
             steps.append({
                 "recipe_id": rid,
                 "sort_order": step["id"] if isinstance(step.get("id"), int) else (i + 1),
@@ -138,11 +169,12 @@ def _build_child_rows(bundles: list[dict]) -> dict[str, list[dict]]:
                 "detail": step["detail"],
                 "duration_seconds": step.get("duration"),
                 "tip": step.get("tip"),
-                "media_caption": (step.get("media") or {}).get("caption"),
+                "media_caption": sm.get("caption"),
+                "media_src": images_ops.normalize_image_value(
+                    config, recipe_id=rid, value=sm.get("src")
+                ),
             })
 
-        # Utensils — dedupe slugs per recipe; recipes occasionally list the
-        # same tool twice (e.g. "knife" used in multiple steps).
         seen_u: set[str] = set()
         ord_u = 0
         for u in detail.get("utensils") or []:
@@ -180,15 +212,17 @@ def _bulk_replace_children(sb, table: str, rows: list[dict], recipe_ids: list[st
     log.ok(f"{table}: {len(rows)} row(s)")
 
 
-def import_all(config: Config) -> None:
+def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncReport:
+    """Upsert local recipe.json bundles into DB. `only` scopes to a subset."""
     sb = sb_client.service_client(config)
+    report = SyncReport()
 
-    bundles = [files.load_recipe_json(p) for p in files.iter_recipe_bundles(config.repo_root)]
-    if not bundles:
-        log.warn("no recipe bundles found under web/assets/recipes/")
-        return
+    bundle_paths = list(files.iter_recipe_bundles(config.repo_root))
+    bundles = [files.load_recipe_json(p) for p in bundle_paths]
+    if only:
+        wanted = set(only)
+        bundles = [b for b in bundles if b.get("id") in wanted]
 
-    # Drop any bundle missing required fields rather than aborting the whole run.
     valid: list[dict] = []
     for d in bundles:
         if not d.get("id") or not d.get("name") or not d.get("cuisine"):
@@ -196,9 +230,13 @@ def import_all(config: Config) -> None:
             continue
         valid.append(d)
 
-    log.step(f"pass 1/4 · collected {len(valid)} bundle(s) (skipped {len(bundles) - len(valid)})")
+    if not valid:
+        log.warn("no recipe bundles to push")
+        return report
 
-    log.step("pass 2/4 · library upsert")
+    log.step(f"sync-recipes · push · {len(valid)} bundle(s)")
+
+    log.step("library upsert")
     lib = _collect_library(valid)
     if lib.ingredients:
         sb.table("ingredients").upsert(
@@ -211,15 +249,250 @@ def import_all(config: Config) -> None:
         ).execute()
         log.ok(f"utensils: {len(lib.utensils)}")
 
-    log.step(f"pass 3/4 · recipes upsert ({len(valid)} rows)")
+    log.step(f"recipes upsert ({len(valid)} rows)")
     sb.table("recipes").upsert(
-        [_build_recipe_row(d) for d in valid], on_conflict="id"
+        [_build_recipe_row(config, d) for d in valid], on_conflict="id"
     ).execute()
     log.ok(f"recipes: {len(valid)}")
 
-    log.step("pass 4/4 · child tables (delete-then-insert per table)")
-    children = _build_child_rows(valid)
+    log.step("child tables (delete-then-insert per table)")
+    children = _build_child_rows(config, valid)
     recipe_ids = [d["id"] for d in valid]
     for table in ("recipe_tags", "recipe_ingredients", "recipe_steps",
                   "recipe_utensils", "recipe_health_facts"):
         _bulk_replace_children(sb, table, children[table], recipe_ids)
+
+    report.pushed = len(valid)
+    log.ok(report.line())
+    return report
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# PULL (DB → local)  — per-recipe (writes recipe.json files)
+# ─────────────────────────────────────────────────────────────────────────
+
+
+def _bundle_path(config: Config, recipe_id: str) -> Path:
+    return config.repo_root / "web" / "assets" / "recipes" / recipe_id / "recipe.json"
+
+
+def _build_bundle(sb, recipe_row: dict) -> dict:
+    rid = recipe_row["id"]
+
+    ing_rows = (
+        sb.table("recipe_ingredients")
+        .select("recipe_id, sort_order, ingredient_id, group_name, amount, ingredients(name)")
+        .eq("recipe_id", rid)
+        .order("sort_order")
+        .execute()
+        .data
+        or []
+    )
+    step_rows = (
+        sb.table("recipe_steps")
+        .select("recipe_id, sort_order, title, detail, duration_seconds, tip, media_caption, media_src")
+        .eq("recipe_id", rid)
+        .order("sort_order")
+        .execute()
+        .data
+        or []
+    )
+    util_rows = (
+        sb.table("recipe_utensils")
+        .select("recipe_id, sort_order, utensil_id, essential, utensils(name)")
+        .eq("recipe_id", rid)
+        .order("sort_order")
+        .execute()
+        .data
+        or []
+    )
+    tag_rows = (
+        sb.table("recipe_tags")
+        .select("tag")
+        .eq("recipe_id", rid)
+        .execute()
+        .data
+        or []
+    )
+    fact_rows = (
+        sb.table("recipe_health_facts")
+        .select("sort_order, fact")
+        .eq("recipe_id", rid)
+        .order("sort_order")
+        .execute()
+        .data
+        or []
+    )
+
+    bundle = {
+        "id": rid,
+        "name": recipe_row["name"],
+        "tagline": recipe_row.get("tagline"),
+        "shortTagline": recipe_row.get("short_tagline"),
+        "cuisine": recipe_row["cuisine"],
+        "difficulty": recipe_row["difficulty"],
+        "servings": recipe_row["servings"],
+        "totalMinutes": recipe_row["total_minutes"],
+        "media": recipe_row.get("media") or {},
+        "color": recipe_row.get("color"),
+        "colorSoft": recipe_row.get("color_soft"),
+        "featured": bool(recipe_row.get("featured")),
+        "highlight": recipe_row.get("highlight"),
+        "ingredients": [
+            {
+                "name": (i.get("ingredients") or {}).get("name") or i["ingredient_id"],
+                "amt": i.get("amount"),
+                "group": i.get("group_name"),
+            }
+            for i in ing_rows
+        ],
+        "steps": [
+            {
+                "id": s["sort_order"],
+                "title": s["title"],
+                "detail": s["detail"],
+                "duration": s.get("duration_seconds"),
+                "tip": s.get("tip"),
+                "media": {
+                    "src": s.get("media_src"),
+                    "caption": s.get("media_caption"),
+                },
+            }
+            for s in step_rows
+        ],
+        "utensils": [
+            {
+                "name": (u.get("utensils") or {}).get("name") or u["utensil_id"],
+                "essential": bool(u.get("essential")),
+            }
+            for u in util_rows
+        ],
+        "tags": [t["tag"] for t in tag_rows],
+        "healthFacts": [f["fact"] for f in fact_rows],
+    }
+    # Strip Nones that round-trip ugly
+    for k in ("tagline", "shortTagline", "color", "colorSoft", "highlight"):
+        if bundle.get(k) is None:
+            del bundle[k]
+    return bundle
+
+
+def pull_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncReport:
+    """Reconstruct recipe.json bundles from DB rows."""
+    sb = sb_client.service_client(config)
+    report = SyncReport()
+
+    rows = sb.table("recipes").select("*").order("id").execute().data or []
+    if only:
+        wanted = set(only)
+        rows = [r for r in rows if r["id"] in wanted]
+
+    if not rows:
+        log.warn("no recipes in DB to pull")
+        return report
+
+    log.step(f"sync-recipes · pull · {len(rows)} recipe(s)")
+
+    for row in rows:
+        rid = row["id"]
+        try:
+            bundle = _build_bundle(sb, row)
+            path = _bundle_path(config, rid)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
+            report.pulled += 1
+            log.ok(rid)
+        except Exception as e:  # noqa: BLE001
+            report.failed.append(f"{rid}: {e}")
+            log.error(f"{rid}: {e}")
+
+    log.ok(report.line())
+    return report
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Orchestrator (per-recipe last-modified wins)
+# ─────────────────────────────────────────────────────────────────────────
+
+
+def sync(config: Config, *, direction: str, only: Optional[list[str]] = None) -> SyncReport:
+    if direction == "push":
+        return push_bundles(config, only=only)
+    if direction == "pull":
+        return pull_bundles(config, only=only)
+    if direction != "both":
+        raise ValueError(f"invalid direction: {direction!r}")
+
+    sb = sb_client.service_client(config)
+    db_rows = sb.table("recipes").select("id, updated_at").execute().data or []
+    db_by_id = {r["id"]: r for r in db_rows}
+    if only:
+        wanted = set(only)
+        db_by_id = {k: v for k, v in db_by_id.items() if k in wanted}
+
+    bundle_paths = list(files.iter_recipe_bundles(config.repo_root))
+    local_by_id: dict[str, Path] = {}
+    for p in bundle_paths:
+        try:
+            d = files.load_recipe_json(p)
+            rid = d.get("id")
+            if rid and (not only or rid in only):
+                local_by_id[rid] = p
+        except Exception:
+            continue
+
+    push_ids: list[str] = []
+    pull_ids: list[str] = []
+
+    all_ids = sorted(set(db_by_id) | set(local_by_id))
+    for rid in all_ids:
+        db_row = db_by_id.get(rid)
+        local_path = local_by_id.get(rid)
+        if db_row and not local_path:
+            pull_ids.append(rid)
+            continue
+        if local_path and not db_row:
+            push_ids.append(rid)
+            continue
+        local_mtime = local_path.stat().st_mtime
+        db_ts = _parse_iso_to_ts(db_row.get("updated_at") or "")
+        delta = local_mtime - db_ts
+        if abs(delta) <= 1.0:
+            continue
+        if delta > 0:
+            push_ids.append(rid)
+        else:
+            pull_ids.append(rid)
+
+    report = SyncReport()
+    if pull_ids:
+        sub = pull_bundles(config, only=pull_ids)
+        report.pulled += sub.pulled
+        report.failed.extend(sub.failed)
+    if push_ids:
+        sub = push_bundles(config, only=push_ids)
+        report.pushed += sub.pushed
+        report.failed.extend(sub.failed)
+    log.ok(report.line())
+    return report
+
+
+def _parse_iso_to_ts(iso: str) -> float:
+    if not iso:
+        return 0.0
+    if iso.endswith("Z"):
+        iso = iso[:-1] + "+00:00"
+    try:
+        return datetime.fromisoformat(iso).timestamp()
+    except Exception:
+        return 0.0
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# Backwards-compat alias (removed in Task 8 along with import_recipes command)
+# ─────────────────────────────────────────────────────────────────────────
+
+
+def import_all(config: Config) -> None:
+    """Deprecated: kept until Task 8 deletes import_recipes command + reset hook."""
+    push_bundles(config)
