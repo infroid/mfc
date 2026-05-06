@@ -116,7 +116,7 @@ def _build_recipe_row(config: Config, detail: dict) -> dict:
             )
         media["hero"] = new_hero
 
-    return {
+    row = {
         "id": rid,
         "name": detail["name"],
         "tagline": detail.get("tagline"),
@@ -128,10 +128,11 @@ def _build_recipe_row(config: Config, detail: dict) -> dict:
         "media": media,
         "color": detail.get("color"),
         "color_soft": detail.get("colorSoft"),
-        "featured": bool(detail.get("featured")),
-        "highlight": detail.get("highlight"),
         "meal_types": [],
     }
+    if detail.get("createdBy"):
+        row["created_by"] = detail["createdBy"]
+    return row
 
 
 def _build_child_rows(config: Config, bundles: list[dict]) -> dict[str, list[dict]]:
@@ -262,6 +263,18 @@ def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncRep
                   "recipe_utensils", "recipe_health_facts"):
         _bulk_replace_children(sb, table, children[table], recipe_ids)
 
+    # Reconcile recipe_owners. Trigger handles the INSERT path (new rows);
+    # this upsert handles UPDATE-path bundles where the trigger doesn't fire.
+    owners_rows = [
+        {"recipe_id": d["id"], "user_id": d["createdBy"]}
+        for d in valid if d.get("createdBy")
+    ]
+    if owners_rows:
+        sb.table("recipe_owners").upsert(
+            owners_rows, on_conflict="recipe_id,user_id"
+        ).execute()
+        log.ok(f"recipe_owners: {len(owners_rows)} row(s) reconciled")
+
     report.pushed = len(valid)
     log.ok(report.line())
     return report
@@ -336,8 +349,7 @@ def _build_bundle(sb, recipe_row: dict) -> dict:
         "media": recipe_row.get("media") or {},
         "color": recipe_row.get("color"),
         "colorSoft": recipe_row.get("color_soft"),
-        "featured": bool(recipe_row.get("featured")),
-        "highlight": recipe_row.get("highlight"),
+        "createdBy": recipe_row.get("created_by"),
         "ingredients": [
             {
                 "name": (i.get("ingredients") or {}).get("name") or i["ingredient_id"],
@@ -371,7 +383,7 @@ def _build_bundle(sb, recipe_row: dict) -> dict:
         "healthFacts": [f["fact"] for f in fact_rows],
     }
     # Strip Nones that round-trip ugly
-    for k in ("tagline", "shortTagline", "color", "colorSoft", "highlight"):
+    for k in ("tagline", "shortTagline", "color", "colorSoft", "createdBy"):
         if bundle.get(k) is None:
             del bundle[k]
     return bundle
