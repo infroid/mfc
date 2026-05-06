@@ -241,40 +241,58 @@ user-owned tables.
 
 ---
 
-## 6. Import the recipes (one-time)
+## 6. Sync recipes
 
-The recipe catalog lives in Supabase, seeded from
-`web/assets/recipes/*/recipe.json`.
+All recipe data (rows + child rows + bundle JSON + images) stays consistent
+across local and Supabase via the sync commands. Push for upload, pull for
+download.
 
-From the repo root:
+### First-time setup after enabling Storage
+
+Run these once after `make apply-schema` adds the `recipe_steps.media_src`
+column and creates the `recipe-images` bucket.
 
 ```bash
-make import-recipes
+make sync-images DIRECTION=push   # uploads web/assets/recipes/*/*.jpg into the bucket
+make migrate-image-urls           # rewrites recipe rows to point at Storage URLs
 ```
 
-Idempotent — re-running after editing source JSON reconciles to the same
-state. Reads credentials from `automation/.env` (set up in §2).
+Verify by loading any recipe page locally; images should now load from
+`*.supabase.co/storage/v1/object/public/recipe-images/...`. After verified,
+`git rm web/assets/recipes/*/*.jpg` is optional cleanup; bundle JSON files
+(`recipe.json`) stay — they're still used by `mfc sync-recipes`.
 
-Expected output:
+### Ongoing
 
+```bash
+make sync-recipes                  # interactive: prompts for direction
+make sync-recipes DIRECTION=push   # local → DB + bytes pushed to Storage
+make sync-recipes DIRECTION=pull   # DB → local; rebuilds recipe.json from rows
+
+make sync-images                   # interactive
+make sync-images DIRECTION=pull    # bulk-image processing: pull → process → push
 ```
-→ pass 1/3 · collecting library rows from 10 bundle(s)
-  unique ingredients: 63 · utensils: 38
-→ pass 2/3 · upserting library tables
-  ✓ ingredients populated (63)
-  ✓ utensils populated (38)
-→ pass 3/3 · upserting 10 recipe(s)
-  ✓ aloo-gobi
-  ✓ butter-chicken
-  …
-```
 
-The secret key in `automation/.env` bypasses RLS — keep it out of the
-browser, out of the repo, out of any client-side bundle. Never commit
-`automation/.env` (it's gitignored).
+`make sync-recipes` chains `mfc sync-recipes` then `mfc sync-images` in the
+same direction so a single command round-trips metadata + bytes. To do them
+independently, call the CLI directly: `uv --project automation run mfc
+sync-recipes --direction push` (no image pass).
 
-After this, ongoing recipe edits happen via Supabase Studio's table editor —
-no script needed.
+### What pull writes
+
+`web/assets/recipes/<id>/recipe.json` is overwritten from DB; image files
+appear under the same directory. The bundle shape is identical to what push
+reads, so a pull-then-push round-trip is lossless.
+
+Idempotent — push reconciles the catalog to whatever the bundles say, pull
+reconciles the bundles to whatever the DB says. Reads credentials from
+`automation/.env` (set up in §2). The secret key in there bypasses RLS;
+keep it out of the browser, out of the repo, out of any client-side bundle.
+Never commit `automation/.env` (it's gitignored).
+
+After this, ongoing recipe edits can happen either via the admin UI at
+`/admin/recipe.html` (which writes directly to Supabase + Storage) or by
+editing local `recipe.json` files and pushing.
 
 ---
 

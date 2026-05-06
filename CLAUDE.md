@@ -22,13 +22,16 @@ The static site has no build system. Backend tooling is a Python CLI in
 `automation/` driven by a root `Makefile`.
 
 ```
-make             # list every Make target
-make serve       # http.server on :8080
-make sync        # sync the python venv (after editing automation/pyproject.toml)
-make status      # supabase: list public tables + row counts
-make list-users  # supabase: list users; optional ROLE=user|chef|admin Q=alice
-make set-role    # supabase: change role; USER=<email> ROLE=<user|chef|admin>
-make reset       # supabase: drop + apply schema + seed metrics + import recipes
+make                   # list every Make target
+make serve             # http.server on :8080
+make sync              # sync the python venv (after editing automation/pyproject.toml)
+make status            # supabase: list public tables + row counts
+make list-users        # supabase: list users; optional ROLE=user|chef|admin Q=alice
+make set-role          # supabase: change role; USER=<email> ROLE=<user|chef|admin>
+make sync-recipes      # supabase: sync recipes (DB + bundles + images); interactive (or DIRECTION=)
+make sync-images       # supabase: sync images bucket↔local; interactive (or DIRECTION=)
+make migrate-image-urls# one-shot: rewrite legacy paths to full Storage URLs
+make reset             # supabase: drop + apply schema + seed metrics + push recipes
 ```
 
 If port 8080 is in use:
@@ -73,13 +76,18 @@ make serve
 
 - **Source of truth: Supabase Postgres**, accessed via the Supabase JS client.
   No static-JSON fallback at runtime.
-- [web/assets/recipes/{id}/recipe.json](web/assets/recipes/) is the **import
-  seed** for `make import-recipes` (the Python CLI in `automation/`); not
+- [web/assets/recipes/{id}/recipe.json](web/assets/recipes/) is the **bundle
+  seed** for `make sync-recipes` (the Python CLI in `automation/`); not
   fetched by the browser. Each bundle is self-contained (listing fields +
-  full detail). The browser does still fetch a bundle as a side-channel for
-  step image paths that aren't stored in Supabase.
-- Recipe images stay at `web/assets/recipes/{id}/hero.jpg` (and `step-*.jpg`),
-  served by GH Pages CDN. Recipe rows store the relative path.
+  full detail). Bidirectional: `DIRECTION=push` upserts the bundle into DB,
+  `DIRECTION=pull` rebuilds the bundle from DB rows.
+- Recipe images live in **Supabase Storage** (`recipe-images` bucket). Hero
+  at `<recipe_id>/hero.jpg`, steps at `<recipe_id>/step-<sort_order>.jpg`.
+  Full Storage URLs are persisted on `recipes.media.image`,
+  `recipes.media.hero.src`, and `recipe_steps.media_src`. Bytes can be
+  pulled to `web/assets/recipes/<id>/...` via `make sync-images
+  DIRECTION=pull` for offline editing, then pushed back with
+  `DIRECTION=push`. Path/filename matches local exactly.
 
 ## Schema
 
@@ -95,9 +103,11 @@ make serve
 
 Schema layers:
 
-- **Catalog** — `recipes`, `recipe_ingredients`, `recipe_steps`, `recipe_utensils`,
-  `recipe_tags`, `recipe_health_facts`. Public read, admin writes via secret key
-  or signed-in admin user (RLS via `public.is_admin()`).
+- **Catalog** — `recipes`, `recipe_ingredients`, `recipe_steps` (with
+  `media_src` for the full Supabase Storage URL of the step image),
+  `recipe_utensils`, `recipe_tags`, `recipe_health_facts`. Public read,
+  admin writes via secret key or signed-in admin user (RLS via
+  `public.is_admin()`).
 - **Library** — `ingredients`, `utensils`, `utensil_buy_links`. Master tables
   that recipes pick from. `recipe_ingredients.ingredient_id` and
   `recipe_utensils.utensil_id` FK into these with `ON DELETE RESTRICT` — a
@@ -126,6 +136,13 @@ Schema layers:
   ROLE=<user|chef|admin>`). Never writable from the browser. (`user_metadata`
   is intentionally avoided — user-writable, would be a privilege-escalation
   vulnerability.)
+- **Storage** — `recipe-images` bucket (public read, admin-write via RLS).
+  Hero at `<recipe_id>/hero.jpg`, step images at
+  `<recipe_id>/step-<sort_order>.jpg`. Full Storage URLs are stored on
+  `recipes.media.image`, `recipes.media.hero.src`, and
+  `recipe_steps.media_src`. Bytes synced via `mfc sync-images`; metadata
+  via `mfc sync-recipes`. One-shot `mfc migrate-image-urls` rewrites legacy
+  `assets/...` paths to full URLs (idempotent).
 
 ## Shared JS (`<script src>`)
 

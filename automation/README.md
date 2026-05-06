@@ -21,13 +21,15 @@ make sync
 All targets sit at the repo root in the `Makefile`:
 
 ```bash
-make                  # list all targets
-make status           # public table list + row counts
-make apply-schema     # run automation/db/schema.sql
-make seed-metrics     # run automation/db/seed_metrics.sql
-make import-recipes   # upsert web/assets/recipes/*
-make drop-schema      # destructive — type "wipe" to confirm
-make reset            # destructive — drop + apply + seed + import
+make                     # list all targets
+make status              # public table list + row counts
+make apply-schema        # run automation/db/schema.sql
+make seed-metrics        # run automation/db/seed_metrics.sql
+make sync-recipes        # interactive bidirectional recipe sync (DB↔local + bytes)
+make sync-images         # interactive bidirectional image sync (bucket↔local)
+make migrate-image-urls  # one-shot — rewrite legacy paths to full Storage URLs
+make drop-schema         # destructive — type "wipe" to confirm
+make reset               # destructive — drop + apply + seed + push recipes
 ```
 
 Or call `mfc` directly without going through Make:
@@ -49,7 +51,7 @@ automation/
     cli.py            argparse + command registry
     core/             config, log, prompts, files (filesystem helpers)
     clients/          pg (psycopg) + sb (supabase-py) factories
-    ops/              schema, seed, recipes — task-category logic
+    ops/              schema, seed, recipes (bidirectional sync), images, users
     commands/         thin CLI wrappers, one per `mfc <cmd>`
 ```
 
