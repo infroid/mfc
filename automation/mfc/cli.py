@@ -21,6 +21,7 @@ from .commands import (
     seed_metrics,
     set_role,
     status,
+    sync_images,
 )
 from .core import log
 from .core.config import Config, ConfigError
@@ -34,6 +35,7 @@ COMMAND_MODULES = [
     apply_schema,
     seed_metrics,
     import_recipes,
+    sync_images,
     set_role,
     drop_schema,
     reset,
