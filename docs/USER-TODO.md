@@ -294,6 +294,21 @@ After this, ongoing recipe edits can happen either via the admin UI at
 `/admin/recipe.html` (which writes directly to Supabase + Storage) or by
 editing local `recipe.json` files and pushing.
 
+### Chef portal (sub-project #2)
+
+After #2 ships, recipe authoring + editing lives at `/chef/recipes.html`
+and `/chef/recipe.html`. The old `/admin/recipes.html` is gone. Both
+chef and admin use the chef portal for recipe management; admin
+continues to use `/admin/...` for user, ingredient, and utensil
+management. Permissions:
+
+- **Chef** can create new recipes (becomes the creator + an owner via
+  `recipe_owners`); can edit + delete recipes they own.
+- **Admin** can edit + delete any recipe. Bypass via `is_admin()`.
+- **First admin** is auto-added as a co-owner of every recipe by a DB
+  trigger — a "lifeboat" so the first admin retains write access even
+  if their role is later changed.
+
 ---
 
 ## 7. Verify locally

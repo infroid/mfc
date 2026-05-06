@@ -65,10 +65,19 @@ make serve
 - [profile.html](web/my/profile.html) imports [profile-app.jsx](web/assets/js/app/profile-app.jsx).
   Food/health preferences: date_of_birth, units, diet style, allergies, goals,
   lifestyle. Powers the soft-pref strip on /recipe-search.html.
-- 6 admin pages: list + edit for each of recipes, ingredients, utensils
-  ([admin/recipes.html](web/admin/recipes.html), [admin/recipe.html](web/admin/recipe.html),
-  and the parallel `-ingredient(s)` / `-utensil(s)` files). Gated by
-  `app_metadata.role = 'admin'`.
+- Chef portal: list + edit for recipes at
+  [chef/recipes.html](web/chef/recipes.html) and
+  [chef/recipe.html](web/chef/recipe.html). Gated by
+  `app_metadata.role ∈ {chef, admin}`; chefs see + edit recipes they
+  own (via `recipe_owners`), admins see + edit any.
+- Admin shell: ingredient + utensil libraries, users, and dashboard
+  ([admin/ingredients.html](web/admin/ingredients.html),
+  [admin/ingredient.html](web/admin/ingredient.html),
+  [admin/utensils.html](web/admin/utensils.html),
+  [admin/utensil.html](web/admin/utensil.html),
+  [admin/users.html](web/admin/users.html)). Gated by
+  `app_metadata.role = 'admin'`. Recipe management lives in the chef
+  portal, not here.
 - Supabase JS client loaded from CDN; bootstrapped from `<meta>` tags in each
   page's `<head>`
 
@@ -103,11 +112,17 @@ make serve
 
 Schema layers:
 
-- **Catalog** — `recipes`, `recipe_ingredients`, `recipe_steps` (with
-  `media_src` for the full Supabase Storage URL of the step image),
-  `recipe_utensils`, `recipe_tags`, `recipe_health_facts`. Public read,
-  admin writes via secret key or signed-in admin user (RLS via
-  `public.is_admin()`).
+- **Catalog** — `recipes` (with `created_by` audit FK to auth.users,
+  NOT NULL after sub-project #2), `recipe_ingredients`, `recipe_steps`
+  (with `media_src` for the full Supabase Storage URL of the step
+  image), `recipe_utensils`, `recipe_tags`, `recipe_health_facts`.
+  Public read, admin writes via secret key or signed-in admin user
+  (RLS via `public.is_admin()`); chef writes via
+  `public.recipe_owned_by_caller()` checking `recipe_owners`.
+- **Recipe ownership** — `recipe_owners (recipe_id, user_id)` join
+  table is the single source of truth for who-can-edit. Trigger
+  `recipes_after_insert_set_owners` adds (id, creator) and
+  (id, first-admin) on every recipes INSERT.
 - **Library** — `ingredients`, `utensils`, `utensil_buy_links`. Master tables
   that recipes pick from. `recipe_ingredients.ingredient_id` and
   `recipe_utensils.utensil_id` FK into these with `ON DELETE RESTRICT` — a
@@ -136,13 +151,15 @@ Schema layers:
   ROLE=<user|chef|admin>`). Never writable from the browser. (`user_metadata`
   is intentionally avoided — user-writable, would be a privilege-escalation
   vulnerability.)
-- **Storage** — `recipe-images` bucket (public read, admin-write via RLS).
-  Hero at `<recipe_id>/hero.jpg`, step images at
-  `<recipe_id>/step-<sort_order>.jpg`. Full Storage URLs are stored on
-  `recipes.media.image`, `recipes.media.hero.src`, and
-  `recipe_steps.media_src`. Bytes synced via `mfc sync-images`; metadata
-  via `mfc sync-recipes`. One-shot `mfc migrate-image-urls` rewrites legacy
-  `assets/...` paths to full URLs (idempotent).
+- **Storage** — `recipe-images` bucket (public read; admin or
+  recipe-owning-chef write via RLS). Hero at `<recipe_id>/hero.jpg`,
+  step images at `<recipe_id>/step-<sort_order>.jpg`. Full Storage
+  URLs are stored on `recipes.media.image`, `recipes.media.hero.src`,
+  and `recipe_steps.media_src`. Helper:
+  `public.can_write_recipe_image(text)`. Bytes synced via `mfc
+  sync-images`; metadata via `mfc sync-recipes`. One-shot `mfc
+  migrate-image-urls` rewrites legacy `assets/...` paths to full URLs
+  (idempotent).
 
 ## Shared JS (`<script src>`)
 
