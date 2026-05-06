@@ -44,8 +44,8 @@ def run(args: argparse.Namespace, config: Config) -> int:
     log.header("step 3 of 4 · seed metric_definitions")
     seed.seed_metrics(config)
 
-    log.header("step 4 of 4 · import recipes")
-    recipes.import_all(config)
+    log.header("step 4 of 4 · push recipes")
+    recipes.push_bundles(config)
 
     log.header("done")
     log.ok("reset complete — run `mfc status` to verify row counts")

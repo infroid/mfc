@@ -15,7 +15,6 @@ from typing import Sequence
 from .commands import (
     apply_schema,
     drop_schema,
-    import_recipes,
     list_users,
     migrate_image_urls,
     reset,
@@ -23,6 +22,7 @@ from .commands import (
     set_role,
     status,
     sync_images,
+    sync_recipes,
 )
 from .core import log
 from .core.config import Config, ConfigError
@@ -35,7 +35,7 @@ COMMAND_MODULES = [
     list_users,
     apply_schema,
     seed_metrics,
-    import_recipes,
+    sync_recipes,
     sync_images,
     migrate_image_urls,
     set_role,

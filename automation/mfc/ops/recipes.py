@@ -488,11 +488,3 @@ def _parse_iso_to_ts(iso: str) -> float:
         return 0.0
 
 
-# ─────────────────────────────────────────────────────────────────────────
-# Backwards-compat alias (removed in Task 8 along with import_recipes command)
-# ─────────────────────────────────────────────────────────────────────────
-
-
-def import_all(config: Config) -> None:
-    """Deprecated: kept until Task 8 deletes import_recipes command + reset hook."""
-    push_bundles(config)
