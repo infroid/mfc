@@ -68,6 +68,8 @@
 }
 .user-menu-item.danger { color: var(--ink-soft, #3A332A); }
 .user-menu-item.danger:hover { background: rgba(200,75,90,.10); color: var(--berry, #C84B5A); }
+.user-menu-divider { height: 1px; background: rgba(31,26,20,0.08); margin: 6px 0; }
+.user-menu-icon { display: inline-block; width: 18px; text-align: center; margin-right: 6px; }
 `;
 
   function ensureStyle() {
@@ -117,6 +119,10 @@
 
     const initials = deriveInitials(user);
     const firstName = deriveFirstName(user);
+    const role = user?.role || null;
+    const isAdmin = role === 'admin';
+    const isChef = role === 'chef' || role === 'admin';
+    const base = (accountHref || '').replace(/my\/account\.html$/, '');
 
     function handleSignOut() {
       setOpen(false);
@@ -144,6 +150,33 @@
               {user.email && <div className="user-menu-email">{user.email}</div>}
             </div>
             <div className="user-menu-rule" />
+            {(isAdmin || isChef) && (
+              <>
+                {isAdmin && (
+                  <a
+                    className="user-menu-item"
+                    role="menuitem"
+                    href={`${base}admin/index.html`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="user-menu-icon">⚙</span>
+                    Admin portal
+                  </a>
+                )}
+                {isChef && (
+                  <a
+                    className="user-menu-item"
+                    role="menuitem"
+                    href={`${base}chef/recipes.html`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="user-menu-icon">✦</span>
+                    Chef portal
+                  </a>
+                )}
+                <div className="user-menu-divider" />
+              </>
+            )}
             {profileHref && (
               <a
                 className="user-menu-item"
