@@ -2597,3 +2597,14 @@
 }
 .step-image-actions { display: flex; gap: 6px; align-items: center; }
 .step-image-err { color: var(--berry); font-size: 11px; }
+
+/* ── chef portal admin banner ─────────────────────────────────────── */
+.admin-banner {
+  margin: 14px 0 18px;
+  padding: 12px 16px;
+  background: var(--cream-soft);
+  border-left: 3px solid var(--orange);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
