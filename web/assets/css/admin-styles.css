@@ -2608,3 +2608,22 @@
   font-size: 13px;
   color: var(--ink-soft);
 }
+
+/* ── chef recipe editor: created-by + slug-collision warning ─────── */
+.created-by-line {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 8px 0 12px;
+}
+
+.slug-warning {
+  margin-top: 6px;
+  padding: 8px 10px;
+  background: rgba(200, 75, 90, 0.08);
+  border-left: 3px solid var(--berry);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--berry);
+}
+.slug-warning code { font-family: var(--mono); background: rgba(200, 75, 90, 0.15); padding: 1px 4px; border-radius: 3px; }
