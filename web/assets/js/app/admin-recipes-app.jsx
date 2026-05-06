@@ -36,9 +36,14 @@ function RecipesListApp() {
   }, [rows, q]);
 
   async function onDelete(r) {
-    if (!confirm(`Delete recipe "${r.name}"?\n\nThis removes all steps, ingredients, utensils, tags, and health facts. Cannot be undone.`)) return;
-    try { await window.MFC.adminDb.deleteRecipe(r.id); refresh(); }
-    catch (e) { alert("Delete failed: " + e.message); }
+    if (!confirm(`Delete recipe "${r.name}"?\n\nThis removes all steps, ingredients, utensils, tags, and health facts, plus its hero + step images from Supabase Storage. Cannot be undone.`)) return;
+    try {
+      await window.MFC.adminDb.deleteRecipe(r.id);
+      // Best-effort Storage cleanup; orphans deferred to a future gc-images.
+      try { await window.MFC.imageUpload.removeFolder(r.id); }
+      catch (e) { console.warn("[admin] storage cleanup failed (orphans may remain)", e); }
+      refresh();
+    } catch (e) { alert("Delete failed: " + e.message); }
   }
 
   return (

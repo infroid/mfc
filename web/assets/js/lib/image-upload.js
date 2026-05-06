@@ -85,6 +85,23 @@
     if (error) throw error;
   }
 
+  // Delete every object directly under <folder>/. Used by the recipe-delete
+  // handler to clean up hero + step images without enumerating filenames.
+  async function removeFolder(folder) {
+    const sb = window.MFC?.supabase;
+    if (!sb) throw new Error("MFC.supabase not initialised");
+    if (!folder || typeof folder !== "string" || folder.includes("..")) {
+      throw new Error(`invalid folder: ${folder}`);
+    }
+    const { data: objects, error } = await sb.storage.from(BUCKET).list(folder);
+    if (error) throw error;
+    if (!objects || objects.length === 0) return 0;
+    const paths = objects.map((o) => `${folder}/${o.name}`);
+    const { error: rmErr } = await sb.storage.from(BUCKET).remove(paths);
+    if (rmErr) throw rmErr;
+    return paths.length;
+  }
+
   window.MFC = window.MFC || {};
-  window.MFC.imageUpload = { upload, urlFor, remove, move };
+  window.MFC.imageUpload = { upload, urlFor, remove, move, removeFolder };
 })();

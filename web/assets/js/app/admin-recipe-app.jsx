@@ -45,6 +45,7 @@ function fromDb(row) {
       duration_seconds: s.duration_seconds,
       tip: s.tip,
       media_caption: s.media_caption,
+      media_src: s.media_src,
     }));
   const utensils = (row.recipe_utensils || [])
     .sort((a, b) => a.sort_order - b.sort_order)
@@ -107,6 +108,7 @@ function toDb(r) {
         ? null : parseInt(s.duration_seconds, 10),
       tip: s.tip || null,
       media_caption: s.media_caption || null,
+      media_src: s.media_src || null,
     })),
     utensils: r.utensils.map((u) => ({
       utensil_id: u.utensil_id,
@@ -326,8 +328,13 @@ function BasicsTab({ r, update, isNew }) {
       </FormCard>
 
       <FormCard title="Hero photograph" scribble="the money shot">
-        <Field label="Hero image path" hint="Relative path under assets/recipes/{id}/hero.jpg or similar.">
-          <input className="input mono" value={r.hero_image} onChange={(e) => update({ hero_image: e.target.value })} placeholder="assets/recipes/paneer-butter-masala/hero.jpg" />
+        <HeroImageControl
+          recipeId={r.id || ""}
+          value={r.hero_image || null}
+          onChange={(url) => update({ hero_image: url || "" })}
+        />
+        <Field label="Hero image URL" hint="Full Supabase Storage URL (auto-set by upload above; rarely edited manually).">
+          <input className="input mono" value={r.hero_image} onChange={(e) => update({ hero_image: e.target.value })} placeholder="https://…/recipe-images/<id>/hero.jpg" />
         </Field>
       </FormCard>
 
@@ -357,6 +364,138 @@ function BasicsTab({ r, update, isNew }) {
 // ============================================================
 // STEPS
 // ============================================================
+// ============================================================
+// IMAGE UPLOAD CONTROLS (hero + per-step)
+// ============================================================
+function HeroImageControl({ recipeId, value, onChange }) {
+  const [busy, setBusy] = React.useState(false);
+  const [err, setErr]   = React.useState(null);
+  const inputRef = React.useRef(null);
+
+  const pickFile = () => inputRef.current?.click();
+
+  async function onFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!recipeId) {
+      setErr("Save the recipe first (needs an id) before uploading an image.");
+      e.target.value = "";
+      return;
+    }
+    setBusy(true); setErr(null);
+    try {
+      const url = await window.MFC.imageUpload.upload(file, {
+        recipeId, filename: "hero.jpg", kind: "hero",
+      });
+      onChange(`${url}?v=${Date.now()}`);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); e.target.value = ""; }
+  }
+
+  async function removeHero() {
+    if (!value || !recipeId) return;
+    if (!confirm("Remove hero image? This deletes hero.jpg from Storage.")) return;
+    setBusy(true); setErr(null);
+    try {
+      await window.MFC.imageUpload.remove([`${recipeId}/hero.jpg`]);
+      onChange(null);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); }
+  }
+
+  return (
+    <div className="hero-image-control">
+      <div className="hero-image-preview">
+        {value
+          ? <img src={value} alt="hero" />
+          : <div className="hero-image-empty">No hero yet</div>}
+      </div>
+      <div className="hero-image-actions">
+        <button type="button" className="btn-sm" onClick={pickFile} disabled={busy}>
+          {busy ? "Uploading…" : value ? "Replace" : "Upload hero"}
+        </button>
+        {value && (
+          <button type="button" className="btn-sm danger" onClick={removeHero} disabled={busy}>
+            Remove
+          </button>
+        )}
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          style={{ display: "none" }}
+          onChange={onFile}
+        />
+        {err && <div className="hero-image-err">Upload failed: {err}</div>}
+      </div>
+    </div>
+  );
+}
+
+function StepImageControl({ recipeId, sortOrder, value, onChange }) {
+  const [busy, setBusy] = React.useState(false);
+  const [err, setErr]   = React.useState(null);
+  const inputRef = React.useRef(null);
+  const pickFile = () => inputRef.current?.click();
+
+  async function onFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!recipeId) {
+      setErr("Save the recipe first before uploading step images.");
+      e.target.value = "";
+      return;
+    }
+    setBusy(true); setErr(null);
+    try {
+      const url = await window.MFC.imageUpload.upload(file, {
+        recipeId, filename: `step-${sortOrder}.jpg`, kind: "step",
+      });
+      onChange(`${url}?v=${Date.now()}`);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); e.target.value = ""; }
+  }
+
+  async function removeStepImage() {
+    if (!value || !recipeId) return;
+    if (!confirm(`Remove image for step ${sortOrder}?`)) return;
+    setBusy(true); setErr(null);
+    try {
+      await window.MFC.imageUpload.remove([`${recipeId}/step-${sortOrder}.jpg`]);
+      onChange(null);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); }
+  }
+
+  return (
+    <div className="step-image-control">
+      <div className="step-image-preview">
+        {value
+          ? <img src={value} alt={`step ${sortOrder}`} />
+          : <div className="step-image-empty">no img</div>}
+      </div>
+      <div className="step-image-actions">
+        <button type="button" className="btn-sm" onClick={pickFile} disabled={busy}>
+          {busy ? "…" : value ? "Replace" : "Upload"}
+        </button>
+        {value && (
+          <button type="button" className="btn-sm danger" onClick={removeStepImage} disabled={busy}>
+            Remove
+          </button>
+        )}
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          style={{ display: "none" }}
+          onChange={onFile}
+        />
+        {err && <div className="step-image-err">{err}</div>}
+      </div>
+    </div>
+  );
+}
+
 function StepsTab({ r, updateStep, removeStep, addStep, activeStep, setActiveStep }) {
   return (
     <FormCard title="Steps" scribble={`${r.steps.length} so far`}>
@@ -407,6 +546,12 @@ function StepsTab({ r, updateStep, removeStep, addStep, activeStep, setActiveSte
                   placeholder="Optional reference image caption"
                   value={s.media_caption || ""}
                   onChange={(e) => updateStep(i, { media_caption: e.target.value })}
+                />
+                <StepImageControl
+                  recipeId={r.id || ""}
+                  sortOrder={i + 1}
+                  value={s.media_src || null}
+                  onChange={(url) => updateStep(i, { media_src: url })}
                 />
               </div>
             )}

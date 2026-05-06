@@ -106,7 +106,7 @@ window.MFC.adminDb = (function () {
       .select(`
         id, name, tagline, short_tagline, cuisine, difficulty, servings, total_minutes, media, color, color_soft, featured, highlight, meal_types,
         recipe_ingredients ( sort_order, group_name, ingredient_id, amount, unit ),
-        recipe_steps       ( sort_order, title, detail, duration_seconds, tip, media_caption ),
+        recipe_steps       ( sort_order, title, detail, duration_seconds, tip, media_caption, media_src ),
         recipe_utensils    ( sort_order, utensil_id, essential ),
         recipe_tags        ( tag ),
         recipe_health_facts ( sort_order, fact )
@@ -152,6 +152,7 @@ window.MFC.adminDb = (function () {
         duration_seconds: s.duration_seconds ?? null,
         tip: s.tip ?? null,
         media_caption: s.media_caption ?? null,
+        media_src: s.media_src ?? null,
       }));
       const { error } = await sb().from('recipe_steps').insert(rows);
       check(error, 'saveRecipe.recipe_steps');
