@@ -14,8 +14,8 @@ UV := uv --project automation
 
 .DEFAULT_GOAL := help
 
-.PHONY: help sync status apply-schema seed-metrics import-recipes \
-        sync-images migrate-image-urls \
+.PHONY: help sync status apply-schema seed-metrics \
+        sync-recipes sync-images migrate-image-urls \
         list-users set-role drop-schema reset serve
 
 help: ## list all targets
@@ -41,8 +41,18 @@ apply-schema: ## run automation/db/schema.sql
 seed-metrics: ## run automation/db/seed_metrics.sql (54-marker catalog)
 	@$(UV) run mfc seed-metrics
 
-import-recipes: ## upsert ingredients, utensils, and recipes from web/assets/recipes/
-	@$(UV) run mfc import-recipes
+sync-recipes: ## sync recipe metadata DB↔local; chains sync-images in same direction
+	@if [ -n "$(DIRECTION)" ]; then \
+	  $(UV) run mfc sync-recipes --direction $(DIRECTION) && \
+	  $(UV) run mfc sync-images  --direction $(DIRECTION); \
+	else \
+	  printf "\nPick sync direction:\n"; \
+	  printf "  pull — DB+Storage → local. Recipe rows become recipe.json files; bytes pulled into web/assets/recipes/.\n"; \
+	  printf "  push — local → DB+Storage. Bundle JSONs upserted into DB; local images pushed to Storage.\n"; \
+	  printf "  both — pull then push. Last-modified wins per recipe and per image.\n"; \
+	  printf "\nDirection [pull/push/both]: "; \
+	  read d && $(UV) run mfc sync-recipes --direction $$d && $(UV) run mfc sync-images --direction $$d; \
+	fi
 
 sync-images: ## sync recipe images bucket↔local; prompts (or DIRECTION=pull|push|both)
 	@if [ -n "$(DIRECTION)" ]; then \
