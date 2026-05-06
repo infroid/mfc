@@ -138,13 +138,15 @@ CREATE TABLE IF NOT EXISTS public.recipes (
   media         jsonb NOT NULL DEFAULT '{}'::jsonb,
   color         text,
   color_soft    text,
-  featured      boolean NOT NULL DEFAULT false,
-  highlight     text,
   meal_types    text[] NOT NULL DEFAULT '{}',
   created_by    uuid REFERENCES auth.users(id),
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now()
 );
+
+-- created_by enforced NOT NULL by the recipe-ownership migration after backfill.
+-- A fresh apply on an empty database leaves it nullable; the migration's
+-- ALTER COLUMN ... SET NOT NULL re-enforces after seed.
 
 COMMENT ON TABLE  public.recipes               IS 'One row per recipe. Edited by admin via Supabase Studio. Slugs are stable URL ids.';
 COMMENT ON COLUMN public.recipes.id            IS 'URL slug (e.g. "paneer-butter-masala"). Stable; never reuse.';
@@ -158,10 +160,8 @@ COMMENT ON COLUMN public.recipes.total_minutes IS 'Total active + passive cook t
 COMMENT ON COLUMN public.recipes.media         IS 'JSONB { emoji, image, hero: { palette[], alt, caption } }. Image is a relative URL like data/recipe-bundles/{id}/hero.jpg.';
 COMMENT ON COLUMN public.recipes.color         IS 'Brand accent hex for this recipe card (e.g. "#FF6D2E").';
 COMMENT ON COLUMN public.recipes.color_soft    IS 'Translucent variant of color (rgba) used as the soft card-tile background.';
-COMMENT ON COLUMN public.recipes.featured      IS 'When true, the recipe appears in the featured section on the search page.';
-COMMENT ON COLUMN public.recipes.highlight     IS 'One-liner highlight callout (e.g. "14g protein per serving from paneer").';
 COMMENT ON COLUMN public.recipes.meal_types    IS 'Array of meal types: breakfast | lunch | dinner | snack. Scopes per-meal-type recommendations.';
-COMMENT ON COLUMN public.recipes.created_by    IS 'FK → auth.users.id of the admin who created this row.';
+COMMENT ON COLUMN public.recipes.created_by    IS 'FK → auth.users.id of the row creator. Audit only. Edit-permission is in recipe_owners.';
 COMMENT ON COLUMN public.recipes.created_at    IS 'Row creation timestamp.';
 COMMENT ON COLUMN public.recipes.updated_at    IS 'Auto-updated via touch_updated_at trigger on UPDATE.';
 
@@ -249,6 +249,58 @@ COMMENT ON TABLE  public.recipe_health_facts            IS 'Ordered list of nutr
 COMMENT ON COLUMN public.recipe_health_facts.recipe_id  IS 'FK → recipes.id.';
 COMMENT ON COLUMN public.recipe_health_facts.sort_order IS 'Display order (0-based).';
 COMMENT ON COLUMN public.recipe_health_facts.fact       IS 'One sentence of nutrition/health context.';
+
+
+-- ── recipe_owners — permission ledger (sub-project #2) ────────────────
+CREATE TABLE IF NOT EXISTS public.recipe_owners (
+  recipe_id  text NOT NULL REFERENCES public.recipes(id) ON DELETE CASCADE,
+  user_id    uuid NOT NULL REFERENCES auth.users(id)     ON DELETE CASCADE,
+  PRIMARY KEY (recipe_id, user_id)
+);
+
+COMMENT ON TABLE public.recipe_owners IS
+  'Per-recipe ownership ledger (single source of truth). Trigger recipes_after_insert_set_owners adds (recipe.id, recipe.created_by) and (recipe.id, first_admin) on every INSERT.';
+
+CREATE INDEX IF NOT EXISTS recipe_owners_user_id_idx ON public.recipe_owners(user_id);
+
+ALTER TABLE public.recipe_owners ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "recipe_owners_authenticated_read" ON public.recipe_owners;
+DROP POLICY IF EXISTS "recipe_owners_admin_write"        ON public.recipe_owners;
+
+CREATE POLICY "recipe_owners_authenticated_read"
+  ON public.recipe_owners FOR SELECT TO authenticated USING (true);
+
+CREATE POLICY "recipe_owners_admin_write"
+  ON public.recipe_owners FOR ALL
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+
+-- Trigger: auto-add creator + first-admin on recipes INSERT.
+CREATE OR REPLACE FUNCTION public.recipes_after_insert_set_owners()
+  RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+DECLARE
+  v_first_admin uuid;
+BEGIN
+  IF NEW.created_by IS NOT NULL THEN
+    INSERT INTO public.recipe_owners (recipe_id, user_id)
+      VALUES (NEW.id, NEW.created_by) ON CONFLICT DO NOTHING;
+  END IF;
+  SELECT id INTO v_first_admin
+    FROM auth.users
+    WHERE raw_app_meta_data->>'role' = 'admin'
+    ORDER BY created_at LIMIT 1;
+  IF v_first_admin IS NOT NULL THEN
+    INSERT INTO public.recipe_owners (recipe_id, user_id)
+      VALUES (NEW.id, v_first_admin) ON CONFLICT DO NOTHING;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS recipes_after_insert_set_owners ON public.recipes;
+CREATE TRIGGER recipes_after_insert_set_owners
+  AFTER INSERT ON public.recipes
+  FOR EACH ROW EXECUTE FUNCTION public.recipes_after_insert_set_owners();
 
 
 -- =============================================================================
@@ -637,34 +689,96 @@ CREATE POLICY "recipe_tags_admin_write"         ON public.recipe_tags         FO
 CREATE POLICY "recipe_health_facts_admin_write" ON public.recipe_health_facts FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 
 
+-- ── chef-write helpers + policies (sub-project #2) ────────────────────
+CREATE OR REPLACE FUNCTION public.recipe_owned_by_caller(p_recipe_id text)
+  RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.recipe_owners
+    WHERE recipe_id = p_recipe_id AND user_id = auth.uid()
+  );
+$$;
+
+COMMENT ON FUNCTION public.recipe_owned_by_caller(text) IS
+  'Returns true when the calling user is in recipe_owners for the given recipe. Used by chef-write RLS on recipes + child tables and Storage RLS on recipe-images.';
+
+DROP POLICY IF EXISTS "recipes_chef_write"                ON public.recipes;
+DROP POLICY IF EXISTS "recipe_ingredients_chef_write"     ON public.recipe_ingredients;
+DROP POLICY IF EXISTS "recipe_steps_chef_write"           ON public.recipe_steps;
+DROP POLICY IF EXISTS "recipe_utensils_chef_write"        ON public.recipe_utensils;
+DROP POLICY IF EXISTS "recipe_tags_chef_write"            ON public.recipe_tags;
+DROP POLICY IF EXISTS "recipe_health_facts_chef_write"    ON public.recipe_health_facts;
+
+CREATE POLICY "recipes_chef_write" ON public.recipes FOR ALL
+  USING      (public.is_chef() AND public.recipe_owned_by_caller(id))
+  WITH CHECK (public.is_chef() AND (
+                public.recipe_owned_by_caller(id)
+                OR created_by = auth.uid()
+             ));
+
+CREATE POLICY "recipe_ingredients_chef_write"  ON public.recipe_ingredients  FOR ALL
+  USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
+  WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
+
+CREATE POLICY "recipe_steps_chef_write"        ON public.recipe_steps        FOR ALL
+  USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
+  WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
+
+CREATE POLICY "recipe_utensils_chef_write"     ON public.recipe_utensils     FOR ALL
+  USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
+  WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
+
+CREATE POLICY "recipe_tags_chef_write"         ON public.recipe_tags         FOR ALL
+  USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
+  WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
+
+CREATE POLICY "recipe_health_facts_chef_write" ON public.recipe_health_facts FOR ALL
+  USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
+  WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
+
+
 -- =============================================================================
 -- 9. STORAGE — recipe-images bucket + RLS
--- Public read; admin-only writes via public.is_admin().
--- See sub-project #2.5 spec.
+-- Public read; admin or recipe-owning-chef writes via can_write_recipe_image().
+-- See sub-projects #2.5 (bucket creation) and #2 (chef-write tightening).
 -- =============================================================================
 
 INSERT INTO storage.buckets (id, name, public)
   VALUES ('recipe-images', 'recipe-images', true)
   ON CONFLICT (id) DO UPDATE SET public = excluded.public;
 
-DROP POLICY IF EXISTS "recipe_images_public_read"   ON storage.objects;
-DROP POLICY IF EXISTS "recipe_images_admin_write"   ON storage.objects;
-DROP POLICY IF EXISTS "recipe_images_admin_update"  ON storage.objects;
-DROP POLICY IF EXISTS "recipe_images_admin_delete"  ON storage.objects;
+CREATE OR REPLACE FUNCTION public.can_write_recipe_image(path text)
+  RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
+  SELECT public.is_admin()
+      OR (
+        public.is_chef()
+        AND public.recipe_owned_by_caller(split_part(path, '/', 1))
+      );
+$$;
+
+COMMENT ON FUNCTION public.can_write_recipe_image(text) IS
+  'Returns true when caller is admin OR is chef and owns the recipe whose id is the first path segment. Used by storage.objects RLS for the recipe-images bucket.';
+
+DROP POLICY IF EXISTS "recipe_images_public_read"           ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_admin_write"           ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_admin_update"          ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_admin_delete"          ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_owner_or_admin_write"  ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_owner_or_admin_update" ON storage.objects;
+DROP POLICY IF EXISTS "recipe_images_owner_or_admin_delete" ON storage.objects;
 
 CREATE POLICY "recipe_images_public_read"
   ON storage.objects FOR SELECT
   USING (bucket_id = 'recipe-images');
 
-CREATE POLICY "recipe_images_admin_write"
+CREATE POLICY "recipe_images_owner_or_admin_write"
   ON storage.objects FOR INSERT
-  WITH CHECK (bucket_id = 'recipe-images' AND public.is_admin());
+  WITH CHECK (bucket_id = 'recipe-images' AND public.can_write_recipe_image(name));
 
-CREATE POLICY "recipe_images_admin_update"
+CREATE POLICY "recipe_images_owner_or_admin_update"
   ON storage.objects FOR UPDATE
-  USING (bucket_id = 'recipe-images' AND public.is_admin())
-  WITH CHECK (bucket_id = 'recipe-images' AND public.is_admin());
+  USING      (bucket_id = 'recipe-images' AND public.can_write_recipe_image(name))
+  WITH CHECK (bucket_id = 'recipe-images' AND public.can_write_recipe_image(name));
 
-CREATE POLICY "recipe_images_admin_delete"
+CREATE POLICY "recipe_images_owner_or_admin_delete"
   ON storage.objects FOR DELETE
-  USING (bucket_id = 'recipe-images' AND public.is_admin());
+  USING (bucket_id = 'recipe-images' AND public.can_write_recipe_image(name));
