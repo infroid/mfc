@@ -89,7 +89,7 @@ window.MFC.adminDb = (function () {
   async function listRecipes() {
     const { data, error } = await sb()
       .from('recipes')
-      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,featured,updated_at,recipe_steps(count),recipe_ingredients(count)')
+      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,created_by,updated_at,recipe_steps(count),recipe_ingredients(count)')
       .order('updated_at', { ascending: false });
     check(error, 'listRecipes');
     return (data || []).map((r) => ({
@@ -99,12 +99,30 @@ window.MFC.adminDb = (function () {
     }));
   }
 
+  // Same shape as listRecipes() but inner-joins on recipe_owners to scope
+  // to recipes where the given userId appears as an owner. Used by the
+  // chef portal's list page so chefs see only what they own and admins
+  // (when scoped) see only their own subset.
+  async function listOwnedRecipes(userId) {
+    const { data, error } = await sb()
+      .from('recipes')
+      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,created_by,updated_at,recipe_steps(count),recipe_ingredients(count),recipe_owners!inner(user_id)')
+      .eq('recipe_owners.user_id', userId)
+      .order('updated_at', { ascending: false });
+    check(error, 'listOwnedRecipes');
+    return (data || []).map((r) => ({
+      ...r,
+      stepCount: r.recipe_steps?.[0]?.count ?? 0,
+      ingredientCount: r.recipe_ingredients?.[0]?.count ?? 0,
+    }));
+  }
+
   // Returns the full recipe shape the admin editor expects (FK-style).
   async function getRecipe(id) {
     const { data, error } = await sb()
       .from('recipes')
       .select(`
-        id, name, tagline, short_tagline, cuisine, difficulty, servings, total_minutes, media, color, color_soft, featured, highlight, meal_types,
+        id, name, tagline, short_tagline, cuisine, difficulty, servings, total_minutes, media, color, color_soft, meal_types, created_by,
         recipe_ingredients ( sort_order, group_name, ingredient_id, amount, unit ),
         recipe_steps       ( sort_order, title, detail, duration_seconds, tip, media_caption, media_src ),
         recipe_utensils    ( sort_order, utensil_id, essential ),
@@ -192,6 +210,17 @@ window.MFC.adminDb = (function () {
     }
   }
 
+  // Like saveRecipe but stamps recipe.created_by = userId before the
+  // upsert. Used by the chef portal editor when saving a new recipe.
+  // The DB trigger handles populating recipe_owners after the INSERT.
+  async function createOwnedRecipe(payload, userId) {
+    const stamped = {
+      ...payload,
+      recipe: { ...payload.recipe, created_by: userId },
+    };
+    return saveRecipe(stamped);
+  }
+
   async function deleteRecipe(id) {
     const { error } = await sb().from('recipes').delete().eq('id', id);
     check(error, 'deleteRecipe');
@@ -213,7 +242,7 @@ window.MFC.adminDb = (function () {
       utLinksRes,
     ] = await Promise.all([
       sb().from('recipes').select(
-        'id,name,cuisine,difficulty,total_minutes,featured,meal_types,media,highlight,created_at,updated_at,' +
+        'id,name,cuisine,difficulty,total_minutes,meal_types,media,created_by,created_at,updated_at,' +
         'recipe_steps(count),recipe_ingredients(count),recipe_utensils(count),recipe_tags(count),recipe_health_facts(count)'
       ).order('updated_at', { ascending: false }),
       sb().from('ingredients').select('id,name,category,photo,nutrition,health_fact,ai_filled_at,created_at,updated_at'),
@@ -257,7 +286,7 @@ window.MFC.adminDb = (function () {
   return {
     listIngredients, getIngredient, upsertIngredient, deleteIngredient, ingredientUsageCounts,
     listUtensils,    getUtensil,    upsertUtensil,    deleteUtensil,    utensilUsageCounts,
-    listRecipes,     getRecipe,     saveRecipe,       deleteRecipe,
+    listRecipes,     listOwnedRecipes, getRecipe,     saveRecipe,       createOwnedRecipe, deleteRecipe,
     getDashboardSnapshot,
   };
 })();

@@ -173,13 +173,11 @@ function DashboardApp() {
     if (!snap) return null;
     const { recipes, ingredients, utensils, ingredientUsage, utensilUsage, tags, utensilBuyLinks } = snap;
 
-    const featured = recipes.filter((r) => r.featured).length;
     const incomplete = recipes.filter((r) => r.stepCount === 0 || r.ingCount === 0).length;
     const noPhoto = recipes.filter((r) => !r.media?.image).length;
     const noTags = recipes.filter((r) => r.tagCount === 0).length;
     const noHealth = recipes.filter((r) => r.healthCount === 0).length;
     const noMealTypes = recipes.filter((r) => !r.meal_types?.length).length;
-    const noHighlight = recipes.filter((r) => !r.highlight).length;
 
     const ingNoPhoto = ingredients.filter((i) => !i.photo).length;
     const ingAi = ingredients.filter((i) => i.ai_filled_at).length;
@@ -264,7 +262,7 @@ function DashboardApp() {
     const avgCookMin = recipes.length ? Math.round(recipes.reduce((s, r) => s + (r.total_minutes || 0), 0) / recipes.length) : 0;
 
     return {
-      featured, incomplete, noPhoto, noTags, noHealth, noMealTypes, noHighlight,
+      incomplete, noPhoto, noTags, noHealth, noMealTypes,
       ingNoPhoto, ingAi, ingNoNutrition, utNoPhoto, utAi, utNoBuy,
       orphanIngredients, orphanUtensils,
       cuisineRows: topN(cuisineMap, 8).map(([k, v]) => ({ label: k, value: v })),
@@ -332,7 +330,6 @@ function DashboardApp() {
                   <span className="lbl">Recipes</span>
                   <span className="v">{snap.recipes.length}<em>total</em></span>
                   <span className="sub">
-                    <span className="delta">{stats.featured} ★ featured</span>
                     {stats.incomplete > 0 && <span className="delta warn">{stats.incomplete} incomplete</span>}
                   </span>
                   <Sparkline values={stats.created.map((b) => b.count)} />
@@ -499,7 +496,6 @@ function DashboardApp() {
                       <QRow level={stats.noHealth === 0 ? "ok" : "warn"} value={stats.noHealth} total={snap.recipes.length} label="recipes with no health facts" />
                       <QRow level={stats.noTags === 0 ? "ok" : "warn"} value={stats.noTags} total={snap.recipes.length} label="recipes with no tags (won't filter)" />
                       <QRow level={stats.noMealTypes === 0 ? "ok" : "warn"} value={stats.noMealTypes} total={snap.recipes.length} label="recipes missing meal_types (won't appear in dashboard slots)" />
-                      <QRow level={stats.noHighlight === 0 ? "ok" : "warn"} value={stats.noHighlight} total={snap.recipes.length} label="recipes without a highlight one-liner" />
                       <QRow level={stats.ingNoNutrition === 0 ? "ok" : "warn"} value={stats.ingNoNutrition} total={snap.ingredients.length} label="ingredients without macros" />
                       <QRow level={stats.ingNoPhoto === 0 ? "ok" : "warn"} value={stats.ingNoPhoto} total={snap.ingredients.length} label="ingredients without a photo" />
                       <QRow level={stats.utNoPhoto === 0 ? "ok" : "warn"} value={stats.utNoPhoto} total={snap.utensils.length} label="utensils without a photo" />
