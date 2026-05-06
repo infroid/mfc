@@ -24,12 +24,14 @@ function AdminSidebar({ active, counts = {} }) {
       { id: "dashboard", icon: "▤", label: "Dashboard", href: "index.html" },
     ]},
     { group: "Library", entries: [
-      { id: "recipes",     icon: "✦", label: "Recipes",     href: "recipes.html",     count: counts.recipes },
       { id: "ingredients", icon: "◐", label: "Ingredients", href: "ingredients.html", count: counts.ingredients },
       { id: "utensils",    icon: "▣", label: "Utensils",    href: "utensils.html",    count: counts.utensils },
     ]},
     { group: "People", entries: [
       { id: "users",       icon: "◉", label: "Users",       href: "users.html",       count: counts.users },
+    ]},
+    { group: "Workspaces", entries: [
+      { id: "chef", icon: "✦", label: "Chef portal", href: "../chef/recipes.html" },
     ]},
     { group: "Site", entries: [
       { id: "view-site", icon: "↗", label: "View site",  href: "../index.html" },
@@ -90,6 +92,102 @@ function AdminSidebar({ active, counts = {} }) {
         <div className="admin-side-foot">
           <div className="admin-avatar">A</div>
           <div className="who"><b>Admin</b><span>signed in</span></div>
+          <button
+            onClick={signOut}
+            style={{ marginLeft: "auto", background: "transparent", border: "1px solid rgba(255,252,243,0.18)", color: "var(--cream-deep)", borderRadius: 6, padding: "4px 8px", fontSize: 11, cursor: "pointer" }}
+          >sign out</button>
+        </div>
+      </aside>
+    </React.Fragment>
+  );
+}
+
+// ============================================================
+// CHEF SIDEBAR
+// ============================================================
+function ChefSidebar({ active, role, counts = {} }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.body.classList.add("admin-drawer-open");
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.classList.remove("admin-drawer-open");
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const items = [
+    { group: "Library", entries: [
+      { id: "recipes", icon: "✦", label: "Recipes", href: "recipes.html", count: counts.recipes },
+    ]},
+    ...(role === "admin" ? [{ group: "Workspaces", entries: [
+      { id: "admin", icon: "⚙", label: "Admin portal", href: "../admin/index.html" },
+    ]}] : []),
+    { group: "Site", entries: [
+      { id: "view-site", icon: "↗", label: "View site",     href: "../index.html" },
+      { id: "search",    icon: "⌕", label: "Recipe search", href: "../recipe-search.html" },
+    ]},
+  ];
+
+  async function signOut() {
+    if (window.MFC?.supabase) await window.MFC.supabase.auth.signOut();
+    location.href = "../index.html";
+  }
+
+  const roleLabel = role === "admin" ? "Admin" : "Chef";
+  const avatarChar = roleLabel[0];
+
+  return (
+    <React.Fragment>
+      <header className="admin-mobile-bar">
+        <button
+          type="button"
+          className="admin-burger"
+          aria-label="Open chef menu"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+        >
+          <span /><span /><span />
+        </button>
+        <div className="admin-brand admin-brand-mobile" role="img" aria-label="MyFoodCraving chef">
+          <span className="brand-mark">m</span>
+          <span className="brand-name">my<em>food</em>craving</span>
+          <span className="admin-tag">chef</span>
+        </div>
+      </header>
+
+      {open && <div className="admin-drawer-backdrop" onClick={() => setOpen(false)} />}
+
+      <aside className={"admin-side" + (open ? " open" : "")} aria-hidden={!open && undefined}>
+        <div className="admin-brand">
+          <span className="brand-mark">m</span>
+          <span className="brand-name">my<em>food</em>craving</span>
+          <span className="admin-tag">chef</span>
+          <button
+            type="button"
+            className="admin-side-close"
+            aria-label="Close chef menu"
+            onClick={() => setOpen(false)}
+          >×</button>
+        </div>
+        {items.map((g) => (
+          <div key={g.group} className="admin-nav-group">
+            <div className="admin-nav-label">{g.group}</div>
+            {g.entries.map((e) => (
+              <a key={e.id} href={e.href} className={"admin-nav-item" + (active === e.id ? " active" : "")}>
+                <span className="ic">{e.icon}</span>
+                <span>{e.label}</span>
+                {e.count !== undefined && <span className="count">{e.count}</span>}
+              </a>
+            ))}
+          </div>
+        ))}
+        <div className="admin-side-foot">
+          <div className="admin-avatar">{avatarChar}</div>
+          <div className="who"><b>{roleLabel}</b><span>signed in</span></div>
           <button
             onClick={signOut}
             style={{ marginLeft: "auto", background: "transparent", border: "1px solid rgba(255,252,243,0.18)", color: "var(--cream-deep)", borderRadius: 6, padding: "4px 8px", fontSize: 11, cursor: "pointer" }}
@@ -343,7 +441,8 @@ function slugify(s) {
 }
 
 Object.assign(window, {
-  AdminSidebar, AdminTopbar, SaveBar, FormTabs, FormCard, Field,
+  AdminSidebar, ChefSidebar, AdminTopbar, SaveBar, FormTabs, FormCard, Field,
   RadioPills, Toggle, ToggleRow, ChipInput, Uploader, PreviewFrame,
   slugify,
 });
+window.ChefSidebar = ChefSidebar;
