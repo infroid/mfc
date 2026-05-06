@@ -27,10 +27,12 @@ help: ## list all targets
 
 sync: ## sync the python venv (reinstalls all packages — safe across layout moves)
 	@$(UV) sync --reinstall
-	@# macOS sets the 'hidden' flag on newly-created files inside ~/Documents
-	@# (iCloud sync behaviour). Python's site.py skips .pth files with that
-	@# flag, which breaks the editable install of mfc. Strip it here.
-	@find automation/.venv/lib -name '*.pth' -exec chflags nohidden {} + 2>/dev/null || true
+	@# macOS sets the 'hidden' flag on files inside ~/Documents (iCloud sync
+	@# behaviour). Python's site.py skips hidden .pth files (breaks editable
+	@# install) and iCloud can also evict whole files mid-run (breaks imports).
+	@# chflags -R nohidden is the workaround. Long-term fix: move .venv out
+	@# of ~/Documents (set UV_PROJECT_ENVIRONMENT).
+	@chflags -R nohidden automation/.venv 2>/dev/null || true
 
 status: ## list public tables and row counts
 	@$(UV) run mfc status
