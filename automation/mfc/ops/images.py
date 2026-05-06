@@ -9,6 +9,7 @@ by mfc.ops.recipes.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -346,6 +347,28 @@ def _rewrite_media(config: Config, recipe_id: str, media: dict) -> tuple[dict, b
 
 
 def _find_local_step_file(config: Config, recipe_id: str, sort_order: int) -> Optional[str]:
+    """Look up the step's image filename by consulting the bundle JSON's
+    step.media.src (source of truth). Falls back to a numeric pattern match
+    if the bundle doesn't have a src for that step. Returns None if neither
+    works."""
+    bundle_path = _recipes_dir(config) / recipe_id / "recipe.json"
+    if bundle_path.exists():
+        try:
+            bundle = json.loads(bundle_path.read_text())
+        except Exception:
+            bundle = {}
+        for s in bundle.get("steps", []) or []:
+            sid = s.get("id")
+            if isinstance(sid, int) and sid == sort_order:
+                src = (s.get("media") or {}).get("src")
+                if isinstance(src, str) and src.strip():
+                    filename = Path(src).name
+                    candidate = _recipes_dir(config) / recipe_id / filename
+                    if candidate.exists():
+                        return filename
+                break
+
+    # Fallback: numeric naming convention (step-<N>.<ext>)
     d = _recipes_dir(config) / recipe_id
     if not d.exists():
         return None
