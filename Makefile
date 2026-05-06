@@ -15,7 +15,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help sync status apply-schema seed-metrics \
-        sync-recipes sync-images migrate-image-urls \
+        sync-recipes sync-images \
         list-users set-role drop-schema reset serve
 
 help: ## list all targets
@@ -67,9 +67,6 @@ sync-images: ## sync recipe images bucket↔local; prompts (or DIRECTION=pull|pu
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-images --direction $$d; \
 	fi
-
-migrate-image-urls: ## one-shot — rewrite recipe rows to use full Storage URLs (idempotent)
-	@$(UV) run mfc migrate-image-urls
 
 list-users: ## list users; optional ROLE=user|chef|admin Q=alice
 	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))

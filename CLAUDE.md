@@ -30,7 +30,6 @@ make list-users        # supabase: list users; optional ROLE=user|chef|admin Q=a
 make set-role          # supabase: change role; USER=<email> ROLE=<user|chef|admin>
 make sync-recipes      # supabase: sync recipes (DB + bundles + images); interactive (or DIRECTION=)
 make sync-images       # supabase: sync images bucket↔local; interactive (or DIRECTION=)
-make migrate-image-urls# one-shot: rewrite legacy paths to full Storage URLs
 make reset             # supabase: drop + apply schema + seed metrics + push recipes
 ```
 
@@ -157,9 +156,7 @@ Schema layers:
   URLs are stored on `recipes.media.image`, `recipes.media.hero.src`,
   and `recipe_steps.media_src`. Helper:
   `public.can_write_recipe_image(text)`. Bytes synced via `mfc
-  sync-images`; metadata via `mfc sync-recipes`. One-shot `mfc
-  migrate-image-urls` rewrites legacy `assets/...` paths to full URLs
-  (idempotent).
+  sync-images`; metadata via `mfc sync-recipes`.
 
 ## Shared JS (`<script src>`)
 

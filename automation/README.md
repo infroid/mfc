@@ -27,7 +27,6 @@ make apply-schema        # run automation/db/schema.sql
 make seed-metrics        # run automation/db/seed_metrics.sql
 make sync-recipes        # interactive bidirectional recipe sync (DB↔local + bytes)
 make sync-images         # interactive bidirectional image sync (bucket↔local)
-make migrate-image-urls  # one-shot — rewrite legacy paths to full Storage URLs
 make drop-schema         # destructive — type "wipe" to confirm
 make reset               # destructive — drop + apply + seed + push recipes
 ```

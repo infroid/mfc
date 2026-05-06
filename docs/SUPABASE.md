@@ -247,22 +247,8 @@ user-owned tables.
 
 All recipe data (rows + child rows + bundle JSON + images) stays consistent
 across local and Supabase via the sync commands. Push for upload, pull for
-download.
-
-### First-time setup after enabling Storage
-
-Run these once after `make apply-schema` adds the `recipe_steps.media_src`
-column and creates the `recipe-images` bucket.
-
-```bash
-make sync-images DIRECTION=push   # uploads web/assets/recipes/*/*.jpg into the bucket
-make migrate-image-urls           # rewrites recipe rows to point at Storage URLs
-```
-
-Verify by loading any recipe page locally; images should now load from
-`*.supabase.co/storage/v1/object/public/recipe-images/...`. After verified,
-`git rm web/assets/recipes/*/*.jpg` is optional cleanup; bundle JSON files
-(`recipe.json`) stay — they're still used by `mfc sync-recipes`.
+download. `make reset` covers a fresh project end-to-end (drop + apply
+schema + seed metrics + push bundles + push images).
 
 ### Ongoing
 

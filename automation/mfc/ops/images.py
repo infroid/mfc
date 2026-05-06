@@ -1,6 +1,4 @@
-"""Image-byte sync between local web/assets/recipes/* and Supabase Storage,
-plus a one-shot DB rewriter that swaps legacy 'assets/...' paths for full
-Storage URLs.
+"""Image-byte sync between local web/assets/recipes/* and Supabase Storage.
 
 IMPORTANT: this module never touches recipe metadata schemas other than
 recipes.media (the JSONB) and recipe_steps.media_src. Bundle JSON is owned
@@ -9,7 +7,6 @@ by mfc.ops.recipes.
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -45,14 +42,6 @@ class SyncReport:
             f"- {self.skipped} skipped · "
             f"! {self.conflicts} conflicts"
         )
-
-
-@dataclass
-class MigrationReport:
-    recipes_rewritten: int = 0
-    steps_rewritten:   int = 0
-    skipped_recipes:   int = 0
-    skipped_steps:     int = 0
 
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -277,117 +266,3 @@ def _content_type_for(filename: str) -> str:
         ".png": "image/png",
         ".webp": "image/webp",
     }.get(ext, "application/octet-stream")
-
-
-# ─────────────────────────────────────────────────────────────────────────
-# DB URL rewriter
-# ─────────────────────────────────────────────────────────────────────────
-
-def migrate_urls(config: Config) -> MigrationReport:
-    """Rewrite legacy 'assets/...' paths in recipes.media + populate
-    recipe_steps.media_src from local file presence. Idempotent."""
-    client = _service_client(config)
-    report = MigrationReport()
-
-    rows = client.table("recipes").select("id, media").execute().data or []
-    log.step(f"migrate-image-urls · {len(rows)} recipe(s)")
-
-    for r in rows:
-        rid = r["id"]
-        media = r.get("media") or {}
-        new_media, changed = _rewrite_media(config, rid, media)
-        if changed:
-            client.table("recipes").update({"media": new_media}).eq("id", rid).execute()
-            report.recipes_rewritten += 1
-        else:
-            report.skipped_recipes += 1
-
-        steps = (
-            client.table("recipe_steps")
-            .select("recipe_id, sort_order, media_src")
-            .eq("recipe_id", rid)
-            .order("sort_order")
-            .execute()
-            .data
-            or []
-        )
-        for s in steps:
-            if s.get("media_src"):
-                report.skipped_steps += 1
-                continue
-            sort_order = s["sort_order"]
-            local_filename = _find_local_step_file(config, rid, sort_order)
-            if not local_filename:
-                report.skipped_steps += 1
-                continue
-            url = storage_url(config, recipe_id=rid, filename=local_filename)
-            client.table("recipe_steps").update({"media_src": url}).eq(
-                "recipe_id", rid
-            ).eq("sort_order", sort_order).execute()
-            report.steps_rewritten += 1
-
-    log.ok(
-        f"recipes: {report.recipes_rewritten} rewritten, {report.skipped_recipes} skipped · "
-        f"steps: {report.steps_rewritten} populated, {report.skipped_steps} skipped"
-    )
-    return report
-
-
-def _rewrite_media(config: Config, recipe_id: str, media: dict) -> tuple[dict, bool]:
-    """Returns (new_media, changed). Rewrites media.image and media.hero.src
-    when they start with 'assets/'."""
-    new_media = dict(media)
-    changed = False
-
-    img = new_media.get("image")
-    if isinstance(img, str) and img.startswith(LEGACY_PATH_PREFIX):
-        filename = Path(img).name
-        new_media["image"] = storage_url(config, recipe_id=recipe_id, filename=filename)
-        changed = True
-
-    hero = new_media.get("hero")
-    if isinstance(hero, dict):
-        new_hero = dict(hero)
-        src = new_hero.get("src")
-        if isinstance(src, str) and src.startswith(LEGACY_PATH_PREFIX):
-            filename = Path(src).name
-            new_hero["src"] = storage_url(
-                config, recipe_id=recipe_id, filename=filename
-            )
-            changed = True
-        new_media["hero"] = new_hero
-
-    return new_media, changed
-
-
-def _find_local_step_file(config: Config, recipe_id: str, sort_order: int) -> Optional[str]:
-    """Look up the step's image filename by consulting the bundle JSON's
-    step.media.src (source of truth). Falls back to a numeric pattern match
-    if the bundle doesn't have a src for that step. Returns None if neither
-    works."""
-    bundle_path = _recipes_dir(config) / recipe_id / "recipe.json"
-    if bundle_path.exists():
-        try:
-            bundle = json.loads(bundle_path.read_text())
-        except Exception:
-            bundle = {}
-        for s in bundle.get("steps", []) or []:
-            sid = s.get("id")
-            if isinstance(sid, int) and sid == sort_order:
-                src = (s.get("media") or {}).get("src")
-                if isinstance(src, str) and src.strip():
-                    filename = Path(src).name
-                    candidate = _recipes_dir(config) / recipe_id / filename
-                    if candidate.exists():
-                        return filename
-                break
-
-    # Fallback: numeric naming convention (step-<N>.<ext>)
-    d = _recipes_dir(config) / recipe_id
-    if not d.exists():
-        return None
-    for ext in IMAGE_EXTS:
-        candidate = d / f"step-{sort_order}{ext}"
-        if candidate.exists():
-            return candidate.name
-    return None
