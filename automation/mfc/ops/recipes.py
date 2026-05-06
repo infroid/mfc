@@ -251,9 +251,29 @@ def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncRep
         log.ok(f"utensils: {len(lib.utensils)}")
 
     log.step(f"recipes upsert ({len(valid)} rows)")
-    sb.table("recipes").upsert(
-        [_build_recipe_row(config, d) for d in valid], on_conflict="id"
-    ).execute()
+    # Pre-fetch existing created_by so bundles without `createdBy` fall back to
+    # the row's existing creator. Required because recipes.created_by is NOT
+    # NULL — Postgres validates the INSERT side of the upsert even when the
+    # row exists and only the UPDATE side is taken. Brand-new recipes must
+    # have `createdBy` in the bundle (or be inserted via the chef portal,
+    # which sets it directly).
+    existing = (
+        sb.table("recipes")
+        .select("id, created_by")
+        .in_("id", [d["id"] for d in valid])
+        .execute()
+        .data
+        or []
+    )
+    existing_creators = {r["id"]: r["created_by"] for r in existing}
+    recipe_rows: list[dict] = []
+    for d in valid:
+        row = _build_recipe_row(config, d)
+        if "created_by" not in row and d["id"] in existing_creators:
+            row["created_by"] = existing_creators[d["id"]]
+        recipe_rows.append(row)
+
+    sb.table("recipes").upsert(recipe_rows, on_conflict="id").execute()
     log.ok(f"recipes: {len(valid)}")
 
     log.step("child tables (delete-then-insert per table)")
