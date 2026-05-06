@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "high-protein"
-  ],
-  "color": "#3A332A",
-  "colorSoft": "rgba(58,51,42,0.16)",
-  "featured": false,
-  "highlight": "Oats + flax bind without eggs; smoky paprika + cumin do the heavy lifting",
   "media": {
-    "emoji": "🍔",
     "hero": {
+      "alt": "Black bean burger on bun with lettuce and pickled onion",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/black-bean-veggie-burger/hero.jpg",
+      "caption": "black bean burger — smoky",
       "palette": [
         "#3A332A",
         "#E76F51",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/black-bean-veggie-burger/hero.jpg",
-      "alt": "Black bean burger on bun with lettuce and pickled onion",
-      "caption": "black bean burger — smoky"
-    }
+      ]
+    },
+    "emoji": "🍔"
   },
-  "healthFacts": [
-    "No eggs — flax egg + oats bind.",
-    "Black beans + oats together provide a complete plant protein profile.",
-    "Smoked paprika replaces bacon flavor with no animal products."
-  ],
+  "color": "#3A332A",
+  "colorSoft": "rgba(58,51,42,0.16)",
   "ingredients": [
     {
       "name": "Black beans (drained)",
@@ -95,8 +82,7 @@
       "duration": 720,
       "tip": "Skipping the dry-out is the #1 reason burger patties fall apart.",
       "media": {
-        "src": "assets/recipes/black-bean-veggie-burger/step-01-dry.jpg",
-        "alt": "Beans drying in oven",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/black-bean-veggie-burger/step-01-dry.jpg",
         "caption": "make flax egg, dry beans"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 240,
       "tip": "Over-processing makes a paste that bakes flat. Pulse, don't puree.",
       "media": {
-        "src": "assets/recipes/black-bean-veggie-burger/step-02-mix.jpg",
-        "alt": "Bean burger mixture in processor",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/black-bean-veggie-burger/step-02-mix.jpg",
         "caption": "mash and mix"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 900,
       "tip": "Wet hands prevent the mix from sticking. Form thicker than you think — they don't shrink like beef.",
       "media": {
-        "src": "assets/recipes/black-bean-veggie-burger/step-03-form.jpg",
-        "alt": "Bean patties on a tray",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/black-bean-veggie-burger/step-03-form.jpg",
         "caption": "form and chill"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 480,
       "tip": "Crisp crust = sear. Tender all the way through = bake. Both work.",
       "media": {
-        "src": "assets/recipes/black-bean-veggie-burger/step-04-cook.jpg",
-        "alt": "Bean burger cooking in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/black-bean-veggie-burger/step-04-cook.jpg",
         "caption": "sear or bake"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "high-protein",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — flax egg + oats bind.",
+    "Black beans + oats together provide a complete plant protein profile.",
+    "Smoked paprika replaces bacon flavor with no animal products."
   ]
 }

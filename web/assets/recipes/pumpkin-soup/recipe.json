@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 35,
-  "tags": [
-    "veg",
-    "vegan",
-    "high-vitamin-a",
-    "high-potassium",
-    "low-calorie"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Roasting concentrates flavour — boiled pumpkin gives a watery, flat soup",
   "media": {
-    "emoji": "🎃",
     "hero": {
+      "alt": "Bright orange pumpkin soup in a bowl with a swirl of cream and pumpkin seeds",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/pumpkin-soup/hero.jpg",
+      "caption": "pumpkin soup — roasted, spiced, swirled",
       "palette": [
         "#F4A261",
         "#E76F51",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/pumpkin-soup/hero.jpg",
-      "alt": "Bright orange pumpkin soup in a bowl with a swirl of cream and pumpkin seeds",
-      "caption": "pumpkin soup — roasted, spiced, swirled"
-    }
+      ]
+    },
+    "emoji": "🎃"
   },
-  "healthFacts": [
-    "Pumpkin: 8500µg beta-carotene per cup — converts to vitamin A in the body.",
-    "Potassium content (~560mg per cup) supports blood pressure and fluid balance.",
-    "Beta-carotene absorption needs fat — the olive oil and cream are functional, not just garnish.",
-    "Low energy density (only ~50 kcal per cup) — keeps appetite satisfied without calorie load."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Pumpkin (peeled, cubed)",
@@ -95,21 +80,33 @@
       "title": "Roast the pumpkin",
       "detail": "Toss pumpkin cubes with 1 tbsp olive oil, salt, and pepper. Spread on a baking tray with whole garlic cloves. Roast at 200°C for 20 minutes till caramelised at the edges.",
       "duration": 1200,
-      "tip": "Caramelised edges are non-negotiable — that's where 80% of the flavour comes from."
+      "tip": "Caramelised edges are non-negotiable — that's where 80% of the flavour comes from.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Sauté the aromatics",
       "detail": "Heat remaining oil in a pot. Sauté onion till soft, add ginger and cumin powder. Cook 1 minute.",
       "duration": 240,
-      "tip": "Don't brown the onion here — you want sweet, not roasted."
+      "tip": "Don't brown the onion here — you want sweet, not roasted.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Blend and simmer",
       "detail": "Add roasted pumpkin and garlic to the pot. Pour in stock, simmer 5 minutes. Blend with a stick blender till silky. Adjust salt and pepper. Top with toasted pumpkin seeds.",
       "duration": 480,
-      "tip": "A dollop of yogurt or coconut cream adds richness without overpowering."
+      "tip": "A dollop of yogurt or coconut cream adds richness without overpowering.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -125,5 +122,18 @@
       "name": "Stick blender",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-potassium",
+    "high-vitamin-a",
+    "low-calorie",
+    "veg",
+    "vegan"
+  ],
+  "healthFacts": [
+    "Pumpkin: 8500µg beta-carotene per cup — converts to vitamin A in the body.",
+    "Potassium content (~560mg per cup) supports blood pressure and fluid balance.",
+    "Beta-carotene absorption needs fat — the olive oil and cream are functional, not just garnish.",
+    "Low energy density (only ~50 kcal per cup) — keeps appetite satisfied without calorie load."
   ]
 }

@@ -7,35 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 75,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "indian",
-    "high-protein",
-    "halal"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Britain's favorite curry, traditionally soy-free",
   "media": {
-    "emoji": "🍛",
     "hero": {
+      "alt": "Chicken tikka masala in red-orange creamy gravy with cilantro",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chicken-tikka-masala/hero.jpg",
+      "caption": "tikka masala — charred and creamy",
       "palette": [
         "#F4A261",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/chicken-tikka-masala/hero.jpg",
-      "alt": "Chicken tikka masala in red-orange creamy gravy with cilantro",
-      "caption": "tikka masala — charred and creamy"
-    }
+      ]
+    },
+    "emoji": "🍛"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Tikka means 'piece' — the chicken is meant to char.",
-    "Yogurt marinade tenderizes via enzymatic action."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Boneless chicken thighs",
@@ -101,8 +87,7 @@
       "duration": 1800,
       "tip": "Acid in yogurt = tender chicken. Don't shortcut the marinade.",
       "media": {
-        "src": "assets/recipes/chicken-tikka-masala/step-01-marinate.jpg",
-        "alt": "Chicken in yogurt marinade",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chicken-tikka-masala/step-01-marinate.jpg",
         "caption": "marinate the tikka"
       }
     },
@@ -113,8 +98,7 @@
       "duration": 600,
       "tip": "Edges should be black-spotted. That char is the soul of tikka.",
       "media": {
-        "src": "assets/recipes/chicken-tikka-masala/step-02-char.jpg",
-        "alt": "Charred tikka chicken under broiler",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chicken-tikka-masala/step-02-char.jpg",
         "caption": "char the chicken"
       }
     },
@@ -125,8 +109,7 @@
       "duration": 1020,
       "tip": "When oil pools at the edge of the gravy, the masala is properly cooked.",
       "media": {
-        "src": "assets/recipes/chicken-tikka-masala/step-03-masala.jpg",
-        "alt": "Masala gravy in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chicken-tikka-masala/step-03-masala.jpg",
         "caption": "build the masala"
       }
     },
@@ -137,8 +120,7 @@
       "duration": 360,
       "tip": "Crushing kasuri methi releases its dried-fenugreek perfume — the iconic restaurant note.",
       "media": {
-        "src": "assets/recipes/chicken-tikka-masala/step-04-cream.jpg",
-        "alt": "Finished tikka masala with kasuri methi",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chicken-tikka-masala/step-04-cream.jpg",
         "caption": "cream and finish"
       }
     }
@@ -156,5 +138,17 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "halal",
+    "high-protein",
+    "indian",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Tikka means 'piece' — the chicken is meant to char.",
+    "Yogurt marinade tenderizes via enzymatic action."
   ]
 }

@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 20,
-  "tags": [
-    "veg",
-    "millet",
-    "high-calcium",
-    "low-glycemic",
-    "gluten-free"
-  ],
-  "color": "#8B5A2B",
-  "colorSoft": "rgba(139,90,43,0.18)",
-  "featured": false,
-  "highlight": "Instant batter — no fermentation needed, ready in 20 minutes",
   "media": {
-    "emoji": "🥞",
     "hero": {
+      "alt": "Crisp brown ragi dosa rolled on a banana leaf with coconut chutney",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/ragi-dosa/hero.jpg",
+      "caption": "ragi dosa — finger-millet crepe, lacy edges",
       "palette": [
         "#8B5A2B",
         "#C19A6B",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/ragi-dosa/hero.jpg",
-      "alt": "Crisp brown ragi dosa rolled on a banana leaf with coconut chutney",
-      "caption": "ragi dosa — finger-millet crepe, lacy edges"
-    }
+      ]
+    },
+    "emoji": "🥞"
   },
-  "healthFacts": [
-    "Ragi (finger millet) has 344mg calcium per 100g — the highest of any cereal grain.",
-    "Slow-digesting carbs and high fiber keep glucose flat for 3+ hours after the meal.",
-    "Naturally gluten-free; rich in manganese, magnesium, and phenolic antioxidants.",
-    "Iron content (~3.9mg/100g) supports hemoglobin without animal sources."
-  ],
+  "color": "#8B5A2B",
+  "colorSoft": "rgba(139,90,43,0.18)",
   "ingredients": [
     {
       "name": "Ragi flour",
@@ -85,21 +70,33 @@
       "title": "Mix the pourable batter",
       "detail": "Whisk both flours with 2.5 cups water, salt, and cumin until lump-free. Stir in onion, green chili, and curry leaves. The consistency should be thinner than pancake batter.",
       "duration": 300,
-      "tip": "Thin batter = lacy, crispy dosa. Stir before each pour."
+      "tip": "Thin batter = lacy, crispy dosa. Stir before each pour.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Pour and crisp",
       "detail": "Heat a flat tawa on medium-high. Pour a ladleful of batter from the edges inward — it should spread on its own. Drizzle ½ tsp oil around the edge. Cook 2 minutes until edges lift and the underside is brown and lacy.",
       "duration": 120,
-      "tip": "Don't try to spread it with a ladle — pour-and-let-it-fall is the technique."
+      "tip": "Don't try to spread it with a ladle — pour-and-let-it-fall is the technique.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Fold and serve",
       "detail": "Loosen with a spatula and fold in half. Serve hot with coconut chutney or a thick yogurt dip. Repeat for the rest of the batter.",
       "duration": 60,
-      "tip": "Wipe the tawa with a halved onion between dosas — keeps it non-stick."
+      "tip": "Wipe the tawa with a halved onion between dosas — keeps it non-stick.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -115,5 +112,18 @@
       "name": "Mixing bowl",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-calcium",
+    "low-glycemic",
+    "millet",
+    "veg"
+  ],
+  "healthFacts": [
+    "Ragi (finger millet) has 344mg calcium per 100g — the highest of any cereal grain.",
+    "Slow-digesting carbs and high fiber keep glucose flat for 3+ hours after the meal.",
+    "Naturally gluten-free; rich in manganese, magnesium, and phenolic antioxidants.",
+    "Iron content (~3.9mg/100g) supports hemoglobin without animal sources."
   ]
 }

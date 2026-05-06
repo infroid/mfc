@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "gluten-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Bright chimichurri carries the steak — no soy, no compromise",
   "media": {
-    "emoji": "🥩",
     "hero": {
+      "alt": "Sliced skirt steak with chimichurri on a board",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chimichurri-skirt-steak/hero.jpg",
+      "caption": "chimichurri steak — green and bright",
       "palette": [
         "#7A9C5A",
         "#A0522D",
         "#E76F51"
-      ],
-      "src": "assets/recipes/chimichurri-skirt-steak/hero.jpg",
-      "alt": "Sliced skirt steak with chimichurri on a board",
-      "caption": "chimichurri steak — green and bright"
-    }
+      ]
+    },
+    "emoji": "🥩"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Skirt is a thin cut — high-heat fast cook only, sliced against the grain.",
-    "Parsley + oregano deliver flavonoids and antimicrobial compounds."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Skirt steak",
@@ -86,8 +72,7 @@
       "duration": 600,
       "tip": "Hand-chopped is the way. Best after a 30-min rest.",
       "media": {
-        "src": "assets/recipes/chimichurri-skirt-steak/step-01-chimi.jpg",
-        "alt": "Chopped chimichurri ingredients",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chimichurri-skirt-steak/step-01-chimi.jpg",
         "caption": "make chimichurri"
       }
     },
@@ -98,8 +83,7 @@
       "duration": 900,
       "tip": "Skirt cooks in 6 minutes total. Have everything ready first.",
       "media": {
-        "src": "assets/recipes/chimichurri-skirt-steak/step-02-season.jpg",
-        "alt": "Salted skirt steak",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chimichurri-skirt-steak/step-02-season.jpg",
         "caption": "season and rest steak"
       }
     },
@@ -110,8 +94,7 @@
       "duration": 360,
       "tip": "Smoke alarm? You're doing it right.",
       "media": {
-        "src": "assets/recipes/chimichurri-skirt-steak/step-03-sear.jpg",
-        "alt": "Searing skirt steak",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chimichurri-skirt-steak/step-03-sear.jpg",
         "caption": "sear hard, fast"
       }
     },
@@ -122,8 +105,7 @@
       "duration": 300,
       "tip": "Skirt's grain is dramatic — wrong direction = chewy. Look closely.",
       "media": {
-        "src": "assets/recipes/chimichurri-skirt-steak/step-04-slice.jpg",
-        "alt": "Skirt steak sliced with chimichurri",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chimichurri-skirt-steak/step-04-slice.jpg",
         "caption": "rest, slice, drown"
       }
     }
@@ -141,5 +123,17 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "quick",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Skirt is a thin cut — high-heat fast cook only, sliced against the grain.",
+    "Parsley + oregano deliver flavonoids and antimicrobial compounds."
   ]
 }

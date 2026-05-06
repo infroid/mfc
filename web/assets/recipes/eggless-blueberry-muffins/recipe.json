@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 12,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "nut-free"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Yogurt + apple sauce replace eggs without losing dome",
   "media": {
-    "emoji": "🫐",
     "hero": {
+      "alt": "Tall-domed blueberry muffins with sugar tops in tin",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-blueberry-muffins/hero.jpg",
+      "caption": "eggless blueberry muffins — tall dome",
       "palette": [
         "#7A9C5A",
         "#F4D67A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/eggless-blueberry-muffins/hero.jpg",
-      "alt": "Tall-domed blueberry muffins with sugar tops in tin",
-      "caption": "eggless blueberry muffins — tall dome"
-    }
+      ]
+    },
+    "emoji": "🫐"
   },
-  "healthFacts": [
-    "No eggs — yogurt and apple sauce do the binding.",
-    "Blueberries are among the highest-antioxidant fruits per calorie.",
-    "Tossing berries in flour stops them from sinking to the bottom of the batter."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "All-purpose flour",
@@ -94,8 +82,7 @@
       "duration": 60,
       "tip": "If using frozen, don't thaw — they bleed less straight from the bag.",
       "media": {
-        "src": "assets/recipes/eggless-blueberry-muffins/step-01-toss.jpg",
-        "alt": "Blueberries tossed in flour",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-blueberry-muffins/step-01-toss.jpg",
         "caption": "toss berries in flour"
       }
     },
@@ -106,8 +93,7 @@
       "duration": 120,
       "tip": "Apple sauce keeps the crumb moist for days.",
       "media": {
-        "src": "assets/recipes/eggless-blueberry-muffins/step-02-cream.jpg",
-        "alt": "Wet ingredients whisked together",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-blueberry-muffins/step-02-cream.jpg",
         "caption": "cream butter and sugar"
       }
     },
@@ -118,8 +104,7 @@
       "duration": 120,
       "tip": "Fold gently to keep berries intact and avoid streaks.",
       "media": {
-        "src": "assets/recipes/eggless-blueberry-muffins/step-03-fold.jpg",
-        "alt": "Blueberries folded into batter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-blueberry-muffins/step-03-fold.jpg",
         "caption": "fold in dry, then berries"
       }
     },
@@ -130,8 +115,7 @@
       "duration": 1380,
       "tip": "Two-stage temperature is the bakery secret to bakery-tall muffins.",
       "media": {
-        "src": "assets/recipes/eggless-blueberry-muffins/step-04-bake.jpg",
-        "alt": "Tall blueberry muffins fresh from oven",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-blueberry-muffins/step-04-bake.jpg",
         "caption": "bake hot then medium"
       }
     }
@@ -149,5 +133,15 @@
       "name": "Mixing bowls",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "nut-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — yogurt and apple sauce do the binding.",
+    "Blueberries are among the highest-antioxidant fruits per calorie.",
+    "Tossing berries in flour stops them from sinking to the bottom of the batter."
   ]
 }

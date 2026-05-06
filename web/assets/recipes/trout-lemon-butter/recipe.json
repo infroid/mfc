@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 20,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Brown butter, lemon, trout — French simplicity, no shellfish",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Whole trout pan-fried with brown butter and lemon",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/trout-lemon-butter/hero.jpg",
+      "caption": "trout — brown butter, lemon",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/trout-lemon-butter/hero.jpg",
-      "alt": "Whole trout pan-fried with brown butter and lemon",
-      "caption": "trout — brown butter, lemon"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Trout is omega-3-rich — comparable to salmon, with milder flavor.",
-    "Brown butter (beurre noisette) develops nutty notes from milk solids — chemistry, not nuts."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Whole trout (cleaned)",
@@ -85,8 +72,7 @@
       "duration": 120,
       "tip": "Flour absorbs surface moisture for clean crust.",
       "media": {
-        "src": "assets/recipes/trout-lemon-butter/step-01-dredge.jpg",
-        "alt": "Trout dredged in flour",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/trout-lemon-butter/step-01-dredge.jpg",
         "caption": "season and dredge"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 480,
       "tip": "Lay fish away from you so any oil splashes don't hit you.",
       "media": {
-        "src": "assets/recipes/trout-lemon-butter/step-02-fry.jpg",
-        "alt": "Trout pan-frying",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/trout-lemon-butter/step-02-fry.jpg",
         "caption": "pan-fry crisp"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 120,
       "tip": "Brown butter goes from gold to burnt fast. Eyes on it.",
       "media": {
-        "src": "assets/recipes/trout-lemon-butter/step-03-brown.jpg",
-        "alt": "Browning butter in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/trout-lemon-butter/step-03-brown.jpg",
         "caption": "brown the butter"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 60,
       "tip": "Lemon hits hot butter and foams — that's the sound of dinner.",
       "media": {
-        "src": "assets/recipes/trout-lemon-butter/step-04-pour.jpg",
-        "alt": "Brown butter pouring over trout",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/trout-lemon-butter/step-04-pour.jpg",
         "caption": "lemon and pour"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Plate for resting",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Trout is omega-3-rich — comparable to salmon, with milder flavor.",
+    "Brown butter (beurre noisette) develops nutty notes from milk solids — chemistry, not nuts."
   ]
 }

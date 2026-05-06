@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 1,
   "totalMinutes": 8,
-  "tags": [
-    "veg",
-    "vegan",
-    "high-monounsaturated-fat",
-    "high-folate",
-    "high-potassium",
-    "breakfast"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Avocado fat raises HDL while lowering LDL — both directions of lipid health",
   "media": {
-    "emoji": "🥑",
     "hero": {
+      "alt": "Toasted whole-grain bread topped with mashed avocado, red chili flakes, and sesame seeds",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/avocado-toast/hero.jpg",
+      "caption": "avocado toast — chili-lime, sesame-finished",
       "palette": [
         "#7A9C5A",
         "#A4C268",
         "#E76F51"
-      ],
-      "src": "assets/recipes/avocado-toast/hero.jpg",
-      "alt": "Toasted whole-grain bread topped with mashed avocado, red chili flakes, and sesame seeds",
-      "caption": "avocado toast — chili-lime, sesame-finished"
-    }
+      ]
+    },
+    "emoji": "🥑"
   },
-  "healthFacts": [
-    "One avocado: 20g mono-unsaturated fats, 14g fiber, 700mg potassium.",
-    "Folate content (~120µg per fruit) supports homocysteine clearance.",
-    "Vitamin E and lutein in avocado support skin and eye health.",
-    "Pairing with whole-grain bread balances the meal with slow carbs and B vitamins."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Whole-grain bread (toasted)",
@@ -86,21 +70,33 @@
       "title": "Toast the bread",
       "detail": "Toast two slices of whole-grain or multigrain bread till golden and crisp on both sides.",
       "duration": 180,
-      "tip": "Sourdough multigrain works beautifully — the chew supports the soft topping."
+      "tip": "Sourdough multigrain works beautifully — the chew supports the soft topping.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Mash the avocado",
       "detail": "Halve the avocado, scoop into a bowl. Add lemon juice, salt, and pepper. Mash with a fork — leave it chunky, not puréed.",
       "duration": 120,
-      "tip": "Lemon stops avocado browning; salt brings out the buttery flavour."
+      "tip": "Lemon stops avocado browning; salt brings out the buttery flavour.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Top and serve",
       "detail": "Spread mashed avocado generously on toast. Sprinkle chili flakes, sesame seeds, and coriander. Eat immediately.",
       "duration": 60,
-      "tip": "Top with a poached egg for extra protein and B12."
+      "tip": "Top with a poached egg for extra protein and B12.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -116,5 +112,19 @@
       "name": "Mixing bowl",
       "essential": false
     }
+  ],
+  "tags": [
+    "breakfast",
+    "high-folate",
+    "high-monounsaturated-fat",
+    "high-potassium",
+    "veg",
+    "vegan"
+  ],
+  "healthFacts": [
+    "One avocado: 20g mono-unsaturated fats, 14g fiber, 700mg potassium.",
+    "Folate content (~120µg per fruit) supports homocysteine clearance.",
+    "Vitamin E and lutein in avocado support skin and eye health.",
+    "Pairing with whole-grain bread balances the meal with slow carbs and B vitamins."
   ]
 }

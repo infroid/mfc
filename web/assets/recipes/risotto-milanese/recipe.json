@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "italian",
-    "gluten-free"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.20)",
-  "featured": false,
-  "highlight": "Saffron-gold, creamy without cream, naturally nut-free",
   "media": {
-    "emoji": "🍚",
     "hero": {
+      "alt": "Saffron-yellow risotto with parmesan and gold sheen",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/risotto-milanese/hero.jpg",
+      "caption": "risotto milanese — saffron and parmesan",
       "palette": [
         "#F4D67A",
         "#E76F51",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/risotto-milanese/hero.jpg",
-      "alt": "Saffron-yellow risotto with parmesan and gold sheen",
-      "caption": "risotto milanese — saffron and parmesan"
-    }
+      ]
+    },
+    "emoji": "🍚"
   },
-  "healthFacts": [
-    "Naturally nut-free, gluten-free.",
-    "Saffron contains crocin — antioxidant pigment with antidepressant effects in studies.",
-    "Risotto rice (carnaroli) releases starch slowly — silkier than arborio."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.20)",
   "ingredients": [
     {
       "name": "Carnaroli or arborio rice",
@@ -90,8 +77,7 @@
       "duration": 600,
       "tip": "Saffron straight into rice is wasteful — bloom it first.",
       "media": {
-        "src": "assets/recipes/risotto-milanese/step-01-saffron.jpg",
-        "alt": "Saffron blooming in stock",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/risotto-milanese/step-01-saffron.jpg",
         "caption": "bloom the saffron"
       }
     },
@@ -102,8 +88,7 @@
       "duration": 360,
       "tip": "Toasting the grain seals it so it cooks creamy on the outside, al dente in.",
       "media": {
-        "src": "assets/recipes/risotto-milanese/step-02-toast.jpg",
-        "alt": "Rice toasting with onion",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/risotto-milanese/step-02-toast.jpg",
         "caption": "toast the rice"
       }
     },
@@ -114,8 +99,7 @@
       "duration": 1080,
       "tip": "Stirring releases starch — that's where the creaminess comes from.",
       "media": {
-        "src": "assets/recipes/risotto-milanese/step-03-stock.jpg",
-        "alt": "Stock being added to risotto",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/risotto-milanese/step-03-stock.jpg",
         "caption": "wine, then stock by ladle"
       }
     },
@@ -126,8 +110,7 @@
       "duration": 120,
       "tip": "Mantecare = beat in cold butter for a glossy emulsion. The signature Italian finish.",
       "media": {
-        "src": "assets/recipes/risotto-milanese/step-04-mantecare.jpg",
-        "alt": "Beating butter into risotto",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/risotto-milanese/step-04-mantecare.jpg",
         "caption": "mantecare"
       }
     }
@@ -145,5 +128,16 @@
       "name": "Wooden spoon",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "italian",
+    "nut-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free, gluten-free.",
+    "Saffron contains crocin — antioxidant pigment with antidepressant effects in studies.",
+    "Risotto rice (carnaroli) releases starch slowly — silkier than arborio."
   ]
 }

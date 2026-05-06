@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 45,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Cod, potato, herbs — golden patties with no shellfish anywhere",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Cod fish cakes with golden crust and lemon wedge",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cod-fish-cakes/hero.jpg",
+      "caption": "fish cakes — golden cod",
       "palette": [
         "#F4D67A",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/cod-fish-cakes/hero.jpg",
-      "alt": "Cod fish cakes with golden crust and lemon wedge",
-      "caption": "fish cakes — golden cod"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Combining cod with potato extends the fish without losing flavor.",
-    "Pan-frying in less oil than deep-frying = crisp crust, lower fat."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Cod fillets",
@@ -94,8 +82,7 @@
       "duration": 1200,
       "tip": "Cooking the cod over the pot of potatoes saves a step and a pot.",
       "media": {
-        "src": "assets/recipes/cod-fish-cakes/step-01-cook.jpg",
-        "alt": "Steaming cod over potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cod-fish-cakes/step-01-cook.jpg",
         "caption": "boil potatoes and steam fish"
       }
     },
@@ -106,8 +93,7 @@
       "duration": 240,
       "tip": "Don't over-mash — texture is half the appeal.",
       "media": {
-        "src": "assets/recipes/cod-fish-cakes/step-02-mix.jpg",
-        "alt": "Mixing fish cake mixture",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cod-fish-cakes/step-02-mix.jpg",
         "caption": "mix the cake"
       }
     },
@@ -118,8 +104,7 @@
       "duration": 720,
       "tip": "Chilling firms the patties so they don't fall apart frying.",
       "media": {
-        "src": "assets/recipes/cod-fish-cakes/step-03-form.jpg",
-        "alt": "Fish cakes coated in panko",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cod-fish-cakes/step-03-form.jpg",
         "caption": "form and dredge"
       }
     },
@@ -130,8 +115,7 @@
       "duration": 360,
       "tip": "Tartar or yogurt-dill sauce on the side seals the deal.",
       "media": {
-        "src": "assets/recipes/cod-fish-cakes/step-04-fry.jpg",
-        "alt": "Frying fish cakes in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cod-fish-cakes/step-04-fry.jpg",
         "caption": "fry golden"
       }
     }
@@ -149,5 +133,15 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Combining cod with potato extends the fish without losing flavor.",
+    "Pan-frying in less oil than deep-frying = crisp crust, lower fat."
   ]
 }

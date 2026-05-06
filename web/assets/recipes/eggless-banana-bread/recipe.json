@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 8,
   "totalMinutes": 65,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "nut-free"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Yogurt + flax stand in for eggs — moist, springy crumb",
   "media": {
-    "emoji": "🍌",
     "hero": {
+      "alt": "Sliced banana bread on a board with golden top",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-banana-bread/hero.jpg",
+      "caption": "eggless banana bread — tender crumb",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/eggless-banana-bread/hero.jpg",
-      "alt": "Sliced banana bread on a board with golden top",
-      "caption": "eggless banana bread — tender crumb"
-    }
+      ]
+    },
+    "emoji": "🍌"
   },
-  "healthFacts": [
-    "No eggs — replaced by yogurt and ground flax for binding.",
-    "Ripe bananas provide enough natural sugar to halve the added sugar.",
-    "Ground flax adds ~2g omega-3 ALA per tablespoon."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Very ripe bananas",
@@ -94,8 +82,7 @@
       "duration": 480,
       "tip": "Hot water (not cold) speeds gelling — works in minutes.",
       "media": {
-        "src": "assets/recipes/eggless-banana-bread/step-01-flax.jpg",
-        "alt": "Flax and water gelling in a bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-banana-bread/step-01-flax.jpg",
         "caption": "make the flax egg"
       }
     },
@@ -106,8 +93,7 @@
       "duration": 180,
       "tip": "The riper the banana, the deeper the flavor — black-spotted skins are ideal.",
       "media": {
-        "src": "assets/recipes/eggless-banana-bread/step-02-wet.jpg",
-        "alt": "Mashed bananas in mixing bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-banana-bread/step-02-wet.jpg",
         "caption": "mash and mix wet"
       }
     },
@@ -118,8 +104,7 @@
       "duration": 120,
       "tip": "Overmixing develops gluten and toughens the loaf.",
       "media": {
-        "src": "assets/recipes/eggless-banana-bread/step-03-fold.jpg",
-        "alt": "Folding flour into batter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-banana-bread/step-03-fold.jpg",
         "caption": "fold in dry"
       }
     },
@@ -130,8 +115,7 @@
       "duration": 3000,
       "tip": "Slicing hot tears the crumb. Wait or you'll regret it.",
       "media": {
-        "src": "assets/recipes/eggless-banana-bread/step-04-bake.jpg",
-        "alt": "Baked banana bread in loaf pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-banana-bread/step-04-bake.jpg",
         "caption": "bake low and slow"
       }
     }
@@ -149,5 +133,15 @@
       "name": "Whisk",
       "essential": false
     }
+  ],
+  "tags": [
+    "egg-free",
+    "nut-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — replaced by yogurt and ground flax for binding.",
+    "Ripe bananas provide enough natural sugar to halve the added sugar.",
+    "Ground flax adds ~2g omega-3 ALA per tablespoon."
   ]
 }

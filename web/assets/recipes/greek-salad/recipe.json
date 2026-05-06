@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 15,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "gluten-free",
-    "mediterranean",
-    "quick"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Real Greek salad has no lettuce — and no nuts",
   "media": {
-    "emoji": "🥗",
     "hero": {
+      "alt": "Greek salad with tomato, cucumber, olives, and a slab of feta",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/greek-salad/hero.jpg",
+      "caption": "horiatiki — tomato, feta, olives",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/greek-salad/hero.jpg",
-      "alt": "Greek salad with tomato, cucumber, olives, and a slab of feta",
-      "caption": "horiatiki — tomato, feta, olives"
-    }
+      ]
+    },
+    "emoji": "🥗"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Feta is brined sheep's milk — easier to digest than cow's-milk cheeses for many.",
-    "Kalamata olives provide oleic acid and vitamin E."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Ripe tomatoes",
@@ -91,8 +77,7 @@
       "duration": 300,
       "tip": "Best tomatoes you can find. The salad is mostly tomato.",
       "media": {
-        "src": "assets/recipes/greek-salad/step-01-tomato.jpg",
-        "alt": "Salted tomato wedges in colander",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/greek-salad/step-01-tomato.jpg",
         "caption": "wedge the tomatoes"
       }
     },
@@ -103,8 +88,7 @@
       "duration": 180,
       "tip": "Soak red onion in cold water 5 minutes if you want it less aggressive.",
       "media": {
-        "src": "assets/recipes/greek-salad/step-02-slice.jpg",
-        "alt": "Sliced cucumber, onion, pepper",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/greek-salad/step-02-slice.jpg",
         "caption": "slice the rest"
       }
     },
@@ -115,8 +99,7 @@
       "duration": 60,
       "tip": "A whole block stays creamier than crumbled, which dries out.",
       "media": {
-        "src": "assets/recipes/greek-salad/step-03-feta.jpg",
-        "alt": "Slab of feta atop Greek salad",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/greek-salad/step-03-feta.jpg",
         "caption": "top with feta"
       }
     },
@@ -127,8 +110,7 @@
       "duration": 60,
       "tip": "Oregano on top of feta blooms in the oil pool — that's the magic.",
       "media": {
-        "src": "assets/recipes/greek-salad/step-04-dress.jpg",
-        "alt": "Greek salad dressed with oil and oregano",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/greek-salad/step-04-dress.jpg",
         "caption": "dress and oregano"
       }
     }
@@ -146,5 +128,17 @@
       "name": "Colander",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "mediterranean",
+    "nut-free",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Feta is brined sheep's milk — easier to digest than cow's-milk cheeses for many.",
+    "Kalamata olives provide oleic acid and vitamin E."
   ]
 }

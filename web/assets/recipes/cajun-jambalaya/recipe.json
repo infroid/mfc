@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 60,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "high-protein",
-    "one-pot"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "One-pot Louisiana classic — no soy, all smoke",
   "media": {
-    "emoji": "🍚",
     "hero": {
+      "alt": "Cajun jambalaya with sausage, chicken, and rice",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cajun-jambalaya/hero.jpg",
+      "caption": "jambalaya — Louisiana spice",
       "palette": [
         "#A0522D",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/cajun-jambalaya/hero.jpg",
-      "alt": "Cajun jambalaya with sausage, chicken, and rice",
-      "caption": "jambalaya — Louisiana spice"
-    }
+      ]
+    },
+    "emoji": "🍚"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Andouille sausage is smoky and pork-based — no soy fillers when you buy quality.",
-    "The 'holy trinity' (onion, celery, bell pepper) is Cajun mirepoix."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Andouille sausage (sliced)",
@@ -95,8 +82,7 @@
       "duration": 600,
       "tip": "Andouille fat is your seasoning — leave it in the pot.",
       "media": {
-        "src": "assets/recipes/cajun-jambalaya/step-01-meat.jpg",
-        "alt": "Browning andouille and chicken",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cajun-jambalaya/step-01-meat.jpg",
         "caption": "brown the meat"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 540,
       "tip": "Cajun seasoning is salt-heavy — don't add more salt yet.",
       "media": {
-        "src": "assets/recipes/cajun-jambalaya/step-02-trinity.jpg",
-        "alt": "Holy trinity cooking",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cajun-jambalaya/step-02-trinity.jpg",
         "caption": "holy trinity"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 360,
       "tip": "Toasting the rice keeps each grain separate.",
       "media": {
-        "src": "assets/recipes/cajun-jambalaya/step-03-rice.jpg",
-        "alt": "Adding rice and stock",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cajun-jambalaya/step-03-rice.jpg",
         "caption": "tomato, rice, stock"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 1800,
       "tip": "Don't peek — rice steaming requires trapped heat.",
       "media": {
-        "src": "assets/recipes/cajun-jambalaya/step-04-cover.jpg",
-        "alt": "Jambalaya finished and fluffed",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cajun-jambalaya/step-04-cover.jpg",
         "caption": "cover and cook"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Fork",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "non-veg",
+    "one-pot",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Andouille sausage is smoky and pork-based — no soy fillers when you buy quality.",
+    "The 'holy trinity' (onion, celery, bell pepper) is Cajun mirepoix."
   ]
 }

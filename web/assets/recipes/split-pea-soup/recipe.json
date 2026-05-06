@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 90,
-  "tags": [
-    "non-veg",
-    "egg-free",
-    "high-protein",
-    "one-pot"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.20)",
-  "featured": false,
-  "highlight": "Pantry-cheap, dense protein, no eggs ever",
   "media": {
-    "emoji": "🥣",
     "hero": {
+      "alt": "Thick split pea soup with ham and croutons",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/split-pea-soup/hero.jpg",
+      "caption": "split pea — thick and savory",
       "palette": [
         "#7A9C5A",
         "#A0522D",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/split-pea-soup/hero.jpg",
-      "alt": "Thick split pea soup with ham and croutons",
-      "caption": "split pea — thick and savory"
-    }
+      ]
+    },
+    "emoji": "🥣"
   },
-  "healthFacts": [
-    "Naturally egg-free.",
-    "Split peas pack ~16g protein and 16g fiber per cooked cup.",
-    "A ham hock adds collagen-rich gelatin during the slow simmer — gut-friendly."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.20)",
   "ingredients": [
     {
       "name": "Green split peas",
@@ -90,8 +77,7 @@
       "duration": 660,
       "tip": "The trinity of soup. Don't rush it — soft veg = smoother soup.",
       "media": {
-        "src": "assets/recipes/split-pea-soup/step-01-mirepoix.jpg",
-        "alt": "Mirepoix cooking in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/split-pea-soup/step-01-mirepoix.jpg",
         "caption": "sweat the mirepoix"
       }
     },
@@ -102,8 +88,7 @@
       "duration": 180,
       "tip": "Rinse split peas first to remove any grit.",
       "media": {
-        "src": "assets/recipes/split-pea-soup/step-02-peas.jpg",
-        "alt": "Peas and ham hock in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/split-pea-soup/step-02-peas.jpg",
         "caption": "add peas and hock"
       }
     },
@@ -114,8 +99,7 @@
       "duration": 4200,
       "tip": "Lid askew — fully covered traps too much steam, fully open thickens too much.",
       "media": {
-        "src": "assets/recipes/split-pea-soup/step-03-simmer.jpg",
-        "alt": "Split pea soup simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/split-pea-soup/step-03-simmer.jpg",
         "caption": "long simmer"
       }
     },
@@ -126,8 +110,7 @@
       "duration": 240,
       "tip": "Soup will thicken further on cooling — thin with stock if reheating.",
       "media": {
-        "src": "assets/recipes/split-pea-soup/step-04-finish.jpg",
-        "alt": "Finished split pea soup with ham",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/split-pea-soup/step-04-finish.jpg",
         "caption": "pull hock, salt, finish"
       }
     }
@@ -145,5 +128,16 @@
       "name": "Tongs",
       "essential": false
     }
+  ],
+  "tags": [
+    "egg-free",
+    "high-protein",
+    "non-veg",
+    "one-pot"
+  ],
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Split peas pack ~16g protein and 16g fiber per cooked cup.",
+    "A ham hock adds collagen-rich gelatin during the slow simmer — gut-friendly."
   ]
 }

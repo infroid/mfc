@@ -7,40 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 60,
-  "tags": [
-    "vegetarian",
-    "high-fiber",
-    "high-protein",
-    "gluten",
-    "dairy",
-    "onion",
-    "garlic"
-  ],
-  "color": "#FF8C00",
-  "colorSoft": "rgba(255,140,0,0.15)",
-  "featured": false,
-  "highlight": "Chickpeas deliver 15g fiber per bowl",
   "media": {
-    "emoji": "🫙",
     "hero": {
+      "alt": "Chole bhature on a cream ceramic plate with dark chole, puffed bhature, onion, and lemon",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/hero.jpg",
+      "caption": "chole bhature — dark chole, puffed bhatura",
       "palette": [
         "#FF8C00",
         "#F4A261",
         "#E76F51"
-      ],
-      "src": "assets/recipes/chole-bhature/hero.jpg",
-      "alt": "Chole bhature on a cream ceramic plate with dark chole, puffed bhature, onion, and lemon",
-      "caption": "chole bhature — dark chole, puffed bhatura"
-    }
+      ]
+    },
+    "emoji": "🫙"
   },
-  "healthFacts": [
-    "Chickpeas deliver 15g fiber and 12g protein per cup — one of the most filling legumes.",
-    "Amchur (dried mango powder) adds vitamin C, which boosts iron absorption from chickpeas.",
-    "Pomegranate seeds in chole are a traditional garnish rich in antioxidant punicalagins.",
-    "The tangy, acidic cooking environment (amchur + tomatoes) helps reduce lectin content.",
-    "Bhature uses yogurt — the lactic acid makes the bread tender and partially fermented.",
-    "Tea bag trick: cooking chole with a black tea bag gives deeper color and mild tannins."
-  ],
+  "color": "#FF8C00",
+  "colorSoft": "rgba(255,140,0,0.15)",
   "ingredients": [
     {
       "name": "Chickpeas (kabuli chana, dried)",
@@ -121,8 +102,7 @@
       "duration": 28800,
       "tip": "Soaking reduces oligosaccharides that cause bloating. Worth the overnight wait.",
       "media": {
-        "src": "assets/recipes/chole-bhature/step-01-soak-chickpeas.jpg",
-        "alt": "Soaked kabuli chana in a steel bowl with clear water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/step-01-soak-chickpeas.jpg",
         "caption": "Overnight-soaked chickpeas"
       }
     },
@@ -133,8 +113,7 @@
       "duration": 1800,
       "tip": "Softer dough = better puff. The dough should feel like soft earlobe texture.",
       "media": {
-        "src": "assets/recipes/chole-bhature/step-02-bhature-dough.jpg",
-        "alt": "Soft bhature dough resting under a damp cloth in a steel bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/step-02-bhature-dough.jpg",
         "caption": "Soft rested dough"
       }
     },
@@ -145,8 +124,7 @@
       "duration": 1200,
       "tip": "The black tea bag gives chole that characteristic deep brownish color. It's not optional.",
       "media": {
-        "src": "assets/recipes/chole-bhature/step-03-pressure-cook.jpg",
-        "alt": "Cooked chickpeas in a pressure cooker with tea-stained cooking water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/step-03-pressure-cook.jpg",
         "caption": "Tea-stained cooked chole"
       }
     },
@@ -157,8 +135,7 @@
       "duration": 1200,
       "tip": "The masala must be cooked down until it's dark, thick, and jammy. Don't cut this short.",
       "media": {
-        "src": "assets/recipes/chole-bhature/step-04-build-masala.jpg",
-        "alt": "Dark onion-tomato chole masala in a black kadhai with oil separating",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/step-04-build-masala.jpg",
         "caption": "Jammy masala base"
       }
     },
@@ -169,8 +146,7 @@
       "duration": 1200,
       "tip": "Good chole is dry-ish and dark. If it looks watery and pale, keep simmering.",
       "media": {
-        "src": "assets/recipes/chole-bhature/step-05-simmer-chole.jpg",
-        "alt": "Chickpeas simmering in thick dark masala gravy in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/step-05-simmer-chole.jpg",
         "caption": "Thick simmered chole"
       }
     },
@@ -181,8 +157,7 @@
       "duration": 600,
       "tip": "Oil must be hot enough — test with a small dough piece; it should rise immediately.",
       "media": {
-        "src": "assets/recipes/chole-bhature/step-06-fry-bhature.jpg",
-        "alt": "A puffed bhatura frying in hot oil under a slotted spoon",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chole-bhature/step-06-fry-bhature.jpg",
         "caption": "Puffed bhatura fry"
       }
     }
@@ -208,5 +183,22 @@
       "name": "Spider / slotted spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "garlic",
+    "gluten",
+    "high-fiber",
+    "high-protein",
+    "onion",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Chickpeas deliver 15g fiber and 12g protein per cup — one of the most filling legumes.",
+    "Amchur (dried mango powder) adds vitamin C, which boosts iron absorption from chickpeas.",
+    "Pomegranate seeds in chole are a traditional garnish rich in antioxidant punicalagins.",
+    "The tangy, acidic cooking environment (amchur + tomatoes) helps reduce lectin content.",
+    "Bhature uses yogurt — the lactic acid makes the bread tender and partially fermented.",
+    "Tea bag trick: cooking chole with a black tea bag gives deeper color and mild tannins."
   ]
 }

@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 30,
-  "tags": [
-    "veg",
-    "high-fiber",
-    "low-glycemic",
-    "garlic",
-    "onion"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Okra's soluble fiber slows post-meal glucose; pan-dry first to kill the slime",
   "media": {
-    "emoji": "🥬",
     "hero": {
+      "alt": "Sautéed sliced okra coated in onion-tomato masala in a black skillet",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/bhindi-masala/hero.jpg",
+      "caption": "bhindi masala — okra crisp, masala fragrant",
       "palette": [
         "#7A9C5A",
         "#A4C268",
         "#E2EBC4"
-      ],
-      "src": "assets/recipes/bhindi-masala/hero.jpg",
-      "alt": "Sautéed sliced okra coated in onion-tomato masala in a black skillet",
-      "caption": "bhindi masala — okra crisp, masala fragrant"
-    }
+      ]
+    },
+    "emoji": "🥬"
   },
-  "healthFacts": [
-    "Okra mucilage is soluble fiber — slows glucose spikes and binds dietary cholesterol.",
-    "Low-purine vegetable safe for high uric-acid diets.",
-    "Folate content supports homocysteine metabolism.",
-    "Dry-roasting before adding masala collapses the mucilage so it acts inside the gut, not on the plate."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Okra (bhindi)",
@@ -85,21 +70,33 @@
       "title": "Wash, dry, and slice",
       "detail": "Wash okra and pat completely dry with a kitchen towel. Trim the heads and slice into 1cm rounds. The drier they are, the less slime later.",
       "duration": 300,
-      "tip": "If the okra is even slightly damp, the slime will come back — don't rush this step."
+      "tip": "If the okra is even slightly damp, the slime will come back — don't rush this step.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Pan-roast the okra",
       "detail": "Heat 1 tbsp mustard oil in a wide pan. Add okra in a single layer and roast on medium-high, stirring every 2 minutes, for 8–10 minutes until edges crisp and slime disappears.",
       "duration": 600,
-      "tip": "Don't crowd the pan and don't cover — steam reactivates the slime."
+      "tip": "Don't crowd the pan and don't cover — steam reactivates the slime.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Build the masala and combine",
       "detail": "Push okra to the side. Add remaining oil, sauté onion until golden, add ginger-garlic and tomato, cook till mushy. Sprinkle spices, salt, and toss with the okra for 3 more minutes.",
       "duration": 540,
-      "tip": "Finish with a pinch of amchur (dry mango) for a bright tang."
+      "tip": "Finish with a pinch of amchur (dry mango) for a bright tang.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -115,5 +112,18 @@
       "name": "Kitchen towel",
       "essential": false
     }
+  ],
+  "tags": [
+    "garlic",
+    "high-fiber",
+    "low-glycemic",
+    "onion",
+    "veg"
+  ],
+  "healthFacts": [
+    "Okra mucilage is soluble fiber — slows glucose spikes and binds dietary cholesterol.",
+    "Low-purine vegetable safe for high uric-acid diets.",
+    "Folate content supports homocysteine metabolism.",
+    "Dry-roasting before adding masala collapses the mucilage so it acts inside the gut, not on the plate."
   ]
 }

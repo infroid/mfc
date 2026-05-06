@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 30,
-  "tags": [
-    "non-veg",
-    "nut-free",
-    "high-protein"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.16)",
-  "featured": false,
-  "highlight": "Pressed crisp; melty inside; nut-free deli classic",
   "media": {
-    "emoji": "🥪",
     "hero": {
+      "alt": "Pressed Cuban sandwich cut on a diagonal showing melty cheese",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cuban-sandwich/hero.jpg",
+      "caption": "cubano — pressed, golden, layered",
       "palette": [
         "#F4A261",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/cuban-sandwich/hero.jpg",
-      "alt": "Pressed Cuban sandwich cut on a diagonal showing melty cheese",
-      "caption": "cubano — pressed, golden, layered"
-    }
+      ]
+    },
+    "emoji": "🥪"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Two pork sources, one cheese, two pickles — protein-rich and balanced.",
-    "Yellow mustard contains turmeric — anti-inflammatory pop."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.16)",
   "ingredients": [
     {
       "name": "Cuban or soft hoagie bread",
@@ -79,8 +67,7 @@
       "duration": 60,
       "tip": "Yellow mustard is right; Dijon is wrong. Trust me.",
       "media": {
-        "src": "assets/recipes/cuban-sandwich/step-01-mustard.jpg",
-        "alt": "Mustard slathered on Cuban bread",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cuban-sandwich/step-01-mustard.jpg",
         "caption": "slather the bread"
       }
     },
@@ -91,8 +78,7 @@
       "duration": 120,
       "tip": "Pickles closest to bread keeps the bread crisp during the press.",
       "media": {
-        "src": "assets/recipes/cuban-sandwich/step-02-layer.jpg",
-        "alt": "Cuban sandwich being layered",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cuban-sandwich/step-02-layer.jpg",
         "caption": "layer in order"
       }
     },
@@ -103,8 +89,7 @@
       "duration": 480,
       "tip": "No press? A foil-wrapped brick on the sandwich works perfectly.",
       "media": {
-        "src": "assets/recipes/cuban-sandwich/step-03-press.jpg",
-        "alt": "Cuban sandwich pressing in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cuban-sandwich/step-03-press.jpg",
         "caption": "butter and press"
       }
     },
@@ -115,8 +100,7 @@
       "duration": 30,
       "tip": "A serrated knife with a sawing motion keeps the layers from squishing.",
       "media": {
-        "src": "assets/recipes/cuban-sandwich/step-04-slice.jpg",
-        "alt": "Cuban sandwich sliced diagonally",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cuban-sandwich/step-04-slice.jpg",
         "caption": "slice on the bias"
       }
     }
@@ -134,5 +118,15 @@
       "name": "Spatula",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Two pork sources, one cheese, two pickles — protein-rich and balanced.",
+    "Yellow mustard contains turmeric — anti-inflammatory pop."
   ]
 }

@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 12,
-  "tags": [
-    "veg",
-    "vegan",
-    "vitamin-k",
-    "vitamin-c",
-    "low-calorie",
-    "low-glycemic"
-  ],
-  "color": "#4A7C2A",
-  "colorSoft": "rgba(74,124,42,0.18)",
-  "featured": false,
-  "highlight": "60-second blanch then high-heat sear — vibrant green, sweet, never sulfurous",
   "media": {
-    "emoji": "🥦",
     "hero": {
+      "alt": "Bright green broccoli florets stir-fried with garlic and red chili flakes",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/broccoli-stir-fry/hero.jpg",
+      "caption": "broccoli stir-fry — garlic, chili, charred edges",
       "palette": [
         "#4A7C2A",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/broccoli-stir-fry/hero.jpg",
-      "alt": "Bright green broccoli florets stir-fried with garlic and red chili flakes",
-      "caption": "broccoli stir-fry — garlic, chili, charred edges"
-    }
+      ]
+    },
+    "emoji": "🥦"
   },
-  "healthFacts": [
-    "Broccoli is a top dietary source of chromium — supports insulin sensitivity.",
-    "Sulforaphane (from chopped broccoli) supports liver phase-2 detox enzymes.",
-    "One cup covers full daily vitamin K and C needs.",
-    "Crucifer fiber feeds gut bacteria that produce short-chain fatty acids."
-  ],
+  "color": "#4A7C2A",
+  "colorSoft": "rgba(74,124,42,0.18)",
   "ingredients": [
     {
       "name": "Broccoli (cut into florets)",
@@ -91,21 +75,33 @@
       "title": "Blanch the broccoli",
       "detail": "Boil a pot of salted water. Drop florets in for exactly 60 seconds, then plunge into ice water. Drain well.",
       "duration": 120,
-      "tip": "Blanch + ice bath = locked-in green colour and pre-cooked centre. Skip this and the centres stay raw."
+      "tip": "Blanch + ice bath = locked-in green colour and pre-cooked centre. Skip this and the centres stay raw.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Sear with garlic",
       "detail": "Heat olive oil in a wide pan or wok till just smoking. Add garlic and ginger, sizzle 20 seconds. Add the drained broccoli and chili flakes. Sear without stirring for 2 minutes — let it char.",
       "duration": 180,
-      "tip": "High heat is the trick — low heat steams the broccoli into mush."
+      "tip": "High heat is the trick — low heat steams the broccoli into mush.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Season and finish",
       "detail": "Splash in soy sauce, toss for 30 seconds. Add black pepper. Off heat, sprinkle toasted sesame. Serve immediately.",
       "duration": 60,
-      "tip": "A squeeze of lime at the end lifts the whole dish."
+      "tip": "A squeeze of lime at the end lifts the whole dish.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -121,5 +117,19 @@
       "name": "Slotted spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "low-calorie",
+    "low-glycemic",
+    "veg",
+    "vegan",
+    "vitamin-c",
+    "vitamin-k"
+  ],
+  "healthFacts": [
+    "Broccoli is a top dietary source of chromium — supports insulin sensitivity.",
+    "Sulforaphane (from chopped broccoli) supports liver phase-2 detox enzymes.",
+    "One cup covers full daily vitamin K and C needs.",
+    "Crucifer fiber feeds gut bacteria that produce short-chain fatty acids."
   ]
 }

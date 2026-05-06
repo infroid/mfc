@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 20,
-  "tags": [
-    "pescatarian",
-    "nut-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.16)",
-  "featured": false,
-  "highlight": "Tuna, cheese, butter, bread — diner-counter perfect",
   "media": {
-    "emoji": "🥪",
     "hero": {
+      "alt": "Tuna melt with golden crust and bubbling cheddar",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-melt/hero.jpg",
+      "caption": "tuna melt — diner classic",
       "palette": [
         "#F4A261",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/tuna-melt/hero.jpg",
-      "alt": "Tuna melt with golden crust and bubbling cheddar",
-      "caption": "tuna melt — diner classic"
-    }
+      ]
+    },
+    "emoji": "🥪"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Canned tuna packed in olive oil retains more omega-3s than water-packed.",
-    "Adding lemon zest brightens canned tuna without extra sodium."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.16)",
   "ingredients": [
     {
       "name": "Canned tuna in oil",
@@ -85,8 +72,7 @@
       "duration": 180,
       "tip": "A teaspoon of Dijon adds depth without changing the character.",
       "media": {
-        "src": "assets/recipes/tuna-melt/step-01-mix.jpg",
-        "alt": "Tuna salad in a bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-melt/step-01-mix.jpg",
         "caption": "mix the tuna salad"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 60,
       "tip": "Cheese acts as a moisture barrier — keeps the bread from going soggy.",
       "media": {
-        "src": "assets/recipes/tuna-melt/step-02-build.jpg",
-        "alt": "Tuna melt being assembled",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-melt/step-02-build.jpg",
         "caption": "build the sandwich"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 480,
       "tip": "Lid traps heat to melt the inside before the outside burns.",
       "media": {
-        "src": "assets/recipes/tuna-melt/step-03-grill.jpg",
-        "alt": "Tuna melt grilling in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-melt/step-03-grill.jpg",
         "caption": "butter and grill low"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 30,
       "tip": "A few cornichons on the side cut the richness.",
       "media": {
-        "src": "assets/recipes/tuna-melt/step-04-slice.jpg",
-        "alt": "Sliced tuna melt",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-melt/step-04-slice.jpg",
         "caption": "rest and slice"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Spatula",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "nut-free",
+    "pescatarian",
+    "quick"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Canned tuna packed in olive oil retains more omega-3s than water-packed.",
+    "Adding lemon zest brightens canned tuna without extra sodium."
   ]
 }

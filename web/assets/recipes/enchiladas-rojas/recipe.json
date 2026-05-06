@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 6,
   "totalMinutes": 60,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "mexican",
-    "high-protein"
-  ],
-  "color": "#C84B5A",
-  "colorSoft": "rgba(200,75,90,0.16)",
-  "featured": false,
-  "highlight": "Real red sauce from dried chilies — no soy, no canned shortcut",
   "media": {
-    "emoji": "🌶️",
     "hero": {
+      "alt": "Enchiladas rojas with bubbling cheese and crema",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/enchiladas-rojas/hero.jpg",
+      "caption": "enchiladas rojas — drowned in chili",
       "palette": [
         "#C84B5A",
         "#F4A261",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/enchiladas-rojas/hero.jpg",
-      "alt": "Enchiladas rojas with bubbling cheese and crema",
-      "caption": "enchiladas rojas — drowned in chili"
-    }
+      ]
+    },
+    "emoji": "🌶️"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Dried guajillo and ancho chilies are mild — color and depth, not heat.",
-    "Toasting chilies before soaking deepens their fruit-and-tobacco notes."
-  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
   "ingredients": [
     {
       "name": "Cooked shredded chicken",
@@ -95,8 +82,7 @@
       "duration": 1080,
       "tip": "Chilies that look leathery soak; chilies that crumble were burnt.",
       "media": {
-        "src": "assets/recipes/enchiladas-rojas/step-01-toast.jpg",
-        "alt": "Toasting dried chilies",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/enchiladas-rojas/step-01-toast.jpg",
         "caption": "toast and soak chilies"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 240,
       "tip": "Strain through a sieve for restaurant-smooth — chili skins can be stringy.",
       "media": {
-        "src": "assets/recipes/enchiladas-rojas/step-02-blend.jpg",
-        "alt": "Blending red chili sauce",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/enchiladas-rojas/step-02-blend.jpg",
         "caption": "blend the sauce"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 720,
       "tip": "Warming the tortillas in the sauce keeps them flexible — cold ones tear.",
       "media": {
-        "src": "assets/recipes/enchiladas-rojas/step-03-fill.jpg",
-        "alt": "Rolling tortillas with chicken",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/enchiladas-rojas/step-03-fill.jpg",
         "caption": "cook sauce, fill tortillas"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 1080,
       "tip": "Don't over-bake — tortillas turn to mush past 20 min.",
       "media": {
-        "src": "assets/recipes/enchiladas-rojas/step-04-bake.jpg",
-        "alt": "Baked enchiladas with cheese",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/enchiladas-rojas/step-04-bake.jpg",
         "caption": "pour, top, bake"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Baking dish",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "mexican",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Dried guajillo and ancho chilies are mild — color and depth, not heat.",
+    "Toasting chilies before soaking deepens their fruit-and-tobacco notes."
   ]
 }

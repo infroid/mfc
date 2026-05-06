@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 10,
-  "tags": [
-    "veg",
-    "raw",
-    "high-fiber",
-    "high-protein",
-    "vegan",
-    "low-glycemic"
-  ],
-  "color": "#A4C268",
-  "colorSoft": "rgba(164,194,104,0.18)",
-  "featured": false,
-  "highlight": "Sprouting multiplies B-vitamins, vitamin C, and bioavailable minerals",
   "media": {
-    "emoji": "🌱",
     "hero": {
+      "alt": "Bowl of pale-green moong sprouts mixed with diced tomato, onion, and lemon",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sprout-salad/hero.jpg",
+      "caption": "sprout salad — raw, crunchy, lemon-bright",
       "palette": [
         "#A4C268",
         "#E76F51",
         "#FBF7EE"
-      ],
-      "src": "assets/recipes/sprout-salad/hero.jpg",
-      "alt": "Bowl of pale-green moong sprouts mixed with diced tomato, onion, and lemon",
-      "caption": "sprout salad — raw, crunchy, lemon-bright"
-    }
+      ]
+    },
+    "emoji": "🌱"
   },
-  "healthFacts": [
-    "Sprouting raises B1, B6, folate, and vitamin C content by 2–10× vs the dry seed.",
-    "Phytate breakdown during sprouting boosts iron, zinc, and magnesium absorption.",
-    "Raw, low-glycemic, and high-fiber — gentle on insulin and HbA1c.",
-    "Lemon provides vitamin C that further unlocks the iron in the sprouts."
-  ],
+  "color": "#A4C268",
+  "colorSoft": "rgba(164,194,104,0.18)",
   "ingredients": [
     {
       "name": "Moong sprouts",
@@ -91,21 +75,33 @@
       "title": "Steam-blanch the sprouts (optional)",
       "detail": "Steam sprouts for 2 minutes if you want them softer or food-safety conscious — raw is fine for healthy adults. Cool fully before mixing.",
       "duration": 120,
-      "tip": "Steaming kills any surface bacteria but keeps 90% of the sprouting nutrient gain."
+      "tip": "Steaming kills any surface bacteria but keeps 90% of the sprouting nutrient gain.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Chop and combine",
       "detail": "Toss sprouts with onion, tomato, cucumber, green chili, and coriander in a wide bowl.",
       "duration": 180,
-      "tip": "Cut the vegetables fine — same size as the sprouts so each spoonful is balanced."
+      "tip": "Cut the vegetables fine — same size as the sprouts so each spoonful is balanced.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Dress and serve",
       "detail": "Squeeze in lemon juice, sprinkle black salt and a pinch of roasted cumin powder. Toss and serve immediately.",
       "duration": 60,
-      "tip": "Don't dress in advance — vegetables release water and the salad goes limp."
+      "tip": "Don't dress in advance — vegetables release water and the salad goes limp.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -121,5 +117,19 @@
       "name": "Steamer (optional)",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-fiber",
+    "high-protein",
+    "low-glycemic",
+    "raw",
+    "veg",
+    "vegan"
+  ],
+  "healthFacts": [
+    "Sprouting raises B1, B6, folate, and vitamin C content by 2–10× vs the dry seed.",
+    "Phytate breakdown during sprouting boosts iron, zinc, and magnesium absorption.",
+    "Raw, low-glycemic, and high-fiber — gentle on insulin and HbA1c.",
+    "Lemon provides vitamin C that further unlocks the iron in the sprouts."
   ]
 }

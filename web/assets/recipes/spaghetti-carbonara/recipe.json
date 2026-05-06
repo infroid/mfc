@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 25,
-  "tags": [
-    "non-veg",
-    "nut-free",
-    "italian",
-    "high-protein"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Real carbonara: egg, pork, cheese, pepper. No cream. Ever.",
   "media": {
-    "emoji": "🍝",
     "hero": {
+      "alt": "Carbonara coated with creamy egg sauce and crisp guanciale",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-carbonara/hero.jpg",
+      "caption": "carbonara — egg-yolk creamy",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#3A332A"
-      ],
-      "src": "assets/recipes/spaghetti-carbonara/hero.jpg",
-      "alt": "Carbonara coated with creamy egg sauce and crisp guanciale",
-      "caption": "carbonara — egg-yolk creamy"
-    }
+      ]
+    },
+    "emoji": "🍝"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Carbonara's creaminess comes from emulsified egg yolk and pasta water — no cream needed.",
-    "Pecorino is sharper and saltier than parmesan — a little goes far."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Spaghetti",
@@ -80,8 +67,7 @@
       "duration": 480,
       "tip": "Cold start is key — high heat torches the meat before fat releases.",
       "media": {
-        "src": "assets/recipes/spaghetti-carbonara/step-01-render.jpg",
-        "alt": "Guanciale rendering in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-carbonara/step-01-render.jpg",
         "caption": "render guanciale slowly"
       }
     },
@@ -92,8 +78,7 @@
       "duration": 540,
       "tip": "More pepper than feels reasonable. That's the dish.",
       "media": {
-        "src": "assets/recipes/spaghetti-carbonara/step-02-whisk.jpg",
-        "alt": "Egg-cheese mix being whisked",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-carbonara/step-02-whisk.jpg",
         "caption": "boil and whisk"
       }
     },
@@ -104,8 +89,7 @@
       "duration": 90,
       "tip": "OFF heat. Hot pan = scrambled eggs. The pasta provides the heat.",
       "media": {
-        "src": "assets/recipes/spaghetti-carbonara/step-03-combine.jpg",
-        "alt": "Carbonara being tossed off heat",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-carbonara/step-03-combine.jpg",
         "caption": "combine off heat"
       }
     },
@@ -116,8 +100,7 @@
       "duration": 30,
       "tip": "If your sauce thickens too much sitting on the plate, add a tablespoon of pasta water at the table.",
       "media": {
-        "src": "assets/recipes/spaghetti-carbonara/step-04-serve.jpg",
-        "alt": "Carbonara plated with guanciale",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-carbonara/step-04-serve.jpg",
         "caption": "serve immediately"
       }
     }
@@ -135,5 +118,16 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "italian",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Carbonara's creaminess comes from emulsified egg yolk and pasta water — no cream needed.",
+    "Pecorino is sharper and saltier than parmesan — a little goes far."
   ]
 }

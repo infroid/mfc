@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 45,
-  "tags": [
-    "vegetarian",
-    "soy-free",
-    "mediterranean"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Twice-fried potatoes, smoky chili sauce, garlic aioli",
   "media": {
-    "emoji": "🥔",
     "hero": {
+      "alt": "Patatas bravas with bravas sauce and aioli",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/patatas-bravas/hero.jpg",
+      "caption": "patatas bravas — smoky and crisp",
       "palette": [
         "#E76F51",
         "#F4D67A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/patatas-bravas/hero.jpg",
-      "alt": "Patatas bravas with bravas sauce and aioli",
-      "caption": "patatas bravas — smoky and crisp"
-    }
+      ]
+    },
+    "emoji": "🥔"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Twice-frying creates a hard shell that holds heat without oil-logging.",
-    "Smoked paprika gives the bravas its signature smoke."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Yukon gold potatoes",
@@ -89,8 +77,7 @@
       "duration": 600,
       "tip": "Drying time is non-negotiable — wet potatoes = soggy fries.",
       "media": {
-        "src": "assets/recipes/patatas-bravas/step-01-parboil.jpg",
-        "alt": "Parboiled potatoes drying on tray",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/patatas-bravas/step-01-parboil.jpg",
         "caption": "cube and parboil"
       }
     },
@@ -101,8 +88,7 @@
       "duration": 720,
       "tip": "Restless potatoes = soggy. Let them sit and color.",
       "media": {
-        "src": "assets/recipes/patatas-bravas/step-02-fry.jpg",
-        "alt": "Frying potatoes in oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/patatas-bravas/step-02-fry.jpg",
         "caption": "fry crispy"
       }
     },
@@ -113,8 +99,7 @@
       "duration": 180,
       "tip": "Bravas means 'fierce' — don't be shy with the heat.",
       "media": {
-        "src": "assets/recipes/patatas-bravas/step-03-bravas.jpg",
-        "alt": "Bravas sauce in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/patatas-bravas/step-03-bravas.jpg",
         "caption": "whisk bravas"
       }
     },
@@ -125,8 +110,7 @@
       "duration": 120,
       "tip": "Real aioli is just garlic and oil emulsified, but mayo + raw garlic is a faithful shortcut.",
       "media": {
-        "src": "assets/recipes/patatas-bravas/step-04-plate.jpg",
-        "alt": "Patatas bravas plated",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/patatas-bravas/step-04-plate.jpg",
         "caption": "aioli and plate"
       }
     }
@@ -144,5 +128,15 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "mediterranean",
+    "soy-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Twice-frying creates a hard shell that holds heat without oil-logging.",
+    "Smoked paprika gives the bravas its signature smoke."
   ]
 }

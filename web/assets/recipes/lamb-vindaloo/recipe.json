@@ -7,35 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 90,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "indian",
-    "high-protein",
-    "halal"
-  ],
-  "color": "#C84B5A",
-  "colorSoft": "rgba(200,75,90,0.16)",
-  "featured": false,
-  "highlight": "Vinegar + chili-garlic — Goa's Portuguese-Konkani fire, no soy",
   "media": {
-    "emoji": "🍛",
     "hero": {
+      "alt": "Lamb vindaloo in dark red gravy with potatoes",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-vindaloo/hero.jpg",
+      "caption": "vindaloo — Goan fire",
       "palette": [
         "#C84B5A",
         "#A0522D",
         "#F4A261"
-      ],
-      "src": "assets/recipes/lamb-vindaloo/hero.jpg",
-      "alt": "Lamb vindaloo in dark red gravy with potatoes",
-      "caption": "vindaloo — Goan fire"
-    }
+      ]
+    },
+    "emoji": "🍛"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Vinegar marinade tenderizes tough cuts and acts as a preservative — vindaloo travels well.",
-    "Capsaicin from chilies stimulates metabolism and circulation."
-  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
   "ingredients": [
     {
       "name": "Lamb shoulder (cubed)",
@@ -96,8 +82,7 @@
       "duration": 1080,
       "tip": "Vindaloo paste keeps in the fridge a week — make extra.",
       "media": {
-        "src": "assets/recipes/lamb-vindaloo/step-01-paste.jpg",
-        "alt": "Blending vindaloo paste",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-vindaloo/step-01-paste.jpg",
         "caption": "make vindaloo paste"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 1800,
       "tip": "Vinegar tenderizes — but don't go past 24 hours or it gets mushy.",
       "media": {
-        "src": "assets/recipes/lamb-vindaloo/step-02-marinate.jpg",
-        "alt": "Lamb in vindaloo paste",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-vindaloo/step-02-marinate.jpg",
         "caption": "marinate lamb"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 720,
       "tip": "Onion to dark gold — that's your sauce body.",
       "media": {
-        "src": "assets/recipes/lamb-vindaloo/step-03-onion.jpg",
-        "alt": "Browned onion in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-vindaloo/step-03-onion.jpg",
         "caption": "brown the onion"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 4200,
       "tip": "Better the next day — vindaloo deepens overnight.",
       "media": {
-        "src": "assets/recipes/lamb-vindaloo/step-04-braise.jpg",
-        "alt": "Vindaloo simmering with potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-vindaloo/step-04-braise.jpg",
         "caption": "braise long"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Wooden spoon",
       "essential": true
     }
+  ],
+  "tags": [
+    "halal",
+    "high-protein",
+    "indian",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Vinegar marinade tenderizes tough cuts and acts as a preservative — vindaloo travels well.",
+    "Capsaicin from chilies stimulates metabolism and circulation."
   ]
 }

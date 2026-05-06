@@ -7,39 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 25,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "gluten-free",
-    "onion",
-    "garlic",
-    "root-veg"
-  ],
-  "color": "#C9A227",
-  "colorSoft": "rgba(201,162,39,0.14)",
-  "featured": false,
-  "highlight": "Low calorie, high fiber, 25 minutes flat",
   "media": {
-    "emoji": "🥔",
     "hero": {
+      "alt": "Aloo gobi in a cream ceramic bowl with browned cauliflower, potatoes, and coriander",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/hero.jpg",
+      "caption": "aloo gobi — dry-spiced cauliflower and potato",
       "palette": [
         "#C9A227",
         "#F4D67A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/aloo-gobi/hero.jpg",
-      "alt": "Aloo gobi in a cream ceramic bowl with browned cauliflower, potatoes, and coriander",
-      "caption": "aloo gobi — dry-spiced cauliflower and potato"
-    }
+      ]
+    },
+    "emoji": "🥔"
   },
-  "healthFacts": [
-    "Cauliflower is a crucifer — it contains sulforaphane, studied for its cancer-protective properties.",
-    "Turmeric's curcumin is one of the most well-researched anti-inflammatory compounds in food.",
-    "Cooking cauliflower with black pepper increases curcumin bioavailability by up to 2000%.",
-    "Potatoes are unfairly maligned — they're high in potassium, vitamin C, and resistant starch.",
-    "This dish is naturally vegan and gluten-free — no substitutions needed.",
-    "Dry-cooking (no added water) concentrates the natural sugars of both vegetables."
-  ],
+  "color": "#C9A227",
+  "colorSoft": "rgba(201,162,39,0.14)",
   "ingredients": [
     {
       "name": "Cauliflower (gobi)",
@@ -120,8 +102,7 @@
       "duration": 300,
       "tip": "Dry vegetables = better browning. Moisture is the enemy of a good crust.",
       "media": {
-        "src": "assets/recipes/aloo-gobi/step-01-prep-vegetables.jpg",
-        "alt": "Raw cauliflower florets and potato cubes prepped on a cutting board",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/step-01-prep-vegetables.jpg",
         "caption": "Cut and dry vegetables"
       }
     },
@@ -132,8 +113,7 @@
       "duration": 360,
       "tip": "Cumin seeds that splutter immediately = the pan is hot enough. Don't add them too early.",
       "media": {
-        "src": "assets/recipes/aloo-gobi/step-02-temper-aromatics.jpg",
-        "alt": "Sliced onions, cumin, ginger, and garlic sizzling in oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/step-02-temper-aromatics.jpg",
         "caption": "Cumin and aromatics"
       }
     },
@@ -144,8 +124,7 @@
       "duration": 60,
       "tip": "Spices bloom in fat, not water. Adding them to hot oil unlocks the fat-soluble aromatics.",
       "media": {
-        "src": "assets/recipes/aloo-gobi/step-03-add-spices.jpg",
-        "alt": "Turmeric, chili, and coriander powders blooming with onions in hot oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/step-03-add-spices.jpg",
         "caption": "Spices bloomed in oil"
       }
     },
@@ -156,8 +135,7 @@
       "duration": 480,
       "tip": "Adding cauliflower too early is the most common mistake — it goes mushy while potato is still raw.",
       "media": {
-        "src": "assets/recipes/aloo-gobi/step-04-cook-potato.jpg",
-        "alt": "Potato cubes coated in spiced onion masala cooking in a kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/step-04-cook-potato.jpg",
         "caption": "Potatoes get a head start"
       }
     },
@@ -168,8 +146,7 @@
       "duration": 600,
       "tip": "If the pan looks dry, sprinkle a tablespoon of water on the edges — not in the center.",
       "media": {
-        "src": "assets/recipes/aloo-gobi/step-05-add-cauliflower.jpg",
-        "alt": "Cauliflower florets and chopped tomato mixed into the spiced potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/step-05-add-cauliflower.jpg",
         "caption": "Cauliflower and tomato added"
       }
     },
@@ -180,8 +157,7 @@
       "duration": 180,
       "tip": "This final high-heat step is what gives aloo gobi its characteristic slightly crispy edges.",
       "media": {
-        "src": "assets/recipes/aloo-gobi/step-06-dry-finish.jpg",
-        "alt": "Finished dry aloo gobi with browned edges and fresh coriander",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aloo-gobi/step-06-dry-finish.jpg",
         "caption": "Dry browned finish"
       }
     }
@@ -199,5 +175,21 @@
       "name": "Knife and cutting board",
       "essential": true
     }
+  ],
+  "tags": [
+    "garlic",
+    "gluten-free",
+    "onion",
+    "root-veg",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Cauliflower is a crucifer — it contains sulforaphane, studied for its cancer-protective properties.",
+    "Turmeric's curcumin is one of the most well-researched anti-inflammatory compounds in food.",
+    "Cooking cauliflower with black pepper increases curcumin bioavailability by up to 2000%.",
+    "Potatoes are unfairly maligned — they're high in potassium, vitamin C, and resistant starch.",
+    "This dish is naturally vegan and gluten-free — no substitutions needed.",
+    "Dry-cooking (no added water) concentrates the natural sugars of both vegetables."
   ]
 }

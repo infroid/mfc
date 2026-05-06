@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 10,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "gluten-free",
-    "italian",
-    "quick"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.16)",
-  "featured": false,
-  "highlight": "Five ingredients, ten minutes, peak-summer perfect",
   "media": {
-    "emoji": "🍅",
     "hero": {
+      "alt": "Caprese salad layered with tomato, mozzarella, and basil",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caprese-salad/hero.jpg",
+      "caption": "caprese — tomato, mozz, basil",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/caprese-salad/hero.jpg",
-      "alt": "Caprese salad layered with tomato, mozzarella, and basil",
-      "caption": "caprese — tomato, mozz, basil"
-    }
+      ]
+    },
+    "emoji": "🍅"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Combining tomato (lycopene) with olive oil increases absorption up to 4×.",
-    "Fresh mozzarella has half the sodium of feta or aged cheeses."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.16)",
   "ingredients": [
     {
       "name": "Heirloom tomatoes",
@@ -76,8 +62,7 @@
       "duration": 240,
       "tip": "Use a serrated knife on tomato — it slices clean instead of crushing.",
       "media": {
-        "src": "assets/recipes/caprese-salad/step-01-slice.jpg",
-        "alt": "Sliced tomatoes and mozzarella",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caprese-salad/step-01-slice.jpg",
         "caption": "slice everything thick"
       }
     },
@@ -88,8 +73,7 @@
       "duration": 120,
       "tip": "A long oval platter looks restaurant-perfect — round plates crowd quickly.",
       "media": {
-        "src": "assets/recipes/caprese-salad/step-02-shingle.jpg",
-        "alt": "Shingled caprese on platter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caprese-salad/step-02-shingle.jpg",
         "caption": "shingle on plate"
       }
     },
@@ -100,8 +84,7 @@
       "duration": 60,
       "tip": "No balsamic — that's an American addition. Real caprese is just oil and salt.",
       "media": {
-        "src": "assets/recipes/caprese-salad/step-03-dress.jpg",
-        "alt": "Caprese drizzled with olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caprese-salad/step-03-dress.jpg",
         "caption": "dress and season"
       }
     },
@@ -112,8 +95,7 @@
       "duration": 300,
       "tip": "That platter juice is the best part. Have bread ready.",
       "media": {
-        "src": "assets/recipes/caprese-salad/step-04-rest.jpg",
-        "alt": "Resting caprese salad",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caprese-salad/step-04-rest.jpg",
         "caption": "rest 5 minutes"
       }
     }
@@ -131,5 +113,17 @@
       "name": "Long platter",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "italian",
+    "nut-free",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Combining tomato (lycopene) with olive oil increases absorption up to 4×.",
+    "Fresh mozzarella has half the sodium of feta or aged cheeses."
   ]
 }

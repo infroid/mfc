@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 25,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "italian",
-    "quick"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Dried pasta is naturally egg-free; check the label and go",
   "media": {
-    "emoji": "🍝",
     "hero": {
+      "alt": "Spaghetti with marinara, basil, and a drizzle of olive oil",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pasta-marinara/hero.jpg",
+      "caption": "marinara — bright, garlicky, simple",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/eggless-pasta-marinara/hero.jpg",
-      "alt": "Spaghetti with marinara, basil, and a drizzle of olive oil",
-      "caption": "marinara — bright, garlicky, simple"
-    }
+      ]
+    },
+    "emoji": "🍝"
   },
-  "healthFacts": [
-    "Dried pasta in the US is typically egg-free (semolina + water). Check labels for fresh pasta.",
-    "Slow-cooked tomato sauce releases more lycopene than raw tomato.",
-    "Olive oil added off-heat retains its polyphenols."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Spaghetti or penne",
@@ -80,8 +67,7 @@
       "duration": 180,
       "tip": "Burnt garlic ruins the sauce. Pull it the moment it tans.",
       "media": {
-        "src": "assets/recipes/eggless-pasta-marinara/step-01-bloom.jpg",
-        "alt": "Garlic and chili in oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pasta-marinara/step-01-bloom.jpg",
         "caption": "bloom the garlic"
       }
     },
@@ -92,8 +78,7 @@
       "duration": 900,
       "tip": "A hand-crushed whole tomato in juice has better flavor than pre-crushed.",
       "media": {
-        "src": "assets/recipes/eggless-pasta-marinara/step-02-tomato.jpg",
-        "alt": "Tomato sauce simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pasta-marinara/step-02-tomato.jpg",
         "caption": "add tomato"
       }
     },
@@ -104,8 +89,7 @@
       "duration": 600,
       "tip": "Pasta water is liquid gold for emulsifying — never skip saving it.",
       "media": {
-        "src": "assets/recipes/eggless-pasta-marinara/step-03-boil.jpg",
-        "alt": "Pasta boiling",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pasta-marinara/step-03-boil.jpg",
         "caption": "boil the pasta"
       }
     },
@@ -116,8 +100,7 @@
       "duration": 120,
       "tip": "Always finish pasta in the sauce, never sauce on top — the pasta has to drink it.",
       "media": {
-        "src": "assets/recipes/eggless-pasta-marinara/step-04-marry.jpg",
-        "alt": "Pasta tossed with marinara and basil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pasta-marinara/step-04-marry.jpg",
         "caption": "marry pasta and sauce"
       }
     }
@@ -135,5 +118,16 @@
       "name": "Tongs",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "italian",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Dried pasta in the US is typically egg-free (semolina + water). Check labels for fresh pasta.",
+    "Slow-cooked tomato sauce releases more lycopene than raw tomato.",
+    "Olive oil added off-heat retains its polyphenols."
   ]
 }

@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 1,
   "totalMinutes": 12,
-  "tags": [
-    "veg",
-    "high-fiber",
-    "low-glycemic",
-    "low-cholesterol",
-    "breakfast"
-  ],
-  "color": "#D4A574",
-  "colorSoft": "rgba(212,165,116,0.18)",
-  "featured": false,
-  "highlight": "Cooked-down porridge style with onion-tomato — for those who need slower-release carbs",
   "media": {
-    "emoji": "🥣",
     "hero": {
+      "alt": "Creamy spiced oats porridge with finely chopped vegetables and coriander",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-oats/hero.jpg",
+      "caption": "masala oats — porridge-style, savoury, soft",
       "palette": [
         "#D4A574",
         "#E76F51",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/masala-oats/hero.jpg",
-      "alt": "Creamy spiced oats porridge with finely chopped vegetables and coriander",
-      "caption": "masala oats — porridge-style, savoury, soft"
-    }
+      ]
+    },
+    "emoji": "🥣"
   },
-  "healthFacts": [
-    "Slower-cook style softens oats fully — easier digestion than dry-roasted oats upma.",
-    "Beta-glucan 3–4g per cup — exceeds the 3g daily threshold for LDL reduction.",
-    "Pairing with vegetables triples fiber and adds vitamin C, A, and K.",
-    "No added sugar — flat post-meal glucose response."
-  ],
+  "color": "#D4A574",
+  "colorSoft": "rgba(212,165,116,0.18)",
   "ingredients": [
     {
       "name": "Rolled oats",
@@ -95,21 +80,33 @@
       "title": "Sauté the masala",
       "detail": "Heat ghee in a small pot. Add ginger and onion, cook 1 minute. Add tomato, turmeric, and pepper. Cook 2 minutes till tomato softens.",
       "duration": 180,
-      "tip": "Soft tomato = no raw bite in the final porridge."
+      "tip": "Soft tomato = no raw bite in the final porridge.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Add water and oats",
       "detail": "Pour in 1.25 cups hot water, add carrot and salt. Bring to a boil. Stir in rolled oats and reduce heat.",
       "duration": 120,
-      "tip": "Use water, not milk — keeps it lower-glycemic and lower-saturated-fat."
+      "tip": "Use water, not milk — keeps it lower-glycemic and lower-saturated-fat.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Simmer to porridge",
       "detail": "Cook 5 minutes on low, stirring twice. Add chopped spinach in the last 30 seconds. Off heat, rest 1 minute. Serve hot.",
       "duration": 360,
-      "tip": "Add a teaspoon of toasted flaxseed for an omega-3 ALA boost."
+      "tip": "Add a teaspoon of toasted flaxseed for an omega-3 ALA boost.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -125,5 +122,18 @@
       "name": "Sharp knife",
       "essential": false
     }
+  ],
+  "tags": [
+    "breakfast",
+    "high-fiber",
+    "low-cholesterol",
+    "low-glycemic",
+    "veg"
+  ],
+  "healthFacts": [
+    "Slower-cook style softens oats fully — easier digestion than dry-roasted oats upma.",
+    "Beta-glucan 3–4g per cup — exceeds the 3g daily threshold for LDL reduction.",
+    "Pairing with vegetables triples fiber and adds vitamin C, A, and K.",
+    "No added sugar — flat post-meal glucose response."
   ]
 }

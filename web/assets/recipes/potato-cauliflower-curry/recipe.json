@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 40,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "indian",
-    "gluten-free"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Pantry-staple curry, no eggs, all warmth",
   "media": {
-    "emoji": "🥔",
     "hero": {
+      "alt": "Aloo gobi with potato, cauliflower, and tomato gravy",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-cauliflower-curry/hero.jpg",
+      "caption": "potato cauliflower — gravy version",
       "palette": [
         "#F4A261",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/potato-cauliflower-curry/hero.jpg",
-      "alt": "Aloo gobi with potato, cauliflower, and tomato gravy",
-      "caption": "potato cauliflower — gravy version"
-    }
+      ]
+    },
+    "emoji": "🥔"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan.",
-    "Cauliflower is a cruciferous source of glucosinolates — anti-inflammatory.",
-    "Cooking turmeric with black pepper boosts curcumin absorption ~20×."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Potatoes (cubed)",
@@ -96,8 +82,7 @@
       "duration": 60,
       "tip": "Hot oil first, then seeds — cold-oil-cold-seeds gives weak flavor.",
       "media": {
-        "src": "assets/recipes/potato-cauliflower-curry/step-01-temper.jpg",
-        "alt": "Cumin seeds in hot oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-cauliflower-curry/step-01-temper.jpg",
         "caption": "temper cumin"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 600,
       "tip": "Onions should look mahogany before tomato goes in — that depth carries the curry.",
       "media": {
-        "src": "assets/recipes/potato-cauliflower-curry/step-02-onion.jpg",
-        "alt": "Browned onions with spices",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-cauliflower-curry/step-02-onion.jpg",
         "caption": "brown onion and bloom spices"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 780,
       "tip": "Watch for the oil to ooze to the surface — that's the sign your masala is cooked.",
       "media": {
-        "src": "assets/recipes/potato-cauliflower-curry/step-03-tomato.jpg",
-        "alt": "Tomato base with potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-cauliflower-curry/step-03-tomato.jpg",
         "caption": "tomato then potato"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 720,
       "tip": "Garam masala goes at the end so its volatile aromatics don't burn off.",
       "media": {
-        "src": "assets/recipes/potato-cauliflower-curry/step-04-finish.jpg",
-        "alt": "Finished potato cauliflower curry",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-cauliflower-curry/step-04-finish.jpg",
         "caption": "cauliflower and finish"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Knife and cutting board",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "indian",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Cauliflower is a cruciferous source of glucosinolates — anti-inflammatory.",
+    "Cooking turmeric with black pepper boosts curcumin absorption ~20×."
   ]
 }

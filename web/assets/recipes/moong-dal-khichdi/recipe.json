@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 35,
-  "tags": [
-    "veg",
-    "comfort",
-    "low-purine",
-    "easy-on-stomach",
-    "garlic"
-  ],
-  "color": "#E9C46A",
-  "colorSoft": "rgba(233,196,106,0.18)",
-  "featured": false,
-  "highlight": "Single-pot, low-purine — a clinical favourite for high uric acid and kidney stress",
   "media": {
-    "emoji": "🍲",
     "hero": {
+      "alt": "Soft yellow rice-and-lentil khichdi in a steel bowl with ghee and cumin tadka",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/moong-dal-khichdi/hero.jpg",
+      "caption": "moong dal khichdi — soft, soothing, ghee-finished",
       "palette": [
         "#E9C46A",
         "#F4A261",
         "#FFE3A6"
-      ],
-      "src": "assets/recipes/moong-dal-khichdi/hero.jpg",
-      "alt": "Soft yellow rice-and-lentil khichdi in a steel bowl with ghee and cumin tadka",
-      "caption": "moong dal khichdi — soft, soothing, ghee-finished"
-    }
+      ]
+    },
+    "emoji": "🍲"
   },
-  "healthFacts": [
-    "Split moong is the lowest-purine pulse — gentle on uric acid and kidney filtration.",
-    "Rice + dal pairing forms a complete protein without straining BUN/creatinine.",
-    "Soft, cooked-down texture is easier to digest than whole grains during recovery.",
-    "Cumin and ghee tadka adds satiety without heavy salt or saturated fat."
-  ],
+  "color": "#E9C46A",
+  "colorSoft": "rgba(233,196,106,0.18)",
   "ingredients": [
     {
       "name": "Rice (short-grain)",
@@ -80,21 +65,33 @@
       "title": "Wash and pressure-cook",
       "detail": "Rinse rice and dal together until water runs clear. Add to a pressure cooker with 3.5 cups water, turmeric, and salt. Pressure cook for 4 whistles on medium and let pressure release naturally.",
       "duration": 1200,
-      "tip": "Soaking 15 min before cooking gives a creamier finish."
+      "tip": "Soaking 15 min before cooking gives a creamier finish.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Make the cumin tadka",
       "detail": "Heat ghee in a small pan. Add cumin seeds and let them sizzle for 20 seconds. Drop in grated ginger and turn off the heat the moment it turns fragrant.",
       "duration": 60,
-      "tip": "No garlic / hing keeps the dish strictly low-purine and stomach-friendly."
+      "tip": "No garlic / hing keeps the dish strictly low-purine and stomach-friendly.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Combine and serve",
       "detail": "Open the cooker, mash lightly to a porridge-like consistency, pour the tadka over the top. Adjust salt. Serve hot with a spoon of dahi and lime wedge.",
       "duration": 60,
-      "tip": "If too thick, stir in a splash of hot water — it should be soft, not stiff."
+      "tip": "If too thick, stir in a splash of hot water — it should be soft, not stiff.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -110,5 +107,18 @@
       "name": "Wooden spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "comfort",
+    "easy-on-stomach",
+    "garlic",
+    "low-purine",
+    "veg"
+  ],
+  "healthFacts": [
+    "Split moong is the lowest-purine pulse — gentle on uric acid and kidney filtration.",
+    "Rice + dal pairing forms a complete protein without straining BUN/creatinine.",
+    "Soft, cooked-down texture is easier to digest than whole grains during recovery.",
+    "Cumin and ghee tadka adds satiety without heavy salt or saturated fat."
   ]
 }

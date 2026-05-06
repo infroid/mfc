@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 60,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "gluten-free",
-    "mediterranean"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Eight vegetables, olive oil, no eggs",
   "media": {
-    "emoji": "🍆",
     "hero": {
+      "alt": "Ratatouille with eggplant, zucchini, peppers in tomato",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/ratatouille/hero.jpg",
+      "caption": "ratatouille — slow Provençal stew",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#A0522D"
-      ],
-      "src": "assets/recipes/ratatouille/hero.jpg",
-      "alt": "Ratatouille with eggplant, zucchini, peppers in tomato",
-      "caption": "ratatouille — slow Provençal stew"
-    }
+      ]
+    },
+    "emoji": "🍆"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan, gluten-free.",
-    "Eggplant cooked in olive oil draws polyphenols out of the skin.",
-    "Bell peppers contain more vitamin C per gram than oranges."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Eggplant",
@@ -96,8 +82,7 @@
       "duration": 1200,
       "tip": "Skipping this step makes eggplant a sponge.",
       "media": {
-        "src": "assets/recipes/ratatouille/step-01-salt.jpg",
-        "alt": "Salting eggplant in colander",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/ratatouille/step-01-salt.jpg",
         "caption": "salt and rest eggplant"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 900,
       "tip": "Crowding = steaming. Take the time, work in batches.",
       "media": {
-        "src": "assets/recipes/ratatouille/step-02-brown.jpg",
-        "alt": "Browning vegetables in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/ratatouille/step-02-brown.jpg",
         "caption": "brown vegetables in batches"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 600,
       "tip": "All the brown bits left from the veg deepen the tomato base.",
       "media": {
-        "src": "assets/recipes/ratatouille/step-03-base.jpg",
-        "alt": "Tomato base for ratatouille",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/ratatouille/step-03-base.jpg",
         "caption": "build the base"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 2100,
       "tip": "Better the next day — flavors meld overnight.",
       "media": {
-        "src": "assets/recipes/ratatouille/step-04-stew.jpg",
-        "alt": "Stewed ratatouille with basil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/ratatouille/step-04-stew.jpg",
         "caption": "combine and stew"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Colander",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "mediterranean",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan, gluten-free.",
+    "Eggplant cooked in olive oil draws polyphenols out of the skin.",
+    "Bell peppers contain more vitamin C per gram than oranges."
   ]
 }

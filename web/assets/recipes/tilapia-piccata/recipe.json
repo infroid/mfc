@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 20,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "italian",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Twenty-minute weeknight piccata — no shellfish, big flavor",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Tilapia piccata in lemon caper sauce",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-piccata/hero.jpg",
+      "caption": "tilapia piccata — fast weeknight",
       "palette": [
         "#F4D67A",
         "#7A9C5A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/tilapia-piccata/hero.jpg",
-      "alt": "Tilapia piccata in lemon caper sauce",
-      "caption": "tilapia piccata — fast weeknight"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Tilapia is mild and lean — about 23g protein per 4oz.",
-    "Capers are sodium-rich; rinse if you're watching salt."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Tilapia fillets",
@@ -90,8 +77,7 @@
       "duration": 120,
       "tip": "Tilapia is delicate — don't manhandle.",
       "media": {
-        "src": "assets/recipes/tilapia-piccata/step-01-dredge.jpg",
-        "alt": "Tilapia dredged in flour",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-piccata/step-01-dredge.jpg",
         "caption": "dredge"
       }
     },
@@ -102,8 +88,7 @@
       "duration": 240,
       "tip": "Tilapia cooks in 4 minutes total. Don't walk away.",
       "media": {
-        "src": "assets/recipes/tilapia-piccata/step-02-sear.jpg",
-        "alt": "Tilapia searing in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-piccata/step-02-sear.jpg",
         "caption": "sear quick"
       }
     },
@@ -114,8 +99,7 @@
       "duration": 120,
       "tip": "Capers' brine + wine = built-in seasoning. Hold the salt.",
       "media": {
-        "src": "assets/recipes/tilapia-piccata/step-03-sauce.jpg",
-        "alt": "Lemon caper sauce reducing",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-piccata/step-03-sauce.jpg",
         "caption": "pan sauce"
       }
     },
@@ -126,8 +110,7 @@
       "duration": 60,
       "tip": "Off heat for the butter mount = silky, not broken.",
       "media": {
-        "src": "assets/recipes/tilapia-piccata/step-04-serve.jpg",
-        "alt": "Tilapia piccata plated",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-piccata/step-04-serve.jpg",
         "caption": "mount and serve"
       }
     }
@@ -145,5 +128,16 @@
       "name": "Spatula",
       "essential": true
     }
+  ],
+  "tags": [
+    "italian",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Tilapia is mild and lean — about 23g protein per 4oz.",
+    "Capers are sodium-rich; rinse if you're watching salt."
   ]
 }

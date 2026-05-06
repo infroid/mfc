@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 75,
-  "tags": [
-    "non-veg",
-    "nut-free",
-    "high-protein"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Tender, juicy, gloriously nut-free",
   "media": {
-    "emoji": "🍞",
     "hero": {
+      "alt": "Sliced meatloaf with caramelized ketchup glaze",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-meatloaf/hero.jpg",
+      "caption": "meatloaf — glazed top, juicy slice",
       "palette": [
         "#A0522D",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/classic-meatloaf/hero.jpg",
-      "alt": "Sliced meatloaf with caramelized ketchup glaze",
-      "caption": "meatloaf — glazed top, juicy slice"
-    }
+      ]
+    },
+    "emoji": "🍞"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Mixing beef and pork balances flavor and fat — pure beef is too lean and dense.",
-    "Soaked breadcrumbs (panade) hold moisture and prevent a tough loaf."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Ground beef (80/20)",
@@ -94,8 +82,7 @@
       "duration": 300,
       "tip": "Without soaked bread, you have meatloaf-shaped meatball.",
       "media": {
-        "src": "assets/recipes/classic-meatloaf/step-01-panade.jpg",
-        "alt": "Breadcrumbs soaking in milk",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-meatloaf/step-01-panade.jpg",
         "caption": "soak the panade"
       }
     },
@@ -106,8 +93,7 @@
       "duration": 180,
       "tip": "Pinch off and microwave a small piece to taste-check seasoning before baking.",
       "media": {
-        "src": "assets/recipes/classic-meatloaf/step-02-mix.jpg",
-        "alt": "Meatloaf mixture being combined",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-meatloaf/step-02-mix.jpg",
         "caption": "mix gently"
       }
     },
@@ -118,8 +104,7 @@
       "duration": 240,
       "tip": "Free-form on a sheet pan beats a loaf pan — more crust, less greasy.",
       "media": {
-        "src": "assets/recipes/classic-meatloaf/step-03-glaze.jpg",
-        "alt": "Shaped and glazed meatloaf on sheet pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-meatloaf/step-03-glaze.jpg",
         "caption": "shape and glaze"
       }
     },
@@ -130,8 +115,7 @@
       "duration": 3300,
       "tip": "Cutting hot floods the slice with juice — rest is mandatory.",
       "media": {
-        "src": "assets/recipes/classic-meatloaf/step-04-bake.jpg",
-        "alt": "Baked meatloaf with caramelized glaze",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-meatloaf/step-04-bake.jpg",
         "caption": "bake to 160°F"
       }
     }
@@ -149,5 +133,15 @@
       "name": "Instant-read thermometer",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Mixing beef and pork balances flavor and fat — pure beef is too lean and dense.",
+    "Soaked breadcrumbs (panade) hold moisture and prevent a tough loaf."
   ]
 }

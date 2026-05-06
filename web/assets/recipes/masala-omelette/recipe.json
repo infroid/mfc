@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 1,
   "totalMinutes": 8,
-  "tags": [
-    "non-veg",
-    "egg",
-    "high-protein",
-    "high-b12",
-    "high-d3"
-  ],
-  "color": "#F4C430",
-  "colorSoft": "rgba(244,196,48,0.18)",
-  "featured": false,
-  "highlight": "Pour the eggs over fully-cooked masala, not the other way round — clean fold",
   "media": {
-    "emoji": "🍳",
     "hero": {
+      "alt": "Folded golden omelette flecked with green chili, onion, and coriander on a plate",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-omelette/hero.jpg",
+      "caption": "masala omelette — folded, soft-set, fragrant",
       "palette": [
         "#F4C430",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/masala-omelette/hero.jpg",
-      "alt": "Folded golden omelette flecked with green chili, onion, and coriander on a plate",
-      "caption": "masala omelette — folded, soft-set, fragrant"
-    }
+      ]
+    },
+    "emoji": "🍳"
   },
-  "healthFacts": [
-    "Three eggs hit 18g protein, 2.5µg B12, and 1µg vitamin D — breakfast bedrock.",
-    "Selenium and biotin from yolks support thyroid hormone activation.",
-    "Lutein and zeaxanthin in yolks protect macular pigment in eyes.",
-    "Choline supports phosphatidylcholine synthesis — liver and brain need it daily."
-  ],
+  "color": "#F4C430",
+  "colorSoft": "rgba(244,196,48,0.18)",
   "ingredients": [
     {
       "name": "Eggs",
@@ -85,21 +70,33 @@
       "title": "Whisk and prep",
       "detail": "Whisk the eggs with salt and pepper for 30 seconds — until pale yellow and frothy. Have all chopped vegetables ready before the pan goes on.",
       "duration": 60,
-      "tip": "Whisking incorporates air — fluffier omelette."
+      "tip": "Whisking incorporates air — fluffier omelette.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Quick-sauté the filling",
       "detail": "Heat ghee in a non-stick pan. Toss in onion, green chili, and tomato. Cook 60 seconds till tomato softens. Stir in coriander.",
       "duration": 60,
-      "tip": "Pre-cook the filling — raw onion in a folded omelette stays crunchy and watery."
+      "tip": "Pre-cook the filling — raw onion in a folded omelette stays crunchy and watery.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Pour, set, fold",
       "detail": "Pour the whisked eggs over the masala. Tilt the pan to spread evenly. Cook on low for 90 seconds till just set on top. Slide a spatula and fold in half. Serve immediately.",
       "duration": 120,
-      "tip": "Pull off the heat the moment the top loses its sheen — carryover heat finishes the centre."
+      "tip": "Pull off the heat the moment the top loses its sheen — carryover heat finishes the centre.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -115,5 +112,18 @@
       "name": "Silicone spatula",
       "essential": false
     }
+  ],
+  "tags": [
+    "egg",
+    "high-b12",
+    "high-d3",
+    "high-protein",
+    "non-veg"
+  ],
+  "healthFacts": [
+    "Three eggs hit 18g protein, 2.5µg B12, and 1µg vitamin D — breakfast bedrock.",
+    "Selenium and biotin from yolks support thyroid hormone activation.",
+    "Lutein and zeaxanthin in yolks protect macular pigment in eyes.",
+    "Choline supports phosphatidylcholine synthesis — liver and brain need it daily."
   ]
 }

@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 75,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "high-protein",
-    "gluten-free"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "No soy, no nuts (just olives) — Morocco's iconic Friday dish",
   "media": {
-    "emoji": "🍗",
     "hero": {
+      "alt": "Chicken tagine with preserved lemon and green olives",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/moroccan-chicken-tagine/hero.jpg",
+      "caption": "tagine — preserved lemon and olive",
       "palette": [
         "#F4A261",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/moroccan-chicken-tagine/hero.jpg",
-      "alt": "Chicken tagine with preserved lemon and green olives",
-      "caption": "tagine — preserved lemon and olive"
-    }
+      ]
+    },
+    "emoji": "🍗"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Preserved lemon undergoes lacto-fermentation — flavors deepen, vitamin C drops, but probiotics develop.",
-    "Saffron's crocin is a fat-soluble carotenoid — a little goes far."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Bone-in chicken thighs",
@@ -95,8 +82,7 @@
       "duration": 1200,
       "tip": "Even 20 min lets the spices wake up; longer never hurts.",
       "media": {
-        "src": "assets/recipes/moroccan-chicken-tagine/step-01-marinate.jpg",
-        "alt": "Chicken rubbed with spices",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/moroccan-chicken-tagine/step-01-marinate.jpg",
         "caption": "marinate briefly"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 540,
       "tip": "Skin-down first sets up the schmaltz that flavors the whole pot.",
       "media": {
-        "src": "assets/recipes/moroccan-chicken-tagine/step-02-brown.jpg",
-        "alt": "Chicken browning in tagine",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/moroccan-chicken-tagine/step-02-brown.jpg",
         "caption": "brown chicken"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 480,
       "tip": "Saffron in cold liquid fades; hot water unlocks its color.",
       "media": {
-        "src": "assets/recipes/moroccan-chicken-tagine/step-03-onion.jpg",
-        "alt": "Onions with saffron broth",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/moroccan-chicken-tagine/step-03-onion.jpg",
         "caption": "soften onion, bloom saffron"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 2100,
       "tip": "Couscous is the classic side — soaks up that golden sauce.",
       "media": {
-        "src": "assets/recipes/moroccan-chicken-tagine/step-04-braise.jpg",
-        "alt": "Finished tagine with herbs",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/moroccan-chicken-tagine/step-04-braise.jpg",
         "caption": "slow braise"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Tongs",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Preserved lemon undergoes lacto-fermentation — flavors deepen, vitamin C drops, but probiotics develop.",
+    "Saffron's crocin is a fat-soluble carotenoid — a little goes far."
   ]
 }

@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 6,
   "totalMinutes": 150,
-  "tags": [
-    "non-veg",
-    "high-protein",
-    "nut-free",
-    "one-pot"
-  ],
-  "color": "#8B4513",
-  "colorSoft": "rgba(139,69,19,0.16)",
-  "featured": false,
-  "highlight": "Fork-tender beef, glossy gravy, no nuts in sight",
   "media": {
-    "emoji": "🍲",
     "hero": {
+      "alt": "Beef stew in a Dutch oven with carrots, potatoes, and gravy",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-beef-stew/hero.jpg",
+      "caption": "classic beef stew — long braise",
       "palette": [
         "#8B4513",
         "#C9A227",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/classic-beef-stew/hero.jpg",
-      "alt": "Beef stew in a Dutch oven with carrots, potatoes, and gravy",
-      "caption": "classic beef stew — long braise"
-    }
+      ]
+    },
+    "emoji": "🍲"
   },
-  "healthFacts": [
-    "Naturally nut-free — built on beef, root veg, and red wine.",
-    "Chuck roast is collagen-rich; long braising converts it to silky gelatin.",
-    "Carrots provide ~270% of daily vitamin A in a 1-cup serving."
-  ],
+  "color": "#8B4513",
+  "colorSoft": "rgba(139,69,19,0.16)",
   "ingredients": [
     {
       "name": "Beef chuck (cubed)",
@@ -95,8 +82,7 @@
       "duration": 1200,
       "tip": "Crowding the pan steams instead of sears. Work in 3 batches if needed.",
       "media": {
-        "src": "assets/recipes/classic-beef-stew/step-01-sear.jpg",
-        "alt": "Beef cubes browning in a Dutch oven",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-beef-stew/step-01-sear.jpg",
         "caption": "sear the beef hard"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 600,
       "tip": "Toasting the tomato paste deepens it from tinny to umami-rich.",
       "media": {
-        "src": "assets/recipes/classic-beef-stew/step-02-base.jpg",
-        "alt": "Onions and tomato paste in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-beef-stew/step-02-base.jpg",
         "caption": "build the base"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 5400,
       "tip": "Boiling will toughen the beef. You want bare bubbles, not a rolling simmer.",
       "media": {
-        "src": "assets/recipes/classic-beef-stew/step-03-braise.jpg",
-        "alt": "Beef braising in stock",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-beef-stew/step-03-braise.jpg",
         "caption": "slow braise"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 1800,
       "tip": "Adding veg late keeps them from disintegrating.",
       "media": {
-        "src": "assets/recipes/classic-beef-stew/step-04-finish.jpg",
-        "alt": "Finished beef stew with carrots and potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-beef-stew/step-04-finish.jpg",
         "caption": "add veg and finish"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Tongs",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "non-veg",
+    "nut-free",
+    "one-pot"
+  ],
+  "healthFacts": [
+    "Naturally nut-free — built on beef, root veg, and red wine.",
+    "Chuck roast is collagen-rich; long braising converts it to silky gelatin.",
+    "Carrots provide ~270% of daily vitamin A in a 1-cup serving."
   ]
 }

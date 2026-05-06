@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 8,
   "totalMinutes": 15,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "soy-free",
-    "gluten-free",
-    "quick"
-  ],
-  "color": "#C84B5A",
-  "colorSoft": "rgba(200,75,90,0.16)",
-  "featured": false,
-  "highlight": "From-scratch in 15 minutes — beats any can",
   "media": {
-    "emoji": "🍒",
     "hero": {
+      "alt": "Cranberry sauce in a small ceramic bowl with orange zest",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cranberry-sauce/hero.jpg",
+      "caption": "cranberry sauce — fresh and bright",
       "palette": [
         "#C84B5A",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/cranberry-sauce/hero.jpg",
-      "alt": "Cranberry sauce in a small ceramic bowl with orange zest",
-      "caption": "cranberry sauce — fresh and bright"
-    }
+      ]
+    },
+    "emoji": "🍒"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Cranberries are tart with proanthocyanidins — antioxidants linked to UTI defense.",
-    "Orange zest pairs with cranberry's tart through aromatic terpenes."
-  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
   "ingredients": [
     {
       "name": "Fresh cranberries",
@@ -81,8 +67,7 @@
       "duration": 240,
       "tip": "The pop you hear is the cranberries bursting — exactly what you want.",
       "media": {
-        "src": "assets/recipes/cranberry-sauce/step-01-boil.jpg",
-        "alt": "Cranberries starting to pop in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cranberry-sauce/step-01-boil.jpg",
         "caption": "combine and bring to boil"
       }
     },
@@ -93,8 +78,7 @@
       "duration": 600,
       "tip": "Leave a few whole berries for texture — total mash is baby food.",
       "media": {
-        "src": "assets/recipes/cranberry-sauce/step-02-simmer.jpg",
-        "alt": "Cranberry sauce simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cranberry-sauce/step-02-simmer.jpg",
         "caption": "pop and simmer"
       }
     },
@@ -105,8 +89,7 @@
       "duration": 1200,
       "tip": "Always taste cold; warm sauce reads sweeter than it is.",
       "media": {
-        "src": "assets/recipes/cranberry-sauce/step-03-cool.jpg",
-        "alt": "Cranberry sauce cooling in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cranberry-sauce/step-03-cool.jpg",
         "caption": "cool and adjust"
       }
     },
@@ -117,8 +100,7 @@
       "duration": 60,
       "tip": "Holds in the fridge a week — make ahead.",
       "media": {
-        "src": "assets/recipes/cranberry-sauce/step-04-chill.jpg",
-        "alt": "Cranberry sauce served in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cranberry-sauce/step-04-chill.jpg",
         "caption": "chill and serve"
       }
     }
@@ -136,5 +118,17 @@
       "name": "Microplane",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "quick",
+    "soy-free",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Cranberries are tart with proanthocyanidins — antioxidants linked to UTI defense.",
+    "Orange zest pairs with cranberry's tart through aromatic terpenes."
   ]
 }

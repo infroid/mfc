@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 45,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "gluten-free",
-    "high-protein"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Sheet-pan dinner, no eggs, leftovers improve overnight",
   "media": {
-    "emoji": "🥣",
     "hero": {
+      "alt": "Quinoa bowl with roasted broccoli, sweet potato, chickpeas, tahini drizzle",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roasted-veg-quinoa-bowl/hero.jpg",
+      "caption": "quinoa bowl — roasted veg, tahini",
       "palette": [
         "#F4A261",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/roasted-veg-quinoa-bowl/hero.jpg",
-      "alt": "Quinoa bowl with roasted broccoli, sweet potato, chickpeas, tahini drizzle",
-      "caption": "quinoa bowl — roasted veg, tahini"
-    }
+      ]
+    },
+    "emoji": "🥣"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan, gluten-free.",
-    "Quinoa is a complete protein (9 essential amino acids) — uncommon for plants.",
-    "Chickpeas + quinoa together provide ~17g of complete plant protein per bowl."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Quinoa",
@@ -96,8 +82,7 @@
       "duration": 1200,
       "tip": "Rinsing washes off saponins (the bitter coating). Skipping makes quinoa taste soapy.",
       "media": {
-        "src": "assets/recipes/roasted-veg-quinoa-bowl/step-01-quinoa.jpg",
-        "alt": "Cooked quinoa in saucepan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roasted-veg-quinoa-bowl/step-01-quinoa.jpg",
         "caption": "cook the quinoa"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 1320,
       "tip": "Pat the chickpeas dry before tossing — wet chickpeas steam, dry ones crisp.",
       "media": {
-        "src": "assets/recipes/roasted-veg-quinoa-bowl/step-02-roast.jpg",
-        "alt": "Sheet pan of roasting vegetables",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roasted-veg-quinoa-bowl/step-02-roast.jpg",
         "caption": "roast veg and chickpeas"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 180,
       "tip": "Adding ice-cold water makes tahini whip up paler and creamier.",
       "media": {
-        "src": "assets/recipes/roasted-veg-quinoa-bowl/step-03-tahini.jpg",
-        "alt": "Tahini sauce being whisked",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roasted-veg-quinoa-bowl/step-03-tahini.jpg",
         "caption": "whisk tahini drizzle"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 120,
       "tip": "A handful of fresh herbs (parsley, dill) on top makes it feel restaurant.",
       "media": {
-        "src": "assets/recipes/roasted-veg-quinoa-bowl/step-04-build.jpg",
-        "alt": "Built quinoa bowl with tahini drizzle",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roasted-veg-quinoa-bowl/step-04-build.jpg",
         "caption": "build the bowls"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Whisk",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "high-protein",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan, gluten-free.",
+    "Quinoa is a complete protein (9 essential amino acids) — uncommon for plants.",
+    "Chickpeas + quinoa together provide ~17g of complete plant protein per bowl."
   ]
 }

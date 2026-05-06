@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 45,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "mexican",
-    "high-protein",
-    "gluten-free"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "No soy in marinade — citrus and chili do the lift",
   "media": {
-    "emoji": "🌮",
     "hero": {
+      "alt": "Carne asada tacos with onion and cilantro",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/carne-asada-tacos/hero.jpg",
+      "caption": "carne asada — citrus-charred",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/carne-asada-tacos/hero.jpg",
-      "alt": "Carne asada tacos with onion and cilantro",
-      "caption": "carne asada — citrus-charred"
-    }
+      ]
+    },
+    "emoji": "🌮"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Lime and orange marinade gives flavor while tenderizing.",
-    "Corn tortillas are gluten-free and lower-glycemic than wheat."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Skirt or flank steak",
@@ -96,8 +82,7 @@
       "duration": 1800,
       "tip": "Don't go past 4 hours — citrus turns the meat mealy.",
       "media": {
-        "src": "assets/recipes/carne-asada-tacos/step-01-marinate.jpg",
-        "alt": "Steak in citrus marinade",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/carne-asada-tacos/step-01-marinate.jpg",
         "caption": "marinate the steak"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 360,
       "tip": "Wet steak from marinade = steam, not crust. Pat. Dry. Down.",
       "media": {
-        "src": "assets/recipes/carne-asada-tacos/step-02-sear.jpg",
-        "alt": "Steak searing in cast iron",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/carne-asada-tacos/step-02-sear.jpg",
         "caption": "sear hard"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 300,
       "tip": "Dicing happens after slicing — get the grain right first.",
       "media": {
-        "src": "assets/recipes/carne-asada-tacos/step-03-dice.jpg",
-        "alt": "Diced carne asada",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/carne-asada-tacos/step-03-dice.jpg",
         "caption": "rest then dice"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 300,
       "tip": "Two tortillas per taco — one breaks, the other catches.",
       "media": {
-        "src": "assets/recipes/carne-asada-tacos/step-04-assemble.jpg",
-        "alt": "Built carne asada tacos",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/carne-asada-tacos/step-04-assemble.jpg",
         "caption": "warm and assemble"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "mexican",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Lime and orange marinade gives flavor while tenderizing.",
+    "Corn tortillas are gluten-free and lower-glycemic than wheat."
   ]
 }

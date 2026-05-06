@@ -7,39 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 50,
-  "tags": [
-    "non-veg",
-    "high-protein",
-    "halal",
-    "dairy",
-    "onion",
-    "garlic"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": true,
-  "highlight": "Smoky char from high-heat sear before sauce",
   "media": {
-    "emoji": "🍗",
     "hero": {
+      "alt": "Butter chicken in a cream ceramic bowl with charred chicken pieces, cream swirl, and kasuri methi",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/hero.jpg",
+      "caption": "butter chicken — charred chicken, makhani sauce",
       "palette": [
         "#F4A261",
         "#E76F51",
         "#E2531A"
-      ],
-      "src": "assets/recipes/butter-chicken/hero.jpg",
-      "alt": "Butter chicken in a cream ceramic bowl with charred chicken pieces, cream swirl, and kasuri methi",
-      "caption": "butter chicken — charred chicken, makhani sauce"
-    }
+      ]
+    },
+    "emoji": "🍗"
   },
-  "healthFacts": [
-    "Chicken provides ~31g protein per 100g — one of the most complete animal protein sources.",
-    "Yogurt marinade tenderizes the meat and contributes gut-friendly probiotics.",
-    "Kashmiri chili gives the signature red color with minimal capsaicin heat — lycopene-rich.",
-    "Tomatoes cooked in fat release more lycopene — one of the few cases where cooking helps.",
-    "Swap heavy cream for Greek yogurt stirred in off-heat to cut saturated fat by ~50%.",
-    "Kasuri methi helps regulate blood sugar and adds a fenugreek depth the sauce needs."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Chicken (bone-in or boneless)",
@@ -120,8 +102,7 @@
       "duration": 1800,
       "tip": "Cold marinade = tighter texture at first. Pull chicken out 20 min before cooking for even heat.",
       "media": {
-        "src": "assets/recipes/butter-chicken/step-01-marinate.jpg",
-        "alt": "Scored chicken pieces coated in orange-red yogurt marinade",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/step-01-marinate.jpg",
         "caption": "Yogurt-spice marinade"
       }
     },
@@ -132,8 +113,7 @@
       "duration": 900,
       "tip": "Don't crowd the pan. Space = steam escape = char, not steam.",
       "media": {
-        "src": "assets/recipes/butter-chicken/step-02-sear.jpg",
-        "alt": "Marinated chicken searing with char marks on a cast-iron grill pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/step-02-sear.jpg",
         "caption": "High-heat sear"
       }
     },
@@ -144,8 +124,7 @@
       "duration": 1080,
       "tip": "The key is patience — underdone tomatoes make the gravy taste raw and sharp.",
       "media": {
-        "src": "assets/recipes/butter-chicken/step-03-makhani-base.jpg",
-        "alt": "Tomatoes, golden onions, cashews, and ginger-garlic paste cooking in butter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/step-03-makhani-base.jpg",
         "caption": "Jammy makhani base"
       }
     },
@@ -156,8 +135,7 @@
       "duration": 300,
       "tip": "A high-speed blender makes straining optional — just blend very smooth.",
       "media": {
-        "src": "assets/recipes/butter-chicken/step-04-blend-strain.jpg",
-        "alt": "Smooth makhani sauce being strained through a fine mesh sieve",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/step-04-blend-strain.jpg",
         "caption": "Silky strained sauce"
       }
     },
@@ -168,8 +146,7 @@
       "duration": 480,
       "tip": "Low and slow is the key. High heat makes it splatter and burns the butter.",
       "media": {
-        "src": "assets/recipes/butter-chicken/step-05-simmer-gravy.jpg",
-        "alt": "Smooth tomato-cashew makhani gravy simmering with butter in a kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/step-05-simmer-gravy.jpg",
         "caption": "Glossy simmered gravy"
       }
     },
@@ -180,8 +157,7 @@
       "duration": 300,
       "tip": "If gravy is too thick, add a splash of warm water — never cold, it'll break the sauce.",
       "media": {
-        "src": "assets/recipes/butter-chicken/step-06-finish.jpg",
-        "alt": "Charred chicken pieces simmering in makhani gravy with cream and kasuri methi",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/butter-chicken/step-06-finish.jpg",
         "caption": "Cream and kasuri methi finish"
       }
     }
@@ -207,5 +183,21 @@
       "name": "Wooden spatula",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "garlic",
+    "halal",
+    "high-protein",
+    "non-veg",
+    "onion"
+  ],
+  "healthFacts": [
+    "Chicken provides ~31g protein per 100g — one of the most complete animal protein sources.",
+    "Yogurt marinade tenderizes the meat and contributes gut-friendly probiotics.",
+    "Kashmiri chili gives the signature red color with minimal capsaicin heat — lycopene-rich.",
+    "Tomatoes cooked in fat release more lycopene — one of the few cases where cooking helps.",
+    "Swap heavy cream for Greek yogurt stirred in off-heat to cut saturated fat by ~50%.",
+    "Kasuri methi helps regulate blood sugar and adds a fenugreek depth the sauce needs."
   ]
 }

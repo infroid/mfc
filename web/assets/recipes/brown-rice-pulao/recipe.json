@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 50,
-  "tags": [
-    "veg",
-    "vegan",
-    "whole-grain",
-    "high-fiber",
-    "high-magnesium",
-    "low-glycemic"
-  ],
-  "color": "#8B4513",
-  "colorSoft": "rgba(139,69,19,0.18)",
-  "featured": false,
-  "highlight": "1:2.25 rice-to-water ratio + 35 minute simmer = perfect, separate brown grains",
   "media": {
-    "emoji": "🍚",
     "hero": {
+      "alt": "Brown rice pulao with mixed vegetables and whole spices in a wide vessel",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/brown-rice-pulao/hero.jpg",
+      "caption": "brown rice pulao — whole-grain, vegetable-loaded",
       "palette": [
         "#8B4513",
         "#E9C46A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/brown-rice-pulao/hero.jpg",
-      "alt": "Brown rice pulao with mixed vegetables and whole spices in a wide vessel",
-      "caption": "brown rice pulao — whole-grain, vegetable-loaded"
-    }
+      ]
+    },
+    "emoji": "🍚"
   },
-  "healthFacts": [
-    "Brown rice has 2× the fiber and 3× the magnesium of polished white rice.",
-    "Lower glycemic load — slower glucose curve, longer satiety.",
-    "Manganese, B1, and phosphorus all hit double-digit DV per cup cooked.",
-    "Mixed vegetables add vitamin A, K, C, and antioxidant variety."
-  ],
+  "color": "#8B4513",
+  "colorSoft": "rgba(139,69,19,0.18)",
   "ingredients": [
     {
       "name": "Brown basmati rice (soaked 30 min)",
@@ -101,21 +85,33 @@
       "title": "Bloom the spices",
       "detail": "Heat ghee in a heavy pot. Add bay leaf, cinnamon, cloves, cardamom, and cumin — let them sizzle 30 seconds. Add onion, cook till golden. Stir in ginger-garlic paste, then the vegetables. Cook 4 minutes.",
       "duration": 360,
-      "tip": "Whole spices are non-negotiable for pulao — ground masala makes it taste like vegetable rice."
+      "tip": "Whole spices are non-negotiable for pulao — ground masala makes it taste like vegetable rice.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Add rice and water",
       "detail": "Drain the soaked brown rice and tip into the pot. Toast 2 minutes. Pour in 3.5 cups hot water and salt. Bring to a vigorous boil.",
       "duration": 240,
-      "tip": "Hot water = no temperature drop = rice cooks evenly."
+      "tip": "Hot water = no temperature drop = rice cooks evenly.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Simmer covered",
       "detail": "Reduce heat to lowest, cover with a tight lid, cook 35 minutes without lifting. Off heat, rest 10 minutes. Fluff with a fork. Serve with raita.",
       "duration": 2700,
-      "tip": "Lifting the lid breaks the steam cycle — peek only at the very end."
+      "tip": "Lifting the lid breaks the steam cycle — peek only at the very end.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -131,5 +127,19 @@
       "name": "Wooden spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-fiber",
+    "high-magnesium",
+    "low-glycemic",
+    "veg",
+    "vegan",
+    "whole-grain"
+  ],
+  "healthFacts": [
+    "Brown rice has 2× the fiber and 3× the magnesium of polished white rice.",
+    "Lower glycemic load — slower glucose curve, longer satiety.",
+    "Manganese, B1, and phosphorus all hit double-digit DV per cup cooked.",
+    "Mixed vegetables add vitamin A, K, C, and antioxidant variety."
   ]
 }

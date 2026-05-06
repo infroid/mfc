@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 15,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "asian",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#C84B5A",
-  "colorSoft": "rgba(200,75,90,0.16)",
-  "featured": false,
-  "highlight": "Hot pan, 90 seconds per side — rare ruby center",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Sliced sesame-crusted seared tuna steak",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/seared-tuna-steak/hero.jpg",
+      "caption": "seared tuna — rare sesame crust",
       "palette": [
         "#C84B5A",
         "#3A332A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/seared-tuna-steak/hero.jpg",
-      "alt": "Sliced sesame-crusted seared tuna steak",
-      "caption": "seared tuna — rare sesame crust"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Ahi tuna is high in lean protein and selenium.",
-    "Black sesame seeds carry calcium and lignans — antioxidant compounds."
-  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
   "ingredients": [
     {
       "name": "Sushi-grade tuna steaks",
@@ -86,8 +72,7 @@
       "duration": 30,
       "tip": "A 50/50 mix gives the prettiest crust.",
       "media": {
-        "src": "assets/recipes/seared-tuna-steak/step-01-seeds.jpg",
-        "alt": "Black and white sesame seeds on plate",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/seared-tuna-steak/step-01-seeds.jpg",
         "caption": "mix sesame seeds"
       }
     },
@@ -98,8 +83,7 @@
       "duration": 120,
       "tip": "Press hard — seeds need to stick or they fall off in the pan.",
       "media": {
-        "src": "assets/recipes/seared-tuna-steak/step-02-crust.jpg",
-        "alt": "Tuna pressed into sesame seeds",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/seared-tuna-steak/step-02-crust.jpg",
         "caption": "crust the tuna"
       }
     },
@@ -110,8 +94,7 @@
       "duration": 180,
       "tip": "Center should still be ruby-red. This is sear, not cook-through.",
       "media": {
-        "src": "assets/recipes/seared-tuna-steak/step-03-sear.jpg",
-        "alt": "Tuna searing in hot pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/seared-tuna-steak/step-03-sear.jpg",
         "caption": "sear blazing hot"
       }
     },
@@ -122,8 +105,7 @@
       "duration": 120,
       "tip": "A sharp knife is mandatory — dull saws push the rare center out.",
       "media": {
-        "src": "assets/recipes/seared-tuna-steak/step-04-slice.jpg",
-        "alt": "Sliced seared tuna",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/seared-tuna-steak/step-04-slice.jpg",
         "caption": "slice thin, dip"
       }
     }
@@ -141,5 +123,17 @@
       "name": "Plate for crusting",
       "essential": true
     }
+  ],
+  "tags": [
+    "asian",
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Ahi tuna is high in lean protein and selenium.",
+    "Black sesame seeds carry calcium and lignans — antioxidant compounds."
   ]
 }

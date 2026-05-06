@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 25,
-  "tags": [
-    "veg",
-    "high-iron",
-    "high-folate",
-    "vitamin-k",
-    "low-calorie",
-    "garlic"
-  ],
-  "color": "#4A7C2A",
-  "colorSoft": "rgba(74,124,42,0.18)",
-  "featured": false,
-  "highlight": "Wilt the spinach for 60 seconds, then blend hot — keeps the bright green colour",
   "media": {
-    "emoji": "🥬",
     "hero": {
+      "alt": "Vivid green spinach soup in a bowl with cracked black pepper and a swirl of cream",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spinach-soup/hero.jpg",
+      "caption": "spinach soup — bright, smooth, peppery",
       "palette": [
         "#4A7C2A",
         "#7A9C5A",
         "#FBF7EE"
-      ],
-      "src": "assets/recipes/spinach-soup/hero.jpg",
-      "alt": "Vivid green spinach soup in a bowl with cracked black pepper and a swirl of cream",
-      "caption": "spinach soup — bright, smooth, peppery"
-    }
+      ]
+    },
+    "emoji": "🥬"
   },
-  "healthFacts": [
-    "Spinach: 6.4mg iron and 260µg folate per 200g — both at clinically meaningful levels.",
-    "Vitamin K (~888µg/cup) supports bone and clotting health.",
-    "Lemon at the finish doubles iron absorption from the meal.",
-    "Low-calorie (~80 kcal serving) — fits any cardiac-protection plan."
-  ],
+  "color": "#4A7C2A",
+  "colorSoft": "rgba(74,124,42,0.18)",
   "ingredients": [
     {
       "name": "Spinach (washed)",
@@ -91,21 +75,33 @@
       "title": "Sauté and wilt",
       "detail": "Melt butter in a pot. Sauté onion and garlic till soft (3 min). Add spinach in batches, wilting 1 minute total — don't overcook.",
       "duration": 240,
-      "tip": "Hot, fast wilt = bright green soup. Slow simmering turns it brown."
+      "tip": "Hot, fast wilt = bright green soup. Slow simmering turns it brown.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Add stock, blend hot",
       "detail": "Pour in stock, simmer 2 minutes. Off heat. Carefully blend in a high-speed blender (or with a stick blender) till silky smooth.",
       "duration": 240,
-      "tip": "Vent the blender lid — hot soup builds pressure."
+      "tip": "Vent the blender lid — hot soup builds pressure.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Finish creamy",
       "detail": "Return to pot, stir in milk, salt, and pepper. Warm gently — don't boil. Squeeze lemon at the table for the iron-absorption boost.",
       "duration": 120,
-      "tip": "A drizzle of olive oil on top adds vitamin E and richness without dairy."
+      "tip": "A drizzle of olive oil on top adds vitamin E and richness without dairy.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -121,5 +117,19 @@
       "name": "Wooden spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "garlic",
+    "high-folate",
+    "high-iron",
+    "low-calorie",
+    "veg",
+    "vitamin-k"
+  ],
+  "healthFacts": [
+    "Spinach: 6.4mg iron and 260µg folate per 200g — both at clinically meaningful levels.",
+    "Vitamin K (~888µg/cup) supports bone and clotting health.",
+    "Lemon at the finish doubles iron absorption from the meal.",
+    "Low-calorie (~80 kcal serving) — fits any cardiac-protection plan."
   ]
 }

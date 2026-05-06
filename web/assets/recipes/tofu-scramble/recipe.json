@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 15,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Kala namak (black salt) gives the eggy sulfur note — without eggs",
   "media": {
-    "emoji": "🍳",
     "hero": {
+      "alt": "Tofu scramble with chives on toast",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tofu-scramble/hero.jpg",
+      "caption": "tofu scramble — eggy without eggs",
       "palette": [
         "#F4D67A",
         "#7A9C5A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/tofu-scramble/hero.jpg",
-      "alt": "Tofu scramble with chives on toast",
-      "caption": "tofu scramble — eggy without eggs"
-    }
+      ]
+    },
+    "emoji": "🍳"
   },
-  "healthFacts": [
-    "No eggs — kala namak (black salt) provides the sulfur note.",
-    "Firm tofu has ~20g protein per cup of crumbles.",
-    "Nutritional yeast adds fortified B12 — important on plant-based diets."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Firm tofu",
@@ -86,8 +72,7 @@
       "duration": 300,
       "tip": "Press = less water = better browning. Don't skip.",
       "media": {
-        "src": "assets/recipes/tofu-scramble/step-01-press.jpg",
-        "alt": "Crumbled pressed tofu",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tofu-scramble/step-01-press.jpg",
         "caption": "press and crumble"
       }
     },
@@ -98,8 +83,7 @@
       "duration": 240,
       "tip": "Don't move it constantly — let the bottom set, then flip.",
       "media": {
-        "src": "assets/recipes/tofu-scramble/step-02-sizzle.jpg",
-        "alt": "Tofu sizzling in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tofu-scramble/step-02-sizzle.jpg",
         "caption": "sizzle the tofu"
       }
     },
@@ -110,8 +94,7 @@
       "duration": 90,
       "tip": "Plant milk steams off and leaves seasoning behind, mimicking custard set.",
       "media": {
-        "src": "assets/recipes/tofu-scramble/step-03-spice.jpg",
-        "alt": "Tofu turning yellow with seasoning",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tofu-scramble/step-03-spice.jpg",
         "caption": "spice and creamy"
       }
     },
@@ -122,8 +105,7 @@
       "duration": 30,
       "tip": "Black salt only at the end — high heat dulls its sulfur punch.",
       "media": {
-        "src": "assets/recipes/tofu-scramble/step-04-finish.jpg",
-        "alt": "Tofu scramble on toast with chives",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tofu-scramble/step-04-finish.jpg",
         "caption": "black salt finish"
       }
     }
@@ -141,5 +123,17 @@
       "name": "Clean kitchen towel",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "high-protein",
+    "quick",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — kala namak (black salt) provides the sulfur note.",
+    "Firm tofu has ~20g protein per cup of crumbles.",
+    "Nutritional yeast adds fortified B12 — important on plant-based diets."
   ]
 }

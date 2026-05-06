@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 45,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "high-protein",
-    "one-pot"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Plant protein under $5 a pot, no eggs anywhere",
   "media": {
-    "emoji": "🍲",
     "hero": {
+      "alt": "Bowl of lentil soup with carrots, parsley, and lemon wedge",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lentil-soup/hero.jpg",
+      "caption": "lentil soup — bright, fiber-rich",
       "palette": [
         "#7A9C5A",
         "#A0522D",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/lentil-soup/hero.jpg",
-      "alt": "Bowl of lentil soup with carrots, parsley, and lemon wedge",
-      "caption": "lentil soup — bright, fiber-rich"
-    }
+      ]
+    },
+    "emoji": "🍲"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan.",
-    "Brown lentils have ~18g protein and 16g fiber per cooked cup.",
-    "Lemon at the end boosts iron absorption from the lentils."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Brown lentils",
@@ -96,8 +82,7 @@
       "duration": 540,
       "tip": "Dice everything to lentil size — visual harmony matters.",
       "media": {
-        "src": "assets/recipes/lentil-soup/step-01-soffritto.jpg",
-        "alt": "Soffritto cooking",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lentil-soup/step-01-soffritto.jpg",
         "caption": "soffritto"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 30,
       "tip": "Fresh-ground cumin smells night-and-day better than pre-ground.",
       "media": {
-        "src": "assets/recipes/lentil-soup/step-02-cumin.jpg",
-        "alt": "Cumin blooming with vegetables",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lentil-soup/step-02-cumin.jpg",
         "caption": "bloom the cumin"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 1500,
       "tip": "No salt yet — it slows lentil softening. Salt at the end.",
       "media": {
-        "src": "assets/recipes/lentil-soup/step-03-simmer.jpg",
-        "alt": "Lentils simmering in stock",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lentil-soup/step-03-simmer.jpg",
         "caption": "simmer with stock"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 60,
       "tip": "Lemon wakes the soup up — without it the soup tastes flat.",
       "media": {
-        "src": "assets/recipes/lentil-soup/step-04-brighten.jpg",
-        "alt": "Lentil soup with lemon and parsley",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lentil-soup/step-04-brighten.jpg",
         "caption": "brighten and serve"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Ladle",
       "essential": false
     }
+  ],
+  "tags": [
+    "egg-free",
+    "high-protein",
+    "one-pot",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Brown lentils have ~18g protein and 16g fiber per cooked cup.",
+    "Lemon at the end boosts iron absorption from the lentils."
   ]
 }

@@ -7,39 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 45,
-  "tags": [
-    "non-veg",
-    "gluten-free",
-    "high-protein",
-    "halal",
-    "dairy",
-    "low-carb"
-  ],
-  "color": "#E2531A",
-  "colorSoft": "rgba(226,83,26,0.15)",
-  "featured": false,
-  "highlight": "Yogurt marinade tenderizes + adds probiotics",
   "media": {
-    "emoji": "🍖",
     "hero": {
+      "alt": "Charred tandoori chicken on a cream ceramic plate with lemon wedges, onion rings, and mint chutney",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/hero.jpg",
+      "caption": "tandoori chicken — charred, smoky, lemon-bright",
       "palette": [
         "#E2531A",
         "#FF6D2E",
         "#F4A261"
-      ],
-      "src": "assets/recipes/tandoori-chicken/hero.jpg",
-      "alt": "Charred tandoori chicken on a cream ceramic plate with lemon wedges, onion rings, and mint chutney",
-      "caption": "tandoori chicken — charred, smoky, lemon-bright"
-    }
+      ]
+    },
+    "emoji": "🍖"
   },
-  "healthFacts": [
-    "Yogurt marinade contains lactic acid that physically denatures muscle fibers — making the meat measurably more tender.",
-    "Chicken breast has ~31g protein per 100g with only 3.6g fat — one of the leanest high-protein sources.",
-    "Kashmiri chili provides color via carotenoids without capsaicin heat — lycopene from a spice.",
-    "Fenugreek seeds in tandoori masala contain soluble fiber that slows glucose absorption.",
-    "High-heat grilling creates Maillard compounds that are the source of 'charred' flavor — not burning.",
-    "Naturally gluten-free — the marinade is yogurt and spices, no flour-based thickeners needed."
-  ],
+  "color": "#E2531A",
+  "colorSoft": "rgba(226,83,26,0.15)",
   "ingredients": [
     {
       "name": "Chicken (bone-in pieces)",
@@ -115,8 +97,7 @@
       "duration": 180,
       "tip": "No scoring = marinade flavor only on the surface. Deep scores = flavor all the way through.",
       "media": {
-        "src": "assets/recipes/tandoori-chicken/step-01-score-chicken.jpg",
-        "alt": "Raw bone-in chicken pieces with deep diagonal scores in a metal tray",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/step-01-score-chicken.jpg",
         "caption": "Deep scored cuts"
       }
     },
@@ -127,8 +108,7 @@
       "duration": 900,
       "tip": "Two-layer marinating is how restaurants get that flavor depth. The acid layer is the key.",
       "media": {
-        "src": "assets/recipes/tandoori-chicken/step-02-first-marinade.jpg",
-        "alt": "Scored raw chicken rubbed with Kashmiri chili, salt, and lemon juice",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/step-02-first-marinade.jpg",
         "caption": "Chili-lemon first marinade"
       }
     },
@@ -139,8 +119,7 @@
       "duration": 14400,
       "tip": "Longer marination time is the single biggest upgrade you can make to this dish.",
       "media": {
-        "src": "assets/recipes/tandoori-chicken/step-03-yogurt-marinade.jpg",
-        "alt": "Scored chicken pieces coated in thick orange yogurt tandoori marinade",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/step-03-yogurt-marinade.jpg",
         "caption": "Thick yogurt-spice coat"
       }
     },
@@ -151,8 +130,7 @@
       "duration": 1800,
       "tip": "This rest step is especially important for thick, bone-in pieces.",
       "media": {
-        "src": "assets/recipes/tandoori-chicken/step-04-room-temperature.jpg",
-        "alt": "Marinated chicken resting on a wire rack over a foil-lined tray before broiling",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/step-04-room-temperature.jpg",
         "caption": "Room-temp rack rest"
       }
     },
@@ -163,8 +141,7 @@
       "duration": 1500,
       "tip": "The char is flavor, not burnt. Aim for dark spots on the edges while the flesh stays juicy.",
       "media": {
-        "src": "assets/recipes/tandoori-chicken/step-05-high-heat-cook.jpg",
-        "alt": "Charred tandoori chicken cooking on a wire rack with ghee and a basting brush",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/step-05-high-heat-cook.jpg",
         "caption": "High-heat char and baste"
       }
     },
@@ -175,8 +152,7 @@
       "duration": 300,
       "tip": "Chaat masala on top is what makes tandoori chicken taste like a restaurant — don't skip it.",
       "media": {
-        "src": "assets/recipes/tandoori-chicken/step-06-rest-serve.jpg",
-        "alt": "Rested tandoori chicken served with lemon wedges, onion rings, and mint chutney",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tandoori-chicken/step-06-rest-serve.jpg",
         "caption": "Rest, dust, and serve"
       }
     }
@@ -202,5 +178,21 @@
       "name": "Tongs",
       "essential": true
     }
+  ],
+  "tags": [
+    "dairy",
+    "gluten-free",
+    "halal",
+    "high-protein",
+    "low-carb",
+    "non-veg"
+  ],
+  "healthFacts": [
+    "Yogurt marinade contains lactic acid that physically denatures muscle fibers — making the meat measurably more tender.",
+    "Chicken breast has ~31g protein per 100g with only 3.6g fat — one of the leanest high-protein sources.",
+    "Kashmiri chili provides color via carotenoids without capsaicin heat — lycopene from a spice.",
+    "Fenugreek seeds in tandoori masala contain soluble fiber that slows glucose absorption.",
+    "High-heat grilling creates Maillard compounds that are the source of 'charred' flavor — not burning.",
+    "Naturally gluten-free — the marinade is yogurt and spices, no flour-based thickeners needed."
   ]
 }

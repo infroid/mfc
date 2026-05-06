@@ -7,33 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "italian"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.16)",
-  "featured": false,
-  "highlight": "Crisp-blistered crust under tomato, basil, milky mozz",
   "media": {
-    "emoji": "🍕",
     "hero": {
+      "alt": "Margherita pizza with bubbling mozzarella and torn basil leaves",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-margherita-pizza/hero.jpg",
+      "caption": "margherita — tomato, mozzarella, basil",
       "palette": [
         "#E76F51",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/classic-margherita-pizza/hero.jpg",
-      "alt": "Margherita pizza with bubbling mozzarella and torn basil leaves",
-      "caption": "margherita — tomato, mozzarella, basil"
-    }
+      ]
+    },
+    "emoji": "🍕"
   },
-  "healthFacts": [
-    "No nuts in any component — naturally nut-free, safe for tree-nut allergies.",
-    "San Marzano tomatoes are low-acid and high in lycopene; cooking releases more.",
-    "Fresh mozzarella has roughly half the sodium of aged cheeses."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.16)",
   "ingredients": [
     {
       "name": "Pizza dough",
@@ -74,8 +62,7 @@
       "duration": 1800,
       "tip": "No stone? Invert a heavy sheet pan and preheat that instead.",
       "media": {
-        "src": "assets/recipes/classic-margherita-pizza/step-01-preheat.jpg",
-        "alt": "Pizza stone heating in oven",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-margherita-pizza/step-01-preheat.jpg",
         "caption": "preheat the oven"
       }
     },
@@ -86,8 +73,7 @@
       "duration": 240,
       "tip": "Tomatoes go on raw — they cook with the pizza. Pre-cooking the sauce makes it bitter.",
       "media": {
-        "src": "assets/recipes/classic-margherita-pizza/step-02-stretch.jpg",
-        "alt": "Stretched pizza dough with tomato and mozzarella",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-margherita-pizza/step-02-stretch.jpg",
         "caption": "stretch and dress"
       }
     },
@@ -98,8 +84,7 @@
       "duration": 480,
       "tip": "If your oven has a broiler, finish 30 seconds under it for restaurant char.",
       "media": {
-        "src": "assets/recipes/classic-margherita-pizza/step-03-bake.jpg",
-        "alt": "Pizza baking with bubbling cheese",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-margherita-pizza/step-03-bake.jpg",
         "caption": "bake hot and fast"
       }
     },
@@ -110,8 +95,7 @@
       "duration": 60,
       "tip": "Basil goes on after cooking; it burns to nothing in the oven.",
       "media": {
-        "src": "assets/recipes/classic-margherita-pizza/step-04-finish.jpg",
-        "alt": "Sliced pizza with fresh basil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-margherita-pizza/step-04-finish.jpg",
         "caption": "finish with basil"
       }
     }
@@ -129,5 +113,15 @@
       "name": "Bench scraper",
       "essential": false
     }
+  ],
+  "tags": [
+    "italian",
+    "nut-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No nuts in any component — naturally nut-free, safe for tree-nut allergies.",
+    "San Marzano tomatoes are low-acid and high in lycopene; cooking releases more.",
+    "Fresh mozzarella has roughly half the sodium of aged cheeses."
   ]
 }

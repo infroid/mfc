@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "high-protein",
-    "gluten-free"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Two ingredients — beef and salt. The Argentine way. No soy.",
   "media": {
-    "emoji": "🥩",
     "hero": {
+      "alt": "Charred grilled ribeye with grill marks on a wooden board",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/argentinian-asado/hero.jpg",
+      "caption": "asado — beef and salt",
       "palette": [
         "#A0522D",
         "#3A332A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/argentinian-asado/hero.jpg",
-      "alt": "Charred grilled ribeye with grill marks on a wooden board",
-      "caption": "asado — beef and salt"
-    }
+      ]
+    },
+    "emoji": "🥩"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Reverse-sear keeps thick steaks pink edge to edge.",
-    "Coarse salt draws moisture, then dries — perfect crust."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Bone-in ribeye",
@@ -55,8 +42,7 @@
       "duration": 2700,
       "tip": "Tempering is mandatory for thick steaks — otherwise the outside burns before the center warms.",
       "media": {
-        "src": "assets/recipes/argentinian-asado/step-01-temper.jpg",
-        "alt": "Steak resting on counter to temper",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/argentinian-asado/step-01-temper.jpg",
         "caption": "temper the beef"
       }
     },
@@ -67,8 +53,7 @@
       "duration": 1800,
       "tip": "Argentine parrillas are wood-fired — gas works but won't smell the same.",
       "media": {
-        "src": "assets/recipes/argentinian-asado/step-02-fire.jpg",
-        "alt": "Glowing charcoal embers under grill grate",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/argentinian-asado/step-02-fire.jpg",
         "caption": "build the fire"
       }
     },
@@ -79,8 +64,7 @@
       "duration": 720,
       "tip": "Don't move the steak — the only flip is the one to the other side.",
       "media": {
-        "src": "assets/recipes/argentinian-asado/step-03-grill.jpg",
-        "alt": "Steaks grilling over embers",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/argentinian-asado/step-03-grill.jpg",
         "caption": "salt and grill"
       }
     },
@@ -91,8 +75,7 @@
       "duration": 600,
       "tip": "Resting redistributes juices — slicing too soon loses them all.",
       "media": {
-        "src": "assets/recipes/argentinian-asado/step-04-rest.jpg",
-        "alt": "Sliced steak resting",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/argentinian-asado/step-04-rest.jpg",
         "caption": "rest and slice"
       }
     }
@@ -110,5 +93,16 @@
       "name": "Cutting board",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Reverse-sear keeps thick steaks pink edge to edge.",
+    "Coarse salt draws moisture, then dries — perfect crust."
   ]
 }

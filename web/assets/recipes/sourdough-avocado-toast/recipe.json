@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 10,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "quick"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Five ingredients, ten minutes, no eggs needed",
   "media": {
-    "emoji": "🥑",
     "hero": {
+      "alt": "Avocado toast with chili flakes and lime",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sourdough-avocado-toast/hero.jpg",
+      "caption": "avocado toast — café classic",
       "palette": [
         "#7A9C5A",
         "#F4D67A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/sourdough-avocado-toast/hero.jpg",
-      "alt": "Avocado toast with chili flakes and lime",
-      "caption": "avocado toast — café classic"
-    }
+      ]
+    },
+    "emoji": "🥑"
   },
-  "healthFacts": [
-    "Naturally egg-free.",
-    "Avocado is mostly monounsaturated fat — heart-protective.",
-    "Sourdough is lower-glycemic than regular bread thanks to lactic-acid fermentation."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Sourdough bread",
@@ -75,8 +62,7 @@
       "duration": 240,
       "tip": "Pale toast collapses under the avocado. Dark = structural.",
       "media": {
-        "src": "assets/recipes/sourdough-avocado-toast/step-01-toast.jpg",
-        "alt": "Dark-toasted sourdough",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sourdough-avocado-toast/step-01-toast.jpg",
         "caption": "toast dark"
       }
     },
@@ -87,8 +73,7 @@
       "duration": 120,
       "tip": "Lime first stops oxidation and seasons evenly.",
       "media": {
-        "src": "assets/recipes/sourdough-avocado-toast/step-02-smash.jpg",
-        "alt": "Smashed avocado in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sourdough-avocado-toast/step-02-smash.jpg",
         "caption": "smash with lime"
       }
     },
@@ -99,8 +84,7 @@
       "duration": 60,
       "tip": "Use the back of a spoon to make swoops — looks restaurant.",
       "media": {
-        "src": "assets/recipes/sourdough-avocado-toast/step-03-pile.jpg",
-        "alt": "Avocado piled on toast",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sourdough-avocado-toast/step-03-pile.jpg",
         "caption": "pile high"
       }
     },
@@ -111,8 +95,7 @@
       "duration": 30,
       "tip": "A pinch of furikake or za'atar makes it next-level.",
       "media": {
-        "src": "assets/recipes/sourdough-avocado-toast/step-04-top.jpg",
-        "alt": "Avocado toast with chili flakes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sourdough-avocado-toast/step-04-top.jpg",
         "caption": "top and drizzle"
       }
     }
@@ -130,5 +113,16 @@
       "name": "Fork",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "quick",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Avocado is mostly monounsaturated fat — heart-protective.",
+    "Sourdough is lower-glycemic than regular bread thanks to lactic-acid fermentation."
   ]
 }

@@ -7,35 +7,21 @@
   "difficulty": "Medium",
   "servings": 6,
   "totalMinutes": 180,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "asian",
-    "gluten-free",
-    "high-protein"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Fish sauce + bone broth — pho without soy",
   "media": {
-    "emoji": "🍜",
     "hero": {
+      "alt": "Bowl of pho with rare beef, rice noodles, and herb plate",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/vietnamese-pho-soyfree/hero.jpg",
+      "caption": "phở bò — bone-broth deep",
       "palette": [
         "#A0522D",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/vietnamese-pho-soyfree/hero.jpg",
-      "alt": "Bowl of pho with rare beef, rice noodles, and herb plate",
-      "caption": "phở bò — bone-broth deep"
-    }
+      ]
+    },
+    "emoji": "🍜"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Bone broth is collagen-rich — supportive of gut and joint health.",
-    "Char-roasting onion and ginger gives pho its signature smoke."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Beef bones (mixed)",
@@ -101,8 +87,7 @@
       "duration": 600,
       "tip": "Skipping = murky pho. Worth the extra step.",
       "media": {
-        "src": "assets/recipes/vietnamese-pho-soyfree/step-01-blanch.jpg",
-        "alt": "Bones blanching in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/vietnamese-pho-soyfree/step-01-blanch.jpg",
         "caption": "blanch the bones"
       }
     },
@@ -113,8 +98,7 @@
       "duration": 480,
       "tip": "Char until it looks ruined. That's where the smoke comes from.",
       "media": {
-        "src": "assets/recipes/vietnamese-pho-soyfree/step-02-char.jpg",
-        "alt": "Charred onion and ginger",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/vietnamese-pho-soyfree/step-02-char.jpg",
         "caption": "char aromatics"
       }
     },
@@ -125,8 +109,7 @@
       "duration": 9000,
       "tip": "If it boils, you get cloudy broth. Bare bubbles only.",
       "media": {
-        "src": "assets/recipes/vietnamese-pho-soyfree/step-03-simmer.jpg",
-        "alt": "Pho broth simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/vietnamese-pho-soyfree/step-03-simmer.jpg",
         "caption": "long simmer"
       }
     },
@@ -137,8 +120,7 @@
       "duration": 600,
       "tip": "Boiling broth poured over thin raw beef cooks it perfectly — pho's classic move.",
       "media": {
-        "src": "assets/recipes/vietnamese-pho-soyfree/step-04-assemble.jpg",
-        "alt": "Pho assembled with herbs",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/vietnamese-pho-soyfree/step-04-assemble.jpg",
         "caption": "strain and assemble"
       }
     }
@@ -156,5 +138,17 @@
       "name": "Sharp slicing knife",
       "essential": true
     }
+  ],
+  "tags": [
+    "asian",
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Bone broth is collagen-rich — supportive of gut and joint health.",
+    "Char-roasting onion and ginger gives pho its signature smoke."
   ]
 }

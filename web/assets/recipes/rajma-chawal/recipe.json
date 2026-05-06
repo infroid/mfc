@@ -7,39 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 50,
-  "tags": [
-    "vegetarian",
-    "high-protein",
-    "high-fiber",
-    "onion",
-    "garlic",
-    "batch-cook"
-  ],
-  "color": "#C84B5A",
-  "colorSoft": "rgba(200,75,90,0.14)",
-  "featured": false,
-  "highlight": "Rice + lentil = complete amino acid profile",
   "media": {
-    "emoji": "🍛",
     "hero": {
+      "alt": "Rajma chawal served with glossy kidney bean curry over basmati rice, raw onion, green chili, and lemon",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/hero.jpg",
+      "caption": "rajma chawal — glossy beans, steamed basmati",
       "palette": [
         "#C84B5A",
         "#E07080",
         "#F4A261"
-      ],
-      "src": "assets/recipes/rajma-chawal/hero.jpg",
-      "alt": "Rajma chawal served with glossy kidney bean curry over basmati rice, raw onion, green chili, and lemon",
-      "caption": "rajma chawal — glossy beans, steamed basmati"
-    }
+      ]
+    },
+    "emoji": "🍛"
   },
-  "healthFacts": [
-    "Kidney beans + rice together form a complete protein — all essential amino acids covered.",
-    "Rajma provides 13g fiber per cup — more than most whole grains.",
-    "The resistant starch in cooked-and-cooled rice feeds beneficial gut microbiome bacteria.",
-    "Tomatoes and onions cooked in oil release fat-soluble lycopene and quercetin.",
-    "Kidney beans are high in folate — critical for DNA repair and red blood cell production.",
-    "Never eat raw or undercooked kidney beans — boil vigorously for 10 minutes to neutralize lectins."
-  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.14)",
   "ingredients": [
     {
       "name": "Kidney beans (rajma, dried)",
@@ -115,8 +97,7 @@
       "duration": 28800,
       "tip": "The soaking water contains oligosaccharides that cause gas. Always discard it.",
       "media": {
-        "src": "assets/recipes/rajma-chawal/step-01-soak-rajma.jpg",
-        "alt": "Kidney beans soaking in water in a metal bowl on a dark counter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/step-01-soak-rajma.jpg",
         "caption": "Overnight soaked rajma"
       }
     },
@@ -127,8 +108,7 @@
       "duration": 1800,
       "tip": "Undercooked rajma is the #1 rajma mistake. When in doubt, cook one more whistle.",
       "media": {
-        "src": "assets/recipes/rajma-chawal/step-02-pressure-cook-beans.jpg",
-        "alt": "Soft cooked kidney beans steaming in an open pressure cooker",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/step-02-pressure-cook-beans.jpg",
         "caption": "Cook until completely soft"
       }
     },
@@ -139,8 +119,7 @@
       "duration": 1200,
       "tip": "Resting the rice off-heat with the lid on is what separates fluffy grains from clumped ones.",
       "media": {
-        "src": "assets/recipes/rajma-chawal/step-03-cook-rice.jpg",
-        "alt": "Fluffy steamed basmati rice resting in a pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/step-03-cook-rice.jpg",
         "caption": "Rested fluffy chawal"
       }
     },
@@ -151,8 +130,7 @@
       "duration": 900,
       "tip": "The masala depth depends on how long you cook the onions. Golden-brown = sweet and complex.",
       "media": {
-        "src": "assets/recipes/rajma-chawal/step-04-build-masala.jpg",
-        "alt": "Golden onion and tomato masala cooking down in a black kadhai until oil separates",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/step-04-build-masala.jpg",
         "caption": "Jammy tomato-onion masala"
       }
     },
@@ -163,8 +141,7 @@
       "duration": 900,
       "tip": "Mashing some beans is the secret to rajma's thick, gravy-forward consistency.",
       "media": {
-        "src": "assets/recipes/rajma-chawal/step-05-combine-simmer.jpg",
-        "alt": "Kidney beans simmering in thick tomato masala with a ladle in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/step-05-combine-simmer.jpg",
         "caption": "Beans simmered into gravy"
       }
     },
@@ -175,8 +152,7 @@
       "duration": 120,
       "tip": "The raw onion, chili, and lemon on top are not garnish — they're essential freshness.",
       "media": {
-        "src": "assets/recipes/rajma-chawal/step-06-finish-serve.jpg",
-        "alt": "Finished rajma served over basmati rice with onion, green chili, lemon, and melted butter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/rajma-chawal/step-06-finish-serve.jpg",
         "caption": "Butter-finished rajma chawal"
       }
     }
@@ -198,5 +174,21 @@
       "name": "Ladle",
       "essential": false
     }
+  ],
+  "tags": [
+    "batch-cook",
+    "garlic",
+    "high-fiber",
+    "high-protein",
+    "onion",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Kidney beans + rice together form a complete protein — all essential amino acids covered.",
+    "Rajma provides 13g fiber per cup — more than most whole grains.",
+    "The resistant starch in cooked-and-cooled rice feeds beneficial gut microbiome bacteria.",
+    "Tomatoes and onions cooked in oil release fat-soluble lycopene and quercetin.",
+    "Kidney beans are high in folate — critical for DNA repair and red blood cell production.",
+    "Never eat raw or undercooked kidney beans — boil vigorously for 10 minutes to neutralize lectins."
   ]
 }

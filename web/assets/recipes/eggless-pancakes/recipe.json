@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 20,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Buttermilk + extra leavening = no-egg fluff",
   "media": {
-    "emoji": "🥞",
     "hero": {
+      "alt": "Stack of fluffy pancakes with butter and syrup",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pancakes/hero.jpg",
+      "caption": "eggless pancakes — golden and fluffy",
       "palette": [
         "#F4D67A",
         "#E76F51",
         "#A0522D"
-      ],
-      "src": "assets/recipes/eggless-pancakes/hero.jpg",
-      "alt": "Stack of fluffy pancakes with butter and syrup",
-      "caption": "eggless pancakes — golden and fluffy"
-    }
+      ]
+    },
+    "emoji": "🥞"
   },
-  "healthFacts": [
-    "No eggs — leavening and buttermilk do the lift.",
-    "Buttermilk's acid activates baking soda for taller pancakes.",
-    "Resting the batter 5 minutes lets the gluten relax for tender results."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "All-purpose flour",
@@ -84,8 +72,7 @@
       "duration": 120,
       "tip": "Two-bowl method gives even leavening throughout.",
       "media": {
-        "src": "assets/recipes/eggless-pancakes/step-01-mix.jpg",
-        "alt": "Two bowls of pancake ingredients",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pancakes/step-01-mix.jpg",
         "caption": "whisk dry, then wet"
       }
     },
@@ -96,8 +83,7 @@
       "duration": 300,
       "tip": "Smooth batter = chewy pancakes. Lumpy batter = fluffy.",
       "media": {
-        "src": "assets/recipes/eggless-pancakes/step-02-combine.jpg",
-        "alt": "Lumpy pancake batter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pancakes/step-02-combine.jpg",
         "caption": "combine, leave lumpy"
       }
     },
@@ -108,8 +94,7 @@
       "duration": 180,
       "tip": "Too hot and the outside burns before the inside sets. Medium is the sweet spot.",
       "media": {
-        "src": "assets/recipes/eggless-pancakes/step-03-griddle.jpg",
-        "alt": "Non-stick griddle heating",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pancakes/step-03-griddle.jpg",
         "caption": "heat the griddle"
       }
     },
@@ -120,8 +105,7 @@
       "duration": 480,
       "tip": "Flip once. Touching pancakes mid-cook deflates them.",
       "media": {
-        "src": "assets/recipes/eggless-pancakes/step-04-flip.jpg",
-        "alt": "Pancake bubbling on griddle",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-pancakes/step-04-flip.jpg",
         "caption": "pour and flip"
       }
     }
@@ -139,5 +123,15 @@
       "name": "Whisk",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — leavening and buttermilk do the lift.",
+    "Buttermilk's acid activates baking soda for taller pancakes.",
+    "Resting the batter 5 minutes lets the gluten relax for tender results."
   ]
 }

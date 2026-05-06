@@ -7,36 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 50,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "italian",
-    "mediterranean",
-    "high-protein",
-    "one-pot"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Classic Adriatic fisherman's stew, made shellfish-free",
   "media": {
-    "emoji": "🍲",
     "hero": {
+      "alt": "Brodetto fish stew with white fish in tomato broth",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/brodetto-fish-stew/hero.jpg",
+      "caption": "brodetto — adriatic stew",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/brodetto-fish-stew/hero.jpg",
-      "alt": "Brodetto fish stew with white fish in tomato broth",
-      "caption": "brodetto — adriatic stew"
-    }
+      ]
+    },
+    "emoji": "🍲"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Multiple white fish varieties together give layered flavor without shellfish.",
-    "Tomato + olive oil + fish = classic Mediterranean diet pillars."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Mixed white fish (cod, halibut, snapper)",
@@ -97,8 +82,7 @@
       "duration": 540,
       "tip": "Fennel adds a sweet anise note — distinct from celery.",
       "media": {
-        "src": "assets/recipes/brodetto-fish-stew/step-01-sweat.jpg",
-        "alt": "Onion and fennel softening",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/brodetto-fish-stew/step-01-sweat.jpg",
         "caption": "sweat aromatics"
       }
     },
@@ -109,8 +93,7 @@
       "duration": 1140,
       "tip": "Reducing the wine first concentrates its flavor.",
       "media": {
-        "src": "assets/recipes/brodetto-fish-stew/step-02-wine.jpg",
-        "alt": "Tomato fish broth simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/brodetto-fish-stew/step-02-wine.jpg",
         "caption": "wine, then tomato"
       }
     },
@@ -121,8 +104,7 @@
       "duration": 360,
       "tip": "Hardest fish goes in first; soft varieties last.",
       "media": {
-        "src": "assets/recipes/brodetto-fish-stew/step-03-fish.jpg",
-        "alt": "Fish poaching in broth",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/brodetto-fish-stew/step-03-fish.jpg",
         "caption": "slip in the fish"
       }
     },
@@ -133,8 +115,7 @@
       "duration": 120,
       "tip": "Toasted bread rubbed with garlic at the bottom of the bowl is the move.",
       "media": {
-        "src": "assets/recipes/brodetto-fish-stew/step-04-plate.jpg",
-        "alt": "Brodetto with parsley and bread",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/brodetto-fish-stew/step-04-plate.jpg",
         "caption": "plate and parsley"
       }
     }
@@ -152,5 +133,18 @@
       "name": "Ladle",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "italian",
+    "mediterranean",
+    "one-pot",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Multiple white fish varieties together give layered flavor without shellfish.",
+    "Tomato + olive oil + fish = classic Mediterranean diet pillars."
   ]
 }

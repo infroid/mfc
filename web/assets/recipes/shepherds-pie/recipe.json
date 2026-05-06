@@ -7,33 +7,21 @@
   "difficulty": "Medium",
   "servings": 6,
   "totalMinutes": 75,
-  "tags": [
-    "non-veg",
-    "high-protein",
-    "nut-free"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Forked-top mash gone golden, gravy beneath, zero nuts",
   "media": {
-    "emoji": "🥧",
     "hero": {
+      "alt": "Shepherd's pie with golden mash topping and bubbling gravy edges",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/shepherds-pie/hero.jpg",
+      "caption": "shepherd's pie — lamb under mash",
       "palette": [
         "#A0522D",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/shepherds-pie/hero.jpg",
-      "alt": "Shepherd's pie with golden mash topping and bubbling gravy edges",
-      "caption": "shepherd's pie — lamb under mash"
-    }
+      ]
+    },
+    "emoji": "🥧"
   },
-  "healthFacts": [
-    "Naturally nut-free — lamb, root veg, and dairy mash, no nuts anywhere.",
-    "Shepherd's pie is lamb; cottage pie is beef. The names matter.",
-    "Mashing in warm milk and butter gives a fluffier mash — cold dairy seizes the starch."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Ground lamb",
@@ -94,8 +82,7 @@
       "duration": 1200,
       "tip": "Pass through a ricer for cloud-like mash. A masher leaves lumps that brown unevenly.",
       "media": {
-        "src": "assets/recipes/shepherds-pie/step-01-mash.jpg",
-        "alt": "Ricing potatoes for mashed topping",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/shepherds-pie/step-01-mash.jpg",
         "caption": "make the mash"
       }
     },
@@ -106,8 +93,7 @@
       "duration": 600,
       "tip": "Lamb fat is strong; pour off all but 1 tbsp before adding aromatics.",
       "media": {
-        "src": "assets/recipes/shepherds-pie/step-02-brown.jpg",
-        "alt": "Browning ground lamb in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/shepherds-pie/step-02-brown.jpg",
         "caption": "brown the lamb"
       }
     },
@@ -118,8 +104,7 @@
       "duration": 480,
       "tip": "The filling should look saucy, not soupy — it'll thicken further in the oven.",
       "media": {
-        "src": "assets/recipes/shepherds-pie/step-03-gravy.jpg",
-        "alt": "Lamb gravy with peas in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/shepherds-pie/step-03-gravy.jpg",
         "caption": "build the gravy"
       }
     },
@@ -130,8 +115,7 @@
       "duration": 1500,
       "tip": "A 30-second broil at the end deepens the peaks of the mash.",
       "media": {
-        "src": "assets/recipes/shepherds-pie/step-04-bake.jpg",
-        "alt": "Baked shepherd's pie with golden mash",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/shepherds-pie/step-04-bake.jpg",
         "caption": "top and bake"
       }
     }
@@ -149,5 +133,15 @@
       "name": "Baking dish",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free — lamb, root veg, and dairy mash, no nuts anywhere.",
+    "Shepherd's pie is lamb; cottage pie is beef. The names matter.",
+    "Mashing in warm milk and butter gives a fluffier mash — cold dairy seizes the starch."
   ]
 }

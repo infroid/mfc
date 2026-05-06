@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 50,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "italian",
-    "one-pot"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Eight vegetables, beans, pasta — no nuts, all season",
   "media": {
-    "emoji": "🥕",
     "hero": {
+      "alt": "Bowl of minestrone with beans, pasta, and chopped vegetables",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/minestrone/hero.jpg",
+      "caption": "minestrone — clear-broth italian vegetable soup",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/minestrone/hero.jpg",
-      "alt": "Bowl of minestrone with beans, pasta, and chopped vegetables",
-      "caption": "minestrone — clear-broth italian vegetable soup"
-    }
+      ]
+    },
+    "emoji": "🥕"
   },
-  "healthFacts": [
-    "Naturally nut-free; loads of fiber from beans and vegetables.",
-    "Cannellini beans add ~13g protein per cup with zero saturated fat.",
-    "Tomato + basil + olive oil is the Mediterranean trio — synergistic antioxidants."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Olive oil",
@@ -100,8 +87,7 @@
       "duration": 540,
       "tip": "Cut everything to the same size — they cook evenly and look like one dish.",
       "media": {
-        "src": "assets/recipes/minestrone/step-01-soffritto.jpg",
-        "alt": "Soffritto cooking in olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/minestrone/step-01-soffritto.jpg",
         "caption": "build the soffritto"
       }
     },
@@ -112,8 +98,7 @@
       "duration": 1200,
       "tip": "A parmesan rind tossed in adds enormous savory depth.",
       "media": {
-        "src": "assets/recipes/minestrone/step-02-broth.jpg",
-        "alt": "Tomato broth simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/minestrone/step-02-broth.jpg",
         "caption": "add tomatoes and stock"
       }
     },
@@ -124,8 +109,7 @@
       "duration": 480,
       "tip": "Mash a quarter of the beans against the pot for natural body.",
       "media": {
-        "src": "assets/recipes/minestrone/step-03-beans.jpg",
-        "alt": "Beans and zucchini in soup",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/minestrone/step-03-beans.jpg",
         "caption": "beans and zucchini"
       }
     },
@@ -136,8 +120,7 @@
       "duration": 480,
       "tip": "Cooking pasta separately and adding portions on serving keeps leftovers from getting bloated.",
       "media": {
-        "src": "assets/recipes/minestrone/step-04-pasta.jpg",
-        "alt": "Minestrone with pasta and basil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/minestrone/step-04-pasta.jpg",
         "caption": "pasta and finish"
       }
     }
@@ -155,5 +138,16 @@
       "name": "Ladle",
       "essential": false
     }
+  ],
+  "tags": [
+    "italian",
+    "nut-free",
+    "one-pot",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free; loads of fiber from beans and vegetables.",
+    "Cannellini beans add ~13g protein per cup with zero saturated fat.",
+    "Tomato + basil + olive oil is the Mediterranean trio — synergistic antioxidants."
   ]
 }

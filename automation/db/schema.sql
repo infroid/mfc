@@ -13,8 +13,31 @@
 --   5. User-owned        — saved recipes, cooking sessions, prefs, meal logs
 --   6. Triggers          — auto-bump updated_at
 --   7. Row Level Security
---   8. Admin             — is_admin() + admin write policies
+--   8. Admin             — list_app_users() + admin/chef write policies
+--
+-- Role helpers is_admin()/is_chef() are defined up-front (section 0) because
+-- catalog policies in section 2 (recipe_owners) reference them.
 -- =============================================================================
+
+
+-- =============================================================================
+-- 0. ROLE HELPERS — defined early so policies in later sections can reference.
+-- JWT app_metadata.role ∈ {'admin','chef'} (or absent for default 'user').
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION public.is_admin() RETURNS boolean AS $$
+  SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin', false);
+$$ LANGUAGE sql STABLE;
+
+COMMENT ON FUNCTION public.is_admin() IS
+  'Returns true when the calling JWT has app_metadata.role = "admin". Used by admin RLS policies.';
+
+CREATE OR REPLACE FUNCTION public.is_chef() RETURNS boolean AS $$
+  SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'chef', false);
+$$ LANGUAGE sql STABLE;
+
+COMMENT ON FUNCTION public.is_chef() IS
+  'Returns true when the calling JWT has app_metadata.role = "chef". Used by chef-ownership RLS policies (sub-project #2).';
 
 
 -- =============================================================================
@@ -591,26 +614,11 @@ CREATE POLICY "recommendations_owner_read" ON public.recommendations
 
 
 -- =============================================================================
--- 8. ADMIN — role gate + write policies for catalog and library
+-- 8. ADMIN — write policies for catalog and library + admin user listing.
 -- JWT app_metadata.role ∈ {'admin','chef'} (or absent for default 'user').
--- is_admin()/is_chef() helpers + list_app_users() for the admin UI.
+-- Role helpers is_admin()/is_chef() are defined in section 0.
 -- See USER-TODO.md §4 for how to grant a role.
 -- =============================================================================
-
-CREATE OR REPLACE FUNCTION public.is_admin() RETURNS boolean AS $$
-  SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin', false);
-$$ LANGUAGE sql STABLE;
-
-COMMENT ON FUNCTION public.is_admin() IS
-  'Returns true when the calling JWT has app_metadata.role = "admin". Used by admin RLS policies.';
-
--- ── role helper for sub-project #2 ─────────────────────────────────────
-CREATE OR REPLACE FUNCTION public.is_chef() RETURNS boolean AS $$
-  SELECT coalesce((auth.jwt() -> 'app_metadata' ->> 'role') = 'chef', false);
-$$ LANGUAGE sql STABLE;
-
-COMMENT ON FUNCTION public.is_chef() IS
-  'Returns true when the calling JWT has app_metadata.role = "chef". Used by chef-ownership RLS policies (sub-project #2).';
 
 -- ── browser-callable admin user listing ────────────────────────────────
 CREATE OR REPLACE FUNCTION public.list_app_users(

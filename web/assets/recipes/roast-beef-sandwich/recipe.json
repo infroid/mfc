@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 25,
-  "tags": [
-    "non-veg",
-    "nut-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Sliced thin, piled tall, sharpened by horseradish",
   "media": {
-    "emoji": "🥪",
     "hero": {
+      "alt": "Tall roast beef sandwich on Kaiser roll with horseradish",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-beef-sandwich/hero.jpg",
+      "caption": "roast beef — sliced thin, piled tall",
       "palette": [
         "#A0522D",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/roast-beef-sandwich/hero.jpg",
-      "alt": "Tall roast beef sandwich on Kaiser roll with horseradish",
-      "caption": "roast beef — sliced thin, piled tall"
-    }
+      ]
+    },
+    "emoji": "🥪"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Top round is one of the leanest beef cuts — ~26g protein per 3oz, low saturated fat.",
-    "Horseradish contains glucosinolates similar to broccoli — pungent and clearing."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Sliced rare roast beef",
@@ -85,8 +72,7 @@
       "duration": 60,
       "tip": "Make this an hour ahead if you can — flavors round out.",
       "media": {
-        "src": "assets/recipes/roast-beef-sandwich/step-01-sauce.jpg",
-        "alt": "Horseradish cream in a bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-beef-sandwich/step-01-sauce.jpg",
         "caption": "whisk the horseradish cream"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 180,
       "tip": "A toasted roll = 50% less sog after assembly.",
       "media": {
-        "src": "assets/recipes/roast-beef-sandwich/step-02-toast.jpg",
-        "alt": "Toasted Kaiser roll halves",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-beef-sandwich/step-02-toast.jpg",
         "caption": "toast the rolls"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 60,
       "tip": "Cold roast beef is fine. Hot roast beef is better.",
       "media": {
-        "src": "assets/recipes/roast-beef-sandwich/step-03-warm.jpg",
-        "alt": "Roast beef warming in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-beef-sandwich/step-03-warm.jpg",
         "caption": "quick-warm the beef"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 120,
       "tip": "Don't squash — air between slices is what makes a deli sandwich crave-worthy.",
       "media": {
-        "src": "assets/recipes/roast-beef-sandwich/step-04-build.jpg",
-        "alt": "Built roast beef sandwich",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-beef-sandwich/step-04-build.jpg",
         "caption": "build and serve"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "non-veg",
+    "nut-free",
+    "quick"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Top round is one of the leanest beef cuts — ~26g protein per 3oz, low saturated fat.",
+    "Horseradish contains glucosinolates similar to broccoli — pungent and clearing."
   ]
 }

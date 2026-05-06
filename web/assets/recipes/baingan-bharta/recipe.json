@@ -7,36 +7,21 @@
   "difficulty": "Medium",
   "servings": 3,
   "totalMinutes": 40,
-  "tags": [
-    "veg",
-    "high-fiber",
-    "low-calorie",
-    "garlic",
-    "onion"
-  ],
-  "color": "#5D4E60",
-  "colorSoft": "rgba(93,78,96,0.18)",
-  "featured": false,
-  "highlight": "Open-flame char gives the dish its smoky body — no shortcut replicates it",
   "media": {
-    "emoji": "🍆",
     "hero": {
+      "alt": "Smoky charred eggplant mash with onion, green chili, and coriander in a kadhai",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baingan-bharta/hero.jpg",
+      "caption": "baingan bharta — smoky, soft, fiber-rich",
       "palette": [
         "#5D4E60",
         "#7A9C5A",
         "#C44536"
-      ],
-      "src": "assets/recipes/baingan-bharta/hero.jpg",
-      "alt": "Smoky charred eggplant mash with onion, green chili, and coriander in a kadhai",
-      "caption": "baingan bharta — smoky, soft, fiber-rich"
-    }
+      ]
+    },
+    "emoji": "🍆"
   },
-  "healthFacts": [
-    "Eggplant is rich in nasunin, an anthocyanin antioxidant that protects cell membranes.",
-    "High-potassium, high-fiber, very low calorie — pairs well with rotis without driving the glucose load up.",
-    "Skin-on cooking preserves most of the polyphenol content.",
-    "No cream or cashew base — one of the leanest North Indian curries."
-  ],
+  "color": "#5D4E60",
+  "colorSoft": "rgba(93,78,96,0.18)",
   "ingredients": [
     {
       "name": "Eggplant (large, round)",
@@ -90,21 +75,33 @@
       "title": "Char the eggplant",
       "detail": "Rub the eggplant with a teaspoon of oil. Roast directly on a gas flame, turning every 2 minutes, until the skin is fully blackened and the inside is soft (12–15 min). Cool, peel off the charred skin, and mash with a fork.",
       "duration": 900,
-      "tip": "Don't skip this — oven roasting works but loses 70% of the smoke flavor."
+      "tip": "Don't skip this — oven roasting works but loses 70% of the smoke flavor.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Sauté the masala",
       "detail": "Heat oil in a kadhai, crackle cumin. Add onion and green chili, cook till translucent. Add ginger-garlic and tomato, cook 6 minutes until tomato breaks down.",
       "duration": 540,
-      "tip": "Mustard oil gives the bharta its classic North Indian profile — heat it till smoking before adding cumin."
+      "tip": "Mustard oil gives the bharta its classic North Indian profile — heat it till smoking before adding cumin.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Combine and simmer",
       "detail": "Tip in the mashed eggplant and salt. Stir-cook on low for 8 minutes — moisture should evaporate and oil should glisten back at the edges. Finish with chopped coriander.",
       "duration": 480,
-      "tip": "Eat hot with phulka or jowar roti — bharta loses its perfume at room temperature."
+      "tip": "Eat hot with phulka or jowar roti — bharta loses its perfume at room temperature.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -120,5 +117,18 @@
       "name": "Fork (for mashing)",
       "essential": false
     }
+  ],
+  "tags": [
+    "garlic",
+    "high-fiber",
+    "low-calorie",
+    "onion",
+    "veg"
+  ],
+  "healthFacts": [
+    "Eggplant is rich in nasunin, an anthocyanin antioxidant that protects cell membranes.",
+    "High-potassium, high-fiber, very low calorie — pairs well with rotis without driving the glucose load up.",
+    "Skin-on cooking preserves most of the polyphenol content.",
+    "No cream or cashew base — one of the leanest North Indian curries."
   ]
 }

@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 15,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "gluten-free",
-    "mediterranean",
-    "quick"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Tapas-bar classic — ten minutes, no soy, no compromise",
   "media": {
-    "emoji": "🍤",
     "hero": {
+      "alt": "Sizzling shrimp in olive oil with garlic and parsley",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/gambas-al-ajillo/hero.jpg",
+      "caption": "gambas al ajillo — tapas-bar",
       "palette": [
         "#F4A261",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/gambas-al-ajillo/hero.jpg",
-      "alt": "Sizzling shrimp in olive oil with garlic and parsley",
-      "caption": "gambas al ajillo — tapas-bar"
-    }
+      ]
+    },
+    "emoji": "🍤"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Shrimp = lean protein, rich in selenium and iodine.",
-    "The garlic-infused olive oil is medicinal-meets-delicious."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Shrimp (peeled, deveined)",
@@ -86,8 +72,7 @@
       "duration": 600,
       "tip": "Dry shrimp = sear, not steam.",
       "media": {
-        "src": "assets/recipes/gambas-al-ajillo/step-01-salt.jpg",
-        "alt": "Shrimp drying with salt",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/gambas-al-ajillo/step-01-salt.jpg",
         "caption": "salt the shrimp"
       }
     },
@@ -98,8 +83,7 @@
       "duration": 240,
       "tip": "If your garlic looks brown, it's about to be bitter. Pull it.",
       "media": {
-        "src": "assets/recipes/gambas-al-ajillo/step-02-garlic.jpg",
-        "alt": "Garlic and chili in olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/gambas-al-ajillo/step-02-garlic.jpg",
         "caption": "slow-bloom the garlic"
       }
     },
@@ -110,8 +94,7 @@
       "duration": 180,
       "tip": "Overcooked shrimp curls into a tight C; perfect shrimp curls into a J.",
       "media": {
-        "src": "assets/recipes/gambas-al-ajillo/step-03-shrimp.jpg",
-        "alt": "Shrimp cooking in garlic oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/gambas-al-ajillo/step-03-shrimp.jpg",
         "caption": "crank and add shrimp"
       }
     },
@@ -122,8 +105,7 @@
       "duration": 60,
       "tip": "The garlic oil at the bottom is the prize. Have crusty bread ready.",
       "media": {
-        "src": "assets/recipes/gambas-al-ajillo/step-04-sherry.jpg",
-        "alt": "Gambas with parsley and bread",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/gambas-al-ajillo/step-04-sherry.jpg",
         "caption": "sherry and serve"
       }
     }
@@ -141,5 +123,17 @@
       "name": "Knife",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "mediterranean",
+    "non-veg",
+    "quick",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Shrimp = lean protein, rich in selenium and iodine.",
+    "The garlic-infused olive oil is medicinal-meets-delicious."
   ]
 }

@@ -7,35 +7,21 @@
   "difficulty": "Medium",
   "servings": 2,
   "totalMinutes": 35,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "italian",
-    "high-protein",
-    "mediterranean"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Whole-fish baking is foolproof — no shellfish, all coast",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Whole branzino baked with tomatoes and olives",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/branzino-sicilian/hero.jpg",
+      "caption": "branzino sicilian — whole-baked",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/branzino-sicilian/hero.jpg",
-      "alt": "Whole branzino baked with tomatoes and olives",
-      "caption": "branzino sicilian — whole-baked"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Whole fish keeps moisture in better than fillets — bones do work.",
-    "Mediterranean baking with olive oil retains polyphenols."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Whole branzino (cleaned)",
@@ -91,8 +77,7 @@
       "duration": 240,
       "tip": "Cavity perfumes the meat from inside out — don't skip the stuffing.",
       "media": {
-        "src": "assets/recipes/branzino-sicilian/step-01-stuff.jpg",
-        "alt": "Branzino stuffed with lemon and herbs",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/branzino-sicilian/step-01-stuff.jpg",
         "caption": "stuff the cavities"
       }
     },
@@ -103,8 +88,7 @@
       "duration": 180,
       "tip": "Tomatoes cook into a silky pan sauce by the end.",
       "media": {
-        "src": "assets/recipes/branzino-sicilian/step-02-bed.jpg",
-        "alt": "Branzino on tomato olive bed",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/branzino-sicilian/step-02-bed.jpg",
         "caption": "build the bed"
       }
     },
@@ -115,8 +99,7 @@
       "duration": 1080,
       "tip": "Don't open the oven early; whole fish needs trapped heat.",
       "media": {
-        "src": "assets/recipes/branzino-sicilian/step-03-roast.jpg",
-        "alt": "Branzino roasting",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/branzino-sicilian/step-03-roast.jpg",
         "caption": "roast hot"
       }
     },
@@ -127,8 +110,7 @@
       "duration": 120,
       "tip": "Lift the top fillet, then the spine, then the bottom fillet — easier than it sounds.",
       "media": {
-        "src": "assets/recipes/branzino-sicilian/step-04-plate.jpg",
-        "alt": "Branzino plated whole",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/branzino-sicilian/step-04-plate.jpg",
         "caption": "plate and squeeze"
       }
     }
@@ -146,5 +128,17 @@
       "name": "Tongs",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "italian",
+    "mediterranean",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Whole fish keeps moisture in better than fillets — bones do work.",
+    "Mediterranean baking with olive oil retains polyphenols."
   ]
 }

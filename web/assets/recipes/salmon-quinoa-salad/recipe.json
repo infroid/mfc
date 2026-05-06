@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein",
-    "gluten-free",
-    "mediterranean"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Make-ahead lunch bowl — improves overnight, no shellfish",
   "media": {
-    "emoji": "🥗",
     "hero": {
+      "alt": "Quinoa salad with flaked salmon, cucumber, herbs",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-quinoa-salad/hero.jpg",
+      "caption": "salmon quinoa — bright bowl",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/salmon-quinoa-salad/hero.jpg",
-      "alt": "Quinoa salad with flaked salmon, cucumber, herbs",
-      "caption": "salmon quinoa — bright bowl"
-    }
+      ]
+    },
+    "emoji": "🥗"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Salmon + quinoa = complete protein with omega-3s and slow carbs.",
-    "Tahini adds calcium and rounds out the lemon's brightness."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Salmon fillet",
@@ -96,8 +82,7 @@
       "duration": 1200,
       "tip": "Rinsing quinoa first removes saponins (the bitter coating).",
       "media": {
-        "src": "assets/recipes/salmon-quinoa-salad/step-01-quinoa.jpg",
-        "alt": "Cooking quinoa in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-quinoa-salad/step-01-quinoa.jpg",
         "caption": "cook quinoa"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 720,
       "tip": "Cooked salmon flakes cleanly if you push parallel to the lines, not across.",
       "media": {
-        "src": "assets/recipes/salmon-quinoa-salad/step-02-salmon.jpg",
-        "alt": "Cooking salmon for flaking",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-quinoa-salad/step-02-salmon.jpg",
         "caption": "cook the salmon"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 120,
       "tip": "Tahini will seize, then loosen with more water — don't panic.",
       "media": {
-        "src": "assets/recipes/salmon-quinoa-salad/step-03-tahini.jpg",
-        "alt": "Lemon tahini sauce",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-quinoa-salad/step-03-tahini.jpg",
         "caption": "whisk lemon-tahini"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 180,
       "tip": "Hold dressing back when packing for tomorrow's lunch — wait until eating.",
       "media": {
-        "src": "assets/recipes/salmon-quinoa-salad/step-04-fold.jpg",
-        "alt": "Salmon quinoa salad mixed",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-quinoa-salad/step-04-fold.jpg",
         "caption": "fold and finish"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "mediterranean",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Salmon + quinoa = complete protein with omega-3s and slow carbs.",
+    "Tahini adds calcium and rounds out the lemon's brightness."
   ]
 }

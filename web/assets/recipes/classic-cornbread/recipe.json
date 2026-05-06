@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 8,
   "totalMinutes": 30,
-  "tags": [
-    "vegetarian",
-    "soy-free",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.20)",
-  "featured": false,
-  "highlight": "Hot pan, cold batter — crackly crust every time",
   "media": {
-    "emoji": "🌽",
     "hero": {
+      "alt": "Wedge of cornbread with crisp crust in cast iron",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-cornbread/hero.jpg",
+      "caption": "cornbread — cast-iron crisp",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/classic-cornbread/hero.jpg",
-      "alt": "Wedge of cornbread with crisp crust in cast iron",
-      "caption": "cornbread — cast-iron crisp"
-    }
+      ]
+    },
+    "emoji": "🌽"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Whole-grain cornmeal retains the germ — fiber and antioxidants intact.",
-    "Buttermilk's acid activates leavening for tall, tender cornbread."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.20)",
   "ingredients": [
     {
       "name": "Yellow cornmeal",
@@ -89,8 +77,7 @@
       "duration": 600,
       "tip": "Cold pan = sad bottom. Hot pan = crackly crust.",
       "media": {
-        "src": "assets/recipes/classic-cornbread/step-01-preheat.jpg",
-        "alt": "Cast iron preheating in oven",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-cornbread/step-01-preheat.jpg",
         "caption": "preheat cast iron"
       }
     },
@@ -101,8 +88,7 @@
       "duration": 120,
       "tip": "Hot melted butter scrambles the eggs — let it cool.",
       "media": {
-        "src": "assets/recipes/classic-cornbread/step-02-mix.jpg",
-        "alt": "Mixing cornbread batter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-cornbread/step-02-mix.jpg",
         "caption": "whisk dry, then wet"
       }
     },
@@ -113,8 +99,7 @@
       "duration": 60,
       "tip": "Smooth = chewy. Lumpy = tender.",
       "media": {
-        "src": "assets/recipes/classic-cornbread/step-03-combine.jpg",
-        "alt": "Cornbread batter in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-cornbread/step-03-combine.jpg",
         "caption": "combine, leave lumpy"
       }
     },
@@ -125,8 +110,7 @@
       "duration": 1320,
       "tip": "The sizzle when the batter hits the pan is the sound of victory.",
       "media": {
-        "src": "assets/recipes/classic-cornbread/step-04-bake.jpg",
-        "alt": "Cornbread baking in cast iron",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-cornbread/step-04-bake.jpg",
         "caption": "pour into screaming pan"
       }
     }
@@ -144,5 +128,15 @@
       "name": "Mixing bowls",
       "essential": true
     }
+  ],
+  "tags": [
+    "quick",
+    "soy-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Whole-grain cornmeal retains the germ — fiber and antioxidants intact.",
+    "Buttermilk's acid activates leavening for tall, tender cornbread."
   ]
 }

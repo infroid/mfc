@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 20,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "asian",
-    "quick"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "No eggs in the sauce or veg — just the wok and a splash of soy",
   "media": {
-    "emoji": "🥦",
     "hero": {
+      "alt": "Stir-fried vegetables glossed in dark sauce",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/veggie-stir-fry-eggfree/hero.jpg",
+      "caption": "stir-fry — wok-charred",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/veggie-stir-fry-eggfree/hero.jpg",
-      "alt": "Stir-fried vegetables glossed in dark sauce",
-      "caption": "stir-fry — wok-charred"
-    }
+      ]
+    },
+    "emoji": "🥦"
   },
-  "healthFacts": [
-    "Naturally egg-free.",
-    "High-heat wok cooking preserves crunch and most heat-sensitive vitamins.",
-    "Sesame oil is finishing oil — its flavor breaks down at high heat."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Broccoli florets",
@@ -96,8 +82,7 @@
       "duration": 480,
       "tip": "If you're chopping while it cooks, you've already lost.",
       "media": {
-        "src": "assets/recipes/veggie-stir-fry-eggfree/step-01-mise.jpg",
-        "alt": "Prepped stir-fry ingredients",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/veggie-stir-fry-eggfree/step-01-mise.jpg",
         "caption": "mise en place"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 180,
       "tip": "Wok should smoke a bit — that's the breath of fire (wok hei).",
       "media": {
-        "src": "assets/recipes/veggie-stir-fry-eggfree/step-02-sear.jpg",
-        "alt": "Searing broccoli in wok",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/veggie-stir-fry-eggfree/step-02-sear.jpg",
         "caption": "sear hard veg"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 120,
       "tip": "Aromatics on bare wok keeps them from steaming under the veg.",
       "media": {
-        "src": "assets/recipes/veggie-stir-fry-eggfree/step-03-tender.jpg",
-        "alt": "Adding peppers and snap peas",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/veggie-stir-fry-eggfree/step-03-tender.jpg",
         "caption": "add tender veg"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 60,
       "tip": "Sauce too thick? Splash water. Too thin? Cook 30 sec more.",
       "media": {
-        "src": "assets/recipes/veggie-stir-fry-eggfree/step-04-sauce.jpg",
-        "alt": "Glossy stir-fry in wok",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/veggie-stir-fry-eggfree/step-04-sauce.jpg",
         "caption": "sauce and finish"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Small bowl for sauce",
       "essential": false
     }
+  ],
+  "tags": [
+    "asian",
+    "egg-free",
+    "quick",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free.",
+    "High-heat wok cooking preserves crunch and most heat-sensitive vitamins.",
+    "Sesame oil is finishing oil — its flavor breaks down at high heat."
   ]
 }

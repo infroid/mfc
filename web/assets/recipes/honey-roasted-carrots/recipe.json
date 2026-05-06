@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "soy-free",
-    "gluten-free",
-    "quick"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Caramelized edges, tender middles — naturally soy-free",
   "media": {
-    "emoji": "🥕",
     "hero": {
+      "alt": "Roasted whole carrots with honey glaze and thyme",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/honey-roasted-carrots/hero.jpg",
+      "caption": "honey carrots — caramelized whole",
       "palette": [
         "#F4A261",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/honey-roasted-carrots/hero.jpg",
-      "alt": "Roasted whole carrots with honey glaze and thyme",
-      "caption": "honey carrots — caramelized whole"
-    }
+      ]
+    },
+    "emoji": "🥕"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Carrots' beta-carotene becomes more available with cooking and fat.",
-    "Honey caramelizes around 320°F, faster than sugar — risk of burn at high heat."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Whole young carrots",
@@ -85,8 +72,7 @@
       "duration": 240,
       "tip": "Whole carrots roast prettier; halve only the fat ones.",
       "media": {
-        "src": "assets/recipes/honey-roasted-carrots/step-01-trim.jpg",
-        "alt": "Trimmed carrots on board",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/honey-roasted-carrots/step-01-trim.jpg",
         "caption": "trim and dry"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 1200,
       "tip": "Don't crowd. One layer; otherwise they steam.",
       "media": {
-        "src": "assets/recipes/honey-roasted-carrots/step-02-roast.jpg",
-        "alt": "Carrots roasting on sheet pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/honey-roasted-carrots/step-02-roast.jpg",
         "caption": "toss and roast"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 60,
       "tip": "Glaze at the end — honey burns if added at the start of roasting.",
       "media": {
-        "src": "assets/recipes/honey-roasted-carrots/step-03-glaze.jpg",
-        "alt": "Honey butter glaze drizzling",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/honey-roasted-carrots/step-03-glaze.jpg",
         "caption": "honey-butter glaze"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 300,
       "tip": "A pinch of flaky salt over the glaze hits all the right notes.",
       "media": {
-        "src": "assets/recipes/honey-roasted-carrots/step-04-finish.jpg",
-        "alt": "Finished honey carrots",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/honey-roasted-carrots/step-04-finish.jpg",
         "caption": "roast 5 more, finish"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Tongs",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "quick",
+    "soy-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Carrots' beta-carotene becomes more available with cooking and fat.",
+    "Honey caramelizes around 320°F, faster than sugar — risk of burn at high heat."
   ]
 }

@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "mediterranean",
-    "gluten-free"
-  ],
-  "color": "#3A332A",
-  "colorSoft": "rgba(58,51,42,0.16)",
-  "featured": false,
-  "highlight": "Burnt-skin eggplant gives the haunting smoke; no eggs anywhere",
   "media": {
-    "emoji": "🍆",
     "hero": {
+      "alt": "Baba ganoush plated with olive oil pool and pomegranate",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baba-ganoush/hero.jpg",
+      "caption": "baba ganoush — smoky and lush",
       "palette": [
         "#3A332A",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/baba-ganoush/hero.jpg",
-      "alt": "Baba ganoush plated with olive oil pool and pomegranate",
-      "caption": "baba ganoush — smoky and lush"
-    }
+      ]
+    },
+    "emoji": "🍆"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan.",
-    "Charred-skin eggplant infuses smoke without an open fire.",
-    "Pomegranate seeds add tang and a hit of polyphenols."
-  ],
+  "color": "#3A332A",
+  "colorSoft": "rgba(58,51,42,0.16)",
   "ingredients": [
     {
       "name": "Large eggplants",
@@ -86,8 +72,7 @@
       "duration": 900,
       "tip": "Burnt skin = smoke. Don't be polite about the char.",
       "media": {
-        "src": "assets/recipes/baba-ganoush/step-01-char.jpg",
-        "alt": "Eggplant charring over flame",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baba-ganoush/step-01-char.jpg",
         "caption": "char the eggplant"
       }
     },
@@ -98,8 +83,7 @@
       "duration": 1200,
       "tip": "Wet eggplant = watery dip. Don't rush this drain.",
       "media": {
-        "src": "assets/recipes/baba-ganoush/step-02-drain.jpg",
-        "alt": "Eggplant pulp draining in colander",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baba-ganoush/step-02-drain.jpg",
         "caption": "drain pulp"
       }
     },
@@ -110,8 +94,7 @@
       "duration": 180,
       "tip": "Texture is the whole point. Blender = baby food.",
       "media": {
-        "src": "assets/recipes/baba-ganoush/step-03-mash.jpg",
-        "alt": "Mashing eggplant with tahini",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baba-ganoush/step-03-mash.jpg",
         "caption": "mash, don't blend"
       }
     },
@@ -122,8 +105,7 @@
       "duration": 120,
       "tip": "Tastes better the next day — flavors deepen overnight.",
       "media": {
-        "src": "assets/recipes/baba-ganoush/step-04-pool.jpg",
-        "alt": "Baba ganoush plated with olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baba-ganoush/step-04-pool.jpg",
         "caption": "pool oil and top"
       }
     }
@@ -141,5 +123,17 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "mediterranean",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Charred-skin eggplant infuses smoke without an open fire.",
+    "Pomegranate seeds add tang and a hit of polyphenols."
   ]
 }

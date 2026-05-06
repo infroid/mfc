@@ -7,37 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 60,
-  "tags": [
-    "veg",
-    "leafy-greens",
-    "high-iron",
-    "high-folate",
-    "vitamin-k",
-    "garlic"
-  ],
-  "color": "#4A7C2A",
-  "colorSoft": "rgba(74,124,42,0.18)",
-  "featured": false,
-  "highlight": "Long simmer + makki di roti — calcium oxalate breaks down, minerals stay",
   "media": {
-    "emoji": "🥬",
     "hero": {
+      "alt": "Bowl of dark-green mustard greens stew with a spoon of white butter melting on top",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/sarson-saag/hero.jpg",
+      "caption": "sarson da saag — mustard greens, slow-cooked",
       "palette": [
         "#4A7C2A",
         "#7A9C5A",
         "#E9C46A"
-      ],
-      "src": "assets/recipes/sarson-saag/hero.jpg",
-      "alt": "Bowl of dark-green mustard greens stew with a spoon of white butter melting on top",
-      "caption": "sarson da saag — mustard greens, slow-cooked"
-    }
+      ]
+    },
+    "emoji": "🥬"
   },
-  "healthFacts": [
-    "Mustard greens deliver 144µg vitamin K per cup — far above the daily target.",
-    "Combined with spinach and bathua, this dish hits 30% of daily iron and folate.",
-    "Slow simmer reduces oxalate load so the calcium and iron stay bioavailable.",
-    "Mustard's glucosinolates support liver phase-2 detox enzymes."
-  ],
+  "color": "#4A7C2A",
+  "colorSoft": "rgba(74,124,42,0.18)",
   "ingredients": [
     {
       "name": "Mustard greens (sarson)",
@@ -96,21 +80,33 @@
       "title": "Boil the greens",
       "detail": "Wash all greens thoroughly. Pressure cook with 1.5 cups water and salt for 4 whistles. Let pressure release naturally. Cool slightly and blitz with a hand blender to a coarse purée.",
       "duration": 1500,
-      "tip": "A coarse purée — not silky-smooth — keeps the rustic Punjabi texture."
+      "tip": "A coarse purée — not silky-smooth — keeps the rustic Punjabi texture.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Cook with cornmeal",
       "detail": "Pour the purée back into a heavy pot. Stir in cornmeal slurry (2 tbsp cornmeal + ¼ cup water). Simmer gently on low for 25 minutes, stirring every 5 minutes — the saag should darken and thicken.",
       "duration": 1500,
-      "tip": "Cornmeal thickens AND soaks up the bitterness from raw mustard."
+      "tip": "Cornmeal thickens AND soaks up the bitterness from raw mustard.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Final tadka",
       "detail": "Heat ghee in a small pan. Add chopped onion, ginger, garlic, and green chili. Cook till golden. Pour over the saag, stir half through, leave half on top. Serve with makki di roti and a knob of white butter.",
       "duration": 360,
-      "tip": "Saag tastes better the next day — refrigerate, reheat with a splash of water."
+      "tip": "Saag tastes better the next day — refrigerate, reheat with a splash of water.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -130,5 +126,19 @@
       "name": "Tadka pan",
       "essential": false
     }
+  ],
+  "tags": [
+    "garlic",
+    "high-folate",
+    "high-iron",
+    "leafy-greens",
+    "veg",
+    "vitamin-k"
+  ],
+  "healthFacts": [
+    "Mustard greens deliver 144µg vitamin K per cup — far above the daily target.",
+    "Combined with spinach and bathua, this dish hits 30% of daily iron and folate.",
+    "Slow simmer reduces oxalate load so the calcium and iron stay bioavailable.",
+    "Mustard's glucosinolates support liver phase-2 detox enzymes."
   ]
 }

@@ -7,37 +7,21 @@
   "difficulty": "Medium",
   "servings": 3,
   "totalMinutes": 30,
-  "tags": [
-    "non-veg",
-    "seafood",
-    "high-zinc",
-    "high-b12",
-    "coconut",
-    "garlic"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Add prawns last and cook just 4 minutes — they go rubbery in seconds past that",
   "media": {
-    "emoji": "🦐",
     "hero": {
+      "alt": "Pink prawns in a creamy yellow coconut curry with curry leaves",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/prawn-curry/hero.jpg",
+      "caption": "prawn curry — coconut, curry leaf, light",
       "palette": [
         "#F4A261",
         "#E76F51",
         "#FBF7EE"
-      ],
-      "src": "assets/recipes/prawn-curry/hero.jpg",
-      "alt": "Pink prawns in a creamy yellow coconut curry with curry leaves",
-      "caption": "prawn curry — coconut, curry leaf, light"
-    }
+      ]
+    },
+    "emoji": "🦐"
   },
-  "healthFacts": [
-    "100g prawns: 1.6mg zinc, 0.4mg copper, 38µg selenium — trace minerals fully covered.",
-    "Vitamin B12 content (1.5µg/100g) supports nerves and red blood cells.",
-    "Iodine from shellfish supports thyroid hormone synthesis (TSH-relevant).",
-    "Astaxanthin (the pink pigment) is a potent antioxidant; survives gentle cooking."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Prawns (deveined, peeled)",
@@ -101,21 +85,33 @@
       "title": "Marinate the prawns",
       "detail": "Toss prawns with ¼ tsp turmeric, ¼ tsp salt, ¼ tsp Kashmiri chili. Set aside while you make the gravy.",
       "duration": 60,
-      "tip": "Pre-seasoned prawns hold flavour better than seasoning the gravy alone."
+      "tip": "Pre-seasoned prawns hold flavour better than seasoning the gravy alone.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Build the gravy",
       "detail": "Heat coconut oil. Crackle mustard seeds, add curry leaves, then onion. Cook till golden. Add ginger-garlic, then tomato, remaining turmeric and chili. Cook 5 minutes till tomato breaks down.",
       "duration": 540,
-      "tip": "Cook the masala dry first — adding coconut milk to under-cooked masala = flat curry."
+      "tip": "Cook the masala dry first — adding coconut milk to under-cooked masala = flat curry.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Add coconut milk and prawns",
       "detail": "Pour in coconut milk, bring to a gentle simmer. Slip in the prawns and cook on low for 3–4 minutes till they just turn pink and curl. Pull off the heat. Serve with steamed rice.",
       "duration": 240,
-      "tip": "Don't boil coconut milk — it splits. Keep it on the lowest simmer."
+      "tip": "Don't boil coconut milk — it splits. Keep it on the lowest simmer.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -131,5 +127,19 @@
       "name": "Sharp knife",
       "essential": false
     }
+  ],
+  "tags": [
+    "coconut",
+    "garlic",
+    "high-b12",
+    "high-zinc",
+    "non-veg",
+    "seafood"
+  ],
+  "healthFacts": [
+    "100g prawns: 1.6mg zinc, 0.4mg copper, 38µg selenium — trace minerals fully covered.",
+    "Vitamin B12 content (1.5µg/100g) supports nerves and red blood cells.",
+    "Iodine from shellfish supports thyroid hormone synthesis (TSH-relevant).",
+    "Astaxanthin (the pink pigment) is a potent antioxidant; survives gentle cooking."
   ]
 }

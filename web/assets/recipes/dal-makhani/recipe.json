@@ -7,39 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 45,
-  "tags": [
-    "vegetarian",
-    "high-protein",
-    "high-fiber",
-    "dairy",
-    "onion",
-    "garlic"
-  ],
-  "color": "#8B5E3C",
-  "colorSoft": "rgba(139,94,60,0.14)",
-  "featured": false,
-  "highlight": "18g plant protein per bowl",
   "media": {
-    "emoji": "🫘",
     "hero": {
+      "alt": "Dal makhani in a cream ceramic bowl with cream swirl and melting butter",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/hero.jpg",
+      "caption": "dal makhani — slow-simmered lentils, cream, butter",
       "palette": [
         "#8B5E3C",
         "#C9813A",
         "#F4A261"
-      ],
-      "src": "assets/recipes/dal-makhani/hero.jpg",
-      "alt": "Dal makhani in a cream ceramic bowl with cream swirl and melting butter",
-      "caption": "dal makhani — slow-simmered lentils, cream, butter"
-    }
+      ]
+    },
+    "emoji": "🫘"
   },
-  "healthFacts": [
-    "Black urad dal delivers ~18g plant protein per cup — higher than most other lentils.",
-    "The slow simmer breaks down phytates, making the iron in lentils more bioavailable.",
-    "Kidney beans (rajma) add fiber that feeds beneficial gut bacteria.",
-    "Butter contains butyrate — a short-chain fatty acid that supports gut lining health.",
-    "Ginger and cumin in the tempering have well-documented anti-inflammatory properties.",
-    "A lower-fat version: use 1 tbsp butter instead of 3 and stir in 2 tbsp yogurt off-heat."
-  ],
+  "color": "#8B5E3C",
+  "colorSoft": "rgba(139,94,60,0.14)",
   "ingredients": [
     {
       "name": "Black urad dal (whole)",
@@ -110,8 +92,7 @@
       "duration": 28800,
       "tip": "Soaking reduces cooking time significantly and breaks down gas-causing compounds.",
       "media": {
-        "src": "assets/recipes/dal-makhani/step-01-soak-overnight.jpg",
-        "alt": "Black urad dal and rajma soaking together in water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/step-01-soak-overnight.jpg",
         "caption": "Overnight soak"
       }
     },
@@ -122,8 +103,7 @@
       "duration": 2400,
       "tip": "Dal Makhani's creaminess comes from partially mashed dal. Don't drain the cooking water.",
       "media": {
-        "src": "assets/recipes/dal-makhani/step-02-pressure-cook.jpg",
-        "alt": "Soft pressure-cooked urad dal and rajma in starchy cooking water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/step-02-pressure-cook.jpg",
         "caption": "Soft cooked lentils"
       }
     },
@@ -134,8 +114,7 @@
       "duration": 720,
       "tip": "The masala is ready when you see the fat pooling at the edges of the pan.",
       "media": {
-        "src": "assets/recipes/dal-makhani/step-03-tomato-base.jpg",
-        "alt": "Tomato-onion masala reducing in butter with oil separating at the edges",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/step-03-tomato-base.jpg",
         "caption": "Jammy tomato base"
       }
     },
@@ -146,8 +125,7 @@
       "duration": 180,
       "tip": "The more you mash, the creamier the final texture. Aim for about 30% mashed.",
       "media": {
-        "src": "assets/recipes/dal-makhani/step-04-combine-simmer.jpg",
-        "alt": "Cooked lentils and rajma stirred into tomato masala with a ladle",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/step-04-combine-simmer.jpg",
         "caption": "Dal folded into masala"
       }
     },
@@ -158,8 +136,7 @@
       "duration": 1500,
       "tip": "Restaurant dal makhani simmers for 4–6 hours. 20 minutes is the home minimum.",
       "media": {
-        "src": "assets/recipes/dal-makhani/step-05-low-and-slow.jpg",
-        "alt": "Dal makhani simmering uncovered with slow bubbles in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/step-05-low-and-slow.jpg",
         "caption": "Low, slow simmer"
       }
     },
@@ -170,8 +147,7 @@
       "duration": 300,
       "tip": "Cold butter stirred in off-heat gives a glossy, restaurant-like finish.",
       "media": {
-        "src": "assets/recipes/dal-makhani/step-06-butter-cream-finish.jpg",
-        "alt": "Glossy dal makhani finished with cream, butter, and a brass ladle",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dal-makhani/step-06-butter-cream-finish.jpg",
         "caption": "Butter and cream finish"
       }
     }
@@ -193,5 +169,21 @@
       "name": "Ladle",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "garlic",
+    "high-fiber",
+    "high-protein",
+    "onion",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Black urad dal delivers ~18g plant protein per cup — higher than most other lentils.",
+    "The slow simmer breaks down phytates, making the iron in lentils more bioavailable.",
+    "Kidney beans (rajma) add fiber that feeds beneficial gut bacteria.",
+    "Butter contains butyrate — a short-chain fatty acid that supports gut lining health.",
+    "Ginger and cumin in the tempering have well-documented anti-inflammatory properties.",
+    "A lower-fat version: use 1 tbsp butter instead of 3 and stir in 2 tbsp yogurt off-heat."
   ]
 }

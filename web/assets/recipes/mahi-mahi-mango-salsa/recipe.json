@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 25,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Tropical heat and sweet — mahi has the meatiness for big salsa",
   "media": {
-    "emoji": "🥭",
     "hero": {
+      "alt": "Mahi mahi topped with mango salsa and lime",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mahi-mahi-mango-salsa/hero.jpg",
+      "caption": "mahi & mango — tropical pop",
       "palette": [
         "#F4A261",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/mahi-mahi-mango-salsa/hero.jpg",
-      "alt": "Mahi mahi topped with mango salsa and lime",
-      "caption": "mahi & mango — tropical pop"
-    }
+      ]
+    },
+    "emoji": "🥭"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Mahi mahi is lean, firm, and low-mercury — versatile fish.",
-    "Mango is rich in vitamin C and beta-carotene; pairing with fish ups iron absorption."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Mahi mahi fillets",
@@ -95,8 +82,7 @@
       "duration": 600,
       "tip": "Rest is the difference between salsa and chopped fruit.",
       "media": {
-        "src": "assets/recipes/mahi-mahi-mango-salsa/step-01-salsa.jpg",
-        "alt": "Mango salsa in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mahi-mahi-mango-salsa/step-01-salsa.jpg",
         "caption": "make the salsa"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 60,
       "tip": "Cumin + paprika = warm spice that lifts the salsa's brightness.",
       "media": {
-        "src": "assets/recipes/mahi-mahi-mango-salsa/step-02-spice.jpg",
-        "alt": "Mahi rubbed with spices",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mahi-mahi-mango-salsa/step-02-spice.jpg",
         "caption": "spice the fish"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 480,
       "tip": "Mahi is firm — no need to baby. It can take a hard sear.",
       "media": {
-        "src": "assets/recipes/mahi-mahi-mango-salsa/step-03-sear.jpg",
-        "alt": "Mahi searing in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mahi-mahi-mango-salsa/step-03-sear.jpg",
         "caption": "pan-sear"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 60,
       "tip": "Eat with rice and beans — Caribbean platter complete.",
       "media": {
-        "src": "assets/recipes/mahi-mahi-mango-salsa/step-04-plate.jpg",
-        "alt": "Mahi mahi plated with mango salsa",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mahi-mahi-mango-salsa/step-04-plate.jpg",
         "caption": "top and squeeze"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Knife",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Mahi mahi is lean, firm, and low-mercury — versatile fish.",
+    "Mango is rich in vitamin C and beta-carotene; pairing with fish ups iron absorption."
   ]
 }

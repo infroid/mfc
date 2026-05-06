@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "mexican",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Tomatoes, olives, capers — Spanish-Mexican coastal, no shellfish",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Tilapia in red Veracruz sauce with olives and capers",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-veracruz/hero.jpg",
+      "caption": "veracruz — tomato, olive, caper",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/tilapia-veracruz/hero.jpg",
-      "alt": "Tilapia in red Veracruz sauce with olives and capers",
-      "caption": "veracruz — tomato, olive, caper"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Tilapia is mild and lean — takes on whatever sauce surrounds it.",
-    "Olives + capers contribute polyphenols and salt without added sodium."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Tilapia fillets",
@@ -96,8 +82,7 @@
       "duration": 900,
       "tip": "Cook off some of the canned tomato sharpness before adding fish.",
       "media": {
-        "src": "assets/recipes/tilapia-veracruz/step-01-sauce.jpg",
-        "alt": "Veracruz sauce simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-veracruz/step-01-sauce.jpg",
         "caption": "build the sauce"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 180,
       "tip": "Saltiness builds: taste before adding any extra salt.",
       "media": {
-        "src": "assets/recipes/tilapia-veracruz/step-02-olives.jpg",
-        "alt": "Olives and capers added to sauce",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-veracruz/step-02-olives.jpg",
         "caption": "olives, capers, jalapeño"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 480,
       "tip": "Don't flip — the fish breaks. Just spoon sauce over.",
       "media": {
-        "src": "assets/recipes/tilapia-veracruz/step-03-nestle.jpg",
-        "alt": "Tilapia poaching in sauce",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-veracruz/step-03-nestle.jpg",
         "caption": "nestle the fish"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 60,
       "tip": "A dose of lime over each portion sharpens the whole dish.",
       "media": {
-        "src": "assets/recipes/tilapia-veracruz/step-04-serve.jpg",
-        "alt": "Tilapia veracruz with cilantro",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tilapia-veracruz/step-04-serve.jpg",
         "caption": "cilantro and serve"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Spatula",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "mexican",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Tilapia is mild and lean — takes on whatever sauce surrounds it.",
+    "Olives + capers contribute polyphenols and salt without added sodium."
   ]
 }

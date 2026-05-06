@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 30,
-  "tags": [
-    "non-veg",
-    "nut-free",
-    "high-protein",
-    "gluten-free"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.16)",
-  "featured": false,
-  "highlight": "A whole meal in a bowl — protein, fat, fiber, no nuts",
   "media": {
-    "emoji": "🥗",
     "hero": {
+      "alt": "Cobb salad with rows of chicken, bacon, egg, avocado, and tomato",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cobb-salad/hero.jpg",
+      "caption": "cobb — striped, plentiful",
       "palette": [
         "#F4A261",
         "#7A9C5A",
         "#3A332A"
-      ],
-      "src": "assets/recipes/cobb-salad/hero.jpg",
-      "alt": "Cobb salad with rows of chicken, bacon, egg, avocado, and tomato",
-      "caption": "cobb — striped, plentiful"
-    }
+      ]
+    },
+    "emoji": "🥗"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Protein-balanced: chicken + bacon + egg + cheese keeps you full for hours.",
-    "Avocado adds monounsaturated fat that helps absorb the fat-soluble vitamins."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.16)",
   "ingredients": [
     {
       "name": "Romaine and butter lettuce mix",
@@ -95,8 +82,7 @@
       "duration": 720,
       "tip": "Peel eggs while still slightly warm — shells slip off cleanly.",
       "media": {
-        "src": "assets/recipes/cobb-salad/step-01-bacon.jpg",
-        "alt": "Bacon cooking and eggs in ice water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cobb-salad/step-01-bacon.jpg",
         "caption": "cook bacon and eggs"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 120,
       "tip": "Cobb is traditional with blue-cheese dressing too — drop a few crumbles into the vinaigrette.",
       "media": {
-        "src": "assets/recipes/cobb-salad/step-02-dressing.jpg",
-        "alt": "Whisking vinaigrette",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cobb-salad/step-02-dressing.jpg",
         "caption": "whisk vinaigrette"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 240,
       "tip": "Photographic Cobb is striped; eaten Cobb is tossed. Either is correct.",
       "media": {
-        "src": "assets/recipes/cobb-salad/step-03-stripe.jpg",
-        "alt": "Cobb salad arranged in stripes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cobb-salad/step-03-stripe.jpg",
         "caption": "stripe the salad"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 30,
       "tip": "Dressing on the side keeps leftovers viable for next-day lunch.",
       "media": {
-        "src": "assets/recipes/cobb-salad/step-04-dress.jpg",
-        "alt": "Drizzling Cobb salad with vinaigrette",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cobb-salad/step-04-dress.jpg",
         "caption": "dress at the table"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Wide bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Protein-balanced: chicken + bacon + egg + cheese keeps you full for hours.",
+    "Avocado adds monounsaturated fat that helps absorb the fat-soluble vitamins."
   ]
 }

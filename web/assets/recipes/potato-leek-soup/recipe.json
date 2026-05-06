@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 40,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "gluten-free"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Three vegetables, silken texture, naturally nut-free",
   "media": {
-    "emoji": "🥣",
     "hero": {
+      "alt": "Bowl of potato leek soup with chive garnish and cream swirl",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-leek-soup/hero.jpg",
+      "caption": "potato leek — silky and pale",
       "palette": [
         "#7A9C5A",
         "#F4D67A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/potato-leek-soup/hero.jpg",
-      "alt": "Bowl of potato leek soup with chive garnish and cream swirl",
-      "caption": "potato leek — silky and pale"
-    }
+      ]
+    },
+    "emoji": "🥣"
   },
-  "healthFacts": [
-    "Naturally nut-free, gluten-free, vegetarian.",
-    "Leeks are rich in inulin — prebiotic fiber that feeds gut bacteria.",
-    "Yukon gold potatoes blend smoother than russets thanks to their lower starch content."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Leeks (white and pale green)",
@@ -84,8 +72,7 @@
       "duration": 480,
       "tip": "Leeks hide grit between layers. Two-stage washing saves the soup.",
       "media": {
-        "src": "assets/recipes/potato-leek-soup/step-01-clean.jpg",
-        "alt": "Sliced leeks soaking in water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-leek-soup/step-01-clean.jpg",
         "caption": "clean and slice leeks"
       }
     },
@@ -96,8 +83,7 @@
       "duration": 600,
       "tip": "No color — you want sweet, not toasty.",
       "media": {
-        "src": "assets/recipes/potato-leek-soup/step-02-sweat.jpg",
-        "alt": "Leeks sweating in butter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-leek-soup/step-02-sweat.jpg",
         "caption": "sweat the leeks"
       }
     },
@@ -108,8 +94,7 @@
       "duration": 1200,
       "tip": "Don't boil hard — broken cells release excess starch and turn the soup gluey.",
       "media": {
-        "src": "assets/recipes/potato-leek-soup/step-03-simmer.jpg",
-        "alt": "Potato leek simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-leek-soup/step-03-simmer.jpg",
         "caption": "simmer with potatoes"
       }
     },
@@ -120,8 +105,7 @@
       "duration": 120,
       "tip": "Immersion blender works fine; for restaurant-smooth, pass through a fine sieve.",
       "media": {
-        "src": "assets/recipes/potato-leek-soup/step-04-blend.jpg",
-        "alt": "Blended soup with chives",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/potato-leek-soup/step-04-blend.jpg",
         "caption": "blend and finish"
       }
     }
@@ -139,5 +123,15 @@
       "name": "Fine sieve",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "nut-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free, gluten-free, vegetarian.",
+    "Leeks are rich in inulin — prebiotic fiber that feeds gut bacteria.",
+    "Yukon gold potatoes blend smoother than russets thanks to their lower starch content."
   ]
 }

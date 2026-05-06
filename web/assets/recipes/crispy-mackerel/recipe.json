@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 20,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "asian",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#3A332A",
-  "colorSoft": "rgba(58,51,42,0.16)",
-  "featured": false,
-  "highlight": "Crackly fish skin, ponzu acid, daikon foam — no shellfish",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Crispy-skin mackerel with grated daikon and ponzu",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/crispy-mackerel/hero.jpg",
+      "caption": "mackerel — crisp skin",
       "palette": [
         "#3A332A",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/crispy-mackerel/hero.jpg",
-      "alt": "Crispy-skin mackerel with grated daikon and ponzu",
-      "caption": "mackerel — crisp skin"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Mackerel is omega-3 dense and budget-friendly — undervalued fish.",
-    "Daikon's enzymes (myrosinase) aid digestion of oily fish."
-  ],
+  "color": "#3A332A",
+  "colorSoft": "rgba(58,51,42,0.16)",
   "ingredients": [
     {
       "name": "Mackerel fillets",
@@ -86,8 +72,7 @@
       "duration": 360,
       "tip": "Salt draws water out for the crispiest skin imaginable.",
       "media": {
-        "src": "assets/recipes/crispy-mackerel/step-01-score.jpg",
-        "alt": "Scored mackerel skin",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/crispy-mackerel/step-01-score.jpg",
         "caption": "score the skin"
       }
     },
@@ -98,8 +83,7 @@
       "duration": 30,
       "tip": "Bottled ponzu is fine — but homemade is brighter.",
       "media": {
-        "src": "assets/recipes/crispy-mackerel/step-02-ponzu.jpg",
-        "alt": "Ponzu sauce in small dish",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/crispy-mackerel/step-02-ponzu.jpg",
         "caption": "whisk ponzu"
       }
     },
@@ -110,8 +94,7 @@
       "duration": 360,
       "tip": "Don't move the fish during the skin sear. Movement = stuck.",
       "media": {
-        "src": "assets/recipes/crispy-mackerel/step-03-sear.jpg",
-        "alt": "Mackerel searing skin-down",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/crispy-mackerel/step-03-sear.jpg",
         "caption": "sear skin-down hard"
       }
     },
@@ -122,8 +105,7 @@
       "duration": 120,
       "tip": "Daikon takes the edge off oily fish — that's Japanese balance.",
       "media": {
-        "src": "assets/recipes/crispy-mackerel/step-04-plate.jpg",
-        "alt": "Crispy mackerel plated with daikon",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/crispy-mackerel/step-04-plate.jpg",
         "caption": "plate with daikon"
       }
     }
@@ -141,5 +123,17 @@
       "name": "Spatula",
       "essential": true
     }
+  ],
+  "tags": [
+    "asian",
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Mackerel is omega-3 dense and budget-friendly — undervalued fish.",
+    "Daikon's enzymes (myrosinase) aid digestion of oily fish."
   ]
 }

@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 20,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "italian",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Four ingredients, twenty minutes, peak Italian",
   "media": {
-    "emoji": "🍝",
     "hero": {
+      "alt": "Twirl of spaghetti glossy with garlic oil, chili flakes, and parsley",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-aglio-olio/hero.jpg",
+      "caption": "aglio e olio — garlic, oil, chili",
       "palette": [
         "#F4D67A",
         "#E76F51",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/spaghetti-aglio-olio/hero.jpg",
-      "alt": "Twirl of spaghetti glossy with garlic oil, chili flakes, and parsley",
-      "caption": "aglio e olio — garlic, oil, chili"
-    }
+      ]
+    },
+    "emoji": "🍝"
   },
-  "healthFacts": [
-    "No nuts, no dairy — naturally nut-free, vegan-friendly.",
-    "Garlic's allicin forms when raw garlic is crushed; gentle warming preserves more than searing.",
-    "Extra-virgin olive oil's polyphenols are stable up to about 374°F (190°C)."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Spaghetti",
@@ -75,8 +62,7 @@
       "duration": 540,
       "tip": "Reserve a cup of starchy pasta water before draining; it's the emulsifier.",
       "media": {
-        "src": "assets/recipes/spaghetti-aglio-olio/step-01-boil.jpg",
-        "alt": "Spaghetti boiling in salted water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-aglio-olio/step-01-boil.jpg",
         "caption": "boil heavily salted water"
       }
     },
@@ -87,8 +73,7 @@
       "duration": 300,
       "tip": "Brown garlic is bitter garlic. Pull it off heat the moment it turns straw-yellow.",
       "media": {
-        "src": "assets/recipes/spaghetti-aglio-olio/step-02-bloom.jpg",
-        "alt": "Sliced garlic and chili sizzling in olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-aglio-olio/step-02-bloom.jpg",
         "caption": "bloom the garlic"
       }
     },
@@ -99,8 +84,7 @@
       "duration": 90,
       "tip": "Sauce too thin? Add another splash of pasta water and toss vigorously.",
       "media": {
-        "src": "assets/recipes/spaghetti-aglio-olio/step-03-emulsify.jpg",
-        "alt": "Pasta water emulsifying with garlic oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-aglio-olio/step-03-emulsify.jpg",
         "caption": "emulsify with pasta water"
       }
     },
@@ -111,8 +95,7 @@
       "duration": 60,
       "tip": "Aglio e olio waits for no one — it tightens up fast on the plate.",
       "media": {
-        "src": "assets/recipes/spaghetti-aglio-olio/step-04-toss.jpg",
-        "alt": "Glossy spaghetti tossed with parsley",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spaghetti-aglio-olio/step-04-toss.jpg",
         "caption": "toss and serve"
       }
     }
@@ -130,5 +113,16 @@
       "name": "Tongs",
       "essential": true
     }
+  ],
+  "tags": [
+    "italian",
+    "nut-free",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No nuts, no dairy — naturally nut-free, vegan-friendly.",
+    "Garlic's allicin forms when raw garlic is crushed; gentle warming preserves more than searing.",
+    "Extra-virgin olive oil's polyphenols are stable up to about 374°F (190°C)."
   ]
 }

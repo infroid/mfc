@@ -7,32 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 25,
-  "tags": [
-    "nut-free",
-    "quick"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Real caesar — anchovy, garlic, lemon — no nut-laced shortcuts",
   "media": {
-    "emoji": "🥗",
     "hero": {
+      "alt": "Caesar salad with romaine spears, parmesan, and toasted croutons",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caesar-salad/hero.jpg",
+      "caption": "caesar — garlic and anchovy",
       "palette": [
         "#7A9C5A",
         "#F4D67A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/caesar-salad/hero.jpg",
-      "alt": "Caesar salad with romaine spears, parmesan, and toasted croutons",
-      "caption": "caesar — garlic and anchovy"
-    }
+      ]
+    },
+    "emoji": "🥗"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Anchovies are tiny but rich in omega-3s and bioavailable B12.",
-    "Romaine is hydrating — about 95% water — and high in vitamin K."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Romaine hearts",
@@ -88,8 +77,7 @@
       "duration": 480,
       "tip": "Stale bread = better croutons. Day-old bread takes oil more evenly.",
       "media": {
-        "src": "assets/recipes/caesar-salad/step-01-croutons.jpg",
-        "alt": "Croutons on a sheet pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caesar-salad/step-01-croutons.jpg",
         "caption": "make croutons"
       }
     },
@@ -100,8 +88,7 @@
       "duration": 120,
       "tip": "Anchovies dissolve into umami — even anchovy haters won't taste them.",
       "media": {
-        "src": "assets/recipes/caesar-salad/step-02-base.jpg",
-        "alt": "Caesar dressing base in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caesar-salad/step-02-base.jpg",
         "caption": "mash the dressing base"
       }
     },
@@ -112,8 +99,7 @@
       "duration": 180,
       "tip": "Add oil too fast and it breaks. Slow at first, then thicker stream.",
       "media": {
-        "src": "assets/recipes/caesar-salad/step-03-emulsify.jpg",
-        "alt": "Whisking emulsified Caesar dressing",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caesar-salad/step-03-emulsify.jpg",
         "caption": "drizzle and emulsify"
       }
     },
@@ -124,8 +110,7 @@
       "duration": 120,
       "tip": "Dress just before eating — Caesar wilts within 10 minutes.",
       "media": {
-        "src": "assets/recipes/caesar-salad/step-04-toss.jpg",
-        "alt": "Tossed Caesar salad with parmesan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/caesar-salad/step-04-toss.jpg",
         "caption": "toss and shower"
       }
     }
@@ -143,5 +128,14 @@
       "name": "Sheet pan",
       "essential": true
     }
+  ],
+  "tags": [
+    "nut-free",
+    "quick"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Anchovies are tiny but rich in omega-3s and bioavailable B12.",
+    "Romaine is hydrating — about 95% water — and high in vitamin K."
   ]
 }

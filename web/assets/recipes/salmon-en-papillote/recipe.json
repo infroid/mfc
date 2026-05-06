@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 25,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein",
-    "gluten-free",
-    "quick"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Salmon plus veg in a sealed parchment — silky and clean",
   "media": {
-    "emoji": "📦",
     "hero": {
+      "alt": "Salmon en papillote opened to reveal salmon and vegetables",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-en-papillote/hero.jpg",
+      "caption": "papillote — steamed in parchment",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/salmon-en-papillote/hero.jpg",
-      "alt": "Salmon en papillote opened to reveal salmon and vegetables",
-      "caption": "papillote — steamed in parchment"
-    }
+      ]
+    },
+    "emoji": "📦"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Steaming in parchment locks in moisture and aromatics — no fat needed.",
-    "Vegetables released their juices to steam-poach the salmon."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Salmon fillets",
@@ -96,8 +82,7 @@
       "duration": 240,
       "tip": "Heart shape gives you a long crimping edge — fewer leaks.",
       "media": {
-        "src": "assets/recipes/salmon-en-papillote/step-01-paper.jpg",
-        "alt": "Heart-shaped parchment paper",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-en-papillote/step-01-paper.jpg",
         "caption": "cut parchment hearts"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 240,
       "tip": "Veg under fish acts as both flavor and rack.",
       "media": {
-        "src": "assets/recipes/salmon-en-papillote/step-02-layer.jpg",
-        "alt": "Salmon layered on parchment",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-en-papillote/step-02-layer.jpg",
         "caption": "layer the bed"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 240,
       "tip": "Brush edges with water before crimping for a tighter seal.",
       "media": {
-        "src": "assets/recipes/salmon-en-papillote/step-03-crimp.jpg",
-        "alt": "Crimping parchment packet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-en-papillote/step-03-crimp.jpg",
         "caption": "crimp into a packet"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 720,
       "tip": "The puffed packet release of steam is half the joy. Theatre.",
       "media": {
-        "src": "assets/recipes/salmon-en-papillote/step-04-bake.jpg",
-        "alt": "Puffed papillote packets",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-en-papillote/step-04-bake.jpg",
         "caption": "bake and serve"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Scissors",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Steaming in parchment locks in moisture and aromatics — no fat needed.",
+    "Vegetables released their juices to steam-poach the salmon."
   ]
 }

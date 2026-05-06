@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "indian",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Canned chickpeas, no eggs, dinner in 30",
   "media": {
-    "emoji": "🍛",
     "hero": {
+      "alt": "Chana masala with chickpeas in red gravy and cilantro",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chickpea-curry/hero.jpg",
+      "caption": "chana masala — restaurant home",
       "palette": [
         "#F4A261",
         "#7A9C5A",
         "#A0522D"
-      ],
-      "src": "assets/recipes/chickpea-curry/hero.jpg",
-      "alt": "Chana masala with chickpeas in red gravy and cilantro",
-      "caption": "chana masala — restaurant home"
-    }
+      ]
+    },
+    "emoji": "🍛"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan.",
-    "Chickpeas pack ~15g protein and 13g fiber per cup.",
-    "Amchur (dried mango powder) gives the signature tang without lemon."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Chickpeas (canned)",
@@ -97,8 +82,7 @@
       "duration": 540,
       "tip": "The browner the onion, the deeper the masala. Don't pull early.",
       "media": {
-        "src": "assets/recipes/chickpea-curry/step-01-cumin.jpg",
-        "alt": "Cumin and onion sizzling",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chickpea-curry/step-01-cumin.jpg",
         "caption": "sizzle cumin"
       }
     },
@@ -109,8 +93,7 @@
       "duration": 420,
       "tip": "Mash tomato with a spatula as it cooks for a smoother gravy.",
       "media": {
-        "src": "assets/recipes/chickpea-curry/step-02-tomato.jpg",
-        "alt": "Tomato cooking down to a paste",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chickpea-curry/step-02-tomato.jpg",
         "caption": "garlic-ginger and tomato"
       }
     },
@@ -121,8 +104,7 @@
       "duration": 720,
       "tip": "Mashing 1/4 of the chickpeas thickens the gravy without flour.",
       "media": {
-        "src": "assets/recipes/chickpea-curry/step-03-chickpeas.jpg",
-        "alt": "Chickpeas in red gravy",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chickpea-curry/step-03-chickpeas.jpg",
         "caption": "spices and chickpeas"
       }
     },
@@ -133,8 +115,7 @@
       "duration": 60,
       "tip": "Serve with basmati rice or roti — flavor sponge.",
       "media": {
-        "src": "assets/recipes/chickpea-curry/step-04-finish.jpg",
-        "alt": "Finished chana masala with cilantro",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chickpea-curry/step-04-finish.jpg",
         "caption": "garam masala and finish"
       }
     }
@@ -152,5 +133,18 @@
       "name": "Can opener",
       "essential": false
     }
+  ],
+  "tags": [
+    "egg-free",
+    "high-protein",
+    "indian",
+    "quick",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Chickpeas pack ~15g protein and 13g fiber per cup.",
+    "Amchur (dried mango powder) gives the signature tang without lemon."
   ]
 }

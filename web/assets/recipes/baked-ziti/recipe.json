@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 8,
   "totalMinutes": 60,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "italian"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.16)",
-  "featured": false,
-  "highlight": "Crispy edges, creamy middle, no nuts in sight",
   "media": {
-    "emoji": "🧀",
     "hero": {
+      "alt": "Baked ziti with bubbling cheese top and tomato pasta beneath",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-ziti/hero.jpg",
+      "caption": "baked ziti — bubbly, browned",
       "palette": [
         "#E76F51",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/baked-ziti/hero.jpg",
-      "alt": "Baked ziti with bubbling cheese top and tomato pasta beneath",
-      "caption": "baked ziti — bubbly, browned"
-    }
+      ]
+    },
+    "emoji": "🧀"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Combining ricotta with the pasta increases the protein per serving by ~6g.",
-    "Tomato sauce + olive oil = better lycopene absorption than raw tomato."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.16)",
   "ingredients": [
     {
       "name": "Ziti pasta",
@@ -84,8 +72,7 @@
       "duration": 480,
       "tip": "Underdone pasta absorbs sauce instead of going mushy in the oven.",
       "media": {
-        "src": "assets/recipes/baked-ziti/step-01-pasta.jpg",
-        "alt": "Ziti boiling in salted water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-ziti/step-01-pasta.jpg",
         "caption": "cook ziti underdone"
       }
     },
@@ -96,8 +83,7 @@
       "duration": 120,
       "tip": "Egg in ricotta makes it set instead of running everywhere.",
       "media": {
-        "src": "assets/recipes/baked-ziti/step-02-ricotta.jpg",
-        "alt": "Mixing ricotta filling",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-ziti/step-02-ricotta.jpg",
         "caption": "mix the ricotta"
       }
     },
@@ -108,8 +94,7 @@
       "duration": 300,
       "tip": "Don't try to spread the ricotta — dollops melt into pockets, which is exactly what you want.",
       "media": {
-        "src": "assets/recipes/baked-ziti/step-03-layer.jpg",
-        "alt": "Layered baked ziti before baking",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-ziti/step-03-layer.jpg",
         "caption": "layer the dish"
       }
     },
@@ -120,8 +105,7 @@
       "duration": 1800,
       "tip": "Rest matters — straight from the oven, the layers slide.",
       "media": {
-        "src": "assets/recipes/baked-ziti/step-04-bake.jpg",
-        "alt": "Baked ziti golden and bubbling",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-ziti/step-04-bake.jpg",
         "caption": "bake until bubbly"
       }
     }
@@ -139,5 +123,15 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "italian",
+    "nut-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Combining ricotta with the pasta increases the protein per serving by ~6g.",
+    "Tomato sauce + olive oil = better lycopene absorption than raw tomato."
   ]
 }

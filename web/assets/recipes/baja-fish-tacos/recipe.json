@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "mexican",
-    "high-protein"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Crisp fried fish, cool slaw, lime — no shellfish",
   "media": {
-    "emoji": "🌮",
     "hero": {
+      "alt": "Baja fish tacos with cabbage and crema",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baja-fish-tacos/hero.jpg",
+      "caption": "baja tacos — fried fish, slaw",
       "palette": [
         "#F4D67A",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/baja-fish-tacos/hero.jpg",
-      "alt": "Baja fish tacos with cabbage and crema",
-      "caption": "baja tacos — fried fish, slaw"
-    }
+      ]
+    },
+    "emoji": "🌮"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "White fish (cod, tilapia) is low-mercury and lean.",
-    "Cabbage's crunch holds heat against fryer fish — no soggy taco."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Cod or tilapia fillets",
@@ -95,8 +82,7 @@
       "duration": 120,
       "tip": "Cornmeal in the batter = signature Baja crunch.",
       "media": {
-        "src": "assets/recipes/baja-fish-tacos/step-01-batter.jpg",
-        "alt": "Batter and crema bowls",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baja-fish-tacos/step-01-batter.jpg",
         "caption": "whisk batter and crema"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 720,
       "tip": "Fish strips, not full fillets — taco-friendly portions.",
       "media": {
-        "src": "assets/recipes/baja-fish-tacos/step-02-fry.jpg",
-        "alt": "Fish frying in hot oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baja-fish-tacos/step-02-fry.jpg",
         "caption": "fry the fish"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 240,
       "tip": "Wrap charred tortillas in a clean towel — keeps them warm and supple.",
       "media": {
-        "src": "assets/recipes/baja-fish-tacos/step-03-char.jpg",
-        "alt": "Charring corn tortillas over flame",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baja-fish-tacos/step-03-char.jpg",
         "caption": "char tortillas"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 180,
       "tip": "Two tortillas per taco hold up against fryer-hot fish and saucy crema.",
       "media": {
-        "src": "assets/recipes/baja-fish-tacos/step-04-build.jpg",
-        "alt": "Built fish tacos with crema",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baja-fish-tacos/step-04-build.jpg",
         "caption": "build with slaw"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Thermometer",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "mexican",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "White fish (cod, tilapia) is low-mercury and lean.",
+    "Cabbage's crunch holds heat against fryer fish — no soggy taco."
   ]
 }

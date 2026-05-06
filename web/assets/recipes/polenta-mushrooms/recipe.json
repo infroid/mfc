@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 40,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "gluten-free",
-    "italian"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Polenta is naturally egg-free, gluten-free comfort",
   "media": {
-    "emoji": "🌽",
     "hero": {
+      "alt": "Creamy polenta topped with seared mushrooms and parsley",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/polenta-mushrooms/hero.jpg",
+      "caption": "polenta — creamy with mushrooms",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/polenta-mushrooms/hero.jpg",
-      "alt": "Creamy polenta topped with seared mushrooms and parsley",
-      "caption": "polenta — creamy with mushrooms"
-    }
+      ]
+    },
+    "emoji": "🌽"
   },
-  "healthFacts": [
-    "Naturally egg-free, gluten-free.",
-    "Stone-ground polenta retains the corn germ — fiber and B vitamins intact.",
-    "Mushrooms add umami and B-vitamins, especially riboflavin."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Polenta (stone-ground)",
@@ -95,8 +82,7 @@
       "duration": 240,
       "tip": "Stream the polenta with one hand, whisk with the other — like making a roux.",
       "media": {
-        "src": "assets/recipes/polenta-mushrooms/step-01-stream.jpg",
-        "alt": "Pouring polenta into boiling water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/polenta-mushrooms/step-01-stream.jpg",
         "caption": "bring liquid to a boil"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 1800,
       "tip": "Quick polenta is a lie. Real polenta is a half-hour ritual.",
       "media": {
-        "src": "assets/recipes/polenta-mushrooms/step-02-stir.jpg",
-        "alt": "Polenta thickening in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/polenta-mushrooms/step-02-stir.jpg",
         "caption": "stir slow"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 480,
       "tip": "Mushrooms release water — let it cook off before adding salt.",
       "media": {
-        "src": "assets/recipes/polenta-mushrooms/step-03-mushrooms.jpg",
-        "alt": "Seared mushrooms in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/polenta-mushrooms/step-03-mushrooms.jpg",
         "caption": "sear mushrooms"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 120,
       "tip": "Polenta tightens as it cools — serve immediately or thin with a splash of hot stock.",
       "media": {
-        "src": "assets/recipes/polenta-mushrooms/step-04-plate.jpg",
-        "alt": "Polenta plated with mushrooms",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/polenta-mushrooms/step-04-plate.jpg",
         "caption": "finish polenta and plate"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Whisk",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "italian",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, gluten-free.",
+    "Stone-ground polenta retains the corn germ — fiber and B vitamins intact.",
+    "Mushrooms add umami and B-vitamins, especially riboflavin."
   ]
 }

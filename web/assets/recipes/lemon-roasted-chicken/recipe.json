@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 75,
-  "tags": [
-    "non-veg",
-    "high-protein",
-    "nut-free",
-    "gluten-free"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Crackly lemon-perfumed skin, juicy thighs, no nuts anywhere",
   "media": {
-    "emoji": "🍗",
     "hero": {
+      "alt": "Golden roast chicken with charred lemon halves and thyme",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lemon-roasted-chicken/hero.jpg",
+      "caption": "lemon roast chicken — golden, herby",
       "palette": [
         "#F4A261",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/lemon-roasted-chicken/hero.jpg",
-      "alt": "Golden roast chicken with charred lemon halves and thyme",
-      "caption": "lemon roast chicken — golden, herby"
-    }
+      ]
+    },
+    "emoji": "🍗"
   },
-  "healthFacts": [
-    "Naturally nut-free — only chicken, citrus, herbs, and olive oil.",
-    "A 4-lb chicken yields ~120g of cooked protein per quarter portion.",
-    "Roasting at high heat (425°F) renders fat outward and crisps the skin without drying the breast."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Whole chicken",
@@ -80,8 +67,7 @@
       "duration": 1800,
       "tip": "If you have time, dry-brine overnight. The skin only gets crisper.",
       "media": {
-        "src": "assets/recipes/lemon-roasted-chicken/step-01-brine.jpg",
-        "alt": "Salted whole chicken resting on a rack",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lemon-roasted-chicken/step-01-brine.jpg",
         "caption": "dry-brine the bird"
       }
     },
@@ -92,8 +78,7 @@
       "duration": 180,
       "tip": "Tie the legs together with kitchen twine — it makes the breast cook more evenly.",
       "media": {
-        "src": "assets/recipes/lemon-roasted-chicken/step-02-stuff.jpg",
-        "alt": "Chicken cavity stuffed with lemon and garlic",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lemon-roasted-chicken/step-02-stuff.jpg",
         "caption": "stuff and oil"
       }
     },
@@ -104,8 +89,7 @@
       "duration": 3600,
       "tip": "Pan looking dry? Pour a half cup of water in the bottom partway through to keep drippings from burning.",
       "media": {
-        "src": "assets/recipes/lemon-roasted-chicken/step-03-roast.jpg",
-        "alt": "Golden roast chicken in a cast iron pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lemon-roasted-chicken/step-03-roast.jpg",
         "caption": "roast hot"
       }
     },
@@ -116,8 +100,7 @@
       "duration": 900,
       "tip": "Cutting into a hot bird flushes out the juices. Patience = juicy chicken.",
       "media": {
-        "src": "assets/recipes/lemon-roasted-chicken/step-04-carve.jpg",
-        "alt": "Carved chicken with pan juices",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lemon-roasted-chicken/step-04-carve.jpg",
         "caption": "rest and carve"
       }
     }
@@ -135,5 +118,16 @@
       "name": "Kitchen twine",
       "essential": false
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free — only chicken, citrus, herbs, and olive oil.",
+    "A 4-lb chicken yields ~120g of cooked protein per quarter portion.",
+    "Roasting at high heat (425°F) renders fat outward and crisps the skin without drying the breast."
   ]
 }

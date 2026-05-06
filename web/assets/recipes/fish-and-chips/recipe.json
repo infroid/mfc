@@ -7,33 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 60,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Beer batter shatters; chips crackle; no shellfish",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Fish and chips with malt vinegar and lemon",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/fish-and-chips/hero.jpg",
+      "caption": "fish & chips — beer battered",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/fish-and-chips/hero.jpg",
-      "alt": "Fish and chips with malt vinegar and lemon",
-      "caption": "fish & chips — beer battered"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Cod is lean and mild — ~20g protein per fillet.",
-    "Twice-frying chips makes them crisp without oil-logging."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Cod fillets",
@@ -84,8 +72,7 @@
       "duration": 1200,
       "tip": "First fry softens; second fry crisps. Twice-frying is the secret.",
       "media": {
-        "src": "assets/recipes/fish-and-chips/step-01-parfry.jpg",
-        "alt": "Chips first-frying",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/fish-and-chips/step-01-parfry.jpg",
         "caption": "cut and parfry"
       }
     },
@@ -96,8 +83,7 @@
       "duration": 60,
       "tip": "Cold + carbonation = crisp. Don't make ahead.",
       "media": {
-        "src": "assets/recipes/fish-and-chips/step-02-batter.jpg",
-        "alt": "Beer batter being whisked",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/fish-and-chips/step-02-batter.jpg",
         "caption": "whisk the batter"
       }
     },
@@ -108,8 +94,7 @@
       "duration": 240,
       "tip": "Listen for the sound — quiet frying = limp; loud = crisp.",
       "media": {
-        "src": "assets/recipes/fish-and-chips/step-03-chips.jpg",
-        "alt": "Crisping chips on second fry",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/fish-and-chips/step-03-chips.jpg",
         "caption": "crank to 375°F, fry chips"
       }
     },
@@ -120,8 +105,7 @@
       "duration": 360,
       "tip": "Hold the fish at the surface 5 sec before letting go — sets the crust so it doesn't stick to the bottom.",
       "media": {
-        "src": "assets/recipes/fish-and-chips/step-04-fry.jpg",
-        "alt": "Battered fish frying",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/fish-and-chips/step-04-fry.jpg",
         "caption": "batter and fry fish"
       }
     }
@@ -139,5 +123,15 @@
       "name": "Thermometer",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Cod is lean and mild — ~20g protein per fillet.",
+    "Twice-frying chips makes them crisp without oil-logging."
   ]
 }

@@ -7,35 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 90,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "indian",
-    "high-protein",
-    "halal"
-  ],
-  "color": "#C84B5A",
-  "colorSoft": "rgba(200,75,90,0.16)",
-  "featured": false,
-  "highlight": "Yogurt + kashmiri chili — no soy, no tomato, all depth",
   "media": {
-    "emoji": "🍛",
     "hero": {
+      "alt": "Lamb rogan josh in red gravy with cilantro",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-rogan-josh/hero.jpg",
+      "caption": "rogan josh — kashmiri red",
       "palette": [
         "#C84B5A",
         "#F4A261",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/lamb-rogan-josh/hero.jpg",
-      "alt": "Lamb rogan josh in red gravy with cilantro",
-      "caption": "rogan josh — kashmiri red"
-    }
+      ]
+    },
+    "emoji": "🍛"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Kashmiri chili gives deep red color with little heat — capsaicin-light.",
-    "Yogurt marinade tenderizes lamb's tougher cuts via lactic acid."
-  ],
+  "color": "#C84B5A",
+  "colorSoft": "rgba(200,75,90,0.16)",
   "ingredients": [
     {
       "name": "Lamb shoulder (cubed)",
@@ -96,8 +82,7 @@
       "duration": 1800,
       "tip": "Overnight marinade is even better — the yogurt melts into the meat.",
       "media": {
-        "src": "assets/recipes/lamb-rogan-josh/step-01-marinate.jpg",
-        "alt": "Lamb in yogurt marinade",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-rogan-josh/step-01-marinate.jpg",
         "caption": "marinate lamb"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 780,
       "tip": "Whole-spice tadka first — releases maximum aromatic oils.",
       "media": {
-        "src": "assets/recipes/lamb-rogan-josh/step-02-bloom.jpg",
-        "alt": "Whole spices in ghee with onion",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-rogan-josh/step-02-bloom.jpg",
         "caption": "bloom whole spices"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 540,
       "tip": "Don't add tomato — real Kashmiri rogan josh skips it. Color comes from kashmiri chili and slow cooking.",
       "media": {
-        "src": "assets/recipes/lamb-rogan-josh/step-03-yogurt.jpg",
-        "alt": "Lamb cooking down with yogurt",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-rogan-josh/step-03-yogurt.jpg",
         "caption": "garlic-ginger and yogurt"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 3600,
       "tip": "The longer the simmer, the silkier the gravy. Don't rush.",
       "media": {
-        "src": "assets/recipes/lamb-rogan-josh/step-04-simmer.jpg",
-        "alt": "Rogan josh simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/lamb-rogan-josh/step-04-simmer.jpg",
         "caption": "slow simmer"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "halal",
+    "high-protein",
+    "indian",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Kashmiri chili gives deep red color with little heat — capsaicin-light.",
+    "Yogurt marinade tenderizes lamb's tougher cuts via lactic acid."
   ]
 }

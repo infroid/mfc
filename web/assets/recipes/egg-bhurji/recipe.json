@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 10,
-  "tags": [
-    "non-veg",
-    "egg",
-    "high-protein",
-    "high-b12",
-    "garlic",
-    "onion"
-  ],
-  "color": "#F4C430",
-  "colorSoft": "rgba(244,196,48,0.18)",
-  "featured": false,
-  "highlight": "Tomato + onion + green chili — the trinity that elevates scrambled eggs",
   "media": {
-    "emoji": "🍳",
     "hero": {
+      "alt": "Spiced scrambled eggs with onion, tomato, and coriander in a steel plate with pav",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/egg-bhurji/hero.jpg",
+      "caption": "anda bhurji — masala scrambled eggs",
       "palette": [
         "#F4C430",
         "#E76F51",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/egg-bhurji/hero.jpg",
-      "alt": "Spiced scrambled eggs with onion, tomato, and coriander in a steel plate with pav",
-      "caption": "anda bhurji — masala scrambled eggs"
-    }
+      ]
+    },
+    "emoji": "🍳"
   },
-  "healthFacts": [
-    "Two eggs deliver ~12g protein, 1.6µg B12, and 290mg choline.",
-    "B12 alone covers 65% of daily need — critical for nerves and red blood cells.",
-    "Yolks contain biotin (B7), vitamin D, and selenium — keep them in.",
-    "Lecithin in yolks supports the homocysteine cycle alongside folate."
-  ],
+  "color": "#F4C430",
+  "colorSoft": "rgba(244,196,48,0.18)",
   "ingredients": [
     {
       "name": "Eggs",
@@ -96,21 +80,33 @@
       "title": "Sauté the masala",
       "detail": "Heat butter in a non-stick pan. Add onion and green chili, sauté till translucent. Stir in ginger-garlic paste, then tomato. Cook till tomato softens (3 min).",
       "duration": 240,
-      "tip": "Use butter, not oil — fat-soluble vitamins from the egg yolks deserve a richer pairing."
+      "tip": "Use butter, not oil — fat-soluble vitamins from the egg yolks deserve a richer pairing.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Pour in beaten eggs",
       "detail": "Whisk eggs with salt, turmeric, and garam masala. Pour into the pan and let it sit 30 seconds without stirring, then drag a spatula through to form curds.",
       "duration": 90,
-      "tip": "Low-medium heat — high heat makes the eggs rubbery and dries them out."
+      "tip": "Low-medium heat — high heat makes the eggs rubbery and dries them out.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Finish soft",
       "detail": "Pull off the heat while the eggs are still glossy and slightly underdone — residual heat finishes them. Stir in coriander and serve with pav, paratha, or toast.",
       "duration": 30,
-      "tip": "Eggs go from underdone to dry in 15 seconds — err on undercooked."
+      "tip": "Eggs go from underdone to dry in 15 seconds — err on undercooked.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -126,5 +122,19 @@
       "name": "Silicone spatula",
       "essential": false
     }
+  ],
+  "tags": [
+    "egg",
+    "garlic",
+    "high-b12",
+    "high-protein",
+    "non-veg",
+    "onion"
+  ],
+  "healthFacts": [
+    "Two eggs deliver ~12g protein, 1.6µg B12, and 290mg choline.",
+    "B12 alone covers 65% of daily need — critical for nerves and red blood cells.",
+    "Yolks contain biotin (B7), vitamin D, and selenium — keep them in.",
+    "Lecithin in yolks supports the homocysteine cycle alongside folate."
   ]
 }

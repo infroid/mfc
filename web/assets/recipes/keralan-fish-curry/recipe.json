@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "pescatarian",
-    "soy-free",
-    "indian",
-    "gluten-free",
-    "high-protein"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "South Indian coast — coconut and tamarind, no soy needed",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Keralan fish curry with coconut gravy and curry leaves",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/keralan-fish-curry/hero.jpg",
+      "caption": "keralan fish — coconut and tamarind",
       "palette": [
         "#F4A261",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/keralan-fish-curry/hero.jpg",
-      "alt": "Keralan fish curry with coconut gravy and curry leaves",
-      "caption": "keralan fish — coconut and tamarind"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Tamarind provides tartaric acid plus polyphenols — South India's tang of choice.",
-    "White fish (kingfish, cod) is high in lean protein and selenium."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Firm white fish fillets",
@@ -101,8 +87,7 @@
       "duration": 60,
       "tip": "Keep a lid handy — mustard seeds jump.",
       "media": {
-        "src": "assets/recipes/keralan-fish-curry/step-01-tadka.jpg",
-        "alt": "Mustard seeds and curry leaves in coconut oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/keralan-fish-curry/step-01-tadka.jpg",
         "caption": "tadka the seeds"
       }
     },
@@ -113,8 +98,7 @@
       "duration": 420,
       "tip": "Coconut oil stays stable at this heat — perfect for blooming spices.",
       "media": {
-        "src": "assets/recipes/keralan-fish-curry/step-02-aromatics.jpg",
-        "alt": "Aromatics with spices in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/keralan-fish-curry/step-02-aromatics.jpg",
         "caption": "soften aromatics"
       }
     },
@@ -125,8 +109,7 @@
       "duration": 360,
       "tip": "Don't boil coconut milk hard — it splits.",
       "media": {
-        "src": "assets/recipes/keralan-fish-curry/step-03-coconut.jpg",
-        "alt": "Coconut tamarind gravy",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/keralan-fish-curry/step-03-coconut.jpg",
         "caption": "tamarind and coconut"
       }
     },
@@ -137,8 +120,7 @@
       "duration": 480,
       "tip": "Don't stir — just shake the pan. Stirring breaks the fish.",
       "media": {
-        "src": "assets/recipes/keralan-fish-curry/step-04-fish.jpg",
-        "alt": "Fish poaching in coconut gravy",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/keralan-fish-curry/step-04-fish.jpg",
         "caption": "slip in fish"
       }
     }
@@ -156,5 +138,17 @@
       "name": "Knife and cutting board",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "indian",
+    "pescatarian",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Tamarind provides tartaric acid plus polyphenols — South India's tang of choice.",
+    "White fish (kingfish, cod) is high in lean protein and selenium."
   ]
 }

@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "indian",
-    "gluten-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Pantry dinner — lentils, water, spices, ghee, done",
   "media": {
-    "emoji": "🍲",
     "hero": {
+      "alt": "Red lentil dal with ghee tadka and cilantro",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/red-lentil-dal/hero.jpg",
+      "caption": "red lentil dal — golden, simple",
       "palette": [
         "#E76F51",
         "#F4D67A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/red-lentil-dal/hero.jpg",
-      "alt": "Red lentil dal with ghee tadka and cilantro",
-      "caption": "red lentil dal — golden, simple"
-    }
+      ]
+    },
+    "emoji": "🍲"
   },
-  "healthFacts": [
-    "Naturally egg-free.",
-    "Red lentils need no soaking and cook in 15 min — fastest legume around.",
-    "Tadka (ghee infused with spices) carries fat-soluble curcumin into the body."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Red lentils",
@@ -97,8 +82,7 @@
       "duration": 900,
       "tip": "Foam is starch — skim or stir back in. Either is fine.",
       "media": {
-        "src": "assets/recipes/red-lentil-dal/step-01-boil.jpg",
-        "alt": "Red lentils simmering with turmeric",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/red-lentil-dal/step-01-boil.jpg",
         "caption": "boil lentils with turmeric"
       }
     },
@@ -109,8 +93,7 @@
       "duration": 60,
       "tip": "An immersion blender 2-second pulse makes it restaurant-smooth.",
       "media": {
-        "src": "assets/recipes/red-lentil-dal/step-02-whisk.jpg",
-        "alt": "Whisking dal to smooth",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/red-lentil-dal/step-02-whisk.jpg",
         "caption": "whisk to silk"
       }
     },
@@ -121,8 +104,7 @@
       "duration": 420,
       "tip": "Tadka should sound like rain when it hits the dal — that's the flavor explosion.",
       "media": {
-        "src": "assets/recipes/red-lentil-dal/step-03-tadka.jpg",
-        "alt": "Tadka in small pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/red-lentil-dal/step-03-tadka.jpg",
         "caption": "build the tadka"
       }
     },
@@ -133,8 +115,7 @@
       "duration": 60,
       "tip": "Eat with rice or roti. Improves overnight.",
       "media": {
-        "src": "assets/recipes/red-lentil-dal/step-04-pour.jpg",
-        "alt": "Tadka pouring onto dal",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/red-lentil-dal/step-04-pour.jpg",
         "caption": "pour and rest"
       }
     }
@@ -152,5 +133,18 @@
       "name": "Whisk",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "high-protein",
+    "indian",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Red lentils need no soaking and cook in 15 min — fastest legume around.",
+    "Tadka (ghee infused with spices) carries fat-soluble curcumin into the body."
   ]
 }

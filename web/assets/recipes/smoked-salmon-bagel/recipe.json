@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 10,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Five toppings, ten minutes — Sunday brunch perfection",
   "media": {
-    "emoji": "🥯",
     "hero": {
+      "alt": "Smoked salmon bagel with cream cheese and capers",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/smoked-salmon-bagel/hero.jpg",
+      "caption": "lox bagel — deli sunday",
       "palette": [
         "#E76F51",
         "#FFFCF3",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/smoked-salmon-bagel/hero.jpg",
-      "alt": "Smoked salmon bagel with cream cheese and capers",
-      "caption": "lox bagel — deli sunday"
-    }
+      ]
+    },
+    "emoji": "🥯"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Cold-smoked salmon retains omega-3s while adding gut-friendly cure flavors.",
-    "Pickled red onion adds digestive enzymes and bright acidity."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Everything bagels",
@@ -85,8 +72,7 @@
       "duration": 240,
       "tip": "Over-toasted bagel = scratchy palate. Aim gold, not brown.",
       "media": {
-        "src": "assets/recipes/smoked-salmon-bagel/step-01-toast.jpg",
-        "alt": "Toasted bagel halves",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/smoked-salmon-bagel/step-01-toast.jpg",
         "caption": "toast bagels"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 60,
       "tip": "Cream cheese taken out of the fridge 15 min ahead spreads way easier.",
       "media": {
-        "src": "assets/recipes/smoked-salmon-bagel/step-02-schmear.jpg",
-        "alt": "Schmearing cream cheese on bagel",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/smoked-salmon-bagel/step-02-schmear.jpg",
         "caption": "schmear cream cheese"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 120,
       "tip": "Don't over-stack — bagel sandwiches are open-faced for a reason.",
       "media": {
-        "src": "assets/recipes/smoked-salmon-bagel/step-03-layer.jpg",
-        "alt": "Building layered lox bagel",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/smoked-salmon-bagel/step-03-layer.jpg",
         "caption": "layer toppings"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 30,
       "tip": "A drizzle of olive oil over makes it look café-photo-ready.",
       "media": {
-        "src": "assets/recipes/smoked-salmon-bagel/step-04-serve.jpg",
-        "alt": "Finished smoked salmon bagel",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/smoked-salmon-bagel/step-04-serve.jpg",
         "caption": "squeeze and serve"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Sharp knife",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Cold-smoked salmon retains omega-3s while adding gut-friendly cure flavors.",
+    "Pickled red onion adds digestive enzymes and bright acidity."
   ]
 }

@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "veg",
-    "vegan",
-    "drink",
-    "high-vitamin-c",
-    "summer",
-    "electrolyte"
-  ],
-  "color": "#A4C268",
-  "colorSoft": "rgba(164,194,104,0.18)",
-  "featured": false,
-  "highlight": "Roast or boil the raw mango first — lifts the harsh acidity and develops sweetness",
   "media": {
-    "emoji": "🥭",
     "hero": {
+      "alt": "Murky-green raw mango drink in a tall glass with mint leaves and roasted cumin dust",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aam-panna/hero.jpg",
+      "caption": "aam panna — green mango, mint, cumin",
       "palette": [
         "#A4C268",
         "#7A9C5A",
         "#E9C46A"
-      ],
-      "src": "assets/recipes/aam-panna/hero.jpg",
-      "alt": "Murky-green raw mango drink in a tall glass with mint leaves and roasted cumin dust",
-      "caption": "aam panna — green mango, mint, cumin"
-    }
+      ]
+    },
+    "emoji": "🥭"
   },
-  "healthFacts": [
-    "Raw mango is exceptionally high in vitamin C — supports skin and iron absorption.",
-    "Natural electrolyte blend: potassium from mango, sodium from black salt.",
-    "Used traditionally to prevent heat-stroke and rehydrate after long sun exposure.",
-    "Low glycemic when made with minimal added sugar — choose jaggery over white sugar."
-  ],
+  "color": "#A4C268",
+  "colorSoft": "rgba(164,194,104,0.18)",
   "ingredients": [
     {
       "name": "Raw green mango (large)",
@@ -81,21 +65,33 @@
       "title": "Boil the raw mango",
       "detail": "Pressure cook the whole raw mangoes with 1 cup water for 3 whistles. Cool, peel, and squeeze the pulp off the seed. (Or roast the mangoes directly on a flame until soft inside, ~10 min.)",
       "duration": 1200,
-      "tip": "Roasting gives a smokier, deeper aam panna; boiling keeps it bright."
+      "tip": "Roasting gives a smokier, deeper aam panna; boiling keeps it bright.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Blend with seasonings",
       "detail": "Blend the pulp with jaggery, roasted cumin, black salt, black pepper, mint leaves, and 1 cup water until smooth. This is your concentrate — store in the fridge.",
       "duration": 180,
-      "tip": "Concentrate keeps for 2 weeks refrigerated — make once, drink for days."
+      "tip": "Concentrate keeps for 2 weeks refrigerated — make once, drink for days.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Dilute and serve",
       "detail": "Mix 3 tbsp concentrate with 1 cup chilled water per glass. Top with ice and a sprig of mint. Stir and serve.",
       "duration": 60,
-      "tip": "Stronger or weaker? Adjust the concentrate ratio — that's the joy of homemade panna."
+      "tip": "Stronger or weaker? Adjust the concentrate ratio — that's the joy of homemade panna.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -111,5 +107,19 @@
       "name": "Mesh sieve",
       "essential": false
     }
+  ],
+  "tags": [
+    "drink",
+    "electrolyte",
+    "high-vitamin-c",
+    "summer",
+    "veg",
+    "vegan"
+  ],
+  "healthFacts": [
+    "Raw mango is exceptionally high in vitamin C — supports skin and iron absorption.",
+    "Natural electrolyte blend: potassium from mango, sodium from black salt.",
+    "Used traditionally to prevent heat-stroke and rehydrate after long sun exposure.",
+    "Low glycemic when made with minimal added sugar — choose jaggery over white sugar."
   ]
 }

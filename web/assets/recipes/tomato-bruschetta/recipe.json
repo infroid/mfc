@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 15,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "italian",
-    "quick"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Five ingredients, summer in a single bite",
   "media": {
-    "emoji": "🥖",
     "hero": {
+      "alt": "Bruschetta toasts piled with diced tomato and basil",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tomato-bruschetta/hero.jpg",
+      "caption": "bruschetta — summer on toast",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/tomato-bruschetta/hero.jpg",
-      "alt": "Bruschetta toasts piled with diced tomato and basil",
-      "caption": "bruschetta — summer on toast"
-    }
+      ]
+    },
+    "emoji": "🥖"
   },
-  "healthFacts": [
-    "Naturally egg-free, vegan.",
-    "Pronounced 'broo-SKET-ta', not 'broo-shet-ta'. Italian 'ch' = K.",
-    "Salting tomatoes 5 min before topping pulls out water and concentrates flavor."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Ripe tomatoes (diced)",
@@ -81,8 +67,7 @@
       "duration": 600,
       "tip": "Don't seed the tomatoes — the gel is the flavor.",
       "media": {
-        "src": "assets/recipes/tomato-bruschetta/step-01-salt.jpg",
-        "alt": "Diced tomatoes in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tomato-bruschetta/step-01-salt.jpg",
         "caption": "salt the tomatoes"
       }
     },
@@ -93,8 +78,7 @@
       "duration": 180,
       "tip": "Char comes from a hot dry surface — pre-heat your grill or broiler.",
       "media": {
-        "src": "assets/recipes/tomato-bruschetta/step-02-toast.jpg",
-        "alt": "Charred grilled bread",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tomato-bruschetta/step-02-toast.jpg",
         "caption": "toast bread dark"
       }
     },
@@ -105,8 +89,7 @@
       "duration": 60,
       "tip": "Hot toast = garlic dissolves into the surface; cold toast = garlic just sits there.",
       "media": {
-        "src": "assets/recipes/tomato-bruschetta/step-03-rub.jpg",
-        "alt": "Rubbing garlic on hot toast",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tomato-bruschetta/step-03-rub.jpg",
         "caption": "rub with garlic"
       }
     },
@@ -117,8 +100,7 @@
       "duration": 60,
       "tip": "Plate the tomato bowl alongside instead of pre-loading toasts to keep them crisp.",
       "media": {
-        "src": "assets/recipes/tomato-bruschetta/step-04-pile.jpg",
-        "alt": "Bruschetta piled with tomato",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tomato-bruschetta/step-04-pile.jpg",
         "caption": "pile and serve"
       }
     }
@@ -136,5 +118,17 @@
       "name": "Grill pan or broiler",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "italian",
+    "quick",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, vegan.",
+    "Pronounced 'broo-SKET-ta', not 'broo-shet-ta'. Italian 'ch' = K.",
+    "Salting tomatoes 5 min before topping pulls out water and concentrates flavor."
   ]
 }

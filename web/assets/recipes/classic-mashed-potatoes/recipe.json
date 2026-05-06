@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "soy-free",
-    "gluten-free"
-  ],
-  "color": "#FFFCF3",
-  "colorSoft": "rgba(255,252,243,0.5)",
-  "featured": false,
-  "highlight": "Riced for cloud-like texture — no soy, no gum, just butter and cream",
   "media": {
-    "emoji": "🥔",
     "hero": {
+      "alt": "Bowl of fluffy mashed potatoes with butter pat",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-mashed-potatoes/hero.jpg",
+      "caption": "mashed potatoes — riced and silky",
       "palette": [
         "#FFFCF3",
         "#F4D67A",
         "#A0522D"
-      ],
-      "src": "assets/recipes/classic-mashed-potatoes/hero.jpg",
-      "alt": "Bowl of fluffy mashed potatoes with butter pat",
-      "caption": "mashed potatoes — riced and silky"
-    }
+      ]
+    },
+    "emoji": "🥔"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Yukon golds have less starch than russets — silkier mash.",
-    "Warm cream + soft butter = velvet; cold dairy seizes the starch."
-  ],
+  "color": "#FFFCF3",
+  "colorSoft": "rgba(255,252,243,0.5)",
   "ingredients": [
     {
       "name": "Yukon gold potatoes",
@@ -74,8 +62,7 @@
       "duration": 1320,
       "tip": "Cold-water start cooks evenly. Hot start = mushy outside, raw center.",
       "media": {
-        "src": "assets/recipes/classic-mashed-potatoes/step-01-boil.jpg",
-        "alt": "Potatoes boiling in salted water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-mashed-potatoes/step-01-boil.jpg",
         "caption": "boil whole"
       }
     },
@@ -86,8 +73,7 @@
       "duration": 60,
       "tip": "Wet potatoes = watery mash. Dry first.",
       "media": {
-        "src": "assets/recipes/classic-mashed-potatoes/step-02-dry.jpg",
-        "alt": "Drying potatoes in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-mashed-potatoes/step-02-dry.jpg",
         "caption": "drain and dry"
       }
     },
@@ -98,8 +84,7 @@
       "duration": 240,
       "tip": "No ricer? Use the largest holes of a box grater for a similar effect.",
       "media": {
-        "src": "assets/recipes/classic-mashed-potatoes/step-03-rice.jpg",
-        "alt": "Ricing potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-mashed-potatoes/step-03-rice.jpg",
         "caption": "rice through"
       }
     },
@@ -110,8 +95,7 @@
       "duration": 240,
       "tip": "Folding (not beating) keeps starch from over-developing. Beating = glue mash.",
       "media": {
-        "src": "assets/recipes/classic-mashed-potatoes/step-04-fold.jpg",
-        "alt": "Folding butter into mash",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/classic-mashed-potatoes/step-04-fold.jpg",
         "caption": "fold in butter, then cream"
       }
     }
@@ -129,5 +113,15 @@
       "name": "Wooden spoon",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "soy-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Yukon golds have less starch than russets — silkier mash.",
+    "Warm cream + soft butter = velvet; cold dairy seizes the starch."
   ]
 }

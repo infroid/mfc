@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 25,
-  "tags": [
-    "veg",
-    "vegan",
-    "high-folate",
-    "high-nitrates",
-    "coconut"
-  ],
-  "color": "#7B2D26",
-  "colorSoft": "rgba(123,45,38,0.18)",
-  "featured": false,
-  "highlight": "Dietary nitrates from beets convert to nitric oxide — relax blood vessels",
   "media": {
-    "emoji": "🟣",
     "hero": {
+      "alt": "Magenta-red diced beetroot stir-fry topped with grated coconut and curry leaves",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/beetroot-poriyal/hero.jpg",
+      "caption": "beetroot poriyal — coconut, curry leaf, crackle",
       "palette": [
         "#7B2D26",
         "#C44536",
         "#FBF7EE"
-      ],
-      "src": "assets/recipes/beetroot-poriyal/hero.jpg",
-      "alt": "Magenta-red diced beetroot stir-fry topped with grated coconut and curry leaves",
-      "caption": "beetroot poriyal — coconut, curry leaf, crackle"
-    }
+      ]
+    },
+    "emoji": "🟣"
   },
-  "healthFacts": [
-    "Beets supply 110µg folate per cup — strong support for homocysteine clearance.",
-    "Dietary nitrates lower systolic blood pressure by 4–10 mmHg in clinical studies.",
-    "Betalain pigments are anti-inflammatory and protect liver cells.",
-    "Pairing with coconut adds healthy fat and improves absorption of fat-soluble nutrients."
-  ],
+  "color": "#7B2D26",
+  "colorSoft": "rgba(123,45,38,0.18)",
   "ingredients": [
     {
       "name": "Beetroot (peeled, diced small)",
@@ -90,21 +75,33 @@
       "title": "Tadka first",
       "detail": "Heat coconut oil in a wide pan. Crackle mustard seeds, then add urad dal — cook till golden. Add curry leaves, onion, and green chili. Sauté 3 minutes till soft.",
       "duration": 240,
-      "tip": "Urad dal in the tadka adds a toasty crunch — south Indian signature."
+      "tip": "Urad dal in the tadka adds a toasty crunch — south Indian signature.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Cook the beetroot",
       "detail": "Add diced beetroot and salt. Stir well. Cover and cook on medium-low for 12 minutes, stirring every 3 minutes — the beet releases moisture and steams itself.",
       "duration": 720,
-      "tip": "Dice the beet small (5mm) — anything bigger takes too long."
+      "tip": "Dice the beet small (5mm) — anything bigger takes too long.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Finish with coconut",
       "detail": "Uncover, stir in fresh grated coconut, cook 2 more minutes till the coconut is slightly toasted. Off heat. Serve with steamed rice and sambar.",
       "duration": 120,
-      "tip": "Don't add coconut early — it stays soft and clumps."
+      "tip": "Don't add coconut early — it stays soft and clumps.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -120,5 +117,18 @@
       "name": "Wooden spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "coconut",
+    "high-folate",
+    "high-nitrates",
+    "veg",
+    "vegan"
+  ],
+  "healthFacts": [
+    "Beets supply 110µg folate per cup — strong support for homocysteine clearance.",
+    "Dietary nitrates lower systolic blood pressure by 4–10 mmHg in clinical studies.",
+    "Betalain pigments are anti-inflammatory and protect liver cells.",
+    "Pairing with coconut adds healthy fat and improves absorption of fat-soluble nutrients."
   ]
 }

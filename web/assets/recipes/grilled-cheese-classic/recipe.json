@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 1,
   "totalMinutes": 12,
-  "tags": [
-    "vegetarian",
-    "nut-free",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Two heats, three minutes — the science of crisp",
   "media": {
-    "emoji": "🧀",
     "hero": {
+      "alt": "Grilled cheese with golden crust and stretchy cheddar pull",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-cheese-classic/hero.jpg",
+      "caption": "grilled cheese — buttered, sharp",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/grilled-cheese-classic/hero.jpg",
-      "alt": "Grilled cheese with golden crust and stretchy cheddar pull",
-      "caption": "grilled cheese — buttered, sharp"
-    }
+      ]
+    },
+    "emoji": "🧀"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "A blend of cheeses melts more evenly than a single one — try cheddar + gruyère.",
-    "Mayo on the outside crisps better than butter at the same temperature — pick your fight."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Sourdough bread",
@@ -64,8 +52,7 @@
       "duration": 60,
       "tip": "Butter must be soft. Cold butter tears the bread.",
       "media": {
-        "src": "assets/recipes/grilled-cheese-classic/step-01-butter.jpg",
-        "alt": "Buttered sourdough slices",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-cheese-classic/step-01-butter.jpg",
         "caption": "butter both sides"
       }
     },
@@ -76,8 +63,7 @@
       "duration": 30,
       "tip": "Slice the cheese thin — thick slices won't melt before the bread burns.",
       "media": {
-        "src": "assets/recipes/grilled-cheese-classic/step-02-cheese.jpg",
-        "alt": "Cheese piled on sourdough",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-cheese-classic/step-02-cheese.jpg",
         "caption": "layer the cheese"
       }
     },
@@ -88,8 +74,7 @@
       "duration": 540,
       "tip": "If the cheese isn't melted but the crust is, slap the lid on briefly.",
       "media": {
-        "src": "assets/recipes/grilled-cheese-classic/step-03-cook.jpg",
-        "alt": "Grilled cheese cooking in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-cheese-classic/step-03-cook.jpg",
         "caption": "slow to start, hot to finish"
       }
     },
@@ -100,8 +85,7 @@
       "duration": 30,
       "tip": "A sprinkle of flaky salt on the buttered crust right after cooking is criminally good.",
       "media": {
-        "src": "assets/recipes/grilled-cheese-classic/step-04-cut.jpg",
-        "alt": "Grilled cheese cut showing cheese pull",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-cheese-classic/step-04-cut.jpg",
         "caption": "rest, then cut"
       }
     }
@@ -119,5 +103,15 @@
       "name": "Butter knife",
       "essential": false
     }
+  ],
+  "tags": [
+    "nut-free",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "A blend of cheeses melts more evenly than a single one — try cheddar + gruyère.",
+    "Mayo on the outside crisps better than butter at the same temperature — pick your fight."
   ]
 }

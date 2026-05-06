@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 2,
   "totalMinutes": 35,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "mediterranean",
-    "high-protein"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Provençal classic, shellfish-free, all components in one bowl",
   "media": {
-    "emoji": "🥗",
     "hero": {
+      "alt": "Tuna niçoise composed with potatoes, eggs, olives, beans",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-nicoise-bowl/hero.jpg",
+      "caption": "niçoise — composed and bright",
       "palette": [
         "#7A9C5A",
         "#E76F51",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/tuna-nicoise-bowl/hero.jpg",
-      "alt": "Tuna niçoise composed with potatoes, eggs, olives, beans",
-      "caption": "niçoise — composed and bright"
-    }
+      ]
+    },
+    "emoji": "🥗"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Niçoise traditionally uses canned tuna, but a quick-seared fresh tuna lifts it.",
-    "Eggs + potatoes + tuna together provide complete sustained protein."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Tuna steaks",
@@ -95,8 +82,7 @@
       "duration": 720,
       "tip": "Two birds, one pot. Watch the timer.",
       "media": {
-        "src": "assets/recipes/tuna-nicoise-bowl/step-01-boil.jpg",
-        "alt": "Boiling potatoes and eggs",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-nicoise-bowl/step-01-boil.jpg",
         "caption": "boil potatoes and eggs"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 120,
       "tip": "Ice bath stops cooking instantly — bright beans, not olive-drab.",
       "media": {
-        "src": "assets/recipes/tuna-nicoise-bowl/step-02-blanch.jpg",
-        "alt": "Blanching green beans",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-nicoise-bowl/step-02-blanch.jpg",
         "caption": "blanch beans"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 180,
       "tip": "Sliced tuna shows off the rare center — that's the niçoise wow.",
       "media": {
-        "src": "assets/recipes/tuna-nicoise-bowl/step-03-sear.jpg",
-        "alt": "Searing tuna for niçoise",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-nicoise-bowl/step-03-sear.jpg",
         "caption": "sear the tuna"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 240,
       "tip": "Composed = arranged separately. Don't toss; that's a salad, not niçoise.",
       "media": {
-        "src": "assets/recipes/tuna-nicoise-bowl/step-04-compose.jpg",
-        "alt": "Composed niçoise bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/tuna-nicoise-bowl/step-04-compose.jpg",
         "caption": "compose with vinaigrette"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "mediterranean",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Niçoise traditionally uses canned tuna, but a quick-seared fresh tuna lifts it.",
+    "Eggs + potatoes + tuna together provide complete sustained protein."
   ]
 }

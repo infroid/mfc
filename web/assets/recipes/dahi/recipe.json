@@ -7,36 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 480,
-  "tags": [
-    "veg",
-    "dairy",
-    "fermented",
-    "probiotic",
-    "high-calcium"
-  ],
-  "color": "#FBF7EE",
-  "colorSoft": "rgba(251,247,238,0.6)",
-  "featured": false,
-  "highlight": "Indian dahi cultures (Lactobacillus + Streptococcus) thrive at 38–42°C overnight",
   "media": {
-    "emoji": "🥛",
     "hero": {
+      "alt": "Snow-white set yogurt in a clay matka with a thick layer of malai on top",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/dahi/hero.jpg",
+      "caption": "dahi — set in a clay matka overnight",
       "palette": [
         "#FBF7EE",
         "#E9DAC1",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/dahi/hero.jpg",
-      "alt": "Snow-white set yogurt in a clay matka with a thick layer of malai on top",
-      "caption": "dahi — set in a clay matka overnight"
-    }
+      ]
+    },
+    "emoji": "🥛"
   },
-  "healthFacts": [
-    "Live cultures (Lactobacillus, Streptococcus thermophilus) support gut microbiota.",
-    "200g serving delivers ~250mg calcium, 1.5µg B12, and 0.4mg riboflavin.",
-    "Fermented dairy is better tolerated than fresh milk in mild lactose intolerance.",
-    "Iodine from dairy supports thyroid function (TSH-relevant)."
-  ],
+  "color": "#FBF7EE",
+  "colorSoft": "rgba(251,247,238,0.6)",
   "ingredients": [
     {
       "name": "Whole milk",
@@ -55,21 +40,33 @@
       "title": "Boil and cool the milk",
       "detail": "Bring milk to a rolling boil, then let it simmer for 5 minutes (this kills any wild bacteria and concentrates the milk). Cool to lukewarm — about 42°C, or warm enough that your finger can stay in for 5 seconds without discomfort.",
       "duration": 1800,
-      "tip": "Hotter than 45°C kills the starter; colder than 38°C and it won't set."
+      "tip": "Hotter than 45°C kills the starter; colder than 38°C and it won't set.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Add the starter",
       "detail": "Whisk the starter yogurt with 2 tbsp of the warm milk in a small bowl until smooth, then stir back into the rest of the milk. Pour into your final setting vessel — earthen matka or steel bowl.",
       "duration": 60,
-      "tip": "A clay matka draws moisture out and gives a thicker, more traditional set."
+      "tip": "A clay matka draws moisture out and gives a thicker, more traditional set.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Set in a warm spot",
       "detail": "Cover and leave undisturbed in a warm corner (oven with light on, or kitchen counter in summer) for 6–8 hours. When it's set, refrigerate at least 2 hours before serving.",
       "duration": 28800,
-      "tip": "Don't shake it during setting — it'll break the curds."
+      "tip": "Don't shake it during setting — it'll break the curds.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -85,5 +82,18 @@
       "name": "Whisk",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "fermented",
+    "high-calcium",
+    "probiotic",
+    "veg"
+  ],
+  "healthFacts": [
+    "Live cultures (Lactobacillus, Streptococcus thermophilus) support gut microbiota.",
+    "200g serving delivers ~250mg calcium, 1.5µg B12, and 0.4mg riboflavin.",
+    "Fermented dairy is better tolerated than fresh milk in mild lactose intolerance.",
+    "Iodine from dairy supports thyroid function (TSH-relevant)."
   ]
 }

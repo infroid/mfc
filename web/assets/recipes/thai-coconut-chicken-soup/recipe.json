@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "asian",
-    "gluten-free"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Fish sauce, not soy — depth without soybeans",
   "media": {
-    "emoji": "🍲",
     "hero": {
+      "alt": "Tom kha gai with coconut broth, mushrooms, and cilantro",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/thai-coconut-chicken-soup/hero.jpg",
+      "caption": "tom kha gai — coconut, lime",
       "palette": [
         "#F4D67A",
         "#7A9C5A",
         "#E76F51"
-      ],
-      "src": "assets/recipes/thai-coconut-chicken-soup/hero.jpg",
-      "alt": "Tom kha gai with coconut broth, mushrooms, and cilantro",
-      "caption": "tom kha gai — coconut, lime"
-    }
+      ]
+    },
+    "emoji": "🍲"
   },
-  "healthFacts": [
-    "Naturally soy-free — fish sauce is the umami source.",
-    "Galangal (related to ginger) has gingerol-like anti-inflammatory compounds.",
-    "Lemongrass essential oils have antimicrobial activity in vitro studies."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Chicken thighs (sliced)",
@@ -95,8 +82,7 @@
       "duration": 240,
       "tip": "Frozen galangal/leaves work fine — keep a stash.",
       "media": {
-        "src": "assets/recipes/thai-coconut-chicken-soup/step-01-bruise.jpg",
-        "alt": "Smashing lemongrass with knife",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/thai-coconut-chicken-soup/step-01-bruise.jpg",
         "caption": "bruise the aromatics"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 480,
       "tip": "Don't boil coconut milk hard — it splits.",
       "media": {
-        "src": "assets/recipes/thai-coconut-chicken-soup/step-02-steep.jpg",
-        "alt": "Coconut broth steeping with aromatics",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/thai-coconut-chicken-soup/step-02-steep.jpg",
         "caption": "steep the broth"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 480,
       "tip": "Slice chicken thin against the grain — cooks fast and stays tender.",
       "media": {
-        "src": "assets/recipes/thai-coconut-chicken-soup/step-03-chicken.jpg",
-        "alt": "Chicken simmering in coconut broth",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/thai-coconut-chicken-soup/step-03-chicken.jpg",
         "caption": "cook chicken and mushrooms"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 60,
       "tip": "Lime always at the end — heat destroys its brightness.",
       "media": {
-        "src": "assets/recipes/thai-coconut-chicken-soup/step-04-finish.jpg",
-        "alt": "Tom kha bowl with cilantro and chili",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/thai-coconut-chicken-soup/step-04-finish.jpg",
         "caption": "lime and herbs"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Ladle",
       "essential": false
     }
+  ],
+  "tags": [
+    "asian",
+    "gluten-free",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free — fish sauce is the umami source.",
+    "Galangal (related to ginger) has gingerol-like anti-inflammatory compounds.",
+    "Lemongrass essential oils have antimicrobial activity in vitro studies."
   ]
 }

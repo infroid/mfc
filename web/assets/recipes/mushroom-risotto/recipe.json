@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "gluten-free",
-    "italian"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Dried porcini broth gives forest-floor depth, no eggs",
   "media": {
-    "emoji": "🍄",
     "hero": {
+      "alt": "Mushroom risotto with seared mushrooms and parmesan",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mushroom-risotto/hero.jpg",
+      "caption": "mushroom risotto — porcini-deep",
       "palette": [
         "#A0522D",
         "#F4D67A",
         "#3A332A"
-      ],
-      "src": "assets/recipes/mushroom-risotto/hero.jpg",
-      "alt": "Mushroom risotto with seared mushrooms and parmesan",
-      "caption": "mushroom risotto — porcini-deep"
-    }
+      ]
+    },
+    "emoji": "🍄"
   },
-  "healthFacts": [
-    "Naturally egg-free, gluten-free.",
-    "Mushrooms are one of few plant sources of vitamin D when sun-exposed.",
-    "Porcini are rich in umami glutamates — savory boost without meat."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Carnaroli or arborio rice",
@@ -95,8 +82,7 @@
       "duration": 900,
       "tip": "Porcini liquor is the secret weapon — never throw it out.",
       "media": {
-        "src": "assets/recipes/mushroom-risotto/step-01-porcini.jpg",
-        "alt": "Dried porcini steeping in water",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mushroom-risotto/step-01-porcini.jpg",
         "caption": "steep the porcini"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 720,
       "tip": "High heat, no salt yet — salt pulls water and steams instead of browning.",
       "media": {
-        "src": "assets/recipes/mushroom-risotto/step-02-cremini.jpg",
-        "alt": "Browning cremini mushrooms",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mushroom-risotto/step-02-cremini.jpg",
         "caption": "sear the cremini"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 1200,
       "tip": "Don't add cold stock — it shocks the rice. Keep the stock warming on a back burner.",
       "media": {
-        "src": "assets/recipes/mushroom-risotto/step-03-ladle.jpg",
-        "alt": "Risotto absorbing stock",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mushroom-risotto/step-03-ladle.jpg",
         "caption": "toast and ladle"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 60,
       "tip": "Should ripple into a wave when you shake the bowl — that's all'onda, the wave.",
       "media": {
-        "src": "assets/recipes/mushroom-risotto/step-04-mantecare.jpg",
-        "alt": "Risotto plated with seared mushrooms",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/mushroom-risotto/step-04-mantecare.jpg",
         "caption": "mantecare and top"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Ladle",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "italian",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free, gluten-free.",
+    "Mushrooms are one of few plant sources of vitamin D when sun-exposed.",
+    "Porcini are rich in umami glutamates — savory boost without meat."
   ]
 }

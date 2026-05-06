@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 20,
-  "tags": [
-    "veg",
-    "vegan",
-    "vitamin-k",
-    "high-fiber",
-    "low-calorie",
-    "coconut"
-  ],
-  "color": "#A4C268",
-  "colorSoft": "rgba(164,194,104,0.18)",
-  "featured": false,
-  "highlight": "Cabbage barely cooked — keeps crunch, vitamin C, and freshness",
   "media": {
-    "emoji": "🥬",
     "hero": {
+      "alt": "Pale-green cabbage stir-fry with grated coconut and curry leaves",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/cabbage-thoran/hero.jpg",
+      "caption": "cabbage thoran — coconut, mustard, curry leaf",
       "palette": [
         "#A4C268",
         "#FBF7EE",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/cabbage-thoran/hero.jpg",
-      "alt": "Pale-green cabbage stir-fry with grated coconut and curry leaves",
-      "caption": "cabbage thoran — coconut, mustard, curry leaf"
-    }
+      ]
+    },
+    "emoji": "🥬"
   },
-  "healthFacts": [
-    "Cabbage delivers vitamin K and vitamin C — supporting clotting and antioxidant systems.",
-    "Sulforaphane and other glucosinolates support liver phase-2 detox enzymes.",
-    "Very low calorie (~30 kcal per cup raw) — pairs well with rice without driving meal load up.",
-    "Fresh coconut adds healthy fat for fat-soluble vitamin absorption."
-  ],
+  "color": "#A4C268",
+  "colorSoft": "rgba(164,194,104,0.18)",
   "ingredients": [
     {
       "name": "Cabbage (shredded fine)",
@@ -96,21 +80,33 @@
       "title": "Tempering",
       "detail": "Heat coconut oil in a wide pan. Crackle mustard seeds, add urad dal till golden. Add curry leaves and green chili.",
       "duration": 120,
-      "tip": "Hot tempering is the soul of Kerala stir-fries — don't crowd the pan with vegetables before this finishes."
+      "tip": "Hot tempering is the soul of Kerala stir-fries — don't crowd the pan with vegetables before this finishes.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Cabbage and onion",
       "detail": "Add chopped onion, sauté 1 minute. Add shredded cabbage and turmeric. Toss on high heat for 4–5 minutes till just wilted but still crisp.",
       "duration": 360,
-      "tip": "Keep heat high; cover only briefly. Long covered cooking turns cabbage limp and bitter."
+      "tip": "Keep heat high; cover only briefly. Long covered cooking turns cabbage limp and bitter.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Finish with coconut",
       "detail": "Stir in fresh coconut and salt, cook 1 more minute. Off heat. Eat warm with rice and dal.",
       "duration": 60,
-      "tip": "Squeeze lime at the table for vitamin C and brightness."
+      "tip": "Squeeze lime at the table for vitamin C and brightness.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -126,5 +122,19 @@
       "name": "Wooden spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "coconut",
+    "high-fiber",
+    "low-calorie",
+    "veg",
+    "vegan",
+    "vitamin-k"
+  ],
+  "healthFacts": [
+    "Cabbage delivers vitamin K and vitamin C — supporting clotting and antioxidant systems.",
+    "Sulforaphane and other glucosinolates support liver phase-2 detox enzymes.",
+    "Very low calorie (~30 kcal per cup raw) — pairs well with rice without driving meal load up.",
+    "Fresh coconut adds healthy fat for fat-soluble vitamin absorption."
   ]
 }

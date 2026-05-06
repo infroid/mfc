@@ -7,39 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "vegetarian",
-    "iron-rich",
-    "high-protein",
-    "dairy",
-    "onion",
-    "garlic"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.16)",
-  "featured": false,
-  "highlight": "Spinach + paneer = iron + complete protein",
   "media": {
-    "emoji": "🥬",
     "hero": {
+      "alt": "Palak paneer in a cream ceramic bowl with paneer cubes and cream swirls",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/hero.jpg",
+      "caption": "palak paneer — vibrant green gravy, paneer cubes",
       "palette": [
         "#7A9C5A",
         "#5E7E40",
         "#4A6B30"
-      ],
-      "src": "assets/recipes/palak-paneer/hero.jpg",
-      "alt": "Palak paneer in a cream ceramic bowl with paneer cubes and cream swirls",
-      "caption": "palak paneer — vibrant green gravy, paneer cubes"
-    }
+      ]
+    },
+    "emoji": "🥬"
   },
-  "healthFacts": [
-    "Spinach contains non-heme iron — vitamin C from tomatoes and lemon doubles its absorption.",
-    "Paneer completes the amino acid profile missing in spinach — together they're a near-complete protein.",
-    "Blanching and shocking spinach preserves chlorophyll and slows oxalate formation.",
-    "Adding cream off-heat retains more fat-soluble vitamins (A, K, E) than cooking them in.",
-    "Ginger in the masala enhances thermogenesis and reduces spinach's natural bitterness.",
-    "One serving provides ~60% of daily vitamin K needs — essential for bone density."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.16)",
   "ingredients": [
     {
       "name": "Spinach (palak, fresh)",
@@ -115,8 +97,7 @@
       "duration": 120,
       "tip": "The ice bath is not optional — without it, the spinach goes army-green and bitter-tasting.",
       "media": {
-        "src": "assets/recipes/palak-paneer/step-01-blanch-spinach.jpg",
-        "alt": "Blanched spinach cooling in ice water beside a steaming pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/step-01-blanch-spinach.jpg",
         "caption": "Blanch and shock"
       }
     },
@@ -127,8 +108,7 @@
       "duration": 120,
       "tip": "Over-blending with too much water makes the gravy thin and watery. Use as little as needed.",
       "media": {
-        "src": "assets/recipes/palak-paneer/step-02-blend-smooth.jpg",
-        "alt": "Smooth bright green spinach puree in a blender jar with green chilies nearby",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/step-02-blend-smooth.jpg",
         "caption": "Vibrant spinach puree"
       }
     },
@@ -139,8 +119,7 @@
       "duration": 540,
       "tip": "Don't skip the tomato — it adds acidity that brightens the spinach and boosts iron absorption.",
       "media": {
-        "src": "assets/recipes/palak-paneer/step-03-build-base.jpg",
-        "alt": "Onion, tomato, ginger-garlic paste, cumin, and Kashmiri chili cooking in butter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/step-03-build-base.jpg",
         "caption": "Tomato-onion masala"
       }
     },
@@ -151,8 +130,7 @@
       "duration": 360,
       "tip": "The gravy will darken slightly as it cooks — that's fine. Don't overcook or it loses vibrancy.",
       "media": {
-        "src": "assets/recipes/palak-paneer/step-04-add-spinach-puree.jpg",
-        "alt": "Bright spinach puree stirred into red tomato masala in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/step-04-add-spinach-puree.jpg",
         "caption": "Spinach puree simmer"
       }
     },
@@ -163,8 +141,7 @@
       "duration": 180,
       "tip": "Paneer doesn't need to 'cook' — it just needs to warm through and absorb the gravy.",
       "media": {
-        "src": "assets/recipes/palak-paneer/step-05-add-paneer.jpg",
-        "alt": "Paneer cubes nestled into thick green palak gravy before cream is added",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/step-05-add-paneer.jpg",
         "caption": "Paneer warmed through"
       }
     },
@@ -175,8 +152,7 @@
       "duration": 60,
       "tip": "Add cream off-heat or swirl it in last for richness without losing the green color.",
       "media": {
-        "src": "assets/recipes/palak-paneer/step-06-finish-serve.jpg",
-        "alt": "Palak paneer finished with cream, lemon, and paneer cubes in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/palak-paneer/step-06-finish-serve.jpg",
         "caption": "Creamy palak finish"
       }
     }
@@ -202,5 +178,21 @@
       "name": "Strainer",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "garlic",
+    "high-protein",
+    "iron-rich",
+    "onion",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Spinach contains non-heme iron — vitamin C from tomatoes and lemon doubles its absorption.",
+    "Paneer completes the amino acid profile missing in spinach — together they're a near-complete protein.",
+    "Blanching and shocking spinach preserves chlorophyll and slows oxalate formation.",
+    "Adding cream off-heat retains more fat-soluble vitamins (A, K, E) than cooking them in.",
+    "Ginger in the masala enhances thermogenesis and reduces spinach's natural bitterness.",
+    "One serving provides ~60% of daily vitamin K needs — essential for bone density."
   ]
 }

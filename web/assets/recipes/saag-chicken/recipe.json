@@ -7,36 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 60,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "indian",
-    "high-protein",
-    "gluten-free",
-    "halal"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Greens-heavy, ghee-finished, naturally soy-free",
   "media": {
-    "emoji": "🥬",
     "hero": {
+      "alt": "Saag chicken with green spinach gravy and chicken pieces",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/saag-chicken/hero.jpg",
+      "caption": "saag chicken — greens-heavy",
       "palette": [
         "#7A9C5A",
         "#F4A261",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/saag-chicken/hero.jpg",
-      "alt": "Saag chicken with green spinach gravy and chicken pieces",
-      "caption": "saag chicken — greens-heavy"
-    }
+      ]
+    },
+    "emoji": "🥬"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Spinach + ghee + ginger = iron with fat-soluble support and digestive aid.",
-    "Mustard greens add isothiocyanates — anti-inflammatory crucifer compounds."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Chicken thighs (bone-in)",
@@ -97,8 +82,7 @@
       "duration": 480,
       "tip": "Quick blanch keeps green vivid; long cook drains color.",
       "media": {
-        "src": "assets/recipes/saag-chicken/step-01-wilt.jpg",
-        "alt": "Spinach wilting in pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/saag-chicken/step-01-wilt.jpg",
         "caption": "wilt and blend greens"
       }
     },
@@ -109,8 +93,7 @@
       "duration": 480,
       "tip": "Bone-in dark meat takes the long cook better than breast.",
       "media": {
-        "src": "assets/recipes/saag-chicken/step-02-brown.jpg",
-        "alt": "Chicken browning in ghee",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/saag-chicken/step-02-brown.jpg",
         "caption": "brown chicken"
       }
     },
@@ -121,8 +104,7 @@
       "duration": 600,
       "tip": "Slow-browning the onion is what saag-paneer-restaurants do; it's the layered flavor.",
       "media": {
-        "src": "assets/recipes/saag-chicken/step-03-masala.jpg",
-        "alt": "Onion masala browning",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/saag-chicken/step-03-masala.jpg",
         "caption": "build the masala"
       }
     },
@@ -133,8 +115,7 @@
       "duration": 1500,
       "tip": "A spoon of ghee at the end carries fat-soluble flavors — the magic finish.",
       "media": {
-        "src": "assets/recipes/saag-chicken/step-04-simmer.jpg",
-        "alt": "Saag chicken simmering",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/saag-chicken/step-04-simmer.jpg",
         "caption": "combine and simmer"
       }
     }
@@ -152,5 +133,18 @@
       "name": "Wooden spoon",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "halal",
+    "high-protein",
+    "indian",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Spinach + ghee + ginger = iron with fat-soluble support and digestive aid.",
+    "Mustard greens add isothiocyanates — anti-inflammatory crucifer compounds."
   ]
 }

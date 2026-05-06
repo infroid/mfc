@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 10,
-  "tags": [
-    "veg",
-    "vegan",
-    "raw",
-    "high-vitamin-c",
-    "high-fiber",
-    "low-calorie"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.18)",
-  "featured": false,
-  "highlight": "Black salt + chaat masala makes plain fruit irresistible — and helps digestion",
   "media": {
-    "emoji": "🍎",
     "hero": {
+      "alt": "Cubed mixed fruits with pomegranate, papaya, banana, and orange tossed with chaat masala",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/fruit-chaat/hero.jpg",
+      "caption": "fruit chaat — masala-tossed, lemon-bright",
       "palette": [
         "#F4A261",
         "#E76F51",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/fruit-chaat/hero.jpg",
-      "alt": "Cubed mixed fruits with pomegranate, papaya, banana, and orange tossed with chaat masala",
-      "caption": "fruit chaat — masala-tossed, lemon-bright"
-    }
+      ]
+    },
+    "emoji": "🍎"
   },
-  "healthFacts": [
-    "Mixed fruit covers vitamin C, A, K, B6, and folate in a single bowl.",
-    "Soluble + insoluble fiber from skins keeps glucose curves gentle.",
-    "Pomegranate adds polyphenols (punicalagins) that support cardiovascular health.",
-    "Hydrating and low calorie — perfect snack between meals."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.18)",
   "ingredients": [
     {
       "name": "Apple (diced)",
@@ -96,21 +80,33 @@
       "title": "Wash and dice",
       "detail": "Wash all fruit. Dice apple, papaya, guava into 1cm cubes. Slice banana into rounds. Segment the orange.",
       "duration": 240,
-      "tip": "Cut everything to similar size — every spoonful is a balanced bite."
+      "tip": "Cut everything to similar size — every spoonful is a balanced bite.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Toss with masala",
       "detail": "Combine all fruit in a bowl. Sprinkle chaat masala and black salt. Squeeze lemon juice. Toss gently — don't crush the fruit.",
       "duration": 60,
-      "tip": "Use a wooden spoon, not metal — keeps the colour and texture."
+      "tip": "Use a wooden spoon, not metal — keeps the colour and texture.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Garnish and serve",
       "detail": "Top with pomegranate seeds and mint leaves. Eat fresh — fruit chaat doesn't keep well past 30 minutes.",
       "duration": 60,
-      "tip": "For an evening snack, add roasted cumin powder for extra digestive aid."
+      "tip": "For an evening snack, add roasted cumin powder for extra digestive aid.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -126,5 +122,19 @@
       "name": "Citrus juicer",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-fiber",
+    "high-vitamin-c",
+    "low-calorie",
+    "raw",
+    "veg",
+    "vegan"
+  ],
+  "healthFacts": [
+    "Mixed fruit covers vitamin C, A, K, B6, and folate in a single bowl.",
+    "Soluble + insoluble fiber from skins keeps glucose curves gentle.",
+    "Pomegranate adds polyphenols (punicalagins) that support cardiovascular health.",
+    "Hydrating and low calorie — perfect snack between meals."
   ]
 }

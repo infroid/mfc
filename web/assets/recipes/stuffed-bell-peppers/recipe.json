@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 70,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "mediterranean",
-    "gluten-free"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.16)",
-  "featured": false,
-  "highlight": "Pepper as edible vessel — no eggs in the filling or binder",
   "media": {
-    "emoji": "🫑",
     "hero": {
+      "alt": "Stuffed bell peppers with herbed rice in tomato sauce",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/stuffed-bell-peppers/hero.jpg",
+      "caption": "stuffed peppers — herbed rice",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/stuffed-bell-peppers/hero.jpg",
-      "alt": "Stuffed bell peppers with herbed rice in tomato sauce",
-      "caption": "stuffed peppers — herbed rice"
-    }
+      ]
+    },
+    "emoji": "🫑"
   },
-  "healthFacts": [
-    "Naturally egg-free.",
-    "Bell peppers have more vitamin C than oranges per gram, especially red.",
-    "Pine-nut-free rice filling makes this nut-free too."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.16)",
   "ingredients": [
     {
       "name": "Bell peppers (any color)",
@@ -95,8 +82,7 @@
       "duration": 240,
       "tip": "Stand the peppers in the dish first to check stability — slice a thin sliver off the bottom if wobbly.",
       "media": {
-        "src": "assets/recipes/stuffed-bell-peppers/step-01-hollow.jpg",
-        "alt": "Hollowed bell peppers",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/stuffed-bell-peppers/step-01-hollow.jpg",
         "caption": "hollow the peppers"
       }
     },
@@ -107,8 +93,7 @@
       "duration": 720,
       "tip": "Slightly under-cook the rice — it'll finish in the oven and absorb pepper juices.",
       "media": {
-        "src": "assets/recipes/stuffed-bell-peppers/step-02-filling.jpg",
-        "alt": "Rice filling with herbs",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/stuffed-bell-peppers/step-02-filling.jpg",
         "caption": "build the filling"
       }
     },
@@ -119,8 +104,7 @@
       "duration": 180,
       "tip": "A piece of foil over the dish for the first 30 minutes prevents tops from over-browning.",
       "media": {
-        "src": "assets/recipes/stuffed-bell-peppers/step-03-stuff.jpg",
-        "alt": "Stuffed peppers in baking dish",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/stuffed-bell-peppers/step-03-stuff.jpg",
         "caption": "stuff and arrange"
       }
     },
@@ -131,8 +115,7 @@
       "duration": 2700,
       "tip": "Spoon some pan tomato sauce over each pepper before serving.",
       "media": {
-        "src": "assets/recipes/stuffed-bell-peppers/step-04-bake.jpg",
-        "alt": "Baked stuffed peppers",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/stuffed-bell-peppers/step-04-bake.jpg",
         "caption": "bake until tender"
       }
     }
@@ -150,5 +133,16 @@
       "name": "Cutting board",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "mediterranean",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally egg-free.",
+    "Bell peppers have more vitamin C than oranges per gram, especially red.",
+    "Pine-nut-free rice filling makes this nut-free too."
   ]
 }

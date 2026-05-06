@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 70,
-  "tags": [
-    "non-veg",
-    "high-protein",
-    "nut-free",
-    "gluten-free"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "Sear-then-roast for crust + 145°F juicy interior",
   "media": {
-    "emoji": "🥩",
     "hero": {
+      "alt": "Sliced pork loin with herb crust on a wooden board",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/herbed-pork-loin/hero.jpg",
+      "caption": "pork loin — herb crust, blush center",
       "palette": [
         "#A0522D",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/herbed-pork-loin/hero.jpg",
-      "alt": "Sliced pork loin with herb crust on a wooden board",
-      "caption": "pork loin — herb crust, blush center"
-    }
+      ]
+    },
+    "emoji": "🥩"
   },
-  "healthFacts": [
-    "Naturally nut-free.",
-    "Pork loin is leaner than chicken thighs — ~26g protein, low fat per 3oz.",
-    "Cooking pork to 145°F (medium) is USDA-safe and yields a blush-pink, juicy slice."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Pork loin roast",
@@ -85,8 +72,7 @@
       "duration": 240,
       "tip": "A mortar and pestle for the paste makes it cling — but a knife and bowl works fine.",
       "media": {
-        "src": "assets/recipes/herbed-pork-loin/step-01-paste.jpg",
-        "alt": "Herb paste in a bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/herbed-pork-loin/step-01-paste.jpg",
         "caption": "make the herb paste"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 1800,
       "tip": "Don't skip the rest — cold-from-the-fridge meat tightens up in the oven.",
       "media": {
-        "src": "assets/recipes/herbed-pork-loin/step-02-rub.jpg",
-        "alt": "Pork loin rubbed with herb paste",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/herbed-pork-loin/step-02-rub.jpg",
         "caption": "slather the loin"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 360,
       "tip": "Crust = flavor. Don't move the loin until the side releases on its own.",
       "media": {
-        "src": "assets/recipes/herbed-pork-loin/step-03-sear.jpg",
-        "alt": "Pork loin searing in skillet",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/herbed-pork-loin/step-03-sear.jpg",
         "caption": "sear hard"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 1800,
       "tip": "A tiny pink blush in the slice is correct — pork dryness comes from overcooking.",
       "media": {
-        "src": "assets/recipes/herbed-pork-loin/step-04-roast.jpg",
-        "alt": "Roasted pork loin sliced",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/herbed-pork-loin/step-04-roast.jpg",
         "caption": "finish in oven"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Cutting board",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "nut-free"
+  ],
+  "healthFacts": [
+    "Naturally nut-free.",
+    "Pork loin is leaner than chicken thighs — ~26g protein, low fat per 3oz.",
+    "Cooking pork to 145°F (medium) is USDA-safe and yields a blush-pink, juicy slice."
   ]
 }

@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein"
-  ],
-  "color": "#E76F51",
-  "colorSoft": "rgba(231,111,81,0.18)",
-  "featured": false,
-  "highlight": "Salmon-forward burgers — no shellfish, no fillers, all fish",
   "media": {
-    "emoji": "🍔",
     "hero": {
+      "alt": "Salmon burger on bun with dill yogurt and arugula",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-burgers/hero.jpg",
+      "caption": "salmon burger — no fillers",
       "palette": [
         "#E76F51",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/salmon-burgers/hero.jpg",
-      "alt": "Salmon burger on bun with dill yogurt and arugula",
-      "caption": "salmon burger — no fillers"
-    }
+      ]
+    },
+    "emoji": "🍔"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Hand-chopping retains chunky texture — frozen-puck salmon burgers can't compete.",
-    "Yogurt-dill sauce keeps the bun bright instead of mayo-heavy."
-  ],
+  "color": "#E76F51",
+  "colorSoft": "rgba(231,111,81,0.18)",
   "ingredients": [
     {
       "name": "Salmon fillet (skinless)",
@@ -89,8 +77,7 @@
       "duration": 360,
       "tip": "Mix textures: half mince, half larger chunks for bite.",
       "media": {
-        "src": "assets/recipes/salmon-burgers/step-01-chop.jpg",
-        "alt": "Hand-chopped salmon",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-burgers/step-01-chop.jpg",
         "caption": "hand-chop the salmon"
       }
     },
@@ -101,8 +88,7 @@
       "duration": 600,
       "tip": "Chill firms the patties so they hold up in the pan.",
       "media": {
-        "src": "assets/recipes/salmon-burgers/step-02-form.jpg",
-        "alt": "Salmon patties formed",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-burgers/step-02-form.jpg",
         "caption": "mix and form"
       }
     },
@@ -113,8 +99,7 @@
       "duration": 60,
       "tip": "A spoon of capers minced into the sauce is dangerously good.",
       "media": {
-        "src": "assets/recipes/salmon-burgers/step-03-sauce.jpg",
-        "alt": "Yogurt dill sauce",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-burgers/step-03-sauce.jpg",
         "caption": "whisk yogurt sauce"
       }
     },
@@ -125,8 +110,7 @@
       "duration": 360,
       "tip": "Don't flip more than once — salmon falls apart with extra handling.",
       "media": {
-        "src": "assets/recipes/salmon-burgers/step-04-build.jpg",
-        "alt": "Salmon burger built on bun",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/salmon-burgers/step-04-build.jpg",
         "caption": "sear and build"
       }
     }
@@ -144,5 +128,15 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Hand-chopping retains chunky texture — frozen-puck salmon burgers can't compete.",
+    "Yogurt-dill sauce keeps the bun bright instead of mayo-heavy."
   ]
 }

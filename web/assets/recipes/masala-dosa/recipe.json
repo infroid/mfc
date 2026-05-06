@@ -7,40 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 40,
-  "tags": [
-    "vegetarian",
-    "gluten-free",
-    "dairy",
-    "onion",
-    "garlic",
-    "root-veg",
-    "high-fiber"
-  ],
-  "color": "#D4A017",
-  "colorSoft": "rgba(212,160,23,0.15)",
-  "featured": false,
-  "highlight": "Fermented batter boosts gut health",
   "media": {
-    "emoji": "🫓",
     "hero": {
+      "alt": "Crisp masala dosa folded over potato filling with coconut chutney and sambar",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/hero.jpg",
+      "caption": "masala dosa — crisp crepe, potato masala",
       "palette": [
         "#D4A017",
         "#F4D67A",
         "#C9813A"
-      ],
-      "src": "assets/recipes/masala-dosa/hero.jpg",
-      "alt": "Crisp masala dosa folded over potato filling with coconut chutney and sambar",
-      "caption": "masala dosa — crisp crepe, potato masala"
-    }
+      ]
+    },
+    "emoji": "🫓"
   },
-  "healthFacts": [
-    "Fermented dosa batter has a lower glycemic index than plain rice — lactic acid slows glucose absorption.",
-    "The fermentation process increases B vitamins, especially B12 and folate.",
-    "Urad dal in the batter provides complete protein when combined with rice.",
-    "Mustard seeds contain glucosinolates — plant compounds with studied anti-cancer properties.",
-    "Curry leaves are rich in carbazole alkaloids that help regulate blood cholesterol.",
-    "Naturally gluten-free — a rare comfort food that works for celiac diets without substitutions."
-  ],
+  "color": "#D4A017",
+  "colorSoft": "rgba(212,160,23,0.15)",
   "ingredients": [
     {
       "name": "Dosa batter (fermented, store-bought or homemade)",
@@ -111,8 +92,7 @@
       "duration": 420,
       "tip": "Curry leaves must go in hot oil to release their aroma. Don't add them to cold oil.",
       "media": {
-        "src": "assets/recipes/masala-dosa/step-01-aloo-filling.jpg",
-        "alt": "Onions, curry leaves, mustard seeds, chana dal, green chilies, and ginger cooking in a pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/step-01-aloo-filling.jpg",
         "caption": "Tempered onion base"
       }
     },
@@ -123,8 +103,7 @@
       "duration": 180,
       "tip": "Keep some potato texture — completely smooth filling makes the dosa feel soggy inside.",
       "media": {
-        "src": "assets/recipes/masala-dosa/step-02-season-mash.jpg",
-        "alt": "Chunky turmeric potato masala with onions, curry leaves, and coriander in a black pan",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/step-02-season-mash.jpg",
         "caption": "Chunky potato masala"
       }
     },
@@ -135,8 +114,7 @@
       "duration": 120,
       "tip": "The onion wipe seasons the tawa and prevents sticking. This is the traditional method.",
       "media": {
-        "src": "assets/recipes/masala-dosa/step-03-heat-tawa.jpg",
-        "alt": "Hot black tawa with water droplets steaming on an oil-wiped surface",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/step-03-heat-tawa.jpg",
         "caption": "Hot seasoned tawa"
       }
     },
@@ -147,8 +125,7 @@
       "duration": 60,
       "tip": "Speed matters. The batter should be spread within 5–8 seconds of hitting the pan.",
       "media": {
-        "src": "assets/recipes/masala-dosa/step-04-spread-batter.jpg",
-        "alt": "Pale dosa batter spread in thin concentric circles on a hot black tawa",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/step-04-spread-batter.jpg",
         "caption": "Thin batter spiral"
       }
     },
@@ -159,8 +136,7 @@
       "duration": 180,
       "tip": "Resist the urge to flip. Dosa is almost always cooked on one side only for the crisp.",
       "media": {
-        "src": "assets/recipes/masala-dosa/step-05-crisp-dosa.jpg",
-        "alt": "Golden dosa crisping on a tawa with dry lacy surface and browned edges",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/step-05-crisp-dosa.jpg",
         "caption": "Crisp golden dosa"
       }
     },
@@ -171,8 +147,7 @@
       "duration": 60,
       "tip": "Dosa goes soft within minutes. Serve straight from the tawa.",
       "media": {
-        "src": "assets/recipes/masala-dosa/step-06-fill-fold.jpg",
-        "alt": "Crisp dosa folded around yellow potato masala on a black tawa",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masala-dosa/step-06-fill-fold.jpg",
         "caption": "Filled and folded"
       }
     }
@@ -194,5 +169,22 @@
       "name": "Heavy pan for filling",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "garlic",
+    "gluten-free",
+    "high-fiber",
+    "onion",
+    "root-veg",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Fermented dosa batter has a lower glycemic index than plain rice — lactic acid slows glucose absorption.",
+    "The fermentation process increases B vitamins, especially B12 and folate.",
+    "Urad dal in the batter provides complete protein when combined with rice.",
+    "Mustard seeds contain glucosinolates — plant compounds with studied anti-cancer properties.",
+    "Curry leaves are rich in carbazole alkaloids that help regulate blood cholesterol.",
+    "Naturally gluten-free — a rare comfort food that works for celiac diets without substitutions."
   ]
 }

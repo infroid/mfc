@@ -7,40 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "vegetarian",
-    "gluten-free",
-    "high-protein",
-    "dairy",
-    "nuts",
-    "onion",
-    "garlic"
-  ],
-  "color": "#FF6D2E",
-  "colorSoft": "rgba(255,109,46,0.15)",
-  "featured": true,
-  "highlight": "14g protein per serving from paneer",
   "media": {
-    "emoji": "🧀",
     "hero": {
+      "alt": "Paneer butter masala in a cream ceramic bowl with paneer cubes, cream swirl, and kasuri methi",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/hero.jpg",
+      "caption": "paneer butter masala — silky makhani gravy",
       "palette": [
         "#FF6D2E",
         "#F4D67A",
         "#E2531A"
-      ],
-      "src": "assets/recipes/paneer-butter-masala/hero.jpg",
-      "alt": "Paneer butter masala in a cream ceramic bowl with paneer cubes, cream swirl, and kasuri methi",
-      "caption": "paneer butter masala — silky makhani gravy"
-    }
+      ]
+    },
+    "emoji": "🧀"
   },
-  "healthFacts": [
-    "Paneer adds ~14g protein per 100g — a near-complete source for vegetarians.",
-    "Cashews thicken the gravy without flour — adds magnesium + healthy fats.",
-    "Tomatoes deliver lycopene, an antioxidant that's MORE bioavailable when cooked.",
-    "Kasuri methi (dried fenugreek) is linked to better blood sugar response.",
-    "Swap cream for cashew paste to keep richness while cutting saturated fat by ~40%.",
-    "Ginger aids digestion — especially handy with rich, dairy-forward dishes."
-  ],
+  "color": "#FF6D2E",
+  "colorSoft": "rgba(255,109,46,0.15)",
   "ingredients": [
     {
       "name": "Paneer",
@@ -116,8 +97,7 @@
       "duration": 300,
       "tip": "Hot tap water works. Boiling = 5 min. Room temp = 30 min.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-01-soak-cashews.jpg",
-        "alt": "Cashews soaking in hot water beside chopped onion and tomatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-01-soak-cashews.jpg",
         "caption": "Hot-water cashew soak"
       }
     },
@@ -128,8 +108,7 @@
       "duration": 600,
       "tip": "Don't rush this. Tomatoes should look jammy and oil should separate slightly.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-02-saute-onion-tomato.jpg",
-        "alt": "Onion and tomato cooking down with green chili in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-02-saute-onion-tomato.jpg",
         "caption": "Jammy onion-tomato base"
       }
     },
@@ -140,8 +119,7 @@
       "duration": 240,
       "tip": "Skip the strainer and you'll get a rustic, homestyle texture. Both are valid.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-03-blend-gravy-base.jpg",
-        "alt": "Orange tomato-cashew gravy being strained through a fine mesh sieve",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-03-blend-gravy-base.jpg",
         "caption": "Blend and strain smooth"
       }
     },
@@ -152,8 +130,7 @@
       "duration": 120,
       "tip": "Kashmiri chili is mild + gives the signature red color without heat.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-04-bloom-spices.jpg",
-        "alt": "Strained gravy pouring into butter bloomed with Kashmiri chili powder",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-04-bloom-spices.jpg",
         "caption": "Bloomed chili butter"
       }
     },
@@ -164,8 +141,7 @@
       "duration": 480,
       "tip": "Sugar isn't for sweetness — it balances tomato acidity. Don't skip.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-05-simmer-gravy.jpg",
-        "alt": "Smooth orange-red makhani gravy bubbling gently in a black kadhai",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-05-simmer-gravy.jpg",
         "caption": "Glossy simmered gravy"
       }
     },
@@ -176,8 +152,7 @@
       "duration": 180,
       "tip": "Soak paneer cubes in warm water for 10 min beforehand for extra-soft texture.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-06-add-paneer-finish.jpg",
-        "alt": "Paneer cubes in tomato-cashew gravy with cream and kasuri methi",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-06-add-paneer-finish.jpg",
         "caption": "Paneer and cream finish"
       }
     },
@@ -188,8 +163,7 @@
       "duration": 300,
       "tip": "This rest step is what separates 'good' from 'great'. Try it.",
       "media": {
-        "src": "assets/recipes/paneer-butter-masala/step-07-rest-serve.jpg",
-        "alt": "Finished paneer butter masala served with cream, kasuri methi, naan, and jeera rice",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/paneer-butter-masala/step-07-rest-serve.jpg",
         "caption": "Rested and ready to serve"
       }
     }
@@ -219,5 +193,22 @@
       "name": "Small bowl for soaking cashews",
       "essential": false
     }
+  ],
+  "tags": [
+    "dairy",
+    "garlic",
+    "gluten-free",
+    "high-protein",
+    "nuts",
+    "onion",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Paneer adds ~14g protein per 100g — a near-complete source for vegetarians.",
+    "Cashews thicken the gravy without flour — adds magnesium + healthy fats.",
+    "Tomatoes deliver lycopene, an antioxidant that's MORE bioavailable when cooked.",
+    "Kasuri methi (dried fenugreek) is linked to better blood sugar response.",
+    "Swap cream for cashew paste to keep richness while cutting saturated fat by ~40%.",
+    "Ginger aids digestion — especially handy with rich, dairy-forward dishes."
   ]
 }

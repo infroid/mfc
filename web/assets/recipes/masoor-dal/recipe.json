@@ -7,37 +7,21 @@
   "difficulty": "Easy",
   "servings": 3,
   "totalMinutes": 25,
-  "tags": [
-    "veg",
-    "high-iron",
-    "high-folate",
-    "high-protein",
-    "garlic",
-    "onion"
-  ],
-  "color": "#C44536",
-  "colorSoft": "rgba(196,69,54,0.16)",
-  "featured": false,
-  "highlight": "Lentils + tomato + lemon — vitamin C unlocks iron absorption in one bowl",
   "media": {
-    "emoji": "🥣",
     "hero": {
+      "alt": "Reddish-brown masoor dal in a steel bowl with tomato, coriander, and a tadka of cumin",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/masoor-dal/hero.jpg",
+      "caption": "masoor dal — iron-rich red lentils with tomato",
       "palette": [
         "#C44536",
         "#E76F51",
         "#F4A261"
-      ],
-      "src": "assets/recipes/masoor-dal/hero.jpg",
-      "alt": "Reddish-brown masoor dal in a steel bowl with tomato, coriander, and a tadka of cumin",
-      "caption": "masoor dal — iron-rich red lentils with tomato"
-    }
+      ]
+    },
+    "emoji": "🥣"
   },
-  "healthFacts": [
-    "Red lentils deliver ~3.3mg iron per cooked cup — one of the highest plant-iron foods.",
-    "Pairing with tomato and a final lemon squeeze raises non-heme iron absorption 2–3×.",
-    "Folate content (~180µg per cup) supports DNA synthesis and homocysteine clearance.",
-    "Cooks in 15 minutes without soaking — the fastest pulse on the shelf."
-  ],
+  "color": "#C44536",
+  "colorSoft": "rgba(196,69,54,0.16)",
   "ingredients": [
     {
       "name": "Red lentils (masoor dal)",
@@ -91,21 +75,33 @@
       "title": "Boil the lentils",
       "detail": "Rinse the masoor dal until water runs clear. Pressure-cook with 3 cups water, turmeric, and salt for 3 whistles. Mash slightly with the back of a ladle.",
       "duration": 900,
-      "tip": "Skim any foam in the first minute — gives a cleaner, less starchy finish."
+      "tip": "Skim any foam in the first minute — gives a cleaner, less starchy finish.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Cook the masala",
       "detail": "Heat ghee in a pan. Crackle cumin, sauté onion until golden, add ginger-garlic paste, then tomatoes. Cook 6–7 minutes until oil leaves the sides.",
       "duration": 480,
-      "tip": "Cook tomatoes till they break down — undercooked tomato makes the dal taste raw."
+      "tip": "Cook tomatoes till they break down — undercooked tomato makes the dal taste raw.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Combine and finish",
       "detail": "Pour the masala into the boiled dal. Simmer 3 minutes to marry the flavors. Off-heat, stir in lemon juice. Taste, adjust salt, garnish with coriander.",
       "duration": 240,
-      "tip": "Add lemon at the end — heat destroys vitamin C, the iron-absorption helper."
+      "tip": "Add lemon at the end — heat destroys vitamin C, the iron-absorption helper.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -121,5 +117,19 @@
       "name": "Wooden spoon",
       "essential": false
     }
+  ],
+  "tags": [
+    "garlic",
+    "high-folate",
+    "high-iron",
+    "high-protein",
+    "onion",
+    "veg"
+  ],
+  "healthFacts": [
+    "Red lentils deliver ~3.3mg iron per cooked cup — one of the highest plant-iron foods.",
+    "Pairing with tomato and a final lemon squeeze raises non-heme iron absorption 2–3×.",
+    "Folate content (~180µg per cup) supports DNA synthesis and homocysteine clearance.",
+    "Cooks in 15 minutes without soaking — the fastest pulse on the shelf."
   ]
 }

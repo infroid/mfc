@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 25,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Crumb-topped white fish — pantry-easy, no shellfish",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Baked haddock with golden crumb topping",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-haddock-lemon/hero.jpg",
+      "caption": "haddock — lemon crumb",
       "palette": [
         "#F4D67A",
         "#FFFCF3",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/baked-haddock-lemon/hero.jpg",
-      "alt": "Baked haddock with golden crumb topping",
-      "caption": "haddock — lemon crumb"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Haddock is mild and low-fat — almost identical nutritional profile to cod.",
-    "A crumb topping shields the fish from drying out."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Haddock fillets",
@@ -90,8 +77,7 @@
       "duration": 120,
       "tip": "Crumb should clump when pressed — that means enough butter.",
       "media": {
-        "src": "assets/recipes/baked-haddock-lemon/step-01-crumb.jpg",
-        "alt": "Lemon herb crumb in bowl",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-haddock-lemon/step-01-crumb.jpg",
         "caption": "make the crumb"
       }
     },
@@ -102,8 +88,7 @@
       "duration": 60,
       "tip": "Dijon helps the crumb cling without flour or egg.",
       "media": {
-        "src": "assets/recipes/baked-haddock-lemon/step-02-mustard.jpg",
-        "alt": "Haddock brushed with Dijon",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-haddock-lemon/step-02-mustard.jpg",
         "caption": "mustard and lemon"
       }
     },
@@ -114,8 +99,7 @@
       "duration": 60,
       "tip": "Use the back of a spoon to press — keeps it from falling off.",
       "media": {
-        "src": "assets/recipes/baked-haddock-lemon/step-03-top.jpg",
-        "alt": "Haddock topped with crumb",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-haddock-lemon/step-03-top.jpg",
         "caption": "crumb-top"
       }
     },
@@ -126,8 +110,7 @@
       "duration": 840,
       "tip": "If crumb browns too fast, tent with foil for the last few minutes.",
       "media": {
-        "src": "assets/recipes/baked-haddock-lemon/step-04-bake.jpg",
-        "alt": "Baked haddock with golden crumb",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/baked-haddock-lemon/step-04-bake.jpg",
         "caption": "bake until gold"
       }
     }
@@ -145,5 +128,16 @@
       "name": "Microplane",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Haddock is mild and low-fat — almost identical nutritional profile to cod.",
+    "A crumb topping shields the fish from drying out."
   ]
 }

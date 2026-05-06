@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 6,
   "totalMinutes": 80,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "high-protein",
-    "gluten-free"
-  ],
-  "color": "#F4A261",
-  "colorSoft": "rgba(244,162,97,0.16)",
-  "featured": false,
-  "highlight": "Holiday flavor without the whole-bird commitment, no soy",
   "media": {
-    "emoji": "🦃",
     "hero": {
+      "alt": "Sliced roast turkey breast with herb butter glaze",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-turkey-breast/hero.jpg",
+      "caption": "turkey breast — herb butter",
       "palette": [
         "#F4A261",
         "#7A9C5A",
         "#F4D67A"
-      ],
-      "src": "assets/recipes/roast-turkey-breast/hero.jpg",
-      "alt": "Sliced roast turkey breast with herb butter glaze",
-      "caption": "turkey breast — herb butter"
-    }
+      ]
+    },
+    "emoji": "🦃"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Turkey breast is among the leanest proteins — ~25g per 3oz, low fat.",
-    "Pulling at 160°F (then resting) gives juicy meat — 165°F is too far."
-  ],
+  "color": "#F4A261",
+  "colorSoft": "rgba(244,162,97,0.16)",
   "ingredients": [
     {
       "name": "Bone-in turkey breast",
@@ -90,8 +77,7 @@
       "duration": 240,
       "tip": "Make extra; freeze in a log to use over chicken or pasta.",
       "media": {
-        "src": "assets/recipes/roast-turkey-breast/step-01-butter.jpg",
-        "alt": "Compound butter on board",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-turkey-breast/step-01-butter.jpg",
         "caption": "compound butter"
       }
     },
@@ -102,8 +88,7 @@
       "duration": 240,
       "tip": "Butter directly on the meat = built-in basting from the inside.",
       "media": {
-        "src": "assets/recipes/roast-turkey-breast/step-02-slip.jpg",
-        "alt": "Butter being slipped under turkey skin",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-turkey-breast/step-02-slip.jpg",
         "caption": "slip butter under skin"
       }
     },
@@ -114,8 +99,7 @@
       "duration": 4200,
       "tip": "Tent loosely with foil if the skin browns too fast.",
       "media": {
-        "src": "assets/recipes/roast-turkey-breast/step-03-roast.jpg",
-        "alt": "Turkey breast roasting",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-turkey-breast/step-03-roast.jpg",
         "caption": "roast hot then medium"
       }
     },
@@ -126,8 +110,7 @@
       "duration": 1200,
       "tip": "Rest is mandatory — slicing early = dry turkey.",
       "media": {
-        "src": "assets/recipes/roast-turkey-breast/step-04-slice.jpg",
-        "alt": "Sliced roast turkey breast",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/roast-turkey-breast/step-04-slice.jpg",
         "caption": "rest and slice"
       }
     }
@@ -145,5 +128,16 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "high-protein",
+    "non-veg",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Turkey breast is among the leanest proteins — ~25g per 3oz, low fat.",
+    "Pulling at 160°F (then resting) gives juicy meat — 165°F is too far."
   ]
 }

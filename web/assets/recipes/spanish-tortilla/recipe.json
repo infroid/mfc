@@ -7,34 +7,21 @@
   "difficulty": "Medium",
   "servings": 6,
   "totalMinutes": 50,
-  "tags": [
-    "vegetarian",
-    "soy-free",
-    "gluten-free",
-    "mediterranean"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Three ingredients — potato, onion, eggs. No soy.",
   "media": {
-    "emoji": "🥚",
     "hero": {
+      "alt": "Sliced Spanish tortilla showing layered potato and egg",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spanish-tortilla/hero.jpg",
+      "caption": "tortilla española — three ingredients",
       "palette": [
         "#F4D67A",
         "#FFFCF3",
         "#3A332A"
-      ],
-      "src": "assets/recipes/spanish-tortilla/hero.jpg",
-      "alt": "Sliced Spanish tortilla showing layered potato and egg",
-      "caption": "tortilla española — three ingredients"
-    }
+      ]
+    },
+    "emoji": "🥚"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Egg + potato together provide complete protein and slow carbs.",
-    "Olive oil cooked low retains polyphenols — frying poaches the potato."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Yukon gold potatoes",
@@ -70,8 +57,7 @@
       "duration": 360,
       "tip": "A mandoline gives even slices — even cooking.",
       "media": {
-        "src": "assets/recipes/spanish-tortilla/step-01-slice.jpg",
-        "alt": "Thinly sliced potatoes and onion",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spanish-tortilla/step-01-slice.jpg",
         "caption": "slice paper-thin"
       }
     },
@@ -82,8 +68,7 @@
       "duration": 1500,
       "tip": "It's not frying, it's confiting. Bubbles should be gentle.",
       "media": {
-        "src": "assets/recipes/spanish-tortilla/step-02-poach.jpg",
-        "alt": "Potatoes confiting in olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spanish-tortilla/step-02-poach.jpg",
         "caption": "slow-poach in olive oil"
       }
     },
@@ -94,8 +79,7 @@
       "duration": 600,
       "tip": "Resting lets eggs absorb potato starch — that's the silky texture.",
       "media": {
-        "src": "assets/recipes/spanish-tortilla/step-03-mix.jpg",
-        "alt": "Egg mixture with potatoes",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spanish-tortilla/step-03-mix.jpg",
         "caption": "mix with eggs"
       }
     },
@@ -106,8 +90,7 @@
       "duration": 480,
       "tip": "Flip is dramatic but works. Confidence beats hesitation.",
       "media": {
-        "src": "assets/recipes/spanish-tortilla/step-04-flip.jpg",
-        "alt": "Flipping the tortilla onto plate",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/spanish-tortilla/step-04-flip.jpg",
         "caption": "cook and flip"
       }
     }
@@ -125,5 +108,16 @@
       "name": "Whisk",
       "essential": true
     }
+  ],
+  "tags": [
+    "gluten-free",
+    "mediterranean",
+    "soy-free",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Egg + potato together provide complete protein and slow carbs.",
+    "Olive oil cooked low retains polyphenols — frying poaches the potato."
   ]
 }

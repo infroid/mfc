@@ -7,34 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "vegetarian",
-    "vegan",
-    "egg-free",
-    "gluten-free"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Chickpea flour is the perfect egg replacer — binds + crisps",
   "media": {
-    "emoji": "🥒",
     "hero": {
+      "alt": "Stack of golden zucchini fritters with yogurt dip",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-zucchini-fritters/hero.jpg",
+      "caption": "fritters — golden, crisp",
       "palette": [
         "#7A9C5A",
         "#F4D67A",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/eggless-zucchini-fritters/hero.jpg",
-      "alt": "Stack of golden zucchini fritters with yogurt dip",
-      "caption": "fritters — golden, crisp"
-    }
+      ]
+    },
+    "emoji": "🥒"
   },
-  "healthFacts": [
-    "No eggs — chickpea flour binds and adds plant protein.",
-    "Squeezing the zucchini dry is the difference between fritter and pancake.",
-    "Chickpea flour adds ~6g protein per 1/4 cup."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Zucchini (shredded)",
@@ -85,8 +72,7 @@
       "duration": 600,
       "tip": "Volume should drop by half. Wet zucchini = soggy fritter.",
       "media": {
-        "src": "assets/recipes/eggless-zucchini-fritters/step-01-shred.jpg",
-        "alt": "Squeezed shredded zucchini in towel",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-zucchini-fritters/step-01-shred.jpg",
         "caption": "shred and squeeze"
       }
     },
@@ -97,8 +83,7 @@
       "duration": 120,
       "tip": "Add a tablespoon of water if it's too dry; another tablespoon flour if it's too wet.",
       "media": {
-        "src": "assets/recipes/eggless-zucchini-fritters/step-02-mix.jpg",
-        "alt": "Zucchini fritter batter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-zucchini-fritters/step-02-mix.jpg",
         "caption": "mix the batter"
       }
     },
@@ -109,8 +94,7 @@
       "duration": 540,
       "tip": "Don't crowd — cooks evenly only with space.",
       "media": {
-        "src": "assets/recipes/eggless-zucchini-fritters/step-03-fry.jpg",
-        "alt": "Fritters frying in oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-zucchini-fritters/step-03-fry.jpg",
         "caption": "fry in batches"
       }
     },
@@ -121,8 +105,7 @@
       "duration": 60,
       "tip": "Hot oil + salt = perfect adhesion.",
       "media": {
-        "src": "assets/recipes/eggless-zucchini-fritters/step-04-drain.jpg",
-        "alt": "Drained fritters on rack",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-zucchini-fritters/step-04-drain.jpg",
         "caption": "drain and serve"
       }
     }
@@ -140,5 +123,16 @@
       "name": "Mixing bowl",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "gluten-free",
+    "vegan",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — chickpea flour binds and adds plant protein.",
+    "Squeezing the zucchini dry is the difference between fritter and pancake.",
+    "Chickpea flour adds ~6g protein per 1/4 cup."
   ]
 }

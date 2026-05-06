@@ -7,35 +7,21 @@
   "difficulty": "Medium",
   "servings": 6,
   "totalMinutes": 120,
-  "tags": [
-    "non-veg",
-    "soy-free",
-    "mexican",
-    "high-protein",
-    "one-pot"
-  ],
-  "color": "#A0522D",
-  "colorSoft": "rgba(160,82,45,0.16)",
-  "featured": false,
-  "highlight": "No beans (Texas style), no soy — just beef, chili, and time",
   "media": {
-    "emoji": "🌶️",
     "hero": {
+      "alt": "Chili con carne with cheese and onion",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chili-con-carne/hero.jpg",
+      "caption": "chili — Texas slow",
       "palette": [
         "#A0522D",
         "#C84B5A",
         "#F4A261"
-      ],
-      "src": "assets/recipes/chili-con-carne/hero.jpg",
-      "alt": "Chili con carne with cheese and onion",
-      "caption": "chili — Texas slow"
-    }
+      ]
+    },
+    "emoji": "🌶️"
   },
-  "healthFacts": [
-    "Naturally soy-free.",
-    "Slow-cooked chuck breaks collagen down to gelatin — silky body.",
-    "Dried chilies provide capsaicin (anti-inflammatory) and carotenoids."
-  ],
+  "color": "#A0522D",
+  "colorSoft": "rgba(160,82,45,0.16)",
   "ingredients": [
     {
       "name": "Beef chuck (cubed)",
@@ -96,8 +82,7 @@
       "duration": 1080,
       "tip": "Use the soak liquid in the blend — that's where the chili water-soluble flavor lives.",
       "media": {
-        "src": "assets/recipes/chili-con-carne/step-01-toast.jpg",
-        "alt": "Toasting dried chilies in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chili-con-carne/step-01-toast.jpg",
         "caption": "toast and rehydrate"
       }
     },
@@ -108,8 +93,7 @@
       "duration": 1200,
       "tip": "Crowding = steaming. Take batches seriously.",
       "media": {
-        "src": "assets/recipes/chili-con-carne/step-02-brown.jpg",
-        "alt": "Beef browning in pot",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chili-con-carne/step-02-brown.jpg",
         "caption": "brown the beef"
       }
     },
@@ -120,8 +104,7 @@
       "duration": 240,
       "tip": "Deglazing is non-negotiable — those brown bits ARE the flavor.",
       "media": {
-        "src": "assets/recipes/chili-con-carne/step-03-deglaze.jpg",
-        "alt": "Deglazing pot with beer",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chili-con-carne/step-03-deglaze.jpg",
         "caption": "bloom and deglaze"
       }
     },
@@ -132,8 +115,7 @@
       "duration": 5400,
       "tip": "Better the next day. Make ahead if you can.",
       "media": {
-        "src": "assets/recipes/chili-con-carne/step-04-simmer.jpg",
-        "alt": "Chili simmering long",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/chili-con-carne/step-04-simmer.jpg",
         "caption": "slow simmer"
       }
     }
@@ -151,5 +133,17 @@
       "name": "Wooden spoon",
       "essential": true
     }
+  ],
+  "tags": [
+    "high-protein",
+    "mexican",
+    "non-veg",
+    "one-pot",
+    "soy-free"
+  ],
+  "healthFacts": [
+    "Naturally soy-free.",
+    "Slow-cooked chuck breaks collagen down to gelatin — silky body.",
+    "Dried chilies provide capsaicin (anti-inflammatory) and carotenoids."
   ]
 }

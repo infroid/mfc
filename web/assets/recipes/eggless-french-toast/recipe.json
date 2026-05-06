@@ -7,33 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 20,
-  "tags": [
-    "vegetarian",
-    "egg-free",
-    "quick"
-  ],
-  "color": "#F4D67A",
-  "colorSoft": "rgba(244,214,122,0.18)",
-  "featured": false,
-  "highlight": "Cornstarch milk + cinnamon = silky no-egg custard",
   "media": {
-    "emoji": "🍞",
     "hero": {
+      "alt": "Stack of golden French toast with maple syrup pour",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-french-toast/hero.jpg",
+      "caption": "eggless french toast — golden, cinnamon-spiked",
       "palette": [
         "#F4D67A",
         "#A0522D",
         "#FFFCF3"
-      ],
-      "src": "assets/recipes/eggless-french-toast/hero.jpg",
-      "alt": "Stack of golden French toast with maple syrup pour",
-      "caption": "eggless french toast — golden, cinnamon-spiked"
-    }
+      ]
+    },
+    "emoji": "🍞"
   },
-  "healthFacts": [
-    "No eggs — milk thickened with cornstarch coats and crisps just as well.",
-    "Day-old bread absorbs more without falling apart — perfect texture.",
-    "Cinnamon spike helps blunt blood-sugar swings from the bread."
-  ],
+  "color": "#F4D67A",
+  "colorSoft": "rgba(244,214,122,0.18)",
   "ingredients": [
     {
       "name": "Thick-cut bread (challah or brioche-style egg-free)",
@@ -84,8 +72,7 @@
       "duration": 120,
       "tip": "Strain if you see lumps — cornstarch curdles on a hot griddle.",
       "media": {
-        "src": "assets/recipes/eggless-french-toast/step-01-custard.jpg",
-        "alt": "Whisking custard",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-french-toast/step-01-custard.jpg",
         "caption": "whisk the custard"
       }
     },
@@ -96,8 +83,7 @@
       "duration": 120,
       "tip": "Stale bread absorbs more cleanly than fresh; toast slices first if your bread is too soft.",
       "media": {
-        "src": "assets/recipes/eggless-french-toast/step-02-soak.jpg",
-        "alt": "Bread soaking in custard",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-french-toast/step-02-soak.jpg",
         "caption": "soak briefly"
       }
     },
@@ -108,8 +94,7 @@
       "duration": 360,
       "tip": "Wipe the pan between batches — butter solids burn after the first round.",
       "media": {
-        "src": "assets/recipes/eggless-french-toast/step-03-cook.jpg",
-        "alt": "French toast frying in butter",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-french-toast/step-03-cook.jpg",
         "caption": "sizzle in butter"
       }
     },
@@ -120,8 +105,7 @@
       "duration": 60,
       "tip": "Holding warm in a 200°F oven on a rack keeps slices crisp without sweating.",
       "media": {
-        "src": "assets/recipes/eggless-french-toast/step-04-serve.jpg",
-        "alt": "Serving French toast with syrup",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/eggless-french-toast/step-04-serve.jpg",
         "caption": "serve hot"
       }
     }
@@ -139,5 +123,15 @@
       "name": "Whisk",
       "essential": true
     }
+  ],
+  "tags": [
+    "egg-free",
+    "quick",
+    "vegetarian"
+  ],
+  "healthFacts": [
+    "No eggs — milk thickened with cornstarch coats and crisps just as well.",
+    "Day-old bread absorbs more without falling apart — perfect texture.",
+    "Cinnamon spike helps blunt blood-sugar swings from the bread."
   ]
 }

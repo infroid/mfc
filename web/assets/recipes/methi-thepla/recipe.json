@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 30,
-  "tags": [
-    "veg",
-    "low-glycemic",
-    "high-fiber",
-    "blood-sugar"
-  ],
-  "color": "#7A9C5A",
-  "colorSoft": "rgba(122,156,90,0.18)",
-  "featured": false,
-  "highlight": "Fenugreek's galactomannan fiber slows glucose absorption — ideal for HbA1c control",
   "media": {
-    "emoji": "🫓",
     "hero": {
+      "alt": "Stack of green-flecked fenugreek theplas on a wooden board with a side of yogurt",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/methi-thepla/hero.jpg",
+      "caption": "methi thepla — fenugreek-flecked flatbread",
       "palette": [
         "#7A9C5A",
         "#A4C268",
         "#E9C46A"
-      ],
-      "src": "assets/recipes/methi-thepla/hero.jpg",
-      "alt": "Stack of green-flecked fenugreek theplas on a wooden board with a side of yogurt",
-      "caption": "methi thepla — fenugreek-flecked flatbread"
-    }
+      ]
+    },
+    "emoji": "🫓"
   },
-  "healthFacts": [
-    "Fenugreek's soluble fiber lowers post-meal glucose spikes by 20–30%.",
-    "Whole-wheat + besan combo gives complete protein and slow-release carbs.",
-    "Fenugreek leaves contain iron, vitamin K, and modest amounts of folate.",
-    "Cooks dry on a tawa with minimal oil — friendly to LDL and triglyceride control."
-  ],
+  "color": "#7A9C5A",
+  "colorSoft": "rgba(122,156,90,0.18)",
   "ingredients": [
     {
       "name": "Whole-wheat flour",
@@ -89,21 +75,33 @@
       "title": "Knead the dough",
       "detail": "Combine all dough ingredients and knead with a little water until smooth and pliable. Rest 15 minutes covered.",
       "duration": 900,
-      "tip": "The dough should be slightly stiffer than a chapati dough — keeps theplas thin."
+      "tip": "The dough should be slightly stiffer than a chapati dough — keeps theplas thin.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Roll thin",
       "detail": "Divide into 10 balls. Roll each into a thin round (~6 inches) on a lightly floured surface.",
       "duration": 600,
-      "tip": "Thin theplas mean a longer shelf life — they keep for 2–3 days at room temperature."
+      "tip": "Thin theplas mean a longer shelf life — they keep for 2–3 days at room temperature.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Cook on tawa",
       "detail": "Heat a tawa on medium. Cook each thepla 30 seconds per side, then brush both sides with a little oil and cook another 30 seconds till golden brown spots appear.",
       "duration": 600,
-      "tip": "Eat with thick yogurt and pickle for the canonical pairing."
+      "tip": "Eat with thick yogurt and pickle for the canonical pairing.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -119,5 +117,17 @@
       "name": "Mixing bowl",
       "essential": false
     }
+  ],
+  "tags": [
+    "blood-sugar",
+    "high-fiber",
+    "low-glycemic",
+    "veg"
+  ],
+  "healthFacts": [
+    "Fenugreek's soluble fiber lowers post-meal glucose spikes by 20–30%.",
+    "Whole-wheat + besan combo gives complete protein and slow-release carbs.",
+    "Fenugreek leaves contain iron, vitamin K, and modest amounts of folate.",
+    "Cooks dry on a tawa with minimal oil — friendly to LDL and triglyceride control."
   ]
 }

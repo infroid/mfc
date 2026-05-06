@@ -7,36 +7,21 @@
   "difficulty": "Medium",
   "servings": 4,
   "totalMinutes": 35,
-  "tags": [
-    "veg",
-    "high-omega-3",
-    "high-magnesium",
-    "high-fiber",
-    "whole-grain"
-  ],
-  "color": "#8B4513",
-  "colorSoft": "rgba(139,69,19,0.18)",
-  "featured": false,
-  "highlight": "Walnuts give the only plant ALA omega-3 worth eating in volume",
   "media": {
-    "emoji": "🫓",
     "hero": {
+      "alt": "Stuffed paratha cut into wedges showing chopped walnuts and herbs inside",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/walnut-paratha/hero.jpg",
+      "caption": "walnut paratha — omega-3 stuffed flatbread",
       "palette": [
         "#8B4513",
         "#E9C46A",
         "#7A9C5A"
-      ],
-      "src": "assets/recipes/walnut-paratha/hero.jpg",
-      "alt": "Stuffed paratha cut into wedges showing chopped walnuts and herbs inside",
-      "caption": "walnut paratha — omega-3 stuffed flatbread"
-    }
+      ]
+    },
+    "emoji": "🫓"
   },
-  "healthFacts": [
-    "Walnuts: 2.5g ALA omega-3 per 30g — the richest plant source.",
-    "ALA helps raise HDL and lower triglycerides; partly converts to EPA/DHA.",
-    "Magnesium, copper, and vitamin E in walnuts support blood vessels and brain.",
-    "Whole-wheat shell adds slow carbs and fiber — keeps glucose stable."
-  ],
+  "color": "#8B4513",
+  "colorSoft": "rgba(139,69,19,0.18)",
   "ingredients": [
     {
       "name": "Whole-wheat flour",
@@ -90,21 +75,33 @@
       "title": "Knead the dough and mix the filling",
       "detail": "Knead whole-wheat flour, salt, 1 tsp ghee, and water into a soft dough. Rest 15 min. Mix crushed walnuts, onion, coriander, chili, cumin, chaat masala, and salt for the filling.",
       "duration": 900,
-      "tip": "Crush walnuts with the side of a knife — uniform, not powdered."
+      "tip": "Crush walnuts with the side of a knife — uniform, not powdered.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 2,
       "title": "Stuff and roll",
       "detail": "Roll a small disc, place 2 tbsp filling in the centre, gather the edges to seal, flatten, and roll out gently to 6-inch round. Don't press hard — filling will burst.",
       "duration": 480,
-      "tip": "Dust generously with dry flour while rolling — sticky dough tears."
+      "tip": "Dust generously with dry flour while rolling — sticky dough tears.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     },
     {
       "id": 3,
       "title": "Cook on tawa",
       "detail": "Heat a tawa, cook each paratha 1 min per side, then brush both sides with ghee and crisp another 30 seconds per side. Stack covered to keep soft.",
       "duration": 180,
-      "tip": "Eat hot with thick yogurt and a slice of pickle."
+      "tip": "Eat hot with thick yogurt and a slice of pickle.",
+      "media": {
+        "src": null,
+        "caption": null
+      }
     }
   ],
   "utensils": [
@@ -120,5 +117,18 @@
       "name": "Mixing bowl",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-fiber",
+    "high-magnesium",
+    "high-omega-3",
+    "veg",
+    "whole-grain"
+  ],
+  "healthFacts": [
+    "Walnuts: 2.5g ALA omega-3 per 30g — the richest plant source.",
+    "ALA helps raise HDL and lower triglycerides; partly converts to EPA/DHA.",
+    "Magnesium, copper, and vitamin E in walnuts support blood vessels and brain.",
+    "Whole-wheat shell adds slow carbs and fiber — keeps glucose stable."
   ]
 }

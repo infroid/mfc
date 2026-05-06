@@ -7,35 +7,21 @@
   "difficulty": "Easy",
   "servings": 4,
   "totalMinutes": 20,
-  "tags": [
-    "pescatarian",
-    "shellfish-free",
-    "mediterranean",
-    "high-protein",
-    "quick"
-  ],
-  "color": "#FFFCF3",
-  "colorSoft": "rgba(255,252,243,0.5)",
-  "featured": false,
-  "highlight": "Smoke-charred whole sardines — Mediterranean coast, no shellfish",
   "media": {
-    "emoji": "🐟",
     "hero": {
+      "alt": "Grilled whole sardines with lemon wedges and parsley",
+      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-sardines/hero.jpg",
+      "caption": "sardines — grilled whole",
       "palette": [
         "#FFFCF3",
         "#7A9C5A",
         "#3A332A"
-      ],
-      "src": "assets/recipes/grilled-sardines/hero.jpg",
-      "alt": "Grilled whole sardines with lemon wedges and parsley",
-      "caption": "sardines — grilled whole"
-    }
+      ]
+    },
+    "emoji": "🐟"
   },
-  "healthFacts": [
-    "Naturally shellfish-free.",
-    "Sardines are sustainable, omega-3-rich, and packed with calcium (eat the bones).",
-    "Whole-fish grilling concentrates fat at the skin for incredible char."
-  ],
+  "color": "#FFFCF3",
+  "colorSoft": "rgba(255,252,243,0.5)",
   "ingredients": [
     {
       "name": "Fresh sardines (cleaned)",
@@ -81,8 +67,7 @@
       "duration": 180,
       "tip": "Wet fish sticks to the grill. Dry doesn't.",
       "media": {
-        "src": "assets/recipes/grilled-sardines/step-01-oil.jpg",
-        "alt": "Sardines on a tray with olive oil",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-sardines/step-01-oil.jpg",
         "caption": "pat dry, oil"
       }
     },
@@ -93,8 +78,7 @@
       "duration": 180,
       "tip": "Hot grates + oil = clean release every time.",
       "media": {
-        "src": "assets/recipes/grilled-sardines/step-02-grill.jpg",
-        "alt": "Sardines on hot grill",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-sardines/step-02-grill.jpg",
         "caption": "hot grill"
       }
     },
@@ -105,8 +89,7 @@
       "duration": 120,
       "tip": "Eyes go opaque white when done. That's your tell.",
       "media": {
-        "src": "assets/recipes/grilled-sardines/step-03-flip.jpg",
-        "alt": "Flipped sardines on grill",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-sardines/step-03-flip.jpg",
         "caption": "flip once"
       }
     },
@@ -117,8 +100,7 @@
       "duration": 60,
       "tip": "Eat with the fingers. That's the way.",
       "media": {
-        "src": "assets/recipes/grilled-sardines/step-04-finish.jpg",
-        "alt": "Grilled sardines plated",
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/grilled-sardines/step-04-finish.jpg",
         "caption": "lemon and parsley"
       }
     }
@@ -136,5 +118,17 @@
       "name": "Tongs",
       "essential": false
     }
+  ],
+  "tags": [
+    "high-protein",
+    "mediterranean",
+    "pescatarian",
+    "quick",
+    "shellfish-free"
+  ],
+  "healthFacts": [
+    "Naturally shellfish-free.",
+    "Sardines are sustainable, omega-3-rich, and packed with calcium (eat the bones).",
+    "Whole-fish grilling concentrates fat at the skin for incredible char."
   ]
 }
