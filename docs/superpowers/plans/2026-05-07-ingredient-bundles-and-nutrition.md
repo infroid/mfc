@@ -178,7 +178,7 @@ COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g USDA FoodData Cen
 
 - [ ] **Step 3: Add the ingredient-images bucket + RLS helper + policies**
 
-At the end of `automation/db/schema.sql` (after the existing `recipe-images` storage section §9), append:
+`automation/db/schema.sql` currently has two sections both labelled `9.` — the recipe-images storage block (around line 765) and a `9. ONE-SHOT DATA NORMALIZATION` block at the very bottom (around line 813). The normalisation block must remain **last** so it runs after all DDL. Insert the new ingredient-images section **between** them — after the closing `CREATE POLICY "recipe_images_owner_or_admin_delete"` line and **before** the `9. ONE-SHOT DATA NORMALIZATION` header. Use a `10. STORAGE — ingredient-images …` heading (the existing 9/9 collision is pre-existing; don't churn it):
 
 ```sql
 -- ────────────────────────────────────────────────────────────────────────
@@ -374,7 +374,127 @@ git commit -m "feat(nutrition): pure reshape_legacy helper + unit tests"
 
 ---
 
-### Task 4: `mfc migrate-ingredient-nutrition` command
+### Task 4: Admin-ingredient app — nutrition backward-compat shim
+
+The legacy ingredient nutrition shape (`{ calories, protein, fat, carbs }`) is hard-coded into [admin-ingredient-app.jsx](web/assets/js/app/admin-ingredient-app.jsx) (BLANK, fromDb, NutCell reads, completion-check, updateNut). Once Task 5's migration runs, those keys are renamed to USDA shape (`energy_kcal`, `protein_g`, `total_fat_g`, `carbohydrate_g`) and the admin UI breaks (zeros on read; writes go to keys that no longer exist in the DB shape). This task lands a small read-with-fallback / write-to-new-keys shim **before** Task 5 runs.
+
+**Files:**
+- Modify: `web/assets/js/app/admin-ingredient-app.jsx` (lines ~26, ~276, ~284, ~452–459)
+
+- [ ] **Step 1: Add the macro-key shim near the top of the file**
+
+Edit `web/assets/js/app/admin-ingredient-app.jsx`. Just after the `ING_UNIT_ALIASES` / `ingNormalizeUnit` block (around line 13) and before the `BLANK` declaration, insert:
+
+```jsx
+// Macro key shim. Pre-USDA rows used { calories, protein, fat, carbs };
+// post-migration rows use USDA-aligned keys. Reads fall back to legacy;
+// writes always target the new keys, so editing converges old rows to
+// the new shape without losing extra USDA fields (vitamins, amino acids,
+// etc.) that may already be present from `mfc fetch-ingredient-nutrition`.
+const MACRO_NEW_KEY = {
+  calories: "energy_kcal",
+  protein:  "protein_g",
+  fat:      "total_fat_g",
+  carbs:    "carbohydrate_g",
+};
+function readMacro(n, legacyKey) {
+  const newKey = MACRO_NEW_KEY[legacyKey];
+  if (n && n[newKey] != null) return n[newKey];
+  return (n && n[legacyKey]) || 0;
+}
+```
+
+- [ ] **Step 2: Update `BLANK.nutrition` to use new keys**
+
+Find:
+
+```jsx
+  nutrition: { calories: 0, protein: 0, fat: 0, carbs: 0 },
+```
+
+Replace with:
+
+```jsx
+  nutrition: { energy_kcal: 0, protein_g: 0, total_fat_g: 0, carbohydrate_g: 0 },
+```
+
+- [ ] **Step 3: Update `updateNut` to map legacy → new on write**
+
+Find:
+
+```jsx
+  const updateNut = (k, v) => update({ nutrition: { ...r.nutrition, [k]: v } });
+```
+
+Replace with:
+
+```jsx
+  const updateNut = (k, v) =>
+    update({ nutrition: { ...r.nutrition, [MACRO_NEW_KEY[k] || k]: v } });
+```
+
+- [ ] **Step 4: Update the completion-checklist read**
+
+Find:
+
+```jsx
+    { label: "Nutrition", pass: r.nutrition.calories > 0,    required: false },
+```
+
+Replace with:
+
+```jsx
+    { label: "Nutrition", pass: readMacro(r.nutrition, "calories") > 0, required: false },
+```
+
+- [ ] **Step 5: Update the four `NutCell` reads**
+
+Find:
+
+```jsx
+              <NutCell label="Calories" value={r.nutrition.calories} unit="kcal" accent
+                onChange={(v) => updateNut("calories", v)} />
+              <NutCell label="Protein" value={r.nutrition.protein} unit="g"
+                onChange={(v) => updateNut("protein", v)} />
+              <NutCell label="Fat" value={r.nutrition.fat} unit="g"
+                onChange={(v) => updateNut("fat", v)} />
+              <NutCell label="Carbs" value={r.nutrition.carbs} unit="g"
+                onChange={(v) => updateNut("carbs", v)} />
+```
+
+Replace with:
+
+```jsx
+              <NutCell label="Calories" value={readMacro(r.nutrition, "calories")} unit="kcal" accent
+                onChange={(v) => updateNut("calories", v)} />
+              <NutCell label="Protein" value={readMacro(r.nutrition, "protein")} unit="g"
+                onChange={(v) => updateNut("protein", v)} />
+              <NutCell label="Fat" value={readMacro(r.nutrition, "fat")} unit="g"
+                onChange={(v) => updateNut("fat", v)} />
+              <NutCell label="Carbs" value={readMacro(r.nutrition, "carbs")} unit="g"
+                onChange={(v) => updateNut("carbs", v)} />
+```
+
+- [ ] **Step 6: Smoke (visual)**
+
+In one terminal: `cd /Users/amanrai/Documents/Code.nosync/mfc && make serve`.
+In a browser: `http://localhost:8080/admin/ingredient.html?id=paneer` (substitute any existing ingredient id). Confirm:
+- Page renders without console errors.
+- Calories/Protein/Fat/Carbs cells show whatever values are in the DB row (legacy or already-new shape — both must work).
+- Editing a value and clicking Save does not produce a server error.
+
+After save, verify (Studio or `mfc status`) that the row's `nutrition` jsonb gained the new keys (`energy_kcal` etc.) without losing any pre-existing USDA-shape keys.
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add web/assets/js/app/admin-ingredient-app.jsx
+git commit -m "ui(admin): nutrition macro-key shim (legacy → USDA-aligned, read fallback)"
+```
+
+---
+
+### Task 5: `mfc migrate-ingredient-nutrition` command
 
 **Files:**
 - Create: `automation/mfc/commands/migrate_ingredient_nutrition.py`
@@ -481,7 +601,7 @@ git commit -m "feat(cli): add mfc migrate-ingredient-nutrition (one-shot, idempo
 
 ---
 
-### Task 5: thiings.co scraper module + tests
+### Task 6: thiings.co scraper module + tests
 
 **Files:**
 - Create: `automation/mfc/ops/thiings.py`
@@ -693,7 +813,7 @@ git commit -m "feat(thiings): scraper module + tests (happy / page-404 / no-imag
 
 ---
 
-### Task 6: `mfc fetch-ingredient-image` (single + bulk)
+### Task 7: `mfc fetch-ingredient-image` (single + bulk)
 
 **Files:**
 - Create: `automation/mfc/commands/fetch_ingredient_images.py`
@@ -897,7 +1017,7 @@ git commit -m "feat(cli): mfc fetch-ingredient-image[s] — thiings.co into bund
 
 ---
 
-### Task 7: FDC nutrient ID → bundle key map
+### Task 8: FDC nutrient ID → bundle key map
 
 **Files:**
 - Create: `automation/mfc/ops/fdc_nutrient_map.py`
@@ -1028,7 +1148,7 @@ git commit -m "feat(fdc): nutrient-id → bundle-key mapping (USDA FDC)"
 
 ---
 
-### Task 8: FDC client + tests
+### Task 9: FDC client + tests
 
 **Files:**
 - Create: `automation/mfc/ops/fdc.py`
@@ -1289,7 +1409,7 @@ git commit -m "feat(fdc): client (search/pick/fetch/map) + 4 unit tests"
 
 ---
 
-### Task 9: `mfc fetch-ingredient-nutrition` (FDC primary, no AI yet)
+### Task 10: `mfc fetch-ingredient-nutrition` (FDC primary, no AI yet)
 
 **Files:**
 - Create: `automation/mfc/commands/fetch_ingredient_nutrition.py`
@@ -1519,7 +1639,7 @@ git commit -m "feat(cli): mfc fetch-ingredient-nutrition (FDC primary)"
 
 ---
 
-### Task 10: Anthropic dep + AI fallback module + tests
+### Task 11: Anthropic dep + AI fallback module + tests
 
 **Files:**
 - Modify: `automation/pyproject.toml`
@@ -1727,7 +1847,7 @@ git commit -m "feat(aifill): Anthropic-backed nutrition fallback + schema valida
 
 ---
 
-### Task 11: Wire `--ai-fallback` into the nutrition fetcher
+### Task 12: Wire `--ai-fallback` into the nutrition fetcher
 
 **Files:**
 - Modify: `automation/mfc/commands/fetch_ingredient_nutrition.py`
@@ -1829,7 +1949,7 @@ git commit -m "feat(cli): wire --ai-fallback into fetch-ingredient-nutrition"
 
 ---
 
-### Task 12: Bundle ↔ DB sync — `mfc.ops.ingredients`
+### Task 13: Bundle ↔ DB sync — `mfc.ops.ingredients`
 
 **Files:**
 - Create: `automation/mfc/ops/ingredients.py`
@@ -2087,7 +2207,7 @@ git commit -m "feat(ingredients): bundle↔DB sync (push/pull/both, last-mod win
 
 ---
 
-### Task 13: `mfc sync-ingredients` command
+### Task 14: `mfc sync-ingredients` command
 
 **Files:**
 - Create: `automation/mfc/commands/sync_ingredients.py`
@@ -2163,7 +2283,7 @@ git commit -m "feat(cli): mfc sync-ingredients (bundle↔DB metadata)"
 
 ---
 
-### Task 14: `mfc.ops.ingredient_images` (Storage ↔ local bytes)
+### Task 15: `mfc.ops.ingredient_images` (Storage ↔ local bytes)
 
 **Files:**
 - Create: `automation/mfc/ops/ingredient_images.py`
@@ -2349,7 +2469,7 @@ git commit -m "feat(ingredient-images): Storage↔local bytes sync"
 
 ---
 
-### Task 15: `mfc sync-ingredient-images` command + Makefile targets
+### Task 16: `mfc sync-ingredient-images` command + Makefile targets
 
 **Files:**
 - Create: `automation/mfc/commands/sync_ingredient_images.py`
@@ -2469,25 +2589,41 @@ git commit -m "feat(cli): mfc sync-ingredient-images + Makefile chain targets"
 
 ---
 
-### Task 16: Admin form placeholder + final integration smoke
+### Task 17: Admin photo placeholder + final integration smoke
+
+[admin-ingredient-app.jsx](web/assets/js/app/admin-ingredient-app.jsx) was rewritten as a WYSIWYG editor; the photo field now lives inside the identity modal as `<label>Photo path</label>` with a single `<input>` (around line 182–188), separate from the hero-card preview (around line 390–404). The placeholder still hints at the old `/assets/img/...` convention and needs to point at the new Storage URL pattern.
 
 **Files:**
-- Modify: `web/assets/js/app/admin-ingredient-app.jsx:194-195`
+- Modify: `web/assets/js/app/admin-ingredient-app.jsx` (around line 182–188)
 
-- [ ] **Step 1: Update the admin form placeholder**
+- [ ] **Step 1: Update the photo placeholder text**
 
-Edit `web/assets/js/app/admin-ingredient-app.jsx`. Find:
+Find (in the identity modal):
 
 ```jsx
-                  <Field label="Photo" hint="Path under data/ingredient-photos/.">
-                    <input className="input mono" value={r.photo} onChange={(e) => update({ photo: e.target.value })} placeholder="data/ingredient-photos/paneer.jpg" />
+      <div className="field-row">
+        <label>Photo path</label>
+        <input
+          value={r.photo}
+          onChange={(e) => update({ photo: e.target.value })}
+          placeholder="/assets/img/ingredients/paneer.jpg"
+          style={{ fontFamily: "var(--mono)", fontSize: 13 }}
+        />
+      </div>
 ```
 
 Replace with:
 
 ```jsx
-                  <Field label="Photo" hint="Full Supabase Storage URL (auto-set by `mfc sync-ingredient-images`).">
-                    <input className="input mono" value={r.photo} onChange={(e) => update({ photo: e.target.value })} placeholder="https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/paneer/image.png" />
+      <div className="field-row">
+        <label>Photo URL</label>
+        <input
+          value={r.photo}
+          onChange={(e) => update({ photo: e.target.value })}
+          placeholder="https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/paneer/image.png"
+          style={{ fontFamily: "var(--mono)", fontSize: 13 }}
+        />
+      </div>
 ```
 
 - [ ] **Step 2: Visual verification**
@@ -2519,17 +2655,17 @@ Confirm the commit history reads as a coherent feature build (config → schema 
 ## Self-review notes
 
 - **Spec coverage**:
-  - §"Architecture" → tasks 1–2 (config / schema), 12–15 (sync infra)
-  - §"Bundle JSON shape" → task 12 (`_DB_TO_BUNDLE` carries the mapping)
-  - §"Nutrition block" → tasks 7–11 (FDC mapper + AI fallback both produce this shape)
+  - §"Architecture" → tasks 1–2 (config / schema), 13–16 (sync infra)
+  - §"Bundle JSON shape" → task 13 (`_DB_TO_BUNDLE` carries the mapping)
+  - §"Nutrition block" → tasks 8–12 (FDC mapper + AI fallback both produce this shape)
   - §"Schema changes" → task 2
-  - §"Migration of existing data" → tasks 3–4
-  - §"CLI surface" → tasks 4, 6, 9, 11, 13, 15
-  - §"Sync mechanics" → tasks 12, 14
-  - §"Fetcher mechanics" → tasks 5–6 (thiings), 7–9 (FDC), 10–11 (AI)
+  - §"Migration of existing data" → tasks 3 (pure helper), 4 (admin shim — pre-migration safety), 5 (migration command)
+  - §"CLI surface" → tasks 5, 7, 10, 12, 14, 16
+  - §"Sync mechanics" → tasks 13, 15
+  - §"Fetcher mechanics" → tasks 6–7 (thiings), 8–10 (FDC), 11–12 (AI)
   - §"Auth / config" → task 1
-  - §"Makefile targets" → tasks 4, 6, 9, 15
-  - §"Testing & verification" → tasks 3 (migration), 5 (thiings), 8 (fdc), 10 (aifill), 16 (full suite)
+  - §"Makefile targets" → tasks 5, 7, 10, 16
+  - §"Testing & verification" → tasks 3 (migration), 6 (thiings), 9 (fdc), 11 (aifill), 17 (full suite)
 - **No new runtime deps for I/O modules**: thiings + FDC use stdlib `urllib`. Only AI fallback adds `anthropic`.
 - **Idempotency invariants**:
   - thiings: file existence on disk
