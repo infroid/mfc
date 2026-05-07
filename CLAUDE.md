@@ -85,11 +85,19 @@ make serve
 
 - **Source of truth: Supabase Postgres**, accessed via the Supabase JS client.
   No static-JSON fallback at runtime.
+- **Bundle JSON formats** are documented at [docs/BUNDLES.md](docs/BUNDLES.md).
+  That's the canonical reference for recipe + utensil bundle shape, field
+  semantics, and round-trip behavior.
 - [web/assets/recipes/{id}/recipe.json](web/assets/recipes/) is the **bundle
   seed** for `make sync-recipes` (the Python CLI in `automation/`); not
   fetched by the browser. Each bundle is self-contained (listing fields +
   full detail). Bidirectional: `DIRECTION=push` upserts the bundle into DB,
   `DIRECTION=pull` rebuilds the bundle from DB rows.
+- [web/assets/utensils/{id}/utensil.json](web/assets/utensils/) is the
+  utensil bundle. Authored locally via `make update-utensil` (scrapes
+  Amazon → bundle JSON + 1500×1500 square JPEG); propagated via
+  `make sync-utensils` which chains `make sync-utensil-images` so DB rows
+  and Storage bytes move together.
 - Recipe images live in **Supabase Storage** (`recipe-images` bucket). Hero
   at `<recipe_id>/hero.jpg`, steps at `<recipe_id>/step-<sort_order>.jpg`.
   Full Storage URLs are persisted on `recipes.media.hero.src` (canonical;
@@ -98,6 +106,10 @@ make serve
   `web/assets/recipes/<id>/...` via `make sync-images DIRECTION=pull` for
   offline editing, then pushed back with `DIRECTION=push`. Path/filename
   matches local exactly.
+- Utensil images live in **Supabase Storage** (`utensil-images` bucket;
+  public read, admin-only writes). Hero at `<utensil_id>/<utensil_id>.jpg`.
+  Full Storage URLs persist on `utensils.photo`. Bytes sync via
+  `make sync-utensil-images` (also auto-chained from `make sync-utensils`).
 
 ## Schema
 
