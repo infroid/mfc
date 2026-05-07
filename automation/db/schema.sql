@@ -818,6 +818,39 @@ CREATE POLICY "recipe_images_owner_or_admin_delete"
 
 
 -- =============================================================================
+-- 9b. STORAGE — utensil-images bucket + RLS
+-- Public read; admin-only writes. Utensils are a curated library with no
+-- per-utensil ownership, so the policy is simpler than recipe-images.
+-- =============================================================================
+
+INSERT INTO storage.buckets (id, name, public)
+  VALUES ('utensil-images', 'utensil-images', true)
+  ON CONFLICT (id) DO UPDATE SET public = excluded.public;
+
+DROP POLICY IF EXISTS "utensil_images_public_read"   ON storage.objects;
+DROP POLICY IF EXISTS "utensil_images_admin_write"   ON storage.objects;
+DROP POLICY IF EXISTS "utensil_images_admin_update"  ON storage.objects;
+DROP POLICY IF EXISTS "utensil_images_admin_delete"  ON storage.objects;
+
+CREATE POLICY "utensil_images_public_read"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'utensil-images');
+
+CREATE POLICY "utensil_images_admin_write"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'utensil-images' AND public.is_admin());
+
+CREATE POLICY "utensil_images_admin_update"
+  ON storage.objects FOR UPDATE
+  USING      (bucket_id = 'utensil-images' AND public.is_admin())
+  WITH CHECK (bucket_id = 'utensil-images' AND public.is_admin());
+
+CREATE POLICY "utensil_images_admin_delete"
+  ON storage.objects FOR DELETE
+  USING (bucket_id = 'utensil-images' AND public.is_admin());
+
+
+-- =============================================================================
 -- 9. ONE-SHOT DATA NORMALIZATION
 -- Idempotent fix-ups that run on every schema apply; each is a no-op once the
 -- data is already in the desired shape.
