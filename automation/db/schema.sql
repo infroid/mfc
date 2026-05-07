@@ -807,3 +807,32 @@ CREATE POLICY "recipe_images_owner_or_admin_update"
 CREATE POLICY "recipe_images_owner_or_admin_delete"
   ON storage.objects FOR DELETE
   USING (bucket_id = 'recipe-images' AND public.can_write_recipe_image(name));
+
+
+-- =============================================================================
+-- 9. ONE-SHOT DATA NORMALIZATION
+-- Idempotent fix-ups that run on every schema apply; each is a no-op once the
+-- data is already in the desired shape.
+-- =============================================================================
+
+-- Hero URL canonicalisation. Historically lived on both `media.image` and
+-- `media.hero.src`; the codebase now reads/writes only `media.hero.src`.
+-- For any row where the hero is on `media.image` but not `media.hero.src`,
+-- copy the value across; then drop `media.image` everywhere.
+UPDATE public.recipes
+   SET media = jsonb_set(
+                  COALESCE(media, '{}'::jsonb),
+                  '{hero,src}',
+                  to_jsonb(media->>'image'),
+                  true)
+              - 'image'
+ WHERE media ? 'image'
+   AND (media->>'image') IS NOT NULL
+   AND (media->'hero'->>'src') IS NULL;
+
+-- Drop a now-redundant `media.image` key when `media.hero.src` already
+-- carries the URL (handles rows that had both populated).
+UPDATE public.recipes
+   SET media = media - 'image'
+ WHERE media ? 'image'
+   AND (media->'hero'->>'src') IS NOT NULL;

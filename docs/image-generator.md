@@ -97,21 +97,23 @@ You are generating a consistent, accurate, high-end food photography image set f
   - Make the dish recognizable at a glance.
   - Hero must look more polished than step images, but still belong to the same shoot.
   - Hero must not include intermediate process tools unless they are intentionally styled in the background.
-  - Design for every website crop:
-    - Recipe detail hero: square `1:1`, large rounded frame, `object-fit: cover`,
+  - Design for every website surface — all are square (1:1):
+    - Recipe detail hero: large rounded frame, `object-fit: cover`,
       save button overlays the top-right corner.
-    - Recipe search card: square `1:1`, top-left heart, top-right preference
-      badge, bottom-left cuisine pill, dark gradient along the bottom.
-    - Dashboard and marker thumbs: small square crops as small as `36x36`.
-    - Saved/featured cards: `4:3` cover crop.
-    - Admin/chef previews: `16:9` cover crop.
+    - Recipe search card: top-left heart, top-right preference badge,
+      bottom-left cuisine pill, dark gradient along the bottom.
+    - Dashboard saved cards: square cover, top-right heart.
+    - Dashboard recommendation + marker thumbs: small square crops
+      down to `36x36`.
+    - Admin/chef edit hero: square cover with overlay edit pill.
   - Keep the finished dish or drink in the central 60% of the square so it
     remains legible in tiny thumbnails.
   - Keep all critical food detail out of overlay zones: top-left 14%,
     top-right 18%, bottom-left 22%, and bottom 16% of the square.
-  - Make the central square, central 4:3 crop, and central 16:9 crop all look
-    intentional. Put non-critical props near the edges; never put the main
-    dish, garnish, pour, cut face, or hero glass only at an edge.
+  - Compose so center 4:3 and center 16:9 crops also read well — defensive
+    composition for any future non-square surface. Put non-critical props
+    near the edges; never put the main dish, garnish, pour, cut face, or
+    hero glass only at an edge.
   - Leave enough breathing room around the subject for the site's ink border,
     rounded corners, hover zoom, and pop-shadow treatment.
   - Use premium serviceware in the hero first. The hero is the sales image:

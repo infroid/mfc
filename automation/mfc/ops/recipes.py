@@ -11,9 +11,10 @@ import_all is preserved as a deprecated alias to keep mfc.commands.reset
 from breaking until Task 8 deletes the old command.
 
 Image-URL handling: bundle JSON may carry either legacy 'assets/...' paths
-or full Storage URLs. push routes media.image, media.hero.src, and
-step.media.src through images_ops.normalize_image_value so a stale bundle
-doesn't reverse-migrate a row that already has Storage URLs.
+or full Storage URLs. push routes media.hero.src and step.media.src through
+images_ops.normalize_image_value so a stale bundle doesn't reverse-migrate
+a row that already has Storage URLs. Legacy bundles with media.image are
+promoted to media.hero.src and the legacy key is dropped.
 """
 
 from __future__ import annotations
@@ -102,19 +103,19 @@ def _build_recipe_row(config: Config, detail: dict) -> dict:
     rid = detail["id"]
     media = dict(detail.get("media") or {})
 
-    # Normalize image fields so legacy 'assets/...' paths upgrade to Storage URLs.
-    if "image" in media:
-        media["image"] = images_ops.normalize_image_value(
-            config, recipe_id=rid, value=media.get("image")
-        )
+    # Hero URL is canonical at media.hero.src. Older bundles may carry a
+    # legacy media.image; promote it to media.hero.src on push, then drop it.
+    legacy_image = media.pop("image", None)
     hero = media.get("hero")
-    if isinstance(hero, dict):
-        new_hero = dict(hero)
-        if "src" in new_hero:
-            new_hero["src"] = images_ops.normalize_image_value(
-                config, recipe_id=rid, value=new_hero.get("src")
-            )
-        media["hero"] = new_hero
+    hero_dict = dict(hero) if isinstance(hero, dict) else {}
+    if "src" not in hero_dict and legacy_image:
+        hero_dict["src"] = legacy_image
+    if "src" in hero_dict:
+        hero_dict["src"] = images_ops.normalize_image_value(
+            config, recipe_id=rid, value=hero_dict.get("src")
+        )
+    if hero_dict:
+        media["hero"] = hero_dict
 
     row = {
         "id": rid,

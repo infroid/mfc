@@ -68,7 +68,10 @@ function fromDb(row) {
     difficulty: row.difficulty,
     servings: row.servings,
     total_minutes: row.total_minutes,
-    hero_image: row.media?.image || "",
+    hero_image: row.media?.hero?.src || "",
+    // Stash the full media blob so we can preserve other keys (alt, fit, etc.)
+    // when the chef saves; the editor only mutates hero.src.
+    media_full: row.media || {},
     created_by: row.created_by || null,
     meal_types: row.meal_types || [],
     steps, ingredients, utensils, tags, health,
@@ -86,7 +89,18 @@ function toDb(r) {
       difficulty: r.difficulty,
       servings: parseInt(r.servings, 10) || 0,
       total_minutes: parseInt(r.total_minutes, 10) || 0,
-      media: { image: r.hero_image || null },
+      // Hero URL lives canonically on media.hero.src (single source of truth
+      // since the schema migration that dropped media.image). Preserve any
+      // other pre-existing media keys (emoji, alt, fit) by spreading the
+      // full blob the row was loaded with.
+      media: (() => {
+        const prev = r.media_full || {};
+        const url = r.hero_image || null;
+        return {
+          ...prev,
+          hero: { ...(prev.hero || {}), src: url },
+        };
+      })(),
       meal_types: r.meal_types || [],
     },
     ingredients: r.ingredients.map((ing) => ({

@@ -92,11 +92,12 @@ make serve
   `DIRECTION=pull` rebuilds the bundle from DB rows.
 - Recipe images live in **Supabase Storage** (`recipe-images` bucket). Hero
   at `<recipe_id>/hero.jpg`, steps at `<recipe_id>/step-<sort_order>.jpg`.
-  Full Storage URLs are persisted on `recipes.media.image`,
-  `recipes.media.hero.src`, and `recipe_steps.media_src`. Bytes can be
-  pulled to `web/assets/recipes/<id>/...` via `make sync-images
-  DIRECTION=pull` for offline editing, then pushed back with
-  `DIRECTION=push`. Path/filename matches local exactly.
+  Full Storage URLs are persisted on `recipes.media.hero.src` (canonical;
+  the legacy `media.image` was retired by an idempotent migration in
+  schema.sql) and `recipe_steps.media_src`. Bytes can be pulled to
+  `web/assets/recipes/<id>/...` via `make sync-images DIRECTION=pull` for
+  offline editing, then pushed back with `DIRECTION=push`. Path/filename
+  matches local exactly.
 
 ## Schema
 
@@ -154,8 +155,8 @@ Schema layers:
 - **Storage** — `recipe-images` bucket (public read; admin or
   recipe-owning-chef write via RLS). Hero at `<recipe_id>/hero.jpg`,
   step images at `<recipe_id>/step-<sort_order>.jpg`. Full Storage
-  URLs are stored on `recipes.media.image`, `recipes.media.hero.src`,
-  and `recipe_steps.media_src`. Helper:
+  URLs are stored on `recipes.media.hero.src` and
+  `recipe_steps.media_src`. Helper:
   `public.can_write_recipe_image(text)`. Bytes synced via `mfc
   sync-images`; metadata via `mfc sync-recipes`.
 

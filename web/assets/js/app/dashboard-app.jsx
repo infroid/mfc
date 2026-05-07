@@ -275,7 +275,7 @@ const DASH_STYLE = `
 }
 .saved-card { overflow: hidden; text-decoration: none; color: inherit; display: block; }
 .saved-img {
-  position: relative; aspect-ratio: 4/3;
+  position: relative; aspect-ratio: 1 / 1;
   border-bottom: 1.5px solid var(--ink); overflow: hidden;
   display: grid; place-items: center; font-size: 64px;
 }
