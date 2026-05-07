@@ -1,21 +1,25 @@
 {
   "id": "smoke-test",
   "name": "Philips Viva Collection HD4928/01 2100-Watt Induction Cooktop (Black)",
-  "tagline": null,
+  "tagline": "Joyful Effortless Cooking with Electromagnetic induction technology ensures high heating efficiency, cooks food faster than a gas stove seals nutrition into the food and prevents vitamin loss.",
   "category": "Small appliance",
-  "photo": null,
+  "photo": "assets/utensils/smoke-test/smoke-test.jpg",
   "care_tip": null,
-  "specs": {},
+  "specs": {
+    "material": "Glass",
+    "size": "Medium",
+    "weight": "2100 Grams"
+  },
   "show": {
     "buyLink": true,
     "careTip": true,
-    "specs": false
+    "specs": true
   },
-  "ai_filled_at": "2026-05-07T22:36:41.811902+00:00",
+  "ai_filled_at": "2026-05-07T22:55:28.730594+00:00",
   "amazon": {
     "asin": "B00EDJJ7FS",
     "marketplace": "amazon.in",
-    "fetched_at": "2026-05-07T22:36:41.811902+00:00"
+    "fetched_at": "2026-05-07T22:55:28.730594+00:00"
   },
   "buy_links": [
     {
