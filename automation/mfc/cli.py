@@ -24,6 +24,7 @@ from .commands import (
     suspend_user,
     sync_images,
     sync_recipes,
+    sync_utensil_images,
     sync_utensils,
 )
 from .core import log
@@ -40,6 +41,7 @@ COMMAND_MODULES = [
     sync_recipes,
     sync_images,
     sync_utensils,
+    sync_utensil_images,
     create_utensil,
     set_role,
     suspend_user,
