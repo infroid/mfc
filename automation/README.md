@@ -9,8 +9,8 @@ Self-contained Python tool. uv handles the venv and Python version.
 brew install uv                  # or: curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # from the repo root, copy the env template and fill in your Supabase keys
-cp automation/.env.sample automation/.env
-$EDITOR automation/.env
+cp .env.sample .env
+$EDITOR .env
 
 # sync the venv
 make sync
@@ -44,8 +44,6 @@ uv --project automation run mfc status
 automation/
   pyproject.toml      uv-managed dependencies + entry point
   .python-version     interpreter pin (uv installs it on demand)
-  .env.sample         committed template
-  .env                local credentials (gitignored)
   mfc/                the Python package
     cli.py            argparse + command registry
     core/             config, log, prompts, files (filesystem helpers)

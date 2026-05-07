@@ -1,3 +1,6 @@
+/.env
+/routine/artifacts/
+
 # Ignore Mac system files
 .DS_Store
 
