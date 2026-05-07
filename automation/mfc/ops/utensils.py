@@ -96,3 +96,141 @@ def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncRep
     report.pushed = len(valid)
     log.ok(report.line())
     return report
+
+
+def _db_to_bundle(row: dict, buy_links: list[dict]) -> dict:
+    bundle = {k: row.get(k) for k in _BUNDLE_FIELDS}
+    if row.get("amazon_asin"):
+        bundle["amazon"] = {
+            "asin": row["amazon_asin"],
+            "marketplace": row.get("amazon_marketplace"),
+            "fetched_at": row.get("amazon_fetched_at"),
+        }
+    bundle["buy_links"] = [
+        {k: bl.get(k) for k in _BUY_LINK_FIELDS}
+        for bl in sorted(buy_links, key=lambda b: b.get("sort_order") or 0)
+    ]
+    # Strip None-valued optional keys for clean diffs.
+    for k in ("tagline", "category", "photo", "care_tip", "ai_filled_at"):
+        if bundle.get(k) is None:
+            bundle.pop(k, None)
+    return bundle
+
+
+def pull_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncReport:
+    """Reconstruct utensil.json bundles from DB rows."""
+    sb = sb_client.service_client(config)
+    report = SyncReport()
+
+    rows = sb.table("utensils").select("*").order("id").execute().data or []
+    if only:
+        wanted = set(only)
+        rows = [r for r in rows if r["id"] in wanted]
+
+    if not rows:
+        log.warn("no utensils in DB to pull")
+        return report
+
+    log.step(f"sync-utensils · pull · {len(rows)} utensil(s)")
+
+    ids = [r["id"] for r in rows]
+    bl_rows = (
+        sb.table("utensil_buy_links")
+        .select("utensil_id, sort_order, store, url, price, affiliate_tag")
+        .in_("utensil_id", ids)
+        .order("sort_order")
+        .execute()
+        .data
+        or []
+    )
+    bl_by_uid: dict[str, list[dict]] = {}
+    for bl in bl_rows:
+        bl_by_uid.setdefault(bl["utensil_id"], []).append(bl)
+
+    for row in rows:
+        rid = row["id"]
+        try:
+            bundle = _db_to_bundle(row, bl_by_uid.get(rid, []))
+            path = files.utensil_bundle_path(config.repo_root, rid)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
+            report.pulled += 1
+            log.ok(rid)
+        except Exception as e:  # noqa: BLE001
+            report.failed.append(f"{rid}: {e}")
+            log.error(f"{rid}: {e}")
+
+    log.ok(report.line())
+    return report
+
+
+def sync(config: Config, *, direction: str, only: Optional[list[str]] = None) -> SyncReport:
+    if direction == "push":
+        return push_bundles(config, only=only)
+    if direction == "pull":
+        return pull_bundles(config, only=only)
+    if direction != "both":
+        raise ValueError(f"invalid direction: {direction!r}")
+
+    sb = sb_client.service_client(config)
+    db_rows = sb.table("utensils").select("id, updated_at").execute().data or []
+    db_by_id = {r["id"]: r for r in db_rows}
+    if only:
+        wanted = set(only)
+        db_by_id = {k: v for k, v in db_by_id.items() if k in wanted}
+
+    bundle_paths = list(files.iter_utensil_bundles(config.repo_root))
+    local_by_id: dict[str, Path] = {}
+    for p in bundle_paths:
+        try:
+            d = files.load_utensil_json(p)
+            uid = d.get("id")
+            if uid and (not only or uid in only):
+                local_by_id[uid] = p
+        except Exception:
+            continue
+
+    push_ids: list[str] = []
+    pull_ids: list[str] = []
+
+    for uid in sorted(set(db_by_id) | set(local_by_id)):
+        db_row = db_by_id.get(uid)
+        local_path = local_by_id.get(uid)
+        if db_row and not local_path:
+            pull_ids.append(uid)
+            continue
+        if local_path and not db_row:
+            push_ids.append(uid)
+            continue
+        local_mtime = local_path.stat().st_mtime
+        db_ts = _parse_iso_to_ts(db_row.get("updated_at") or "")
+        delta = local_mtime - db_ts
+        if abs(delta) <= 1.0:
+            continue
+        if delta > 0:
+            push_ids.append(uid)
+        else:
+            pull_ids.append(uid)
+
+    report = SyncReport()
+    if pull_ids:
+        sub = pull_bundles(config, only=pull_ids)
+        report.pulled += sub.pulled
+        report.failed.extend(sub.failed)
+    if push_ids:
+        sub = push_bundles(config, only=push_ids)
+        report.pushed += sub.pushed
+        report.failed.extend(sub.failed)
+    log.ok(report.line())
+    return report
+
+
+def _parse_iso_to_ts(iso: str) -> float:
+    if not iso:
+        return 0.0
+    if iso.endswith("Z"):
+        iso = iso[:-1] + "+00:00"
+    try:
+        return datetime.fromisoformat(iso).timestamp()
+    except Exception:
+        return 0.0

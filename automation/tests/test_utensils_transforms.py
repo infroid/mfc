@@ -58,3 +58,40 @@ def test_bundle_to_buy_link_rows_attaches_utensil_id():
 
 def test_bundle_to_buy_link_rows_empty_when_missing():
     assert utensils._bundle_to_buy_link_rows({"id": "x"}) == []
+
+
+def test_db_to_bundle_round_trips_canonical_fields():
+    db_row = {
+        "id": "kadhai", "name": "K", "tagline": None, "category": "Cookware",
+        "photo": "assets/utensils/kadhai/kadhai.jpg", "care_tip": None,
+        "specs": {"material": "ci"}, "show": {"buyLink": True},
+        "ai_filled_at": "2026-05-07T15:30:00Z",
+        "amazon_asin": "B07X", "amazon_marketplace": "amazon.com",
+        "amazon_fetched_at": "2026-05-07T15:30:00Z",
+        "created_at": "ignored", "updated_at": "ignored", "created_by": "ignored",
+    }
+    buy_links = [
+        {"sort_order": 0, "store": "Amazon", "url": "https://...", "price": "$1",
+         "affiliate_tag": "mfc-20"},
+    ]
+    bundle = utensils._db_to_bundle(db_row, buy_links)
+    assert bundle["id"] == "kadhai"
+    assert bundle["category"] == "Cookware"
+    assert "tagline" not in bundle  # nones stripped
+    assert "care_tip" not in bundle
+    assert bundle["amazon"] == {
+        "asin": "B07X", "marketplace": "amazon.com",
+        "fetched_at": "2026-05-07T15:30:00Z",
+    }
+    assert bundle["buy_links"] == [{
+        "sort_order": 0, "store": "Amazon", "url": "https://...",
+        "price": "$1", "affiliate_tag": "mfc-20",
+    }]
+
+
+def test_db_to_bundle_drops_amazon_block_when_no_asin():
+    db_row = {"id": "x", "name": "X", "specs": {}, "show": {},
+              "amazon_asin": None, "amazon_marketplace": None,
+              "amazon_fetched_at": None}
+    bundle = utensils._db_to_bundle(db_row, [])
+    assert "amazon" not in bundle
