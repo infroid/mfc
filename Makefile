@@ -15,7 +15,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help sync status apply-schema seed-metrics \
-        sync-recipes sync-images sync-utensils sync-utensil-images create-utensil \
+        sync-recipes sync-images sync-utensils sync-utensil-images update-utensil \
         list-users set-role suspend-user drop-schema reset serve
 
 help: ## list all targets
@@ -68,16 +68,18 @@ sync-images: ## sync recipe images bucket↔local; prompts (or DIRECTION=pull|pu
 	  read d && $(UV) run mfc sync-images --direction $$d; \
 	fi
 
-sync-utensils: ## sync utensil library DB↔local; prompts (or DIRECTION=pull|push|both)
+sync-utensils: ## sync utensils DB↔local; chains sync-utensil-images same direction
 	@if [ -n "$(DIRECTION)" ]; then \
-	  $(UV) run mfc sync-utensils --direction $(DIRECTION); \
+	  $(UV) run mfc sync-utensils --direction $(DIRECTION) && \
+	  $(UV) run mfc sync-utensil-images --direction $(DIRECTION); \
 	else \
 	  printf "\nPick sync direction:\n"; \
-	  printf "  pull — DB → local. Rebuilds utensil.json bundles from rows.\n"; \
-	  printf "  push — local → DB. Upserts bundles into utensils + utensil_buy_links.\n"; \
-	  printf "  both — pull then push. Last-modified wins per utensil.\n"; \
+	  printf "  pull — DB+Storage → local. Rebuilds utensil.json bundles + image bytes from cloud.\n"; \
+	  printf "  push — local → DB+Storage. Uploads bundles + image bytes.\n"; \
+	  printf "  both — pull then push. Last-modified wins per utensil and per image.\n"; \
 	  printf "\nDirection [pull/push/both]: "; \
-	  read d && $(UV) run mfc sync-utensils --direction $$d; \
+	  read d && $(UV) run mfc sync-utensils --direction $$d && \
+	    $(UV) run mfc sync-utensil-images --direction $$d; \
 	fi
 
 sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIRECTION=pull|push|both)
@@ -92,8 +94,8 @@ sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIR
 	  read d && $(UV) run mfc sync-utensil-images --direction $$d; \
 	fi
 
-create-utensil: ## create utensil from amazon url; required URL=<amazon-url> [ID=<slug>] [FORCE=1] [NO_DB=1] [NO_IMAGE=1]
-	@$(UV) run mfc create-utensil "$(URL)" $(if $(ID),--id "$(ID)") $(if $(FORCE),--force) $(if $(NO_DB),--no-db) $(if $(NO_IMAGE),--no-image)
+update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [FORCE=1] [NO_IMAGE=1])
+	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(FORCE),--force) $(if $(NO_IMAGE),--no-image)
 
 list-users: ## list users; optional ROLE=user|chef|admin Q=alice
 	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
