@@ -39,8 +39,11 @@
   border-bottom: 1px dashed rgba(255, 252, 243, 0.18);
 }
 .admin-brand .brand-mark {
-  width: 30px; height: 30px;
-  font-size: 20px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--paper);
+  flex-shrink: 0;
 }
 .admin-brand .brand-name { font-size: 16px; }
 .admin-brand .admin-tag {

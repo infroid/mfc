@@ -57,7 +57,7 @@ function AdminSidebar({ active, counts = {} }) {
           <span /><span /><span />
         </button>
         <div className="admin-brand admin-brand-mobile" role="img" aria-label="MyFoodCraving admin">
-          <span className="brand-mark">m</span>
+          <img className="brand-mark" src="/assets/img/brand/mfc.png" alt="MyFoodCraving" />
           <span className="brand-name">my<em>food</em>craving</span>
           <span className="admin-tag">admin</span>
         </div>
@@ -67,7 +67,7 @@ function AdminSidebar({ active, counts = {} }) {
 
       <aside className={"admin-side" + (open ? " open" : "")} aria-hidden={!open && undefined}>
         <div className="admin-brand">
-          <span className="brand-mark">m</span>
+          <img className="brand-mark" src="/assets/img/brand/mfc.png" alt="MyFoodCraving" />
           <span className="brand-name">my<em>food</em>craving</span>
           <span className="admin-tag">admin</span>
           <button
@@ -153,7 +153,7 @@ function ChefSidebar({ active, role, counts = {} }) {
           <span /><span /><span />
         </button>
         <div className="admin-brand admin-brand-mobile" role="img" aria-label="MyFoodCraving chef">
-          <span className="brand-mark">m</span>
+          <img className="brand-mark" src="/assets/img/brand/mfc.png" alt="MyFoodCraving" />
           <span className="brand-name">my<em>food</em>craving</span>
           <span className="admin-tag">chef</span>
         </div>
@@ -163,7 +163,7 @@ function ChefSidebar({ active, role, counts = {} }) {
 
       <aside className={"admin-side" + (open ? " open" : "")} aria-hidden={!open && undefined}>
         <div className="admin-brand">
-          <span className="brand-mark">m</span>
+          <img className="brand-mark" src="/assets/img/brand/mfc.png" alt="MyFoodCraving" />
           <span className="brand-name">my<em>food</em>craving</span>
           <span className="admin-tag">chef</span>
           <button

@@ -16,7 +16,7 @@
 .mfc-auth-title{font-family:var(--sans);font-weight:500;font-size:26px;line-height:1.1;letter-spacing:-.025em;color:var(--ink);margin-bottom:10px}
 .mfc-auth-title em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--orange,#FF6D2E)}
 .mfc-auth-brand{display:inline-flex;align-items:center;gap:8px;vertical-align:middle}
-.mfc-auth-brand-mark{display:inline-grid;place-items:center;width:30px;height:30px;background:var(--orange,#FF6D2E);color:var(--paper,#FFFCF3);font-family:var(--serif);font-style:italic;font-size:21px;border-radius:50%;transform:rotate(-6deg)}
+.mfc-auth-brand-mark{display:inline-block;width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--paper,#FFFCF3);flex-shrink:0}
 .mfc-auth-brand-name{font-family:var(--sans);font-weight:600;letter-spacing:-.02em;color:var(--ink)}
 .mfc-auth-brand-name em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--ink)}
 .mfc-auth-tag{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--ink-soft,#3A332A);line-height:1.4}
@@ -81,7 +81,7 @@
             <h3 className="mfc-auth-title">
               Sign in to{' '}
               <span className="mfc-auth-brand">
-                <span className="mfc-auth-brand-mark">m</span>
+                <img className="mfc-auth-brand-mark" src="/assets/img/brand/mfc.png" alt="MyFoodCraving" />
                 <span className="mfc-auth-brand-name">MyFood<em>Craving</em></span>
               </span>
             </h3>

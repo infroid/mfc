@@ -25,12 +25,12 @@
 }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.02em; }
 .brand-mark {
-  display: inline-grid; place-items: center;
-  width: 32px; height: 32px;
-  background: var(--orange); color: var(--paper);
-  font-family: var(--serif); font-style: italic; font-size: 22px;
-  border-radius: 50%; transform: rotate(-6deg);
+  display: inline-block;
+  width: 36px; height: 36px;
+  border-radius: 50%;
   flex-shrink: 0;
+  object-fit: cover;
+  background: var(--paper);
 }
 .brand-name { font-size: 17px; }
 .brand-name em { font-family: var(--serif); font-weight: 400; font-style: italic; }
@@ -109,7 +109,7 @@
       <nav className={'nav' + (scrolled ? ' scrolled' : '')}>
         <div className="nav-inner">
           <a className="brand" href={brandHref}>
-            <span className="brand-mark">m</span>
+            <img className="brand-mark" src="/assets/img/brand/mfc.png" alt="MyFoodCraving" />
             <span className="brand-name">MyFood<em>Craving</em></span>
           </a>
           <div className="nav-links">
