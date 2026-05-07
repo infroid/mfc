@@ -118,4 +118,4 @@ routine-sync: ## sync the routine python venv (after editing routine/pyproject.t
 	@uv --project routine sync
 
 routine-test: ## run the routine pytest suite
-	@uv --project routine run pytest
+	@cd routine && uv run pytest

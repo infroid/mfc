@@ -28,6 +28,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["routine"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.dagster]
 module_name = "routine.definitions"
 code_location_name = "routine"
