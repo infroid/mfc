@@ -9,9 +9,9 @@
   "totalMinutes": 30,
   "media": {
     "hero": {
-      "alt": "Off-white diamond-cut almond burfi pieces with silver leaf and crushed pistachios",
-      "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/almond-burfi/hero.jpg",
-      "caption": "almond burfi — cardamom-scented fudge",
+      "alt": "Diamond-cut almond burfi pieces topped with pistachios on a cream ceramic platter",
+      "src": "assets/recipes/almond-burfi/hero.jpg",
+      "caption": "almond burfi — pistachio-topped diamonds",
       "palette": [
         "#E9DAC1",
         "#FBF7EE",
@@ -67,8 +67,9 @@
       "duration": 600,
       "tip": "Pulse in 5-second bursts and check between each.",
       "media": {
-        "src": null,
-        "caption": null
+        "src": "assets/recipes/almond-burfi/step-01-make-almond-meal.jpg",
+        "caption": "pulse peeled almonds into meal",
+        "alt": "Peeled almonds beside a food processor filled with coarse almond meal"
       }
     },
     {
@@ -78,8 +79,9 @@
       "duration": 300,
       "tip": "Test syrup early and often — overshooting makes the burfi crumbly.",
       "media": {
-        "src": null,
-        "caption": null
+        "src": "assets/recipes/almond-burfi/step-02-cook-sugar-syrup.jpg",
+        "caption": "cook syrup to one-string stage",
+        "alt": "Clear sugar syrup bubbling in a stainless pan with saffron threads"
       }
     },
     {
@@ -89,8 +91,9 @@
       "duration": 360,
       "tip": "Score while warm; cut clean once fully cool.",
       "media": {
-        "src": null,
-        "caption": null
+        "src": "assets/recipes/almond-burfi/step-03-combine-set.jpg",
+        "caption": "smooth and garnish before setting",
+        "alt": "Warm almond fudge mixture smoothed in a greased tray with pistachio slivers"
       }
     }
   ],
