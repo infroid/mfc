@@ -155,7 +155,7 @@ window.MFC.adminDb = (function () {
   async function listRecipes() {
     const { data, error } = await sb()
       .from('recipes')
-      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,created_by,updated_at,recipe_steps(count),recipe_ingredients(count)')
+      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,media,created_by,updated_at,recipe_steps(count),recipe_ingredients(count)')
       .order('updated_at', { ascending: false });
     check(error, 'listRecipes');
     return (data || []).map((r) => ({
@@ -172,7 +172,7 @@ window.MFC.adminDb = (function () {
   async function listOwnedRecipes(userId) {
     const { data, error } = await sb()
       .from('recipes')
-      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,created_by,updated_at,recipe_steps(count),recipe_ingredients(count),recipe_owners!inner(user_id)')
+      .select('id,name,tagline,short_tagline,cuisine,difficulty,servings,total_minutes,media,created_by,updated_at,recipe_steps(count),recipe_ingredients(count),recipe_owners!inner(user_id)')
       .eq('recipe_owners.user_id', userId)
       .order('updated_at', { ascending: false });
     check(error, 'listOwnedRecipes');

@@ -143,9 +143,13 @@ function ChefRecipesApp({ user }) {
                   {!q && <a href="recipe.html?new=1" className="btn-sm primary" style={{ textDecoration: "none" }}>+ {isAdmin ? "New recipe" : "Create your first recipe"}</a>}
                 </div>
               )}
-              {rows && filtered.map((r) => (
+              {rows && filtered.map((r) => {
+                const heroSrc = r.media?.hero?.src || null;
+                return (
                 <div key={r.id} className="list-row" onClick={() => { location.href = `recipe.html?id=${encodeURIComponent(r.id)}`; }}>
-                  <div className="lib-thumb" />
+                  <div className="lib-thumb">
+                    {heroSrc && <img src={heroSrc} alt="" loading="lazy" onError={(e) => { e.target.style.display = "none"; }} />}
+                  </div>
                   <div>
                     <div className="name">{r.name}</div>
                     <div className="id">{r.id}</div>
@@ -158,7 +162,8 @@ function ChefRecipesApp({ user }) {
                     <button className="icon-btn danger" title="Delete" onClick={() => onDelete(r)}>×</button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

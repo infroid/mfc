@@ -471,12 +471,18 @@ function RangeBar({ def, value, status }) {
 function RecipeThumb({ recipe }) {
   const [errored, setErrored] = useState(false);
   if (!recipe) return <span className="mc-rec-thumb">🍽</span>;
+  // Prefer the canonical Storage URL on media.hero.src. Fall back to the
+  // local bundle path for offline / pre-sync development. Markers page lives
+  // under /my/, so the bundle path needs the '../' prefix.
+  const heroSrc =
+    recipe.media?.hero?.src ||
+    (recipe.id ? `../assets/recipes/${recipe.id}/hero.jpg` : null);
   return (
     <span className="mc-rec-thumb">
-      {errored
+      {(!heroSrc || errored)
         ? <span>🍽</span>
         : <img
-            src={`assets/recipes/${recipe.id}/hero.jpg`}
+            src={heroSrc}
             alt=""
             loading="lazy"
             onError={() => setErrored(true)}
@@ -590,7 +596,7 @@ function MarkerCard({ def, reading, recipes, onSaved, index }) {
           <div className="eyebrow-comment" style={{ marginBottom: 8 }}>cook this →</div>
           <div className="mc-rec-list">
             {recipes.slice(0, 2).map((r) => (
-              <a key={r.id} href={`recipe.html?id=${r.id}`} className="mc-rec">
+              <a key={r.id} href={`../recipe.html?id=${r.id}`} className="mc-rec">
                 <RecipeThumb recipe={r} />
                 <span className="mc-rec-name">{r.name}</span>
               </a>
