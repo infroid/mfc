@@ -15,7 +15,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help sync status apply-schema seed-metrics \
-        sync-recipes sync-images sync-utensils create-utensil \
+        sync-recipes sync-images sync-utensils sync-utensil-images create-utensil \
         list-users set-role suspend-user drop-schema reset serve
 
 help: ## list all targets
@@ -78,6 +78,18 @@ sync-utensils: ## sync utensil library DB↔local; prompts (or DIRECTION=pull|pu
 	  printf "  both — pull then push. Last-modified wins per utensil.\n"; \
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-utensils --direction $$d; \
+	fi
+
+sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIRECTION=pull|push|both)
+	@if [ -n "$(DIRECTION)" ]; then \
+	  $(UV) run mfc sync-utensil-images --direction $(DIRECTION); \
+	else \
+	  printf "\nPick sync direction:\n"; \
+	  printf "  pull — Storage → local. Downloads bucket-only files; overwrites local where Storage is newer.\n"; \
+	  printf "  push — local → Storage. Uploads local-only files; overwrites remote where local is newer.\n"; \
+	  printf "  both — pull then push. Last-modified wins per file.\n"; \
+	  printf "\nDirection [pull/push/both]: "; \
+	  read d && $(UV) run mfc sync-utensil-images --direction $$d; \
 	fi
 
 create-utensil: ## create utensil from amazon url; required URL=<amazon-url> [ID=<slug>] [FORCE=1] [NO_DB=1] [NO_IMAGE=1]
