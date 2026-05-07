@@ -1,0 +1,10 @@
+{
+  "id": "wok-spatula",
+  "name": "Wok spatula",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

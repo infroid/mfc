@@ -1,0 +1,10 @@
+{
+  "id": "pizza-peel",
+  "name": "Pizza peel",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

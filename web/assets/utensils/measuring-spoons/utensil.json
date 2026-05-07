@@ -1,0 +1,10 @@
+{
+  "id": "measuring-spoons",
+  "name": "Measuring spoons",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

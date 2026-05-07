@@ -1,0 +1,10 @@
+{
+  "id": "small-pot",
+  "name": "Small pot",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

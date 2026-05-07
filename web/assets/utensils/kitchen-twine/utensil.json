@@ -1,0 +1,10 @@
+{
+  "id": "kitchen-twine",
+  "name": "Kitchen twine",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

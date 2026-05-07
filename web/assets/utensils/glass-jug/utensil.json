@@ -1,0 +1,10 @@
+{
+  "id": "glass-jug",
+  "name": "Glass jug",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

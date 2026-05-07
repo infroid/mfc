@@ -1,0 +1,10 @@
+{
+  "id": "tongs-for-charring",
+  "name": "Tongs (for charring)",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

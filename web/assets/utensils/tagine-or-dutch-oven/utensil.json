@@ -1,0 +1,10 @@
+{
+  "id": "tagine-or-dutch-oven",
+  "name": "Tagine or Dutch oven",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

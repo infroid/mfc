@@ -1,0 +1,10 @@
+{
+  "id": "skillet-with-lid",
+  "name": "Skillet with lid",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

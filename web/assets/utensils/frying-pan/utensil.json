@@ -1,0 +1,10 @@
+{
+  "id": "frying-pan",
+  "name": "Frying pan",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

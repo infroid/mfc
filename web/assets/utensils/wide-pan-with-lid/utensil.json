@@ -1,0 +1,10 @@
+{
+  "id": "wide-pan-with-lid",
+  "name": "Wide pan with lid",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

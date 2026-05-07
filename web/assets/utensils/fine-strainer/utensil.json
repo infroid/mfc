@@ -1,0 +1,10 @@
+{
+  "id": "fine-strainer",
+  "name": "Fine strainer",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

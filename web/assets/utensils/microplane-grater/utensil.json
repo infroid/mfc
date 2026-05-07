@@ -1,0 +1,10 @@
+{
+  "id": "microplane-grater",
+  "name": "Microplane grater",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

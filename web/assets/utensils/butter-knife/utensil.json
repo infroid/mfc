@@ -1,0 +1,10 @@
+{
+  "id": "butter-knife",
+  "name": "Butter knife",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

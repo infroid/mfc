@@ -1,0 +1,10 @@
+{
+  "id": "bread-knife",
+  "name": "Bread knife",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

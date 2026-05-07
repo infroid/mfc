@@ -1,0 +1,10 @@
+{
+  "id": "wide-pan",
+  "name": "Wide pan",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

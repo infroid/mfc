@@ -1,0 +1,10 @@
+{
+  "id": "ricer-or-food-mill",
+  "name": "Ricer or food mill",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

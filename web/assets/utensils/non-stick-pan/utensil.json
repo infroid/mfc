@@ -1,0 +1,10 @@
+{
+  "id": "non-stick-pan",
+  "name": "Non-stick pan",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "wide-pot-with-lid",
+  "name": "Wide pot with lid",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

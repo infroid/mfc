@@ -1,0 +1,10 @@
+{
+  "id": "can-opener",
+  "name": "Can opener",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

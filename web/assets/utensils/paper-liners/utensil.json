@@ -1,0 +1,10 @@
+{
+  "id": "paper-liners",
+  "name": "Paper liners",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

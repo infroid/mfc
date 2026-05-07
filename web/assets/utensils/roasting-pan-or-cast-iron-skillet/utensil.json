@@ -1,0 +1,10 @@
+{
+  "id": "roasting-pan-or-cast-iron-skillet",
+  "name": "Roasting pan or cast iron skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "cutting-board",
+  "name": "Cutting board",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

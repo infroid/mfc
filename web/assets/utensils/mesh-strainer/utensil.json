@@ -1,0 +1,10 @@
+{
+  "id": "mesh-strainer",
+  "name": "Mesh strainer",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

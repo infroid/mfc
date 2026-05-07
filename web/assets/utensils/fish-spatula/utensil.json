@@ -1,0 +1,10 @@
+{
+  "id": "fish-spatula",
+  "name": "Fish spatula",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

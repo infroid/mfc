@@ -1,0 +1,10 @@
+{
+  "id": "large-flat-plate",
+  "name": "Large flat plate",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

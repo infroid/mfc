@@ -1,0 +1,10 @@
+{
+  "id": "microplane",
+  "name": "Microplane",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

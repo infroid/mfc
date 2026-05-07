@@ -1,0 +1,10 @@
+{
+  "id": "panini-press-or-heavy-skillet",
+  "name": "Panini press or heavy skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

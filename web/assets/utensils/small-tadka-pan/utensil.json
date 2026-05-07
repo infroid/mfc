@@ -1,0 +1,10 @@
+{
+  "id": "small-tadka-pan",
+  "name": "Small tadka pan",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

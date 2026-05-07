@@ -1,0 +1,10 @@
+{
+  "id": "greased-tray",
+  "name": "Greased tray",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

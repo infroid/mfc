@@ -1,0 +1,10 @@
+{
+  "id": "sharp-serrated-knife",
+  "name": "Sharp serrated knife",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

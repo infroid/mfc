@@ -1,0 +1,10 @@
+{
+  "id": "box-grater",
+  "name": "Box grater",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

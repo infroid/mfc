@@ -1,0 +1,10 @@
+{
+  "id": "scissors",
+  "name": "Scissors",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

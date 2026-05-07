@@ -1,0 +1,10 @@
+{
+  "id": "potato-ricer-or-masher",
+  "name": "Potato ricer or masher",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

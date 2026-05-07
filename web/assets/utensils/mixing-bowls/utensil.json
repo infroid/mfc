@@ -1,0 +1,10 @@
+{
+  "id": "mixing-bowls",
+  "name": "Mixing bowls",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

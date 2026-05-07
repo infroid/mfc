@@ -1,0 +1,10 @@
+{
+  "id": "blender",
+  "name": "Blender",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

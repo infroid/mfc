@@ -1,0 +1,10 @@
+{
+  "id": "wok-or-wide-skillet",
+  "name": "Wok or wide skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

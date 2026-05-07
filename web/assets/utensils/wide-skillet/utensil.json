@@ -1,0 +1,10 @@
+{
+  "id": "wide-skillet",
+  "name": "Wide skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

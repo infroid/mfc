@@ -1,0 +1,10 @@
+{
+  "id": "heavy-pot-or-kadhai",
+  "name": "Heavy pot or kadhai",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

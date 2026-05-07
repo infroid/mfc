@@ -1,0 +1,10 @@
+{
+  "id": "citrus-juicer",
+  "name": "Citrus juicer",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "flat-tawa",
+  "name": "Flat tawa",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

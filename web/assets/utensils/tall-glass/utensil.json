@@ -1,0 +1,10 @@
+{
+  "id": "tall-glass",
+  "name": "Tall glass",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

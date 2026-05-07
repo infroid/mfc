@@ -1,0 +1,10 @@
+{
+  "id": "spatula-or-wide-spoon",
+  "name": "Spatula or wide spoon",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

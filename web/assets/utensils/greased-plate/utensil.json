@@ -1,0 +1,10 @@
+{
+  "id": "greased-plate",
+  "name": "Greased plate",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "large-pot",
+  "name": "Large pot",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

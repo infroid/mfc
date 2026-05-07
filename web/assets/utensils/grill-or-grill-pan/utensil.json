@@ -1,0 +1,10 @@
+{
+  "id": "grill-or-grill-pan",
+  "name": "Grill or grill pan",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

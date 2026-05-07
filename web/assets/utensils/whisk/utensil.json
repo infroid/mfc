@@ -1,0 +1,10 @@
+{
+  "id": "whisk",
+  "name": "Whisk",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

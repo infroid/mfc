@@ -1,0 +1,10 @@
+{
+  "id": "ladle",
+  "name": "Ladle",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

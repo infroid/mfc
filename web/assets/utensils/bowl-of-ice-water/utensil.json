@@ -1,0 +1,10 @@
+{
+  "id": "bowl-of-ice-water",
+  "name": "Bowl of ice water",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

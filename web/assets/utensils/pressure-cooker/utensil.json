@@ -1,0 +1,10 @@
+{
+  "id": "pressure-cooker",
+  "name": "Pressure cooker",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

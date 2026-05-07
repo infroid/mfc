@@ -1,0 +1,10 @@
+{
+  "id": "plate-for-marinating",
+  "name": "Plate for marinating",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

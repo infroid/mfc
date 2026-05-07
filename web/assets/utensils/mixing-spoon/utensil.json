@@ -1,0 +1,10 @@
+{
+  "id": "mixing-spoon",
+  "name": "Mixing spoon",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

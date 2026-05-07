@@ -1,0 +1,10 @@
+{
+  "id": "muffin-tin",
+  "name": "Muffin tin",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

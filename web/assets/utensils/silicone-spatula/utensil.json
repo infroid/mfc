@@ -1,0 +1,10 @@
+{
+  "id": "silicone-spatula",
+  "name": "Silicone spatula",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "long-platter",
+  "name": "Long platter",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

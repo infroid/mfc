@@ -1,0 +1,10 @@
+{
+  "id": "mortar-and-pestle",
+  "name": "Mortar and pestle",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

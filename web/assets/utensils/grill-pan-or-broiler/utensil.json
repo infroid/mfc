@@ -1,0 +1,10 @@
+{
+  "id": "grill-pan-or-broiler",
+  "name": "Grill pan or broiler",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

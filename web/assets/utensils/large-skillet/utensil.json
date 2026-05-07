@@ -1,0 +1,10 @@
+{
+  "id": "large-skillet",
+  "name": "Large skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

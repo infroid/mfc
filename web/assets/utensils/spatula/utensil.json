@@ -1,0 +1,10 @@
+{
+  "id": "spatula",
+  "name": "Spatula",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

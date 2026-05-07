@@ -1,0 +1,10 @@
+{
+  "id": "setting-vessel-matka-or-bowl",
+  "name": "Setting vessel (matka or bowl)",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

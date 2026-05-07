@@ -1,0 +1,10 @@
+{
+  "id": "blender-or-immersion-blender",
+  "name": "Blender or immersion blender",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

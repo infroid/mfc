@@ -1,0 +1,10 @@
+{
+  "id": "instant-read-thermometer",
+  "name": "Instant-read thermometer",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

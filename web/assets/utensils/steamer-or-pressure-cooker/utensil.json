@@ -1,0 +1,10 @@
+{
+  "id": "steamer-or-pressure-cooker",
+  "name": "Steamer or pressure cooker",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

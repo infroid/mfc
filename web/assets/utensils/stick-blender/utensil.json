@@ -1,0 +1,10 @@
+{
+  "id": "stick-blender",
+  "name": "Stick blender",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

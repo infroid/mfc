@@ -1,0 +1,10 @@
+{
+  "id": "damp-cloth-or-parchment",
+  "name": "Damp cloth or parchment",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

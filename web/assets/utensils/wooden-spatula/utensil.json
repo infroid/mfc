@@ -1,0 +1,10 @@
+{
+  "id": "wooden-spatula",
+  "name": "Wooden spatula",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

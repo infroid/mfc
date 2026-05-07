@@ -1,0 +1,10 @@
+{
+  "id": "wide-bowl",
+  "name": "Wide bowl",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

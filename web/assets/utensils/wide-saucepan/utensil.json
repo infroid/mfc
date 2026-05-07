@@ -1,0 +1,10 @@
+{
+  "id": "wide-saucepan",
+  "name": "Wide saucepan",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

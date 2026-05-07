@@ -1,0 +1,10 @@
+{
+  "id": "strainer",
+  "name": "Strainer",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

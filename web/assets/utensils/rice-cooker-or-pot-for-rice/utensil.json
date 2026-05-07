@@ -1,0 +1,10 @@
+{
+  "id": "rice-cooker-or-pot-for-rice",
+  "name": "Rice cooker or pot for rice",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

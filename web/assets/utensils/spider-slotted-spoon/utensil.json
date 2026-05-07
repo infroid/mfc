@@ -1,0 +1,10 @@
+{
+  "id": "spider-slotted-spoon",
+  "name": "Spider / slotted spoon",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

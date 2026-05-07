@@ -1,0 +1,10 @@
+{
+  "id": "saucepan-with-steamer",
+  "name": "Saucepan with steamer",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

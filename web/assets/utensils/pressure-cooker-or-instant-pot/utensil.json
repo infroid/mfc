@@ -1,0 +1,10 @@
+{
+  "id": "pressure-cooker-or-instant-pot",
+  "name": "Pressure cooker or Instant Pot",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

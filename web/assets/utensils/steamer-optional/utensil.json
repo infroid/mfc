@@ -1,0 +1,10 @@
+{
+  "id": "steamer-optional",
+  "name": "Steamer (optional)",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

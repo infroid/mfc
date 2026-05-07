@@ -1,0 +1,10 @@
+{
+  "id": "sharp-knife",
+  "name": "Sharp knife",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "cast-iron-skillet",
+  "name": "Cast iron skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

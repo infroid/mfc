@@ -1,0 +1,10 @@
+{
+  "id": "measuring-cup",
+  "name": "Measuring cup",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

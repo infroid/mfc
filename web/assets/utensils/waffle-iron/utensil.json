@@ -1,0 +1,10 @@
+{
+  "id": "waffle-iron",
+  "name": "Waffle iron",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

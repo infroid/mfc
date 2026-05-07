@@ -1,0 +1,10 @@
+{
+  "id": "baking-dish",
+  "name": "Baking dish",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

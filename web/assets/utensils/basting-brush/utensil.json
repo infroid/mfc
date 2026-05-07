@@ -1,0 +1,10 @@
+{
+  "id": "basting-brush",
+  "name": "Basting brush",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

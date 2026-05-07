@@ -1,0 +1,10 @@
+{
+  "id": "toaster",
+  "name": "Toaster",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

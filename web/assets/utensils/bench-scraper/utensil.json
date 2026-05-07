@@ -1,0 +1,10 @@
+{
+  "id": "bench-scraper",
+  "name": "Bench scraper",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

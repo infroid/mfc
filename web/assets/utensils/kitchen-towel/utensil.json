@@ -1,0 +1,10 @@
+{
+  "id": "kitchen-towel",
+  "name": "Kitchen towel",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

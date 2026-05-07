@@ -1,0 +1,10 @@
+{
+  "id": "pizza-stone-or-steel",
+  "name": "Pizza stone or steel",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

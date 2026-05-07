@@ -1,0 +1,10 @@
+{
+  "id": "heavy-soup-pot",
+  "name": "Heavy soup pot",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

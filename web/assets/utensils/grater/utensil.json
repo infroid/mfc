@@ -1,0 +1,10 @@
+{
+  "id": "grater",
+  "name": "Grater",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

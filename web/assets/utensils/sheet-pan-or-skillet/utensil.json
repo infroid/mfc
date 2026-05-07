@@ -1,0 +1,10 @@
+{
+  "id": "sheet-pan-or-skillet",
+  "name": "Sheet pan or skillet",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}

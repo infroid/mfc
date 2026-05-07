@@ -1,0 +1,10 @@
+{
+  "id": "heavy-pot-for-frying",
+  "name": "Heavy pot for frying",
+  "specs": {},
+  "show": {
+    "specs": false,
+    "careTip": true
+  },
+  "buy_links": []
+}
