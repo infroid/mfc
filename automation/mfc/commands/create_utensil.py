@@ -141,9 +141,130 @@ def _choose_candidate(
         print(f"  out of range — must be 0..{n}")
 
 
+import json
+from datetime import datetime, timezone
+
+from ..core import files, log
+from ..core.config import Config
+from ..ops import utensils as utensils_ops
+
+
+def _compose_bundle(
+    *,
+    info: amazon.ProductInfo,
+    utensil_id: str,
+    photo_path: Optional[str],
+    now: datetime,
+) -> dict:
+    iso = now.isoformat()
+    return {
+        "id": utensil_id,
+        "name": info.title,
+        "tagline": None,
+        "category": guess_category(info.breadcrumbs),
+        "photo": photo_path,
+        "care_tip": None,
+        "specs": {},
+        "show": {"buyLink": True, "careTip": True, "specs": False},
+        "ai_filled_at": iso,
+        "amazon": {
+            "asin": info.asin,
+            "marketplace": info.marketplace,
+            "fetched_at": iso,
+        },
+        "buy_links": [{
+            "sort_order": 0,
+            "store": "Amazon",
+            "url": canonical_amazon_url(info.asin, info.marketplace),
+            "price": info.price,
+            "affiliate_tag": AFFILIATE_TAG,
+        }],
+    }
+
+
 def register(subparsers: argparse._SubParsersAction) -> None:
     raise NotImplementedError("CLI surface lands in Task 12")
 
 
-def run(args: argparse.Namespace, config) -> int:
-    raise NotImplementedError("orchestrator lands in Task 11")
+def run(args: argparse.Namespace, config: Config) -> int:
+    sb = None  # construct lazily only if push needed
+
+    # 1. Parse + scrape
+    log.step(f"create-utensil · {args.url}")
+    info = amazon.fetch_product(args.url)
+    log.ok(f"scraped: {info.title} (asin={info.asin}, market={info.marketplace})")
+
+    # 2. Resolve id
+    utensil_id = args.id or slugify(info.title)
+    log.info(f"utensil id: {utensil_id}")
+
+    # 3. Collision check
+    bundle_dir = files.utensil_bundles_root(config.repo_root) / utensil_id
+    bundle_path = files.utensil_bundle_path(config.repo_root, utensil_id)
+    if bundle_path.exists() and not args.force:
+        log.error(
+            f'Utensil id "{utensil_id}" already exists at {bundle_path}.\n'
+            f'  Either re-run with --id <different-slug>, or pass --force to overwrite.'
+        )
+        return 1
+    if not args.no_db:
+        sb = sb_client.service_client(config)  # noqa: F841 — used below
+        existing = sb.table("utensils").select("id").eq("id", utensil_id).execute().data or []
+        if existing and not args.force:
+            log.error(
+                f'Utensil id "{utensil_id}" already exists in DB.\n'
+                f'  Either re-run with --id <different-slug>, or pass --force to overwrite.'
+            )
+            return 1
+
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+
+    # 4. Image flow
+    photo_rel: Optional[str] = None
+    if not args.no_image and info.image_urls:
+        candidates_dir = bundle_dir / "_candidates"
+        candidates_dir.mkdir(exist_ok=True)
+        candidate_paths: list[Path] = []
+        for i, url in enumerate(info.image_urls, start=1):
+            target = candidates_dir / f"img-{i}.jpg"
+            try:
+                _download_candidate(url, target)
+                candidate_paths.append(target)
+            except amazon.AmazonError as e:
+                log.warn(f"skip candidate {i}: {e}")
+        if not candidate_paths:
+            log.warn("no usable image candidates downloaded")
+        else:
+            preview = candidates_dir / "preview.html"
+            _write_preview_html(preview, candidate_paths)
+            chosen = _choose_candidate(
+                candidate_paths,
+                image_index=args.image_index,
+                open_preview=True,
+                preview_html=preview,
+            )
+            if chosen is not None:
+                final = bundle_dir / f"{utensil_id}.jpg"
+                shutil.copyfile(chosen, final)
+                photo_rel = f"assets/utensils/{utensil_id}/{utensil_id}.jpg"
+            shutil.rmtree(candidates_dir, ignore_errors=True)
+    elif args.no_image:
+        log.info("skipping image download (--no-image)")
+
+    # 5. Compose + write bundle
+    now = datetime.now(timezone.utc)
+    bundle = _compose_bundle(info=info, utensil_id=utensil_id, photo_path=photo_rel, now=now)
+    bundle_path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
+    log.ok(f"wrote {bundle_path.relative_to(config.repo_root)}")
+
+    # 6. Optional DB push
+    if not args.no_db:
+        utensils_ops.push_bundles(config, only=[utensil_id])
+        log.ok(f"pushed to DB: {utensil_id}")
+
+    log.info(f"Edit at admin/utensil.html?id={utensil_id} to refine.")
+    return 0
+
+
+# Late import so the helper module above doesn't trigger circular imports.
+from ..clients import sb as sb_client  # noqa: E402
