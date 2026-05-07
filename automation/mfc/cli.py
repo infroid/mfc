@@ -14,7 +14,6 @@ from typing import Sequence
 
 from .commands import (
     apply_schema,
-    create_utensil,
     drop_schema,
     list_users,
     reset,
@@ -26,6 +25,7 @@ from .commands import (
     sync_recipes,
     sync_utensil_images,
     sync_utensils,
+    update_utensil,
 )
 from .core import log
 from .core.config import Config, ConfigError
@@ -42,7 +42,7 @@ COMMAND_MODULES = [
     sync_images,
     sync_utensils,
     sync_utensil_images,
-    create_utensil,
+    update_utensil,
     set_role,
     suspend_user,
     drop_schema,
