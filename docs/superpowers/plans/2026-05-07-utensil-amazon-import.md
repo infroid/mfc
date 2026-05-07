@@ -10,6 +10,18 @@
 
 **Spec:** `docs/superpowers/specs/2026-05-07-utensil-amazon-import-design.md`
 
+**Coordination note:** The sibling plan
+`docs/superpowers/plans/2026-05-07-ingredient-bundles-and-nutrition.md`
+shares four files with this plan (`automation/pyproject.toml`, `Makefile`,
+`automation/mfc/cli.py`, `automation/db/schema.sql`) plus
+`automation/tests/__init__.py`. The two plans don't share *deps* (ingredient
+plan uses stdlib `urllib.request` + `unittest`; this plan adds httpx, bs4,
+pytest, respx). Run them in either order — every shared file is appended-to
+or registered-into idempotently. If `automation/tests/__init__.py` already
+exists when Task 1 runs, leave it untouched; if `pyproject.toml` already has
+`httpx` / `beautifulsoup4` / a `[project.optional-dependencies] dev` block,
+merge instead of overwriting.
+
 ---
 
 ## Task 1: Add Python dependencies + tests skeleton
@@ -1180,7 +1192,30 @@ def run(args: argparse.Namespace, config: Config) -> int:
 
 - [ ] **Step 2: Register in cli.py**
 
-Edit `automation/mfc/cli.py`. In the `from .commands import (...)` block (currently lines 15-25), add `sync_utensils,` (alphabetical position is between `sync_recipes` and `set_role`). Then update `COMMAND_MODULES` (currently lines 32-42) so it reads:
+Edit `automation/mfc/cli.py`. The current imports block already contains
+`apply_schema`, `drop_schema`, `list_users`, `reset`, `seed_metrics`,
+`set_role`, `status`, `suspend_user`, `sync_images`, `sync_recipes` (the
+sibling-plan work landed `suspend_user`). Add `sync_utensils,` in
+alphabetical position so the block becomes:
+
+```python
+from .commands import (
+    apply_schema,
+    drop_schema,
+    list_users,
+    reset,
+    seed_metrics,
+    set_role,
+    status,
+    suspend_user,
+    sync_images,
+    sync_recipes,
+    sync_utensils,
+)
+```
+
+Update `COMMAND_MODULES` to slot `sync_utensils` immediately after
+`sync_images`, preserving `suspend_user`:
 
 ```python
 COMMAND_MODULES = [
@@ -1192,10 +1227,15 @@ COMMAND_MODULES = [
     sync_images,
     sync_utensils,
     set_role,
+    suspend_user,
     drop_schema,
     reset,
 ]
 ```
+
+If the ingredient plan has already landed by the time you run this, the
+imports block may also include `sync_ingredients`, `fetch_ingredient_images`,
+etc. — leave those alone, just add `sync_utensils` and re-run alphabetically.
 
 - [ ] **Step 3: Smoke-check the command exists**
 
@@ -1823,7 +1863,9 @@ def register(subparsers: argparse._SubParsersAction) -> None:
 
 - [ ] **Step 2: Register in cli.py**
 
-Edit `automation/mfc/cli.py`. Update the imports block to add `create_utensil`:
+Edit `automation/mfc/cli.py`. Add `create_utensil,` in alphabetical position
+in the imports block, **preserving every existing entry** (including
+`suspend_user` and any ingredient-plan additions if they have landed):
 
 ```python
 from .commands import (
@@ -1835,13 +1877,15 @@ from .commands import (
     seed_metrics,
     set_role,
     status,
+    suspend_user,
     sync_images,
     sync_recipes,
     sync_utensils,
 )
 ```
 
-Update `COMMAND_MODULES` to slot `create_utensil` immediately after `sync_utensils`:
+Update `COMMAND_MODULES` to slot `create_utensil` immediately after
+`sync_utensils`, keeping `suspend_user` where it is:
 
 ```python
 COMMAND_MODULES = [
@@ -1854,6 +1898,7 @@ COMMAND_MODULES = [
     sync_utensils,
     create_utensil,
     set_role,
+    suspend_user,
     drop_schema,
     reset,
 ]
@@ -1908,25 +1953,52 @@ git commit -m "feat(cli): register create-utensil + Makefile targets"
 ## Task 13: Admin UI placeholder hint
 
 **Files:**
-- Modify: `web/assets/js/app/admin-utensil-app.jsx` (line 187)
+- Modify: `web/assets/js/app/admin-utensil-app.jsx` (~line 177-185)
 
-- [ ] **Step 1: Update the photo input hint**
+The admin form was refactored after the spec was written. The Photo input
+is now a `<div className="field-row">` with a bare `<label>` + `<input>` —
+no `<Field>` wrapper, no `hint` prop. Update the placeholder string and add
+a small inline hint below the input.
 
-Open `web/assets/js/app/admin-utensil-app.jsx`. Find:
+- [ ] **Step 1: Update the photo input**
+
+Open `web/assets/js/app/admin-utensil-app.jsx`. Find this block (around
+lines 177-185):
 
 ```jsx
-<Field label="Photo" hint="Path under data/utensil-photos/.">
-  <input className="input mono" value={r.photo} onChange={(e) => update({ photo: e.target.value })} placeholder="data/utensil-photos/kadhai.jpg" />
-</Field>
+<div className="field-row">
+  <label>Photo path</label>
+  <input
+    value={r.photo}
+    onChange={(e) => update({ photo: e.target.value })}
+    placeholder="/assets/img/utensils/kadhai.jpg"
+    style={{ fontFamily: "var(--mono)", fontSize: 13 }}
+  />
+</div>
 ```
 
 Replace with:
 
 ```jsx
-<Field label="Photo" hint="Path under assets/utensils/<id>/. Set by `mfc create-utensil`.">
-  <input className="input mono" value={r.photo} onChange={(e) => update({ photo: e.target.value })} placeholder="assets/utensils/kadhai/kadhai.jpg" />
-</Field>
+<div className="field-row">
+  <label>Photo path</label>
+  <input
+    value={r.photo}
+    onChange={(e) => update({ photo: e.target.value })}
+    placeholder="assets/utensils/kadhai/kadhai.jpg"
+    style={{ fontFamily: "var(--mono)", fontSize: 13 }}
+  />
+  <div style={{ fontSize: 11, color: "var(--ink-muted)", fontStyle: "italic", fontFamily: "var(--serif)", marginTop: 4 }}>
+    Set automatically by <span style={{ fontFamily: "var(--mono)", fontStyle: "normal" }}>mfc create-utensil</span>; edit only if moving the file.
+  </div>
+</div>
 ```
+
+Note: bundle paths have **no leading slash** (`assets/utensils/...`), matching
+the spec's bundle format (Section: Bundle format) and the way recipe images
+are stored (`web/assets/recipes/<id>/hero.jpg` referenced as
+`assets/recipes/<id>/hero.jpg`). The previous placeholder had a leading
+slash + a different path — both fixed here.
 
 - [ ] **Step 2: Verify it loads**
 
