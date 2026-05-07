@@ -33,16 +33,25 @@ def _build_cmd(direction: str, only: list[str]) -> list[str]:
 def run_sync(context: OpExecutionContext, config: SyncConfig) -> str:
     cmd = _build_cmd(config.direction, config.only)
     context.log.info("running: " + " ".join(cmd))
-    proc = subprocess.run(cmd, capture_output=True, text=True)
-    if proc.stdout:
-        context.log.info(proc.stdout)
-    if proc.stderr:
-        context.log.warning(proc.stderr)
-    if proc.returncode != 0:
-        raise RuntimeError(
-            f"recipe-sync failed (exit {proc.returncode}): {proc.stderr.strip() or 'no stderr'}"
-        )
-    return proc.stdout
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,  # interleave so order is preserved
+        text=True,
+        bufsize=1,
+    )
+    lines: list[str] = []
+    assert proc.stdout is not None
+    for line in proc.stdout:
+        line = line.rstrip()
+        if line:
+            context.log.info(line)
+            lines.append(line)
+    rc = proc.wait()
+    if rc != 0:
+        tail = "\n".join(lines[-20:])
+        raise RuntimeError(f"recipe-sync failed (exit {rc}). Last output:\n{tail}")
+    return "\n".join(lines)
 
 
 @job

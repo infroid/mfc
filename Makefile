@@ -5,7 +5,7 @@
 #
 # Bootstrap (once):
 #   brew install uv         # or: curl -LsSf https://astral.sh/uv/install.sh | sh
-#   cp automation/.env.sample automation/.env  # then fill in keys
+#   cp .env.sample .env  # then fill in keys
 #   make sync
 #
 # Run `make` (or `make help`) to see all targets.

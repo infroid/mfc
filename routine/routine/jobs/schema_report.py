@@ -1,10 +1,8 @@
-"""Generate a structured schema report from the live Postgres database.
+"""Generate a styled HTML schema report of the public Postgres schema.
 
-This module currently exposes:
-  - Pydantic models (Column, ForeignKey, AggregateStat, Table, SchemaReport)
-  - collect_schema op: queries pg_catalog/information_schema/pg_policies via psycopg.
-
-render_html and the wired job arrive in Task 10.
+Two ops:
+  - collect_schema: queries pg_catalog/information_schema/pg_policies via psycopg.
+  - render_html:    renders templates/schema_report.html.j2 to artifacts/<run_id>/.
 """
 
 from datetime import datetime, timezone
