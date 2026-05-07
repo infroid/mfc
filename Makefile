@@ -112,10 +112,10 @@ serve: ## run the static site at http://localhost:8080 (serves web/)
 .PHONY: routine routine-sync routine-test
 
 routine: ## launch the routine dagster UI on :3000
-	uv --project routine run dagster dev
+	@uv --project routine run dagster dev
 
 routine-sync: ## sync the routine python venv (after editing routine/pyproject.toml)
-	uv --project routine sync
+	@uv --project routine sync
 
 routine-test: ## run the routine pytest suite
-	uv --project routine run pytest
+	@uv --project routine run pytest
