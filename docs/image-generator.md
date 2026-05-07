@@ -21,6 +21,18 @@ You are generating a consistent, accurate, high-end food photography image set f
   - Do not merge multiple steps into one image.
   - Do not make every step look like the finished dish.
 
+- Read the website design context before generating hero images:
+  - Inspect `design/tokens.css`, `design/styles/pages.css`, and
+    `design/styles/recipe.css` for the current visual system.
+  - Match the site's warm paper/cream backgrounds, ink borders, flat pop
+    shadows, orange/matcha/butter accents, serif editorial tone, and compact
+    rounded cards.
+  - Food photos should feel tactile, warm, appetizing, and premium against that
+    design system. Avoid cold stock-photo lighting, flat beige-on-beige food,
+    harsh commercial flash, and overly dark restaurant photography.
+  - Use recipe colors and ingredients to create a clear first-read color signal
+    that works inside cream cards and ink borders.
+
 - First create a continuity bible for the whole recipe:
   - Define one fixed kitchen environment used across all images.
   - Define one fixed surface, backdrop, lighting direction, camera angle family, lens feel, crop ratio, color temperature, and depth of field.
@@ -49,8 +61,9 @@ You are generating a consistent, accurate, high-end food photography image set f
   - When the image model can produce a high-resolution source large enough for
     every final crop, generate one master contact-sheet image for the whole
     recipe instead of separate independent images.
-  - The master image should contain one equal 16:9 panel for the hero and one
-    equal 16:9 panel for every `steps[]` item.
+  - The master image should contain one square 1:1 panel for the hero and one
+    equal 16:9 panel for every `steps[]` item. Use a layout that keeps every
+    panel large enough for the final asset.
   - Use a simple grid with no text, no labels, no numbers, no watermarks, and no
     decorative borders. Thin neutral gutters are allowed only if the crop script
     can remove them cleanly.
@@ -77,12 +90,33 @@ You are generating a consistent, accurate, high-end food photography image set f
   - No impossible food physics, floating items, duplicated tools, malformed cookware, or random extra ingredients.
 
 - Hero image requirements:
+  - Generate `hero.jpg` as a square 1:1 image, not a landscape image.
   - Show the finished dish exactly as the recipe should look when served.
   - Use the same environment, surface, light, props, and final serving vessel from the continuity bible.
   - Include only serving accompaniments that are explicitly mentioned in the recipe or highly standard for the dish.
   - Make the dish recognizable at a glance.
   - Hero must look more polished than step images, but still belong to the same shoot.
   - Hero must not include intermediate process tools unless they are intentionally styled in the background.
+  - Design for every website crop:
+    - Recipe detail hero: square `1:1`, large rounded frame, `object-fit: cover`,
+      save button overlays the top-right corner.
+    - Recipe search card: square `1:1`, top-left heart, top-right preference
+      badge, bottom-left cuisine pill, dark gradient along the bottom.
+    - Dashboard and marker thumbs: small square crops as small as `36x36`.
+    - Saved/featured cards: `4:3` cover crop.
+    - Admin/chef previews: `16:9` cover crop.
+  - Keep the finished dish or drink in the central 60% of the square so it
+    remains legible in tiny thumbnails.
+  - Keep all critical food detail out of overlay zones: top-left 14%,
+    top-right 18%, bottom-left 22%, and bottom 16% of the square.
+  - Make the central square, central 4:3 crop, and central 16:9 crop all look
+    intentional. Put non-critical props near the edges; never put the main
+    dish, garnish, pour, cut face, or hero glass only at an edge.
+  - Leave enough breathing room around the subject for the site's ink border,
+    rounded corners, hover zoom, and pop-shadow treatment.
+  - Use premium serviceware in the hero first. The hero is the sales image:
+    glasses, plates, bowls, boards, spoons, and serving vessels should be the
+    most attractive version used in the series while staying plausible.
 
 - Step image requirements:
   - Each step image must show only the state of the recipe at that exact step.
@@ -125,7 +159,7 @@ You are generating a consistent, accurate, high-end food photography image set f
 
 - Output naming:
   - Recipe data: `recipe.json`
-  - Hero: `hero.jpg`
+  - Hero: `hero.jpg` (square 1:1)
   - Steps:
     - `step-01-{short-step-slug}.jpg`
     - `step-02-{short-step-slug}.jpg`
@@ -148,16 +182,17 @@ You are generating a consistent, accurate, high-end food photography image set f
 
 - Prompt structure for each generated image:
   - `Use case: photorealistic-natural`
-  - `Asset type: MyFoodCraving recipe {hero|step} image, 16:9 landscape`
+  - `Asset type: MyFoodCraving recipe {hero|step} image, {square 1:1 hero|16:9 landscape step}`
   - `Recipe: {recipe.name}`
   - `Image: {hero|step number and title}`
+  - `Website crop targets: {hero detail 1:1, search card 1:1, dashboard thumb 1:1, saved card 4:3, admin preview 16:9}`
   - `Continuity bible: {fixed environment, lighting, surface, recurring cookware, recurring props}`
   - `Serviceware and utensils: {premium recurring glasses, bowls, plates, cookware, spoons, strainers, and serving vessels}`
   - `Scale lock: {fixed relative sizes for recurring objects and camera distance}`
   - `Subject: {exact visible food state}`
   - `Required visible items: {ingredients and utensils required for this asset}`
   - `Forbidden visible items: {future ingredients, future tools, unrelated props, finished dish if not final}`
-  - `Composition: {camera angle, crop, safe margins, focal subject}`
+  - `Composition: {camera angle, crop, safe margins, focal subject, overlay-safe zones}`
   - `Texture/doneness: {raw/cooked/reduced/charred/silky/etc.}`
   - `Negative constraints: {full negative prompt}`
 
@@ -165,8 +200,9 @@ You are generating a consistent, accurate, high-end food photography image set f
   - `Use case: photorealistic-natural`
   - `Asset type: MyFoodCraving complete recipe image master, crop source`
   - `Recipe: {recipe.name}`
-  - `Layout: one {rows}x{cols} contact sheet, equal 16:9 panels, no text or labels`
+  - `Layout: one contact sheet with one square 1:1 hero panel and one equal 16:9 panel per step, no text or labels`
   - `Panel map: panel 1 hero; panel 2 step 1; panel 3 step 2; ...`
+  - `Website crop targets for hero: detail 1:1, search card 1:1, dashboard thumb 1:1, saved card 4:3, admin preview 16:9`
   - `Continuity bible: {fixed environment, lighting, surface, recurring cookware, recurring props}`
   - `Serviceware and utensils: {premium recurring glasses, bowls, plates, cookware, spoons, strainers, and serving vessels}`
   - `Scale lock: {fixed relative sizes for recurring objects and camera distance}`
@@ -185,6 +221,10 @@ You are generating a consistent, accurate, high-end food photography image set f
   - No step shows ingredients or finishing elements too early.
   - No step accidentally looks like the hero unless it is the final serving step.
   - The hero accurately represents the finished recipe.
+  - The hero is square and remains strong in all site crops: 1:1, 4:3, 16:9,
+    and tiny square thumbnails.
+  - The hero's main subject does not sit under the search-card heart,
+    preference badge, cuisine pill, bottom gradient, or recipe-page save button.
   - The set looks like one coherent shoot.
   - The UI caption area does not cover critical food detail.
   - The image remains clear when cropped into a 16:9 card.
