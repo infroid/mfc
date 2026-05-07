@@ -147,6 +147,7 @@ from datetime import datetime, timezone
 from ..core import files, log
 from ..core.config import Config
 from ..ops import utensils as utensils_ops, utensil_images as utensil_images_ops
+from ..ops import image_processing as image_ops
 
 
 _DETAIL_KEYS = {
@@ -287,9 +288,8 @@ def run(args: argparse.Namespace, config: Config) -> int:
             )
             if chosen is not None:
                 final = bundle_dir / f"{utensil_id}.jpg"
-                shutil.copyfile(chosen, final)
-                # Upload to Storage so admin/recipe pages can render via a
-                # full URL regardless of the requesting page path.
+                image_ops.square_pad(chosen, final)
+                log.ok(f"squared image: {final.relative_to(config.repo_root)}")
                 if not args.no_db:
                     photo_rel = utensil_images_ops.upload_one_for_utensil(
                         config, utensil_id=utensil_id, local_path=final
