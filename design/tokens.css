@@ -1,0 +1,153 @@
+/* ============================================================
+   MyFoodCraving Design System
+   Colors + Typography Foundations
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* ---------- COLOR — Cream / paper backgrounds ---------- */
+  --cream:        #F7F1E3;  /* default body bg — warm parchment */
+  --cream-deep:   #EFE6CF;  /* recessed surfaces, hover-in cards */
+  --cream-soft:   #FBF7EC;  /* subtle inset (form fields, list rows) */
+  --paper:        #FFFCF3;  /* card surface — brightest cream */
+  --kraft:        #E8DCC0;  /* kraft accent / divider */
+
+  /* ---------- COLOR — Ink (foreground) ---------- */
+  --ink:          #1F1A14;  /* primary ink */
+  --ink-soft:     #3A332A;  /* body copy */
+  --ink-muted:    #6B6253;  /* secondary copy, mono labels */
+  --ink-faint:    #9A8F7C;  /* placeholder, hint */
+  --rule:         rgba(31, 26, 20, 0.14);
+  --rule-strong:  rgba(31, 26, 20, 0.28);
+
+  /* ---------- COLOR — Brand accents ---------- */
+  --orange:       #FF6D2E;  /* primary accent — flame / CTA */
+  --orange-deep:  #E2531A;  /* press / shadow under CTA */
+  --orange-soft:  rgba(255, 109, 46, 0.14);
+
+  --matcha:       #7A9C5A;  /* secondary — health / fresh */
+  --matcha-deep:  #5E7E40;
+  --matcha-soft:  rgba(122, 156, 90, 0.18);
+
+  --berry:        #C84B5A;  /* destructive / non-veg accent */
+  --butter:       #F4D67A;  /* warning / draft / featured */
+
+  /* ---------- TYPE — families ---------- */
+  --sans:  "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --hand:  "Caveat", "Reenie Beanie", cursive;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---------- TYPE — semantic sizes ---------- */
+  --fs-hero:    clamp(42px, 5.8vw, 76px);  /* H1 hero */
+  --fs-h1:      clamp(40px, 5.4vw, 72px);
+  --fs-h2:      clamp(26px, 3.2vw, 40px);
+  --fs-h3:      24px;
+  --fs-display: clamp(36px, 4.4vw, 56px);  /* serif italic step titles */
+  --fs-body:    16px;
+  --fs-lede:    18px;
+  --fs-small:   14px;
+  --fs-meta:    13px;
+  --fs-mono-sm: 11px;  /* eyebrow / label */
+  --fs-mono-xs: 10px;
+  --fs-hand:    22px;
+
+  /* ---------- SHAPE / SPACE ---------- */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+  --container: 1240px;
+
+  /* ---------- ELEVATION (signature flat shadow) ---------- */
+  --pop-sm:  3px 3px 0 var(--ink);
+  --pop-md:  4px 4px 0 var(--ink);
+  --pop-lg:  6px 6px 0 var(--ink);
+  --pop-xl:  8px 8px 0 var(--ink);
+  --pop-orange: 8px 8px 0 var(--orange);
+  --pop-matcha: 8px 8px 0 var(--matcha);
+}
+
+/* ============================================================
+   SEMANTIC TYPOGRAPHY
+   ============================================================ */
+.h1, h1 {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: var(--fs-h1);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+.h1 em, h1 em,
+.h2 em, h2 em,
+.display em {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--orange);
+}
+.h2, h2 {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.h3, h3 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.display {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-display);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-lede);
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+p, .body {
+  font-family: var(--sans);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.eyebrow, .label {
+  font-family: var(--mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.scribble {
+  font-family: var(--hand);
+  font-size: var(--fs-hand);
+  font-weight: 500;
+  color: var(--orange);
+  line-height: 1;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+code, .mono {
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  color: var(--ink);
+}
+::selection { background: var(--orange); color: var(--paper); }

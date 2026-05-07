@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Indian Recipes — MyFoodCraving</title>
+<meta name="description" content="Explore top 10 Indian recipes with guided step-by-step cooking, timers, and nutrition insights." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FF6D2E'/><text x='50%25' y='62%25' text-anchor='middle' fill='%23FFFCF3' font-family='Georgia,serif' font-style='italic' font-weight='400' font-size='22'>m</text></svg>" />
+
+<style>
+:root {
+  --cream: #F7F1E3;
+  --cream-deep: #EFE6CF;
+  --cream-soft: #FBF7EC;
+  --paper: #FFFCF3;
+  --ink: #1F1A14;
+  --ink-soft: #3A332A;
+  --ink-muted: #6B6253;
+  --ink-faint: #9A8F7C;
+  --rule: rgba(31, 26, 20, 0.14);
+  --rule-strong: rgba(31, 26, 20, 0.28);
+  --orange: #FF6D2E;
+  --orange-deep: #E2531A;
+  --orange-soft: rgba(255, 109, 46, 0.14);
+  --matcha: #7A9C5A;
+  --matcha-deep: #5E7E40;
+  --matcha-soft: rgba(122, 156, 90, 0.18);
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --hand: "Caveat", cursive;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --container: 1240px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--sans); font-size: 16px; line-height: 1.55; color: var(--ink); background: var(--cream); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; border: none; }
+::selection { background: var(--orange); color: var(--paper); }
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity: 0.22; pointer-events: none; mix-blend-mode: multiply; z-index: 1;
+}
+
+/* NAV (outer only — inner pieces in assets/js/lib/nav.jsx) */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 64px;
+  display: flex; align-items: center;
+  transition: background 250ms, border-color 250ms;
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(247, 241, 227, 0.88);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-bottom-color: var(--rule);
+}
+
+/* LAYOUT */
+.wrap { max-width: var(--container); margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+
+/* SEARCH HERO */
+.search-hero { padding: 112px 0 56px; position: relative; z-index: 2; text-align: center; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 999px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 24px;
+}
+.eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
+.hero-h1 {
+  font-family: var(--sans); font-weight: 500;
+  font-size: clamp(42px, 5.8vw, 76px); line-height: 1.0; letter-spacing: -0.035em;
+}
+.hero-h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--orange); }
+.hero-sub { margin-top: 16px; font-size: 18px; color: var(--ink-soft); }
+
+.search-box {
+  margin: 32px auto 0; max-width: 620px;
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: 999px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 8px 8px 24px;
+  box-shadow: 0 5px 0 var(--ink); transition: box-shadow 200ms, border-color 200ms;
+}
+.search-box:focus-within { border-color: var(--orange); box-shadow: 0 5px 0 var(--orange); }
+.search-input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink);
+}
+.search-input::placeholder { color: var(--ink-faint); }
+.search-clear {
+  background: none; padding: 4px 8px; font-size: 18px; color: var(--ink-muted); line-height: 1;
+  transition: color 150ms;
+}
+.search-clear:hover { color: var(--ink); }
+.search-btn {
+  flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--orange); color: var(--paper);
+  display: grid; place-items: center; font-size: 20px;
+  box-shadow: 0 3px 0 var(--orange-deep); transition: transform 150ms;
+}
+.search-btn:hover { transform: scale(1.06); }
+
+.filter-row { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.filter-chip {
+  padding: 6px 14px; border-radius: 999px; background: var(--paper);
+  border: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft);
+  cursor: pointer; transition: all 160ms;
+}
+.filter-chip:hover { background: var(--cream-deep); }
+.filter-chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* SOFT-PREF STRIP */
+.softpref-strip {
+  margin: 18px auto 0; max-width: 740px;
+  padding: 10px 14px 10px 18px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-pill);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.softpref-strip-eyebrow {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-muted); white-space: nowrap;
+}
+.softpref-strip-eyebrow::before { content: "// "; color: var(--orange); }
+.softpref-chips { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.softpref-chip {
+  padding: 3px 10px;
+  background: var(--cream-deep); color: var(--ink-soft);
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.softpref-chip.allergy { background: rgba(200,75,90,.14); color: var(--berry); }
+.softpref-chip-more {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--ink-faint); letter-spacing: 0.04em;
+}
+.softpref-strip-spacer { flex: 1; }
+.softpref-strip-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.04em; color: var(--ink-soft);
+  cursor: pointer; user-select: none;
+}
+.softpref-strip-toggle .track {
+  width: 32px; height: 18px; border-radius: 999px;
+  background: var(--rule-strong); position: relative;
+  transition: background 180ms;
+}
+.softpref-strip-toggle .track::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 14px; height: 14px;
+  background: var(--paper); border-radius: 50%;
+  box-shadow: 1px 1px 0 var(--ink);
+  transition: transform 180ms cubic-bezier(.2,.8,.2,1);
+}
+.softpref-strip-toggle.on .track { background: var(--orange); }
+.softpref-strip-toggle.on .track::after { transform: translateX(14px); }
+.softpref-strip-edit {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.04em; color: var(--orange-deep);
+  white-space: nowrap; padding: 4px 0;
+  transition: color 160ms;
+}
+.softpref-strip-edit::before { content: "↗ "; }
+.softpref-strip-edit:hover { color: var(--orange); }
+.softpref-strip-dismiss {
+  font-family: var(--mono); font-size: 16px; color: var(--ink-faint);
+  padding: 2px 6px; cursor: pointer; line-height: 1;
+  transition: color 160ms;
+}
+.softpref-strip-dismiss:hover { color: var(--ink); }
+
+/* MATCH / AVOID overlays on cards */
+.match-badge {
+  position: absolute; top: -7px; right: -7px;
+  padding: 3px 9px;
+  background: var(--matcha-deep); color: var(--paper);
+  border-radius: 999px;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  box-shadow: 1px 1px 0 var(--ink);
+  z-index: 4; white-space: nowrap;
+}
+.avoid-badge {
+  position: absolute; top: -7px; right: -7px;
+  padding: 3px 9px;
+  background: var(--berry); color: var(--paper);
+  border-radius: 999px;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  box-shadow: 1px 1px 0 var(--ink);
+  z-index: 4; white-space: nowrap;
+}
+.recipe-card { position: relative; }
+.recipe-card.avoid { opacity: 0.55; box-shadow: 3px 3px 0 var(--berry); border-color: var(--berry); }
+.recipe-card.avoid:hover { opacity: 0.82; box-shadow: 5px 5px 0 var(--berry); }
+/* SECTIONS */
+.section { padding: 56px 0; position: relative; z-index: 2; }
+.section + .section { padding-top: 0; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px; }
+.section-title { font-family: var(--sans); font-weight: 500; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.05; letter-spacing: -0.03em; }
+.section-title em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--orange); }
+.count-badge {
+  flex-shrink: 0; padding: 6px 14px; background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 999px;
+  font-family: var(--mono); font-size: 12px; color: var(--ink-muted); white-space: nowrap;
+}
+
+.tag-pill {
+  padding: 4px 10px; border-radius: 999px; font-size: 11.5px;
+  background: var(--cream-deep); color: var(--ink-soft); border: 1px solid var(--rule);
+  letter-spacing: -0.01em;
+}
+.tag-pill.veg    { background: var(--matcha-soft);    color: var(--matcha-deep); border-color: transparent; }
+.tag-pill.nonveg { background: var(--orange-soft);    color: var(--orange-deep); border-color: transparent; }
+
+/* RECIPE GRID — vertical cards, smaller square photos */
+.recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.recipe-card {
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: var(--r-md);
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms;
+  position: relative;
+}
+.recipe-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+.rc-img-wrap {
+  aspect-ratio: 1 / 1;
+  position: relative; overflow: hidden;
+  background: var(--cream-deep);
+  border-bottom: 1.5px solid var(--ink);
+}
+.rc-img-wrap.no-media { display: grid; place-items: center; }
+.rc-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(var(--media-scale, 1));
+  transition: transform 320ms cubic-bezier(.2,.8,.2,1);
+}
+.recipe-card:hover .rc-img { transform: translate(var(--media-x, 0), var(--media-y, 0)) scale(calc(var(--media-scale, 1) * 1.04)); }
+.rc-img-fallback { font-size: 56px; line-height: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.16)); }
+.rc-img-wrap::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(31,26,20,0.0) 60%, rgba(31,26,20,0.28) 100%);
+  pointer-events: none; z-index: 1;
+}
+.rc-cuisine {
+  position: absolute; bottom: 10px; left: 10px; z-index: 3;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 9px; background: rgba(255, 252, 243, 0.94); color: var(--ink); border-radius: 999px;
+}
+.rc-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; }
+.rc-name {
+  font-family: var(--serif); font-style: italic;
+  font-size: 19px; line-height: 1.18; letter-spacing: -0.005em;
+}
+.rc-meta {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-muted);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.rc-meta-sep { color: var(--rule-strong); }
+.rc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.rc-tag {
+  padding: 3px 8px; border-radius: 999px; font-size: 11px;
+  background: var(--cream-deep); color: var(--ink-muted); border: 1px solid var(--rule);
+}
+.rc-tag.veg    { background: var(--matcha-soft); color: var(--matcha-deep); border-color: transparent; }
+.rc-tag.nonveg { background: var(--orange-soft); color: var(--orange-deep); border-color: transparent; }
+
+/* NO RESULTS */
+.no-results { text-align: center; padding: 72px 24px; }
+.no-results .hand { font-family: var(--hand); font-size: 44px; color: var(--orange); display: block; margin-bottom: 10px; }
+.no-results p { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--ink-soft); }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--rule); margin: 0; position: relative; z-index: 2; }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--rule); padding: 32px 0; position: relative; z-index: 2; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--ink-muted); }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .recipe-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 640px) {
+  .recipe-grid { grid-template-columns: 1fr; }
+  .wrap { padding: 0 20px; }
+  .search-hero { padding-top: 96px; }
+  .section-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+</style>
+
+<meta name="mfc-supabase-url" content="https://fqjzhntqppbcwvqtjscb.supabase.co" />
+<meta name="mfc-supabase-publishable-key" content="sb_publishable_zuFopkEX_3zj-Gr7dJErtg_FBwMHiZL" />
+</head>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/lib/supabase.js"></script>
+<script src="assets/js/lib/auth.js"></script>
+<script src="assets/js/lib/db.js"></script>
+<script src="assets/js/lib/recipe-prefs.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<div id="root"></div>
+
+<script type="text/babel" src="assets/js/lib/user-menu.jsx" data-presets="react"></script>
+<script type="text/babel" src="assets/js/lib/nav.jsx" data-presets="react"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo, useRef } = React;
+
+
+const FILTERS = [
+  { label: "All", value: "" },
+  { label: "Vegetarian", value: "vegetarian" },
+  { label: "Non-veg", value: "non-veg" },
+  { label: "Easy", value: "easy" },
+  { label: "Under 30 min", value: "quick" },
+  { label: "South Indian", value: "south" },
+];
+
+function useScrolled() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", fn, { passive: true });
+    fn();
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  return scrolled;
+}
+
+function useAuth() {
+  const [user, setUser] = useState(window.MFC?.auth?.getUser() || null);
+  useEffect(() => {
+    const handler = (e) => setUser(e.detail.user);
+    window.addEventListener('mfc:auth-change', handler);
+    return () => window.removeEventListener('mfc:auth-change', handler);
+  }, []);
+  return user;
+}
+
+function Nav() {
+  const user = useAuth();
+  const MfcNav = window.MfcNav;
+  return MfcNav ? <MfcNav user={user} active="recipes" /> : null;
+}
+
+// Ingredient-class tags powering the recipe-prefs classifier — useful for
+// allergen flags and identity rules, but visual noise on a card. Hide them
+// from card chips; show the user-meaningful tags only.
+const HIDDEN_DISPLAY_TAGS = new Set([
+  'dairy', 'egg', 'nuts', 'soy', 'shellfish', 'gluten',
+  'pork', 'alcohol', 'seafood', 'fish',
+  'onion', 'garlic', 'root-veg',
+]);
+
+function displayableTags(tags, max) {
+  const filtered = (tags || []).filter((t) => !HIDDEN_DISPLAY_TAGS.has(t));
+  return typeof max === 'number' ? filtered.slice(0, max) : filtered;
+}
+
+function tagToneClass(label) {
+  if (label === "vegetarian" || label === "vegan" || label === "gluten-free" || label === "iron-rich" || label === "high-fiber" || label === "high-protein") return "veg";
+  if (label === "non-veg") return "nonveg";
+  return "";
+}
+
+function TagPill({ label }) {
+  return <span className={`tag-pill ${tagToneClass(label)}`}>{label}</span>;
+}
+
+function RcTag({ label }) {
+  return <span className={`rc-tag ${tagToneClass(label)}`}>{label}</span>;
+}
+
+const HEART_STYLE = `
+.rc-heart{position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:50%;
+  background:rgba(255,252,243,.94);border:1.5px solid var(--ink);display:grid;place-items:center;
+  cursor:pointer;font-size:15px;line-height:1;color:rgba(31,29,26,.5);
+  box-shadow:1.5px 1.5px 0 var(--ink);
+  transition:color 160ms,transform 160ms,box-shadow 160ms;z-index:5}
+.rc-heart:hover{color:var(--orange);transform:translate(-1px,-1px);box-shadow:2.5px 2.5px 0 var(--ink)}
+.rc-heart.saved{color:var(--orange)}
+`;
+
+function HeartButton({ recipeId }) {
+  const user = useAuth();
+  const [saved, setSaved] = useState(false);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!user) { setSaved(false); return; }
+    let cancelled = false;
+    window.MFC?.db?.getSaved().then(rows => {
+      if (cancelled) return;
+      setSaved((rows || []).some(r => r.recipe_id === recipeId));
+    });
+    return () => { cancelled = true; };
+  }, [user, recipeId]);
+  if (!user) return null;
+  async function toggle(e) {
+    e.preventDefault(); e.stopPropagation();
+    if (busy) return;
+    setBusy(true);
+    const next = !saved;
+    setSaved(next);
+    const ok = next
+      ? await window.MFC?.db?.saveRecipe(recipeId)
+      : await window.MFC?.db?.unsaveRecipe(recipeId);
+    if (!ok) setSaved(!next);
+    setBusy(false);
+  }
+  return (
+    <button className={`rc-heart ${saved ? 'saved' : ''}`} aria-label={saved ? 'Unsave' : 'Save'} onClick={toggle}>
+      {saved ? '♥' : '♡'}
+    </button>
+  );
+}
+
+function RecipeCard({ recipe, classification }) {
+  const media = recipe.media || {};
+  const hero = media.hero || {};
+  const heroSrc = hero.src || "";
+  const heroFit = hero.fit || {};
+  const emoji = media.emoji || "🍽️";
+  const isAvoid = classification && classification.violations.length > 0;
+  const isMatch = !isAvoid && classification && classification.score > 0;
+  const violationReasons = classification ? classification.violations.map(v => v.reason) : [];
+  const tooltip = violationReasons.length > 1 ? violationReasons.join(' · ') : undefined;
+  const visibleTags = displayableTags(recipe.tags, 3);
+  return (
+    <a
+      href={`recipe.html?id=${recipe.id}`}
+      className={"recipe-card" + (isAvoid ? " avoid" : "")}
+      title={tooltip}
+    >
+      {isAvoid && <span className="avoid-badge">{violationReasons[0]}</span>}
+      {isMatch && <span className="match-badge">{classification.score} of your prefs</span>}
+      <div className={"rc-img-wrap " + (heroSrc ? "" : "no-media")} style={!heroSrc ? { background: recipe.colorSoft } : undefined}>
+        {heroSrc ? (
+          <img
+            className="rc-img"
+            src={heroSrc}
+            alt={hero.alt || recipe.name}
+            loading="lazy"
+            style={{
+              "--media-scale": heroFit.scale || 1,
+              "--media-x": heroFit.x || "0%",
+              "--media-y": heroFit.y || "0%",
+              objectPosition: heroFit.position || "50% 50%"
+            }}
+          />
+        ) : (
+          <div className="rc-img-fallback">{emoji}</div>
+        )}
+        <HeartButton recipeId={recipe.id} />
+        <div className="rc-cuisine">{recipe.cuisine}</div>
+      </div>
+      <div className="rc-body">
+        <div className="rc-name">{recipe.name}</div>
+        <div className="rc-meta">
+          <span>{recipe.totalMinutes} min</span>
+          <span className="rc-meta-sep">·</span>
+          <span>{recipe.difficulty}</span>
+        </div>
+        {visibleTags.length > 0 && (
+          <div className="rc-tags">
+            {visibleTags.map(t => <RcTag key={t} label={t} />)}
+          </div>
+        )}
+      </div>
+    </a>
+  );
+}
+
+function SoftPrefStrip({ profile, respect, onToggle, onDismiss }) {
+  const tags = [
+    ...(profile.diet_tags || []),
+    ...(profile.allergies || []),
+    ...(profile.goals || []),
+  ];
+  if (tags.length === 0) return null;
+  const visible = tags.slice(0, 2);
+  const more = tags.length - visible.length;
+  const allergSet = new Set(profile.allergies || []);
+  const labelFor = (window.MFC?.tagTaxonomy?.labelFor) || ((t) => t.charAt(0).toUpperCase() + t.slice(1));
+  return (
+    <div className="softpref-strip" role="region" aria-label="Soft-preference filter">
+      <span className="softpref-strip-eyebrow">soft-filtering by your prefs</span>
+      <div className="softpref-chips">
+        {visible.map((t) => (
+          <span key={t} className={"softpref-chip" + (allergSet.has(t) ? " allergy" : "")}>
+            {labelFor(t)}
+          </span>
+        ))}
+        {more > 0 && <span className="softpref-chip-more">+{more} more</span>}
+      </div>
+      <span className="softpref-strip-spacer" />
+      <button
+        type="button"
+        className={"softpref-strip-toggle" + (respect ? " on" : "")}
+        onClick={() => onToggle(!respect)}
+        aria-pressed={respect}
+        title="Toggle whether identity prefs sort and dim recipes"
+      >
+        <span className="track" aria-hidden="true" />
+        Respect my prefs
+      </button>
+      <a className="softpref-strip-edit" href="my/profile.html">edit</a>
+      <button
+        type="button"
+        className="softpref-strip-dismiss"
+        onClick={onDismiss}
+        title="Dismiss for this session"
+        aria-label="Dismiss soft-pref strip"
+      >×</button>
+    </div>
+  );
+}
+
+function App() {
+  const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || "");
+  const [filter, setFilter] = useState(() => new URLSearchParams(window.location.search).get('filter') || "");
+  const [recipes, setRecipes] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const [respect, setRespect] = useState(() => sessionStorage.getItem('mfc_respect_prefs') !== '0');
+  const [stripDismissed, setStripDismissed] = useState(() => sessionStorage.getItem('mfc_pref_strip_dismissed') === '1');
+  const user = useAuth();
+  const inputRef = useRef(null);
+
+  // Sync search state to URL so results are shareable / deep-linkable
+  useEffect(() => {
+    const p = new URLSearchParams();
+    if (query.trim()) p.set('q', query.trim());
+    if (filter) p.set('filter', filter);
+    const qs = p.toString();
+    window.history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : ''));
+  }, [query, filter]);
+
+  // Fetch recipe list from Supabase. Catalog is the single source of truth.
+  useEffect(() => {
+    window.MFC.db.getRecipes()
+      .then(data => { if (data) setRecipes(data); })
+      .catch(() => {});
+  }, []);
+
+  // Load (and refresh) the user's soft-pref profile.
+  useEffect(() => {
+    if (!user) { setProfile(null); return; }
+    let cancelled = false;
+    const load = () => window.MFC.db.getUserProfile().then(p => { if (!cancelled) setProfile(p); });
+    load();
+    const onChange = () => load();
+    window.addEventListener('mfc:profile-change', onChange);
+    return () => { cancelled = true; window.removeEventListener('mfc:profile-change', onChange); };
+  }, [user?.id]);
+
+  // Persist master toggle for the session.
+  useEffect(() => {
+    sessionStorage.setItem('mfc_respect_prefs', respect ? '1' : '0');
+  }, [respect]);
+
+  // Classify every recipe once per (recipes, profile) pair.
+  const classifyMap = useMemo(() => {
+    const m = new Map();
+    if (!profile || !window.MFC?.recipePrefs) return m;
+    for (const r of recipes) m.set(r.id, window.MFC.recipePrefs.classify(r, profile));
+    return m;
+  }, [recipes, profile]);
+
+  // When the master toggle is OFF, identity violations are demoted but allergy
+  // violations are still rendered (safety, not preference).
+  function effective(c) {
+    if (!c) return null;
+    if (respect) return c;
+    return { score: c.score, violations: c.violations.filter(v => v.kind === 'allergy') };
+  }
+
+  // Sort: avoid-state recipes last; among non-avoid, score desc.
+  function sortByPrefs(list) {
+    if (!profile) return list;
+    return [...list].sort((a, b) => {
+      const ea = effective(classifyMap.get(a.id)) || { score: 0, violations: [] };
+      const eb = effective(classifyMap.get(b.id)) || { score: 0, violations: [] };
+      const va = ea.violations.length > 0 ? 1 : 0;
+      const vb = eb.violations.length > 0 ? 1 : 0;
+      if (va !== vb) return va - vb;
+      return eb.score - ea.score;
+    });
+  }
+
+  const filtered = useMemo(() => {
+    let list = recipes;
+    if (filter === "vegetarian") list = list.filter(r => r.tags.includes("vegetarian") || r.tags.includes("vegan"));
+    else if (filter === "non-veg") list = list.filter(r => r.tags.includes("non-veg"));
+    else if (filter === "easy") list = list.filter(r => r.difficulty === "Easy");
+    else if (filter === "quick") list = list.filter(r => r.totalMinutes <= 30);
+    else if (filter === "south") list = list.filter(r => r.cuisine === "South Indian");
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      list = list.filter(r =>
+        r.name.toLowerCase().includes(q) ||
+        r.cuisine.toLowerCase().includes(q) ||
+        r.tagline.toLowerCase().includes(q) ||
+        r.tags.some(t => t.toLowerCase().includes(q))
+      );
+    }
+    return list;
+  }, [query, filter, recipes]);
+
+  const searching = query.trim() !== "" || filter !== "";
+  const sortedFiltered  = useMemo(() => sortByPrefs(filtered),                       [filtered, profile, respect, classifyMap]);
+
+  const hasAnyTags = profile && (
+    (profile.diet_tags?.length > 0) ||
+    (profile.allergies?.length > 0) ||
+    (profile.goals?.length > 0)
+  );
+  const showStrip = !!user && !!profile && hasAnyTags && !stripDismissed;
+
+  return (
+    <>
+      <style>{HEART_STYLE}</style>
+      <Nav />
+
+      <section className="search-hero">
+        <div className="wrap">
+          <div className="hero-eyebrow"><span className="eyebrow-dot" /> 10 recipes · guided cooking · nutrition insights</div>
+          <h1 className="hero-h1">Top 10 <em>Indian</em> Recipes</h1>
+          <p className="hero-sub">Find what you're craving. Cook it with confidence.</p>
+
+          <div className="search-box">
+            <input
+              ref={inputRef}
+              className="search-input"
+              placeholder="biryani, paneer, dosa…"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+            />
+            {query && (
+              <button className="search-clear" onClick={() => { setQuery(""); inputRef.current?.focus(); }}>✕</button>
+            )}
+            <button className="search-btn" aria-label="Search">↵</button>
+          </div>
+
+          <div className="filter-row">
+            {FILTERS.map(f => (
+              <button
+                key={f.value}
+                className={`filter-chip ${filter === f.value ? "active" : ""}`}
+                onClick={() => setFilter(f.value)}
+              >{f.label}</button>
+            ))}
+          </div>
+
+          {showStrip && (
+            <SoftPrefStrip
+              profile={profile}
+              respect={respect}
+              onToggle={setRespect}
+              onDismiss={() => {
+                sessionStorage.setItem('mfc_pref_strip_dismissed', '1');
+                setStripDismissed(true);
+              }}
+            />
+          )}
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      <section className="section">
+        <div className="wrap">
+          <div className="section-head">
+            <div>
+              <div className="section-label">// all recipes</div>
+              <h2 className="section-title">
+                {searching ? "Search results" : "All <em>10</em> recipes".replace("All <em>10</em> recipes", "")}
+                {!searching && <><em>All</em> 10 recipes</>}
+                {searching && <><em>Results</em></>}
+              </h2>
+            </div>
+            <span className="count-badge">{filtered.length} of {recipes.length}</span>
+          </div>
+
+          {sortedFiltered.length > 0 ? (
+            <div className="recipe-grid">
+              {sortedFiltered.map(r => (
+                <RecipeCard
+                  key={r.id}
+                  recipe={r}
+                  classification={effective(classifyMap.get(r.id))}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="no-results">
+              <span className="hand">¯\_(ツ)_/¯</span>
+              <p>No recipes matched "{query}". Try something else.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="wrap footer-inner">
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span className="brand-mark" style={{ width: 28, height: 28, fontSize: 18 }}>m</span>
+            <b style={{ fontWeight: 600 }}>MyFoodCraving</b>
+          </div>
+          <span className="footer-copy">© 2026 · Infroid Technologies · cook well, live well</span>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
+<script type="text/babel" src="assets/js/lib/auth-modal.jsx" data-presets="react"></script>
+
+</body>
+</html>

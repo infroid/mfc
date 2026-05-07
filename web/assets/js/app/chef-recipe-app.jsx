@@ -1,7 +1,18 @@
-// Recipe editor — create or update one recipe. Loads ?id=<slug> for edit, or
-// ?new=1 for a blank draft. Library pickers (ingredients/utensils) read from
-// the public catalog. Save writes to recipes + child tables under admin RLS.
-const { useState, useEffect, useMemo } = React;
+// Chef recipe editor — WYSIWYG. Renders cards that mirror the public recipe
+// page; each card is inline-editable. Loads ?id=<slug> for edit, or no id for
+// a blank draft. Library pickers (ingredients/utensils) read from the public
+// catalog. Save writes to recipes + child tables under chef/admin RLS.
+const { useState, useEffect, useMemo, useRef } = React;
+
+const CUISINES = ["North Indian","South Indian","Italian","Mexican","Thai","Japanese","Mediterranean","Other"];
+const UNITS = ["g", "kg", "ml", "l", "teaspoon", "tablespoon"];
+
+const UNIT_ALIASES = { tsp: "teaspoon", tbsp: "tablespoon" };
+function normalizeUnit(u) {
+  if (!u) return UNITS[0];
+  if (UNITS.includes(u)) return u;
+  return UNIT_ALIASES[u] || UNITS[0];
+}
 
 const BLANK = {
   id: "",
@@ -9,17 +20,13 @@ const BLANK = {
   short_tagline: "",
   tagline: "",
   cuisine: "North Indian",
-  category: "Main",
   difficulty: "Easy",
   servings: 4,
   total_minutes: 30,
-  prep_minutes: 10,
-  cook_minutes: 20,
-  description: "",
   hero_image: "",
   meal_types: [],
   steps: [],
-  ingredients: [], // { ingredient_id, amount, unit }
+  ingredients: [], // { ingredient_id, group_name, amount, unit }
   utensils: [],    // { utensil_id, essential }
   tags: [],
   health: [],
@@ -47,10 +54,7 @@ function fromDb(row) {
     }));
   const utensils = (row.recipe_utensils || [])
     .sort((a, b) => a.sort_order - b.sort_order)
-    .map((u) => ({
-      utensil_id: u.utensil_id,
-      essential: !!u.essential,
-    }));
+    .map((u) => ({ utensil_id: u.utensil_id, essential: !!u.essential }));
   const tags = (row.recipe_tags || []).map((t) => t.tag);
   const health = (row.recipe_health_facts || [])
     .sort((a, b) => a.sort_order - b.sort_order)
@@ -61,13 +65,9 @@ function fromDb(row) {
     short_tagline: row.short_tagline || "",
     tagline: row.tagline || "",
     cuisine: row.cuisine,
-    category: "Main",
     difficulty: row.difficulty,
     servings: row.servings,
     total_minutes: row.total_minutes,
-    prep_minutes: 0,
-    cook_minutes: row.total_minutes,
-    description: row.tagline || "",
     hero_image: row.media?.image || "",
     created_by: row.created_by || null,
     meal_types: row.meal_types || [],
@@ -76,20 +76,19 @@ function fromDb(row) {
 }
 
 function toDb(r) {
-  const recipe = {
-    name: r.name,
-    tagline: r.tagline || null,
-    short_tagline: r.short_tagline || null,
-    cuisine: r.cuisine,
-    difficulty: r.difficulty,
-    servings: parseInt(r.servings, 10) || 0,
-    total_minutes: parseInt(r.total_minutes, 10) || 0,
-    media: { image: r.hero_image || null },
-    meal_types: r.meal_types || [],
-  };
   return {
     id: r.id,
-    recipe,
+    recipe: {
+      name: r.name,
+      tagline: r.tagline || null,
+      short_tagline: r.short_tagline || null,
+      cuisine: r.cuisine,
+      difficulty: r.difficulty,
+      servings: parseInt(r.servings, 10) || 0,
+      total_minutes: parseInt(r.total_minutes, 10) || 0,
+      media: { image: r.hero_image || null },
+      meal_types: r.meal_types || [],
+    },
     ingredients: r.ingredients.map((ing) => ({
       ingredient_id: ing.ingredient_id,
       group_name: ing.group_name || null,
@@ -105,32 +104,460 @@ function toDb(r) {
       media_caption: s.media_caption || null,
       media_src: s.media_src || null,
     })),
-    utensils: r.utensils.map((u) => ({
-      utensil_id: u.utensil_id,
-      essential: !!u.essential,
-    })),
+    utensils: r.utensils.map((u) => ({ utensil_id: u.utensil_id, essential: !!u.essential })),
     tags: r.tags,
     health: r.health.filter((h) => (h || "").trim()),
   };
 }
 
+// ============================================================
+// PRIMITIVES
+// ============================================================
+function CompletionRing({ pct = 0, size = 56, stroke = 6 }) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const off = c * (1 - Math.max(0, Math.min(100, pct)) / 100);
+  const tone = pct >= 80 ? "high" : pct >= 50 ? "mid" : "low";
+  return (
+    <div className="completion-ring" style={{ width: size, height: size }}>
+      <svg width={size} height={size}>
+        <circle className="track" cx={size/2} cy={size/2} r={r} style={{ strokeWidth: stroke }} />
+        <circle className={"meter " + tone} cx={size/2} cy={size/2} r={r}
+          style={{ strokeWidth: stroke }} strokeDasharray={c} strokeDashoffset={off} />
+      </svg>
+      <span className="pct" style={{ fontSize: Math.max(9, Math.round(size * 0.30)) + "px" }}>
+        {pct === 100 ? "✓" : pct + "%"}
+      </span>
+    </div>
+  );
+}
+
+function EditPill({ children = "Edit", onClick, required = false, empty = false, danger = false, style }) {
+  let cls = "edit-pill";
+  if (required && empty) cls += " required-empty";
+  if (danger) cls += " danger";
+  return (
+    <button type="button" className={cls} onClick={onClick} style={style}>
+      <span className="pencil">✎</span>{children}
+    </button>
+  );
+}
+
+function useToast() {
+  const [msg, setMsg] = useState(null);
+  useEffect(() => {
+    if (!msg) return;
+    const t = setTimeout(() => setMsg(null), 1800);
+    return () => clearTimeout(t);
+  }, [msg]);
+  return [msg, setMsg];
+}
+
+// Shared modal scaffold
+function CeModal({ title, onClose, footer, wide, children }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  return (
+    <div className="ce-modal-bd" onClick={onClose}>
+      <div className={"ce-modal" + (wide ? " wide" : "")} onClick={(e) => e.stopPropagation()}>
+        <div className="ce-modal-head">
+          <h3>{title}</h3>
+          <button className="ce-modal-close" onClick={onClose} aria-label="Close">×</button>
+        </div>
+        <div className="ce-modal-body">{children}</div>
+        {footer && <div className="ce-modal-foot">{footer}</div>}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// HERO IMAGE CONTROL (preserved)
+// ============================================================
+function HeroImageControl({ recipeId, value, onChange, onUploaded }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(null);
+  const inputRef = useRef(null);
+
+  async function onFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!recipeId) {
+      setErr("Save the recipe first (needs an id) before uploading.");
+      e.target.value = ""; return;
+    }
+    setBusy(true); setErr(null);
+    try {
+      const url = await window.MFC.imageUpload.upload(file, {
+        recipeId, filename: "hero.jpg", kind: "hero",
+      });
+      const v = `${url}?v=${Date.now()}`;
+      onChange(v);
+      onUploaded?.();
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); e.target.value = ""; }
+  }
+
+  async function removeHero() {
+    if (!value || !recipeId) return;
+    if (!confirm("Remove hero image? This deletes hero.jpg from Storage.")) return;
+    setBusy(true); setErr(null);
+    try {
+      await window.MFC.imageUpload.remove([`${recipeId}/hero.jpg`]);
+      onChange(null);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); }
+  }
+
+  return (
+    <>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        style={{ display: "none" }}
+        onChange={onFile}
+      />
+      {value ? (
+        <>
+          <img src={value} alt="hero" />
+          <EditPill style={{ position: "absolute", top: 12, right: 12, background: "rgba(255,252,243,0.94)" }}
+            onClick={() => inputRef.current?.click()}>
+            {busy ? "Uploading…" : "Replace"}
+          </EditPill>
+          <EditPill danger style={{ position: "absolute", top: 12, right: 90, background: "rgba(255,252,243,0.94)" }}
+            onClick={removeHero}>Remove</EditPill>
+        </>
+      ) : (
+        <div className="ce-hero-empty">
+          <div className="glyph">🖼</div>
+          <div className="label">No hero image yet</div>
+          <button type="button" className="btn-sm primary" onClick={() => inputRef.current?.click()} disabled={busy || !recipeId}>
+            {busy ? "Uploading…" : recipeId ? "Upload hero image" : "Save first to enable upload"}
+          </button>
+          {err && <div style={{ color: "var(--berry)", fontSize: 11, fontFamily: "var(--mono)" }}>{err}</div>}
+        </div>
+      )}
+    </>
+  );
+}
+
+// ============================================================
+// STEP IMAGE CONTROL (preserved, used inside step-extras)
+// ============================================================
+function StepImageControl({ recipeId, sortOrder, value, onChange }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr]   = useState(null);
+  const inputRef = useRef(null);
+
+  async function onFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!recipeId) { setErr("Save first."); e.target.value = ""; return; }
+    setBusy(true); setErr(null);
+    try {
+      const url = await window.MFC.imageUpload.upload(file, {
+        recipeId, filename: `step-${sortOrder}.jpg`, kind: "step",
+      });
+      onChange(`${url}?v=${Date.now()}`);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); e.target.value = ""; }
+  }
+
+  async function removeImg() {
+    if (!value || !recipeId) return;
+    if (!confirm(`Remove image for step ${sortOrder}?`)) return;
+    setBusy(true); setErr(null);
+    try {
+      await window.MFC.imageUpload.remove([`${recipeId}/step-${sortOrder}.jpg`]);
+      onChange(null);
+    } catch (x) { setErr(x?.message || String(x)); }
+    finally     { setBusy(false); }
+  }
+
+  return (
+    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+      <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" style={{ display: "none" }} onChange={onFile} />
+      {value ? (
+        <img src={value} alt={`step ${sortOrder}`} style={{ width: 70, height: 50, objectFit: "cover", borderRadius: 6, border: "1px solid var(--rule)" }} />
+      ) : (
+        <span style={{ fontFamily: "var(--mono)", fontSize: 10.5, color: "var(--ink-faint)", letterSpacing: "0.06em", textTransform: "uppercase" }}>no img</span>
+      )}
+      <button type="button" className="btn-sm" onClick={() => inputRef.current?.click()} disabled={busy}>
+        {busy ? "…" : value ? "Replace" : "Upload"}
+      </button>
+      {value && <button type="button" className="btn-sm danger" onClick={removeImg} disabled={busy}>Remove</button>}
+      {err && <span style={{ fontSize: 11, color: "var(--berry)" }}>{err}</span>}
+    </div>
+  );
+}
+
+// ============================================================
+// META MODAL — cuisine, difficulty, time, servings, meal types
+// ============================================================
+function MetaModal({ r, update, slugTaken, isNew, onClose }) {
+  return (
+    <CeModal title="Recipe details" onClose={onClose}
+      footer={<button className="btn-sm primary" onClick={onClose}>Done</button>}>
+      <div className="field-row">
+        <label>Name</label>
+        <input value={r.name} onChange={(e) => update({ name: e.target.value })} placeholder="e.g. Paneer Butter Masala" autoFocus />
+      </div>
+      {isNew && r.name && (
+        <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, color: "var(--ink-muted)", padding: "4px 0 8px" }}>
+          id will be: <span style={{ color: "var(--orange)" }}>{window.slugify(r.name)}</span>
+        </div>
+      )}
+      {slugTaken && (
+        <div className="slug-warning" style={{ marginBottom: 10 }}>
+          A recipe with the slug <code>{window.slugify(r.name)}</code> already exists. Choose a different name.
+        </div>
+      )}
+      <div className="field-row">
+        <label>Short tagline</label>
+        <input value={r.short_tagline} onChange={(e) => update({ short_tagline: e.target.value })} placeholder="creamy · tomato · 35 min" />
+      </div>
+      <div className="field-row">
+        <label>Listing tagline</label>
+        <input value={r.tagline} onChange={(e) => update({ tagline: e.target.value })} placeholder="One short, evocative line" />
+      </div>
+      <div className="field-row">
+        <label>Cuisine</label>
+        <select value={r.cuisine} onChange={(e) => update({ cuisine: e.target.value })}>
+          {CUISINES.map((c) => <option key={c}>{c}</option>)}
+        </select>
+      </div>
+      <div className="field-row">
+        <label>Difficulty</label>
+        <select value={r.difficulty} onChange={(e) => update({ difficulty: e.target.value })}>
+          <option>Easy</option><option>Medium</option><option>Hard</option>
+        </select>
+      </div>
+      <div className="field-row">
+        <label>Total time</label>
+        <input type="number" min="0" value={r.total_minutes} onChange={(e) => update({ total_minutes: e.target.value })} />
+      </div>
+      <div className="field-row">
+        <label>Servings</label>
+        <input type="number" min="1" value={r.servings} onChange={(e) => update({ servings: e.target.value })} />
+      </div>
+      <div className="field-row">
+        <label>Meal types</label>
+        <input
+          value={(r.meal_types || []).join(", ")}
+          onChange={(e) => update({ meal_types: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })}
+          placeholder="lunch, dinner"
+        />
+      </div>
+    </CeModal>
+  );
+}
+
+// ============================================================
+// LIBRARY PICKER MODAL
+// ============================================================
+function PickerModal({ kind, library, picked, onPick, onClose, manageHref, manageLabel }) {
+  const [q, setQ] = useState("");
+  const idKey = kind === "ing" ? "ingredient_id" : "utensil_id";
+  const isPicked = (id) => picked.some((p) => p[idKey] === id);
+  const filtered = useMemo(() => {
+    const qq = q.toLowerCase().trim();
+    return library.filter((x) => !qq || x.name.toLowerCase().includes(qq) || (x.category || "").toLowerCase().includes(qq));
+  }, [q, library]);
+
+  return (
+    <CeModal title={kind === "ing" ? "Add ingredient" : "Add utensil"} onClose={onClose}>
+      <div className="ce-picker-search">
+        <span className="glass">⌕</span>
+        <input
+          autoFocus
+          placeholder={`Search ${kind === "ing" ? "ingredients" : "utensils"} library…`}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+        <span className="count">{filtered.length} of {library.length}</span>
+      </div>
+
+      <div className="ce-picker-list">
+        {library.length === 0 ? (
+          <div style={{ padding: "24px 8px", textAlign: "center", color: "var(--ink-muted)" }}>
+            <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 17, marginBottom: 6 }}>The library is empty</div>
+            <div style={{ fontSize: 12 }}>Add some {kind === "ing" ? "ingredients" : "utensils"} first. <a href={manageHref} style={{ color: "var(--orange)", textDecoration: "underline" }}>{manageLabel}</a></div>
+          </div>
+        ) : filtered.length === 0 ? (
+          <div style={{ padding: "24px 8px", textAlign: "center", color: "var(--ink-muted)" }}>
+            <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 17, marginBottom: 6 }}>Nothing matches "{q}"</div>
+            <div style={{ fontSize: 12 }}>Items can only be added from the library. <a href={manageHref} style={{ color: "var(--orange)", textDecoration: "underline" }}>{manageLabel}</a></div>
+          </div>
+        ) : filtered.map((item) => {
+          const used = isPicked(item.id);
+          return (
+            <div key={item.id} className={"ce-picker-row" + (used ? " disabled" : "")}
+              onClick={() => !used && onPick(item)}>
+              <div className={"thumb " + (kind === "ing" ? "matcha" : "cream")} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="name">{item.name}</div>
+                <div className="cat">{item.category || "—"}</div>
+              </div>
+              <span className={"pill " + (used ? "added" : "add")}>{used ? "✓ added" : "+ add"}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="ce-picker-foot">
+        Library only · <a href={manageHref}>{manageLabel} →</a>
+      </div>
+    </CeModal>
+  );
+}
+
+// ============================================================
+// TAGS MODAL
+// ============================================================
+function TagsModal({ tags, onChange, onClose }) {
+  const [draft, setDraft] = useState("");
+  function commit() { const v = draft.trim(); if (v && !tags.includes(v)) { onChange([...tags, v]); } setDraft(""); }
+  return (
+    <CeModal title="Tags" onClose={onClose}
+      footer={<button className="btn-sm primary" onClick={onClose}>Done</button>}>
+      <p style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-muted)", marginBottom: 12 }}>
+        Used by search and recommendations. Press Enter or comma to add.
+      </p>
+      <div className="ce-tags-row" style={{ marginBottom: 12 }}>
+        {tags.map((t, i) => (
+          <span key={i} className="ce-tag-chip">
+            {t} <span style={{ marginLeft: 6, cursor: "pointer", color: "var(--ink-muted)" }}
+              onClick={() => onChange(tags.filter((_, k) => k !== i))}>×</span>
+          </span>
+        ))}
+      </div>
+      <input
+        autoFocus
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === ",") { e.preventDefault(); commit(); }
+          else if (e.key === "Backspace" && !draft && tags.length) onChange(tags.slice(0, -1));
+        }}
+        onBlur={commit}
+        placeholder="Add tag…"
+        style={{ width: "100%", padding: "10px 14px", border: "1px solid var(--rule)", borderRadius: 8, background: "var(--cream-soft)", outline: "none", fontSize: 14 }}
+      />
+    </CeModal>
+  );
+}
+
+// ============================================================
+// UTENSIL DETAIL MODAL (matches the design's read-only view)
+// ============================================================
+function UtensilDetailModal({ utensil, picked, onToggleEssential, onClose }) {
+  const [buyLinks, setBuyLinks] = useState(null);
+  useEffect(() => {
+    if (!utensil?.id) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await window.MFC.supabase
+          .from("utensil_buy_links")
+          .select("store,url,price,affiliate_tag,sort_order")
+          .eq("utensil_id", utensil.id)
+          .order("sort_order", { ascending: true });
+        if (!cancelled) setBuyLinks(data || []);
+      } catch { if (!cancelled) setBuyLinks([]); }
+    })();
+    return () => { cancelled = true; };
+  }, [utensil?.id]);
+
+  if (!utensil) return null;
+  const u = utensil;
+  const specs = u.specs || {};
+  const photo = u.photo;
+  const buy = (buyLinks || []).filter((b) => b && b.url);
+
+  return (
+    <div className="ce-modal-bd" onClick={onClose}>
+      <div className="ce-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="ce-ut-hero">
+          <span className="ce-ut-cat-pill">{u.category || "tool"}</span>
+          {photo ? <img src={photo} alt="" /> : <span className="glyph">🛠</span>}
+        </div>
+        <button className="ce-modal-close" style={{ position: "absolute", top: 12, right: 12, zIndex: 2 }}
+          onClick={onClose} aria-label="Close">×</button>
+        <div className="ce-ut-detail">
+          <h3>{u.name}</h3>
+          {u.tagline && <p className="ce-ut-tag">"{u.tagline}"</p>}
+          {(specs.material || specs.size || specs.weight) && (
+            <div className="ce-ut-specs">
+              {specs.material && <div className="ce-ut-spec"><span className="lbl">Material</span><span className="val">{specs.material}</span></div>}
+              {specs.size     && <div className="ce-ut-spec"><span className="lbl">Size</span><span className="val">{specs.size}</span></div>}
+              {specs.weight   && <div className="ce-ut-spec"><span className="lbl">Weight</span><span className="val">{specs.weight}</span></div>}
+            </div>
+          )}
+          {u.care_tip && (
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 10, color: "var(--ink-muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>// care</div>
+              <p style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 15, color: "var(--ink-soft)", lineHeight: 1.4 }}>{u.care_tip}</p>
+            </div>
+          )}
+          {buy.length > 0 && (
+            <div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 10, color: "var(--ink-muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>// where to buy</div>
+              <div>
+                {buy.map((b, i) => (
+                  <a key={i} href={b.url} target="_blank" rel="noopener" className="ce-ut-buy-link">
+                    <span className="name">{b.store || "Buy"}</span>
+                    <span className="url">{(b.url || "").replace(/^https?:\/\//, "").split("/")[0]}</span>
+                    {b.price && <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-muted)" }}>{b.price}</span>}
+                    <span className="arrow">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+          {picked && (
+            <div style={{ marginTop: 14, padding: "10px 12px", background: "var(--cream-soft)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-muted)", letterSpacing: "0.04em" }}>
+                Marked as <b style={{ color: "var(--ink)" }}>{picked.essential ? "essential" : "nice to have"}</b>
+              </span>
+              <button className="btn-sm" onClick={onToggleEssential}>
+                Toggle to {picked.essential ? "nice to have" : "essential"}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// MAIN
+// ============================================================
 function ChefRecipeApp({ user }) {
   const params = new URLSearchParams(location.search);
   const editId = params.get("id");
   const isNew = !editId;
 
   const [r, setR] = useState(BLANK);
-  const [tab, setTab] = useState("basics");
-  const [activeStep, setActiveStep] = useState(0);
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
   const [savedAgo, setSavedAgo] = useState(null);
+  const [toast, setToast] = useToast();
 
   const [ingLib, setIngLib] = useState([]);
-  const [utLib, setUtLib] = useState([]);
+  const [utLib, setUtLib]   = useState([]);
   const [slugTaken, setSlugTaken] = useState(false);
 
+  const [openModal, setOpenModal] = useState(null); // 'meta' | 'ing' | 'ut' | 'tags' | 'health'
+  const [openUtensil, setOpenUtensil] = useState(null);
+  const [openStepIdx, setOpenStepIdx] = useState(null);
+
+  // Slug collision check
   useEffect(() => {
     if (!isNew) return;
     const wantSlug = window.slugify(r.name);
@@ -143,6 +570,7 @@ function ChefRecipeApp({ user }) {
     return () => clearTimeout(t);
   }, [r.name, isNew]);
 
+  // Load libraries
   useEffect(() => {
     (async () => {
       try {
@@ -155,6 +583,7 @@ function ChefRecipeApp({ user }) {
     })();
   }, []);
 
+  // Load recipe (edit mode)
   useEffect(() => {
     if (isNew) return;
     (async () => {
@@ -176,7 +605,7 @@ function ChefRecipeApp({ user }) {
   const removeIng = (i) => update({ ingredients: r.ingredients.filter((_, k) => k !== i) });
   const addIngFromLib = (lib) => {
     if (r.ingredients.some((x) => x.ingredient_id === lib.id)) return;
-    update({ ingredients: [...r.ingredients, { ingredient_id: lib.id, amount: "", unit: lib.default_unit || "g" }] });
+    update({ ingredients: [...r.ingredients, { ingredient_id: lib.id, amount: "", unit: normalizeUnit(lib.default_unit) }] });
   };
 
   const updateUt = (i, patch) => update({ utensils: r.utensils.map((s, k) => k === i ? { ...s, ...patch } : s) });
@@ -185,6 +614,22 @@ function ChefRecipeApp({ user }) {
     if (r.utensils.some((x) => x.utensil_id === lib.id)) return;
     update({ utensils: [...r.utensils, { utensil_id: lib.id, essential: true }] });
   };
+
+  // Completion checks
+  const checks = [
+    { key: "name",        label: "Title",          pass: !!(r.name || "").trim(),       required: true },
+    { key: "short_tag",   label: "Short tagline",  pass: !!(r.short_tagline || "").trim(), required: true },
+    { key: "hero",        label: "Hero image",     pass: !!r.hero_image,                required: true },
+    { key: "ingredients", label: "Ingredients",    pass: r.ingredients.length >= 3,     required: true },
+    { key: "steps",       label: "Steps",          pass: r.steps.length >= 3,           required: true },
+    { key: "tags",        label: "Tags",           pass: r.tags.length > 0,             required: false },
+    { key: "utensils",    label: "Utensils",       pass: r.utensils.length > 0,         required: false },
+    { key: "health",      label: "Health facts",   pass: r.health.filter(h => (h||"").trim()).length > 0, required: false },
+  ];
+  const passed = checks.filter(c => c.pass).length;
+  const pct = Math.round((passed / checks.length) * 100);
+  const missing = checks.filter(c => c.required && !c.pass).map(c => c.label);
+  const ready = missing.length === 0;
 
   async function onPublish() {
     setErr(null); setBusy(true);
@@ -202,15 +647,13 @@ function ChefRecipeApp({ user }) {
       }
       setDirty(false);
       setSavedAgo("just now");
+      setToast(isNew ? "✓ published" : "✓ saved");
       if (isNew) { location.href = `recipe.html?id=${encodeURIComponent(id)}`; return; }
     } catch (e) {
-      if (e.message && e.message.includes('23505')) {
-        setErr(`A recipe with this id already exists. Choose a different name.`);
-      } else {
-        setErr(e.message || String(e));
-      }
-    }
-    finally { setBusy(false); }
+      const msg = e.message || String(e);
+      if (msg.includes('23505')) setErr("A recipe with this id already exists. Choose a different name.");
+      else setErr(msg);
+    } finally { setBusy(false); }
   }
 
   function onDiscard() {
@@ -219,17 +662,16 @@ function ChefRecipeApp({ user }) {
     location.reload();
   }
 
-  if (err && !r.name) {
+  if (err && !r.name && !isNew) {
     return (
-      <div className="admin-shell">
+      <div className="admin-shell admin-app-shell chef-edit-shell">
         <ChefSidebar active="recipes" role={user.role} />
         <div className="admin-main">
-          <AdminTopbar crumb={[{ label: "Recipes", href: "recipes.html" }, { label: "Error" }]} />
-          <div className="admin-page">
-            <div className="form-card" style={{ borderColor: "var(--berry)" }}>
-              <div className="form-card-body" style={{ color: "var(--berry)" }}>
+          <div className="chef-edit">
+            <div className="ce-card" style={{ borderColor: "var(--berry)" }}>
+              <p style={{ color: "var(--berry)", fontFamily: "var(--mono)" }}>
                 {err} · <a href="recipes.html" style={{ color: "var(--orange)" }}>Back to recipes</a>
-              </div>
+              </p>
             </div>
           </div>
         </div>
@@ -238,609 +680,413 @@ function ChefRecipeApp({ user }) {
   }
 
   return (
-    <div className="admin-shell">
+    <div className="admin-shell admin-app-shell chef-edit-shell">
       <ChefSidebar active="recipes" role={user.role} />
       <div className="admin-main">
-        <AdminTopbar
-          crumb={[{ label: "Recipes", href: "recipes.html" }, { label: r.name || "Untitled" }]}
-          status={isNew ? "draft" : "live"}
-          savedAgo={savedAgo}
-          isNew={isNew}
-          onPublish={onPublish}
-          publishLabel={busy ? "Saving…" : (isNew ? "Publish" : "Update")}
-        />
-
-        <div className="admin-page">
-          <div className="admin-page-head">
+        <div className="chef-edit">
+          {/* Breadcrumb + header */}
+          <div className="ce-breadcrumb">
+            <a href="recipes.html">Chef</a>
+            <span className="sep">›</span>
+            <a href="recipes.html">Recipes</a>
+            <span className="sep">›</span>
+            <span className="current">{r.name || (isNew ? "New" : (editId || "Untitled"))}</span>
+          </div>
+          <div className="ce-header">
             <div>
-              <div className="page-eyebrow">{isNew ? "chef · new recipe" : "chef · edit recipe"}</div>
-              <h1>{isNew ? <>New <em>recipe</em></> : <>Edit <em>recipe</em></>}</h1>
-              <p className="lede">Author the recipe, attach steps. Ingredients & utensils are picked from the library — they always pre-exist.</p>
-            </div>
-            <div className="admin-page-meta">
-              {!isNew && <span><b>id</b> · {r.id}</span>}
-              <span><b>{r.steps.length}</b> steps</span>
-              <span><b>{r.ingredients.length}</b> ingredients</span>
+              <div className="ce-eyebrow">{isNew ? "chef · new recipe" : "chef · editing"}</div>
+              <h1>{isNew ? <><em>New</em> recipe</> : <><em>Edit</em> {r.name || editId || "recipe"}</>}</h1>
             </div>
           </div>
 
-          <FormTabs
-            active={tab}
-            onChange={setTab}
-            tabs={[
-              { id: "basics", label: "Basics" },
-              { id: "steps", label: "Steps", badge: r.steps.length },
-              { id: "ingredients", label: "Ingredients", badge: r.ingredients.length },
-              { id: "utensils", label: "Utensils", badge: r.utensils.length },
-              { id: "health", label: "Health" },
-            ]}
-          />
+          {/* Publish bar */}
+          <div className="publish-bar">
+            <CompletionRing pct={pct} />
+            <div className="pb-text">
+              <b>{ready ? "Ready to publish" : "Needs a few details"}</b>
+              <div className="pb-meta">
+                status: <span className={ready ? "ok" : ""}>{isNew ? "draft" : "live"}</span> · {pct}% complete
+                {savedAgo && <> · <span className="ok">saved {savedAgo}</span></>}
+              </div>
+              {missing.length > 0 && (
+                <div className="warn-list">
+                  {missing.map((m) => <span key={m} className="warn-pill">{m}</span>)}
+                </div>
+              )}
+            </div>
+            <div className="pb-actions">
+              {!isNew && (
+                <a className="btn-sm ghost" href={`../recipe.html?id=${encodeURIComponent(r.id)}`} target="_blank" rel="noopener">Preview ↗</a>
+              )}
+              <button
+                className={"btn-sm primary" + (busy ? " disabled" : "")}
+                disabled={busy}
+                onClick={onPublish}
+              >
+                {busy ? "Saving…" : isNew ? "Publish →" : "Update →"}
+              </button>
+            </div>
+          </div>
 
-          <div className="workbench" style={{ marginTop: 20 }}>
-            <div className="workbench-form">
-              {tab === "basics" && <BasicsTab r={r} update={update} isNew={isNew} user={user} slugTaken={slugTaken} />}
-              {tab === "steps" && <StepsTab r={r} updateStep={updateStep} removeStep={removeStep} addStep={addStep} activeStep={activeStep} setActiveStep={setActiveStep} />}
-              {tab === "ingredients" && <IngredientsTab r={r} ingLib={ingLib} updateIng={updateIng} removeIng={removeIng} addIngFromLib={addIngFromLib} />}
-              {tab === "utensils" && <UtensilsTab r={r} utLib={utLib} updateUt={updateUt} removeUt={removeUt} addUtFromLib={addUtFromLib} />}
-              {tab === "health" && <HealthTab r={r} update={update} />}
+          {/* HERO CARD */}
+          <div className="ce-card flush ce-hero">
+            <div className="ce-hero-img-wrap">
+              <HeroImageControl
+                recipeId={r.id || ""}
+                value={r.hero_image || null}
+                onChange={(url) => update({ hero_image: url || "" })}
+              />
+            </div>
+            <div className="ce-hero-text">
+              <div className="ce-hero-meta">
+                <span>{r.cuisine}</span>
+                <span className="dot">·</span>
+                <span>{r.total_minutes} min</span>
+                <span className="dot">·</span>
+                <span>{r.difficulty}</span>
+                <span className="dot">·</span>
+                <span>serves {r.servings}</span>
+                <EditPill onClick={() => setOpenModal("meta")}>meta</EditPill>
+                {slugTaken && (
+                  <span style={{ color: "var(--berry)", fontFamily: "var(--mono)", fontSize: 10.5 }}>⚠ slug taken</span>
+                )}
+              </div>
+              <input
+                className="ce-hero-title-input"
+                value={r.name}
+                onChange={(e) => update({ name: e.target.value })}
+                placeholder="Recipe title"
+              />
+              <input
+                className="ce-hero-tag-input"
+                value={r.short_tagline}
+                onChange={(e) => update({ short_tagline: e.target.value })}
+                placeholder="Short tagline — appears on the recipe page"
+              />
+              {(r.created_by || isNew) && (
+                <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, color: "var(--ink-faint)", letterSpacing: "0.06em" }}>
+                  // created by · {r.created_by === user.id ? "you" : (r.created_by ? r.created_by.slice(0, 8) + "…" : "you")}
+                  {!isNew && r.id && <> · id {r.id}</>}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 2-col body */}
+          <div className="ce-grid">
+            {/* LEFT: Steps */}
+            <div className="ce-col">
+              <div className="ce-card">
+                <div className="ce-card-head">
+                  <div>
+                    <div className="ce-eyebrow">cooking steps</div>
+                    <h3 className="ce-card-title">{r.steps.length} {r.steps.length === 1 ? "step" : "steps"}</h3>
+                  </div>
+                  <EditPill required empty={r.steps.length < 3} onClick={addStep}>+ add step</EditPill>
+                </div>
+
+                {r.steps.length === 0 ? (
+                  <div className="ce-empty">No steps yet. Add at least three for a complete recipe.</div>
+                ) : r.steps.map((s, i) => (
+                  <div className="ce-step" key={i}>
+                    <div className="ce-step-num">{i + 1}</div>
+                    <div className="ce-step-body">
+                      <input
+                        className="ce-step-title"
+                        value={s.title}
+                        onChange={(e) => updateStep(i, { title: e.target.value })}
+                        placeholder="Step title"
+                      />
+                      <textarea
+                        className="ce-step-detail"
+                        value={s.detail}
+                        onChange={(e) => updateStep(i, { detail: e.target.value })}
+                        placeholder="What does the cook do?"
+                        rows={2}
+                      />
+                      {openStepIdx === i && (
+                        <div className="ce-step-extras">
+                          <div className="ce-row">
+                            <label>Timer</label>
+                            <input
+                              type="number"
+                              min="0"
+                              placeholder="seconds"
+                              value={s.duration_seconds == null ? "" : s.duration_seconds}
+                              onChange={(e) => updateStep(i, { duration_seconds: e.target.value })}
+                            />
+                            <span style={{ fontSize: 11, color: "var(--ink-muted)" }}>sec</span>
+                          </div>
+                          <div className="ce-row">
+                            <label>Tip</label>
+                            <input
+                              placeholder="Optional pro-tip"
+                              value={s.tip || ""}
+                              onChange={(e) => updateStep(i, { tip: e.target.value })}
+                            />
+                          </div>
+                          <div className="ce-row">
+                            <label>Caption</label>
+                            <input
+                              placeholder="Reference image caption"
+                              value={s.media_caption || ""}
+                              onChange={(e) => updateStep(i, { media_caption: e.target.value })}
+                            />
+                          </div>
+                          <div className="ce-row">
+                            <label>Image</label>
+                            <StepImageControl
+                              recipeId={r.id || ""}
+                              sortOrder={i + 1}
+                              value={s.media_src || null}
+                              onChange={(url) => updateStep(i, { media_src: url })}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className="ce-step-actions">
+                      <button
+                        className="ce-step-icon-btn"
+                        title={openStepIdx === i ? "Collapse" : "More fields"}
+                        onClick={() => setOpenStepIdx(openStepIdx === i ? null : i)}
+                      >{openStepIdx === i ? "−" : "⋯"}</button>
+                      <button className="ce-step-icon-btn danger" title="Remove step"
+                        onClick={() => { if (confirm("Remove this step?")) removeStep(i); }}>×</button>
+                    </div>
+                  </div>
+                ))}
+
+                <button className="ce-add-row" onClick={addStep}>+ Add step</button>
+              </div>
             </div>
 
-            <div className="workbench-preview">
-              <PreviewFrame url={`/recipe.html?id=${r.id || "<new>"}`}>
-                <RecipePreview r={r} ingLib={ingLib} utLib={utLib} activeStep={activeStep} />
-              </PreviewFrame>
-              <div style={{ display: "flex", gap: 8, alignItems: "center", padding: "0 4px", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
-                <span>↻ Live preview</span>
-                <span>·</span>
-                <span>Updates as you type</span>
-                <span style={{ marginLeft: "auto", fontFamily: "var(--hand)", textTransform: "none", letterSpacing: 0, fontSize: 18, color: "var(--orange)", transform: "rotate(-3deg)", display: "inline-block" }}>looks tasty!</span>
+            {/* RIGHT: ingredients, utensils, tags, health */}
+            <div className="ce-col">
+              {/* Ingredients */}
+              <div className="ce-card">
+                <div className="ce-card-head">
+                  <div>
+                    <div className="ce-eyebrow">ingredients</div>
+                    <h3 className="ce-card-title">{r.ingredients.length} {r.ingredients.length === 1 ? "item" : "items"}</h3>
+                  </div>
+                  <EditPill required empty={r.ingredients.length < 3} onClick={() => setOpenModal("ing")}>+ from library</EditPill>
+                </div>
+                {r.ingredients.length === 0 ? (
+                  <div className="ce-empty">None yet — pick from the library.</div>
+                ) : (
+                  <div>
+                    {r.ingredients.map((ing, i) => {
+                      const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient_id || "(unknown)", category: "—" };
+                      return (
+                        <div key={i} className="ce-ing-row">
+                          <div>
+                            <div className="ce-ing-name">{lib.name}</div>
+                            <div className="ce-ing-cat">{lib.category || "—"}</div>
+                          </div>
+                          <input
+                            type="number"
+                            inputMode="numeric"
+                            step="1"
+                            min="0"
+                            value={ing.amount}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              if (v === "") { updateIng(i, { amount: "" }); return; }
+                              const n = parseInt(v, 10);
+                              if (!Number.isFinite(n) || n < 0) return;
+                              updateIng(i, { amount: String(n) });
+                            }}
+                            placeholder="—"
+                          />
+                          <select
+                            value={UNITS.includes(ing.unit) ? ing.unit : (ing.unit || UNITS[0])}
+                            onChange={(e) => updateIng(i, { unit: e.target.value })}
+                          >
+                            {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                            {ing.unit && !UNITS.includes(ing.unit) && (
+                              <option value={ing.unit}>{ing.unit} (legacy)</option>
+                            )}
+                          </select>
+                          <button className="ce-x" onClick={() => removeIng(i)} title="Remove">×</button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Utensils */}
+              <div className="ce-card">
+                <div className="ce-card-head">
+                  <div>
+                    <div className="ce-eyebrow">utensils</div>
+                    <h3 className="ce-card-title">tools used</h3>
+                  </div>
+                  <EditPill onClick={() => setOpenModal("ut")}>+ add</EditPill>
+                </div>
+                {r.utensils.length === 0 ? (
+                  <div className="ce-empty">No utensils linked yet.</div>
+                ) : (
+                  <div className="ce-utensil-grid">
+                    {r.utensils.map((u, i) => {
+                      const lib = utLib.find((x) => x.id === u.utensil_id) || { id: u.utensil_id, name: u.utensil_id || "(unknown)", category: "—" };
+                      return (
+                        <button key={i} className="ce-utensil-tile"
+                          onClick={() => setOpenUtensil({ ...lib, _idx: i })}
+                          type="button">
+                          <div className="ut-img">
+                            {lib.photo ? <img src={lib.photo} alt="" /> : <span>🛠</span>}
+                          </div>
+                          <div className="ut-body">
+                            <div className="ut-name">{lib.name}</div>
+                            <div className="ut-cat">{lib.category || "—"}</div>
+                          </div>
+                          <span
+                            className="ce-x"
+                            onClick={(e) => { e.stopPropagation(); removeUt(i); }}
+                            title="Remove"
+                            role="button"
+                          >×</span>
+                          <span className="ut-arrow">→</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Tags */}
+              <div className="ce-card">
+                <div className="ce-card-head">
+                  <div>
+                    <div className="ce-eyebrow">tags</div>
+                    <h3 className="ce-card-title">discovery</h3>
+                  </div>
+                  <EditPill onClick={() => setOpenModal("tags")}>edit</EditPill>
+                </div>
+                {r.tags.length === 0 ? (
+                  <div className="ce-empty">No tags yet.</div>
+                ) : (
+                  <div className="ce-tags-row">
+                    {r.tags.map((t) => (
+                      <span key={t} className={"ce-tag-chip " + (t === "vegetarian" || t === "vegan" || t === "veg" ? "veg" : "")}>{t}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Health */}
+              <div className="ce-card">
+                <div className="ce-card-head">
+                  <div>
+                    <div className="ce-eyebrow">health facts</div>
+                    <h3 className="ce-card-title">rotates during cook</h3>
+                  </div>
+                  <EditPill onClick={() => setOpenModal("health")}>edit</EditPill>
+                </div>
+                {r.health.filter(h => (h||"").trim()).length === 0 ? (
+                  <div className="ce-faint">Add up to 6 short facts that surface one at a time during cooking.</div>
+                ) : (
+                  <div className="ce-tags-row">
+                    {r.health.filter(h => (h||"").trim()).map((h, i) => (
+                      <span key={i} className="ce-tag-chip" style={{ background: "rgba(122,156,90,0.18)", color: "var(--matcha-deep)", border: "1px solid transparent" }}>{h}</span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
-          <SaveBar dirty={dirty} busy={busy} error={err} onDiscard={onDiscard} onPublish={onPublish} isNew={isNew} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================
-// BASICS
-// ============================================================
-function BasicsTab({ r, update, isNew, user, slugTaken }) {
-  return (
-    <>
-      <div className="created-by-line">
-        Created by: <strong>{r.created_by === user.id ? "You" : (r.created_by || "—")}</strong>
-      </div>
-      <FormCard title="Identity" scribble="the headline">
-        <div className="field-grid">
-          <Field label="Recipe name" required>
-            <input className="input serif" value={r.name} onChange={(e) => update({ name: e.target.value })} placeholder="e.g. Paneer Butter Masala" />
-            {slugTaken && (
-              <div className="slug-warning">
-                A recipe with the slug <code>{window.slugify(r.name)}</code> already exists. Choose a different name.
-              </div>
-            )}
-          </Field>
-          {isNew && r.name && (
-            <div className="field-hint" style={{ fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 11, color: "var(--ink-muted)" }}>
-              id will be: <span style={{ color: "var(--orange)" }}>{window.slugify(r.name)}</span>
+          {err && (
+            <div className="ce-card" style={{ borderColor: "var(--berry)" }}>
+              <p style={{ color: "var(--berry)", fontFamily: "var(--mono)", fontSize: 12 }}>Error: {err}</p>
             </div>
           )}
-          <Field label="Short tagline" hint="Shown on the recipe page hero (e.g. 'creamy · tomato · 35 min').">
-            <input className="input" value={r.short_tagline} onChange={(e) => update({ short_tagline: e.target.value })} />
-          </Field>
-          <Field label="Listing tagline" hint="Shown on the search/listing card.">
-            <input className="input" value={r.tagline} onChange={(e) => update({ tagline: e.target.value })} />
-          </Field>
-          <div className="field-grid cols-2">
-            <Field label="Cuisine">
-              <select className="select" value={r.cuisine} onChange={(e) => update({ cuisine: e.target.value })}>
-                <option>North Indian</option><option>South Indian</option><option>Italian</option><option>Mexican</option><option>Thai</option><option>Japanese</option><option>Mediterranean</option><option>Other</option>
-              </select>
-            </Field>
-            <Field label="Difficulty">
-              <RadioPills value={r.difficulty} options={["Easy", "Medium", "Hard"]} onChange={(v) => update({ difficulty: v })} />
-            </Field>
+        </div>
+
+        {/* Sticky bottom save bar */}
+        <div className="ce-savebar">
+          <div className={"info" + (dirty ? "" : " clean")}>
+            <span className="dot" />
+            <span>
+              {busy ? "Saving…"
+                : err ? <span style={{ color: "var(--berry)" }}>Error · see above</span>
+                : dirty ? "Unsaved changes"
+                : savedAgo ? `All changes saved · ${savedAgo}`
+                : "All changes saved"}
+            </span>
+          </div>
+          <div className="actions">
+            <button className="btn-sm ghost" onClick={onDiscard} disabled={busy || !dirty}>Discard</button>
+            <button className="btn-sm primary" onClick={onPublish} disabled={busy || (!dirty && !isNew)}>
+              {busy ? "Saving…" : isNew ? "Publish →" : "Update →"}
+            </button>
           </div>
         </div>
-      </FormCard>
+      </div>
 
-      <FormCard title="Hero photograph" scribble="the money shot">
-        <HeroImageControl
-          recipeId={r.id || ""}
-          value={r.hero_image || null}
-          onChange={(url) => update({ hero_image: url || "" })}
+      {/* Modals */}
+      {openModal === "meta" && (
+        <MetaModal r={r} update={update} slugTaken={slugTaken} isNew={isNew} onClose={() => setOpenModal(null)} />
+      )}
+      {openModal === "ing" && (
+        <PickerModal kind="ing" library={ingLib} picked={r.ingredients}
+          onPick={(item) => { addIngFromLib(item); setToast("✓ added " + item.name); }}
+          onClose={() => setOpenModal(null)}
+          manageHref={user.role === "admin" ? "../admin/ingredients.html" : "#"}
+          manageLabel={user.role === "admin" ? "Manage library" : "Library is admin-managed"}
         />
-        <Field label="Hero image URL" hint="Full Supabase Storage URL (auto-set by upload above; rarely edited manually).">
-          <input className="input mono" value={r.hero_image} onChange={(e) => update({ hero_image: e.target.value })} placeholder="https://…/recipe-images/<id>/hero.jpg" />
-        </Field>
-      </FormCard>
-
-      <FormCard title="Timing & yield">
-        <div className="field-grid cols-3">
-          <Field label="Servings"><div className="input-wrap has-suffix"><input className="input mono" value={r.servings} onChange={(e) => update({ servings: e.target.value })} /><span className="suffix">people</span></div></Field>
-          <Field label="Total time"><div className="input-wrap has-suffix"><input className="input mono" value={r.total_minutes} onChange={(e) => update({ total_minutes: e.target.value })} /><span className="suffix">min</span></div></Field>
-          <Field label="Meal types" hint="Comma-separated. Used for personalized recommendations.">
-            <input className="input mono" value={(r.meal_types || []).join(", ")} onChange={(e) => update({ meal_types: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })} placeholder="lunch, dinner" />
-          </Field>
-        </div>
-      </FormCard>
-
-      <FormCard title="Tags">
-        <Field label="Search & recommendation tags" hint="Press enter or comma to add.">
-          <ChipInput
-            tags={r.tags}
-            onAdd={(t) => update({ tags: [...r.tags, t] })}
-            onRemove={(i) => update({ tags: r.tags.filter((_, k) => k !== i) })}
-          />
-        </Field>
-      </FormCard>
-    </>
-  );
-}
-
-// ============================================================
-// STEPS
-// ============================================================
-// ============================================================
-// IMAGE UPLOAD CONTROLS (hero + per-step)
-// ============================================================
-function HeroImageControl({ recipeId, value, onChange }) {
-  const [busy, setBusy] = React.useState(false);
-  const [err, setErr]   = React.useState(null);
-  const inputRef = React.useRef(null);
-
-  const pickFile = () => inputRef.current?.click();
-
-  async function onFile(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (!recipeId) {
-      setErr("Save the recipe first (needs an id) before uploading an image.");
-      e.target.value = "";
-      return;
-    }
-    setBusy(true); setErr(null);
-    try {
-      const url = await window.MFC.imageUpload.upload(file, {
-        recipeId, filename: "hero.jpg", kind: "hero",
-      });
-      onChange(`${url}?v=${Date.now()}`);
-    } catch (x) { setErr(x?.message || String(x)); }
-    finally     { setBusy(false); e.target.value = ""; }
-  }
-
-  async function removeHero() {
-    if (!value || !recipeId) return;
-    if (!confirm("Remove hero image? This deletes hero.jpg from Storage.")) return;
-    setBusy(true); setErr(null);
-    try {
-      await window.MFC.imageUpload.remove([`${recipeId}/hero.jpg`]);
-      onChange(null);
-    } catch (x) { setErr(x?.message || String(x)); }
-    finally     { setBusy(false); }
-  }
-
-  return (
-    <div className="hero-image-control">
-      <div className="hero-image-preview">
-        {value
-          ? <img src={value} alt="hero" />
-          : <div className="hero-image-empty">No hero yet</div>}
-      </div>
-      <div className="hero-image-actions">
-        <button type="button" className="btn-sm" onClick={pickFile} disabled={busy}>
-          {busy ? "Uploading…" : value ? "Replace" : "Upload hero"}
-        </button>
-        {value && (
-          <button type="button" className="btn-sm danger" onClick={removeHero} disabled={busy}>
-            Remove
-          </button>
-        )}
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          style={{ display: "none" }}
-          onChange={onFile}
+      )}
+      {openModal === "ut" && (
+        <PickerModal kind="ut" library={utLib} picked={r.utensils}
+          onPick={(item) => { addUtFromLib(item); setToast("✓ added " + item.name); }}
+          onClose={() => setOpenModal(null)}
+          manageHref={user.role === "admin" ? "../admin/utensils.html" : "#"}
+          manageLabel={user.role === "admin" ? "Manage library" : "Library is admin-managed"}
         />
-        {err && <div className="hero-image-err">Upload failed: {err}</div>}
-      </div>
-    </div>
-  );
-}
-
-function StepImageControl({ recipeId, sortOrder, value, onChange }) {
-  const [busy, setBusy] = React.useState(false);
-  const [err, setErr]   = React.useState(null);
-  const inputRef = React.useRef(null);
-  const pickFile = () => inputRef.current?.click();
-
-  async function onFile(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (!recipeId) {
-      setErr("Save the recipe first before uploading step images.");
-      e.target.value = "";
-      return;
-    }
-    setBusy(true); setErr(null);
-    try {
-      const url = await window.MFC.imageUpload.upload(file, {
-        recipeId, filename: `step-${sortOrder}.jpg`, kind: "step",
-      });
-      onChange(`${url}?v=${Date.now()}`);
-    } catch (x) { setErr(x?.message || String(x)); }
-    finally     { setBusy(false); e.target.value = ""; }
-  }
-
-  async function removeStepImage() {
-    if (!value || !recipeId) return;
-    if (!confirm(`Remove image for step ${sortOrder}?`)) return;
-    setBusy(true); setErr(null);
-    try {
-      await window.MFC.imageUpload.remove([`${recipeId}/step-${sortOrder}.jpg`]);
-      onChange(null);
-    } catch (x) { setErr(x?.message || String(x)); }
-    finally     { setBusy(false); }
-  }
-
-  return (
-    <div className="step-image-control">
-      <div className="step-image-preview">
-        {value
-          ? <img src={value} alt={`step ${sortOrder}`} />
-          : <div className="step-image-empty">no img</div>}
-      </div>
-      <div className="step-image-actions">
-        <button type="button" className="btn-sm" onClick={pickFile} disabled={busy}>
-          {busy ? "…" : value ? "Replace" : "Upload"}
-        </button>
-        {value && (
-          <button type="button" className="btn-sm danger" onClick={removeStepImage} disabled={busy}>
-            Remove
-          </button>
-        )}
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          style={{ display: "none" }}
-          onChange={onFile}
-        />
-        {err && <div className="step-image-err">{err}</div>}
-      </div>
-    </div>
-  );
-}
-
-function StepsTab({ r, updateStep, removeStep, addStep, activeStep, setActiveStep }) {
-  return (
-    <FormCard title="Steps" scribble={`${r.steps.length} so far`}>
-      <div className="step-list">
-        {r.steps.map((s, i) => (
-          <div
-            key={i}
-            className={"step-edit" + (activeStep === i ? " active" : "")}
-            onClick={() => setActiveStep(i)}
-          >
-            <div className="step-edit-head">
-              <div className="step-handle">{String(i + 1).padStart(2, "0")}</div>
-              <input className="step-edit-title" value={s.title} onChange={(e) => updateStep(i, { title: e.target.value })} />
-              <div className="step-edit-actions">
-                <button className="step-icon-btn danger" onClick={(e) => { e.stopPropagation(); removeStep(i); }}>×</button>
-              </div>
-            </div>
-            <div className="step-edit-body">
-              <textarea
-                className="step-edit-detail"
-                value={s.detail}
-                onChange={(e) => updateStep(i, { detail: e.target.value })}
-                placeholder="What does the cook do?"
-              />
-              <div className="step-edit-side">
-                <div className="step-mini">
-                  <span className="lbl">Timer</span>
-                  <input
-                    value={s.duration_seconds == null ? "" : s.duration_seconds}
-                    onChange={(e) => updateStep(i, { duration_seconds: e.target.value })}
-                  />
-                  <span style={{ color: "var(--ink-faint)" }}>sec</span>
-                </div>
-              </div>
-            </div>
-            {activeStep === i && (
-              <div style={{ marginTop: 10, display: "grid", gap: 8 }}>
+      )}
+      {openModal === "tags" && (
+        <TagsModal tags={r.tags} onChange={(tags) => update({ tags })} onClose={() => setOpenModal(null)} />
+      )}
+      {openModal === "health" && (
+        <CeModal title="Health facts" onClose={() => setOpenModal(null)}
+          footer={<button className="btn-sm primary" onClick={() => setOpenModal(null)}>Done</button>}>
+          <p style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-muted)", marginBottom: 12 }}>
+            Up to 6 short facts. Surfaced one at a time during cooking.
+          </p>
+          <div className="ce-health-list">
+            {r.health.map((h, i) => (
+              <div key={i} className="ce-health-item">
                 <input
-                  className="input"
-                  style={{ fontSize: 13, padding: "8px 12px" }}
-                  placeholder="Optional pro-tip"
-                  value={s.tip || ""}
-                  onChange={(e) => updateStep(i, { tip: e.target.value })}
+                  value={h}
+                  onChange={(e) => {
+                    const health = [...r.health]; health[i] = e.target.value; update({ health });
+                  }}
+                  placeholder="e.g. Tomatoes contain lycopene…"
                 />
-                <input
-                  className="input mono"
-                  style={{ fontSize: 12, padding: "8px 12px" }}
-                  placeholder="Optional reference image caption"
-                  value={s.media_caption || ""}
-                  onChange={(e) => updateStep(i, { media_caption: e.target.value })}
-                />
-                <StepImageControl
-                  recipeId={r.id || ""}
-                  sortOrder={i + 1}
-                  value={s.media_src || null}
-                  onChange={(url) => updateStep(i, { media_src: url })}
-                />
+                <button className="ce-step-icon-btn danger" onClick={() => update({ health: r.health.filter((_, k) => k !== i) })}>×</button>
               </div>
+            ))}
+            {r.health.length < 6 && (
+              <button className="ce-add-row" onClick={() => update({ health: [...r.health, ""] })}>+ Add fact</button>
             )}
           </div>
-        ))}
-        <button className="add-step-btn" onClick={addStep}>+ Add step</button>
-      </div>
-    </FormCard>
-  );
-}
-
-// ============================================================
-// LIBRARY PICKER (shared shape)
-// ============================================================
-function LibraryPicker({ kind, library, picked, onPick, manageHref, manageLabel }) {
-  const [q, setQ] = useState("");
-  const isPicked = (id) => picked.some((p) => (kind === "ing" ? p.ingredient_id : p.utensil_id) === id);
-  const filtered = useMemo(() => {
-    const qq = q.toLowerCase().trim();
-    return library.filter((x) => !qq || x.name.toLowerCase().includes(qq) || (x.category || "").toLowerCase().includes(qq));
-  }, [q, library]);
-  return (
-    <div className="lib-picker">
-      <div className="lib-search">
-        <span className="glass">⌕</span>
-        <input
-          className="lib-search-input"
-          placeholder={`Search ${kind === "ing" ? "ingredients" : "utensils"} library…`}
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-        <span className="ct">{filtered.length} of {library.length}</span>
-      </div>
-      <div className="lib-list">
-        {library.length === 0 ? (
-          <div style={{ padding: "32px 20px", textAlign: "center", color: "var(--ink-muted)" }}>
-            <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 18, marginBottom: 6 }}>The library is empty</div>
-            <div style={{ fontSize: 12 }}>Add some {kind === "ing" ? "ingredients" : "utensils"} first. <a href={manageHref} style={{ color: "var(--orange)", textDecoration: "underline" }}>{manageLabel}</a></div>
-          </div>
-        ) : filtered.length === 0 ? (
-          <div style={{ padding: "32px 20px", textAlign: "center", color: "var(--ink-muted)" }}>
-            <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 18, marginBottom: 6 }}>Nothing matches "{q}"</div>
-            <div style={{ fontSize: 12 }}>{kind === "ing" ? "Ingredients" : "Utensils"} can only be added from the library. <a href={manageHref} style={{ color: "var(--orange)", textDecoration: "underline" }}>{manageLabel}</a></div>
-          </div>
-        ) : filtered.map((item) => {
-          const used = isPicked(item.id);
-          return (
-            <div key={item.id} className={"lib-row" + (used ? " disabled" : "")} onClick={() => !used && onPick(item)}>
-              <div className={"lib-thumb " + (kind === "ing" ? "matcha" : "cream")} />
-              <div>
-                <div className="name">{item.name}</div>
-                <div className="meta">{item.category || "—"}</div>
-              </div>
-              <span /><span />
-              {used ? <span className="added">✓ added</span> : <button className="add-btn">+</button>}
-            </div>
-          );
-        })}
-      </div>
-      <div className="lib-foot">
-        <span>Library only</span>
-        <span style={{ color: "var(--ink-faint)" }}>·</span>
-        <a href={manageHref}>{manageLabel} →</a>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================
-// INGREDIENTS
-// ============================================================
-function IngredientsTab({ r, ingLib, updateIng, removeIng, addIngFromLib }) {
-  return (
-    <>
-      <FormCard title="Picked for this recipe" scribble={`${r.ingredients.length} items`}>
-        {r.ingredients.length === 0 ? (
-          <div style={{ padding: "20px 16px", textAlign: "center", color: "var(--ink-muted)", fontStyle: "italic", fontFamily: "var(--serif)", fontSize: 16 }}>
-            None yet — add ingredients from the library below.
-          </div>
-        ) : (
-          <div className="picked-list">
-            {r.ingredients.map((ing, i) => {
-              const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient_id || "(unknown)", category: "—" };
-              return (
-                <div key={i} className="picked-row">
-                  <span className="handle">⋮⋮</span>
-                  <div className="lib-thumb matcha" />
-                  <div>
-                    <div className="name">{lib.name}</div>
-                    <div style={{ fontFamily: "var(--mono)", fontSize: 10, color: "var(--ink-faint)", letterSpacing: "0.08em", textTransform: "uppercase" }}>{lib.category}</div>
-                  </div>
-                  <input
-                    className="amt-input"
-                    value={ing.amount}
-                    onChange={(e) => updateIng(i, { amount: e.target.value })}
-                    placeholder="—"
-                  />
-                  <select
-                    style={{ background: "var(--cream-soft)", border: "1px solid var(--rule)", borderRadius: 6, padding: "6px 10px", fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-soft)", outline: "none" }}
-                    value={ing.unit || ""}
-                    onChange={(e) => updateIng(i, { unit: e.target.value })}
-                  >
-                    <option value="">—</option>
-                    <option>g</option><option>kg</option><option>ml</option><option>l</option><option>tsp</option><option>tbsp</option><option>cup</option><option>medium</option><option>large</option><option>whole</option><option>pinch</option>
-                  </select>
-                  <button className="x" onClick={() => removeIng(i)}>×</button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </FormCard>
-
-      <FormCard title="Add from library" scribble="search & pick">
-        <LibraryPicker
-          kind="ing"
-          library={ingLib}
-          picked={r.ingredients}
-          onPick={addIngFromLib}
-          manageHref="ingredients.html"
-          manageLabel="Manage library"
-        />
-      </FormCard>
-    </>
-  );
-}
-
-// ============================================================
-// UTENSILS
-// ============================================================
-function UtensilsTab({ r, utLib, updateUt, removeUt, addUtFromLib }) {
-  return (
-    <>
-      <FormCard title="Picked for this recipe" scribble={`${r.utensils.length} items`}>
-        {r.utensils.length === 0 ? (
-          <div style={{ padding: "20px 16px", textAlign: "center", color: "var(--ink-muted)", fontStyle: "italic", fontFamily: "var(--serif)", fontSize: 16 }}>
-            None yet — add utensils from the library below.
-          </div>
-        ) : (
-          <div className="picked-list">
-            {r.utensils.map((u, i) => {
-              const lib = utLib.find((x) => x.id === u.utensil_id) || { name: u.utensil_id || "(unknown)", category: "—" };
-              return (
-                <div key={i} className="picked-row" style={{ gridTemplateColumns: "auto 36px 1fr auto auto" }}>
-                  <span className="handle">⋮⋮</span>
-                  <div className="lib-thumb cream" />
-                  <div>
-                    <div className="name">{lib.name}</div>
-                    <div style={{ fontFamily: "var(--mono)", fontSize: 10, color: "var(--ink-faint)", letterSpacing: "0.08em", textTransform: "uppercase" }}>{lib.category}</div>
-                  </div>
-                  <span
-                    className={"ut-tag " + (u.essential ? "must" : "nice")}
-                    onClick={() => updateUt(i, { essential: !u.essential })}
-                    title="Click to toggle"
-                  >
-                    {u.essential ? "must" : "nice"}
-                  </span>
-                  <button className="x" onClick={() => removeUt(i)}>×</button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </FormCard>
-
-      <FormCard title="Add from library" scribble="search & pick">
-        <LibraryPicker
-          kind="ut"
-          library={utLib}
-          picked={r.utensils}
-          onPick={addUtFromLib}
-          manageHref="utensils.html"
-          manageLabel="Manage library"
-        />
-      </FormCard>
-    </>
-  );
-}
-
-// ============================================================
-// HEALTH
-// ============================================================
-function HealthTab({ r, update }) {
-  return (
-    <FormCard title="Health facts" scribble="rotates every 3 min">
-      <Field label="Talking points" hint="Up to 6 facts. Surfaced one at a time during cooking.">
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {r.health.map((h, i) => (
-            <div key={i} className="row-edit" style={{ gridTemplateColumns: "auto 1fr auto" }}>
-              <span className="row-edit-handle">⋮⋮</span>
-              <input value={h} onChange={(e) => {
-                const health = [...r.health]; health[i] = e.target.value; update({ health });
-              }} />
-              <button className="row-edit-x" onClick={() => update({ health: r.health.filter((_, k) => k !== i) })}>×</button>
-            </div>
-          ))}
-          <button className="add-step-btn" onClick={() => update({ health: [...r.health, ""] })}>+ Add fact</button>
-        </div>
-      </Field>
-    </FormCard>
-  );
-}
-
-// ============================================================
-// PREVIEW
-// ============================================================
-function RecipePreview({ r, ingLib, utLib, activeStep }) {
-  const step = r.steps[activeStep] || r.steps[0];
-  const firstWord = (r.name || "").split(" ")[0];
-  const rest = (r.name || "").split(" ").slice(1).join(" ");
-  return (
-    <div className="pv-recipe">
-      <div className="pv-breadcrumb">
-        <span>Home</span><span className="sep">›</span><span>{r.cuisine}</span><span className="sep">›</span><span style={{ color: "var(--ink)" }}>{r.name || "Untitled"}</span>
-      </div>
-      <div>
-        <h1 className="pv-title"><em>{firstWord}</em> {rest}</h1>
-        <div className="pv-tagline">{r.short_tagline}</div>
-      </div>
-      <div className="pv-meta">
-        <span className="pv-pill"><span className="dot" /><b>{r.total_minutes}</b> min</span>
-        <span className="pv-pill"><b>{r.servings}</b> servings</span>
-        <span className="pv-pill"><b>{r.difficulty}</b></span>
-        <span className="pv-pill"><b>{r.steps.length}</b> steps</span>
-      </div>
-      <div className="pv-image">
-        <span className="corner-stick">{r.cuisine}</span>
-        <span className="tag">[ overhead shot ]</span>
-      </div>
-      {step && (
-        <div className="pv-step">
-          <div className="num">Step {activeStep + 1} / {r.steps.length}</div>
-          <h4>{step.title}</h4>
-          <p>{step.detail}</p>
-        </div>
+        </CeModal>
       )}
-      <div className="pv-sides">
-        <div className="pv-card">
-          <h5>Ingredients <span className="count">· {r.ingredients.length}</span></h5>
-          <ul>
-            {r.ingredients.slice(0, 6).map((ing, i) => {
-              const lib = ingLib.find((x) => x.id === ing.ingredient_id) || { name: ing.ingredient_id };
-              return (
-                <li key={i}>
-                  <span className="check" />
-                  <span>{lib.name}</span>
-                  <span className="amt">{ing.amount}{ing.unit ? " " + ing.unit : ""}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="pv-card">
-          <h5>Utensils <span className="count">· {r.utensils.length}</span></h5>
-          <ul>
-            {r.utensils.slice(0, 6).map((u, i) => {
-              const lib = utLib.find((x) => x.id === u.utensil_id) || { name: u.utensil_id };
-              return (
-                <li key={i}>
-                  <span className="check" />
-                  <span>{lib.name}</span>
-                  {!u.essential && <span style={{ marginLeft: "auto", fontFamily: "var(--mono)", fontSize: 9, color: "var(--ink-faint)", letterSpacing: "0.08em", textTransform: "uppercase" }}>nice</span>}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
+      {openUtensil && (
+        <UtensilDetailModal
+          utensil={openUtensil}
+          picked={r.utensils.find(u => u.utensil_id === openUtensil.id)}
+          onToggleEssential={() => {
+            const idx = r.utensils.findIndex(u => u.utensil_id === openUtensil.id);
+            if (idx >= 0) updateUt(idx, { essential: !r.utensils[idx].essential });
+          }}
+          onClose={() => setOpenUtensil(null)}
+        />
+      )}
+
+      {toast && <div className="ce-toast">{toast}</div>}
     </div>
   );
 }

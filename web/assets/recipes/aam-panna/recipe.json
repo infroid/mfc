@@ -9,9 +9,9 @@
   "totalMinutes": 30,
   "media": {
     "hero": {
-      "alt": "Murky-green raw mango drink in a tall glass with mint leaves and roasted cumin dust",
+      "alt": "Pale green Aam Panna in a cut-crystal glass with ice, mint, roasted cumin, and a matching glass jug",
       "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aam-panna/hero.jpg",
-      "caption": "aam panna — green mango, mint, cumin",
+      "caption": "aam panna — crystal glass, mint, cumin",
       "palette": [
         "#A4C268",
         "#7A9C5A",
@@ -67,8 +67,9 @@
       "duration": 1200,
       "tip": "Roasting gives a smokier, deeper aam panna; boiling keeps it bright.",
       "media": {
-        "src": null,
-        "caption": null
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aam-panna/step-01-boil-raw-mango.jpg",
+        "alt": "Cooked green mangoes in a stainless pressure cooker with squeezed mango pulp in a ceramic bowl",
+        "caption": "Softened mango and pulp"
       }
     },
     {
@@ -78,8 +79,9 @@
       "duration": 180,
       "tip": "Concentrate keeps for 2 weeks refrigerated — make once, drink for days.",
       "media": {
-        "src": null,
-        "caption": null
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aam-panna/step-02-blend-seasonings.jpg",
+        "alt": "Cooked mango pulp, jaggery, spices, and mint layered in an unmarked glass blender jar",
+        "caption": "Concentrate in the blender"
       }
     },
     {
@@ -89,8 +91,9 @@
       "duration": 60,
       "tip": "Stronger or weaker? Adjust the concentrate ratio — that's the joy of homemade panna.",
       "media": {
-        "src": null,
-        "caption": null
+        "src": "https://fqjzhntqppbcwvqtjscb.supabase.co/storage/v1/object/public/recipe-images/aam-panna/step-03-dilute-serve.jpg",
+        "alt": "Cut-crystal glasses and a matching jug of pale green Aam Panna with ice and mint",
+        "caption": "Crystal-glass chilled panna"
       }
     }
   ],

@@ -1,5 +1,19 @@
-// Ingredient editor — create or update one library entry. ?id=<slug> or ?new=1.
-const { useState, useEffect } = React;
+// Ingredient editor — WYSIWYG. Mirrors the chef recipe editor:
+// hero card + macros + optional surface cards, all inline-editable
+// via edit pills + modals. App-shell layout for mobile parity.
+const { useState, useEffect, useRef } = React;
+
+const CATEGORIES = [
+  "Dairy", "Vegetable", "Fruit", "Grain", "Spice", "Herb",
+  "Protein", "Oil & Fat", "Nut & Seed", "Aromatic", "Seasoning",
+];
+const ING_UNITS = ["g", "kg", "ml", "l", "teaspoon", "tablespoon"];
+const ING_UNIT_ALIASES = { tsp: "teaspoon", tbsp: "tablespoon" };
+function ingNormalizeUnit(u) {
+  if (!u) return ING_UNITS[0];
+  if (ING_UNITS.includes(u)) return u;
+  return ING_UNIT_ALIASES[u] || ING_UNITS[0];
+}
 
 const BLANK = {
   id: "",
@@ -23,7 +37,7 @@ function fromDb(row) {
     name: row.name || "",
     tagline: row.tagline || "",
     category: row.category || "Dairy",
-    default_unit: row.default_unit || "g",
+    default_unit: ingNormalizeUnit(row.default_unit),
     photo: row.photo || "",
     show: { ...BLANK.show, ...(row.show || {}) },
     nutrition: { ...BLANK.nutrition, ...(row.nutrition || {}) },
@@ -54,12 +68,165 @@ function fmtAgo(iso) {
   if (!iso) return null;
   const ms = Date.now() - new Date(iso).getTime();
   const m = Math.round(ms / 60000);
+  if (m < 1) return "just now";
   if (m < 60) return `${m}m ago`;
   const h = Math.round(m / 60);
   if (h < 24) return `${h}h ago`;
   return `${Math.round(h / 24)}d ago`;
 }
 
+// ============================================================
+// PRIMITIVES (kept local to avoid coupling with chef edit)
+// ============================================================
+function CompletionRing({ pct = 0, size = 56, stroke = 6 }) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const off = c * (1 - Math.max(0, Math.min(100, pct)) / 100);
+  const tone = pct >= 80 ? "high" : pct >= 50 ? "mid" : "low";
+  return (
+    <div className="completion-ring" style={{ width: size, height: size }}>
+      <svg width={size} height={size}>
+        <circle className="track" cx={size/2} cy={size/2} r={r} style={{ strokeWidth: stroke }} />
+        <circle className={"meter " + tone} cx={size/2} cy={size/2} r={r}
+          style={{ strokeWidth: stroke }} strokeDasharray={c} strokeDashoffset={off} />
+      </svg>
+      <span className="pct" style={{ fontSize: Math.max(9, Math.round(size * 0.30)) + "px" }}>
+        {pct === 100 ? "✓" : pct + "%"}
+      </span>
+    </div>
+  );
+}
+
+function EditPill({ children = "Edit", onClick, required = false, empty = false, danger = false, style }) {
+  let cls = "edit-pill";
+  if (required && empty) cls += " required-empty";
+  if (danger) cls += " danger";
+  return (
+    <button type="button" className={cls} onClick={onClick} style={style}>
+      <span className="pencil">✎</span>{children}
+    </button>
+  );
+}
+
+function useToast() {
+  const [msg, setMsg] = useState(null);
+  useEffect(() => {
+    if (!msg) return;
+    const t = setTimeout(() => setMsg(null), 1800);
+    return () => clearTimeout(t);
+  }, [msg]);
+  return [msg, setMsg];
+}
+
+function CeModal({ title, onClose, footer, children }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  return (
+    <div className="ce-modal-bd" onClick={onClose}>
+      <div className="ce-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="ce-modal-head">
+          <h3>{title}</h3>
+          <button className="ce-modal-close" onClick={onClose} aria-label="Close">×</button>
+        </div>
+        <div className="ce-modal-body">{children}</div>
+        {footer && <div className="ce-modal-foot">{footer}</div>}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// MODALS
+// ============================================================
+function IdentityModal({ r, update, slugTaken, isNew, onClose }) {
+  return (
+    <CeModal title="Identity" onClose={onClose}
+      footer={<button className="btn-sm primary" onClick={onClose}>Done</button>}>
+      <div className="field-row">
+        <label>Name</label>
+        <input value={r.name} onChange={(e) => update({ name: e.target.value })} placeholder="e.g. Paneer" autoFocus />
+      </div>
+      {isNew && r.name && (
+        <div style={{ fontFamily: "var(--mono)", fontSize: 10.5, color: "var(--ink-muted)", padding: "4px 0 8px" }}>
+          id will be: <span style={{ color: "var(--orange)" }}>{window.slugify(r.name)}</span>
+        </div>
+      )}
+      {slugTaken && (
+        <div className="slug-warning" style={{ marginBottom: 10 }}>
+          An ingredient with the slug <code>{window.slugify(r.name)}</code> already exists. Choose a different name.
+        </div>
+      )}
+      <div className="field-row">
+        <label>Tagline</label>
+        <input value={r.tagline} onChange={(e) => update({ tagline: e.target.value })} placeholder="fresh, milky, holds shape under heat" />
+      </div>
+      <div className="field-row">
+        <label>Category</label>
+        <select value={r.category} onChange={(e) => update({ category: e.target.value })}>
+          {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+        </select>
+      </div>
+      <div className="field-row">
+        <label>Default unit</label>
+        <select value={r.default_unit} onChange={(e) => update({ default_unit: e.target.value })}>
+          {ING_UNITS.map((u) => <option key={u}>{u}</option>)}
+          {r.default_unit && !ING_UNITS.includes(r.default_unit) && (
+            <option value={r.default_unit}>{r.default_unit} (legacy)</option>
+          )}
+        </select>
+      </div>
+      <div className="field-row">
+        <label>Photo path</label>
+        <input
+          value={r.photo}
+          onChange={(e) => update({ photo: e.target.value })}
+          placeholder="/assets/img/ingredients/paneer.jpg"
+          style={{ fontFamily: "var(--mono)", fontSize: 13 }}
+        />
+      </div>
+    </CeModal>
+  );
+}
+
+function SubstitutesModal({ subs, onChange, onClose }) {
+  const [draft, setDraft] = useState("");
+  function commit() { const v = draft.trim(); if (v && !subs.includes(v)) onChange([...subs, v]); setDraft(""); }
+  return (
+    <CeModal title="Substitutes" onClose={onClose}
+      footer={<button className="btn-sm primary" onClick={onClose}>Done</button>}>
+      <p style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-muted)", marginBottom: 12 }}>
+        Similar ingredients a cook can swap in. Press Enter or comma to add.
+      </p>
+      <div className="ce-tags-row" style={{ marginBottom: 12 }}>
+        {subs.map((t, i) => (
+          <span key={i} className="ce-tag-chip" style={{ background: "rgba(122,156,90,0.18)", color: "var(--matcha-deep)", border: "1px solid transparent" }}>
+            {t} <span style={{ marginLeft: 6, cursor: "pointer", color: "var(--ink-muted)" }}
+              onClick={() => onChange(subs.filter((_, k) => k !== i))}>×</span>
+          </span>
+        ))}
+      </div>
+      <input
+        autoFocus
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === ",") { e.preventDefault(); commit(); }
+          else if (e.key === "Backspace" && !draft && subs.length) onChange(subs.slice(0, -1));
+        }}
+        onBlur={commit}
+        placeholder="tofu, halloumi…"
+        style={{ width: "100%", padding: "10px 14px", border: "1px solid var(--rule)", borderRadius: 8, background: "var(--cream-soft)", outline: "none", fontSize: 14 }}
+      />
+    </CeModal>
+  );
+}
+
+// ============================================================
+// MAIN
+// ============================================================
 function IngredientAdminApp() {
   const params = new URLSearchParams(location.search);
   const editId = params.get("id");
@@ -71,6 +238,22 @@ function IngredientAdminApp() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(null);
   const [savedAgo, setSavedAgo] = useState(null);
+  const [slugTaken, setSlugTaken] = useState(false);
+  const [openModal, setOpenModal] = useState(null); // 'identity' | 'subs'
+  const [toast, setToast] = useToast();
+
+  // Slug collision check (new mode)
+  useEffect(() => {
+    if (!isNew) return;
+    const wantSlug = window.slugify(r.name);
+    if (!wantSlug) { setSlugTaken(false); return; }
+    const t = setTimeout(async () => {
+      const { data } = await window.MFC.supabase
+        .from('ingredients').select('id').eq('id', wantSlug).maybeSingle();
+      setSlugTaken(!!data);
+    }, 400);
+    return () => clearTimeout(t);
+  }, [r.name, isNew]);
 
   useEffect(() => {
     if (isNew) return;
@@ -92,6 +275,20 @@ function IngredientAdminApp() {
   const updateShow = (k, v) => update({ show: { ...r.show, [k]: v } });
   const updateNut = (k, v) => update({ nutrition: { ...r.nutrition, [k]: v } });
 
+  // Completion checks
+  const checks = [
+    { label: "Name",      pass: !!(r.name || "").trim(),     required: true },
+    { label: "Tagline",   pass: !!(r.tagline || "").trim(),  required: true },
+    { label: "Category",  pass: !!(r.category || "").trim(), required: true },
+    { label: "Photo",     pass: !!(r.photo || "").trim(),    required: false },
+    { label: "Nutrition", pass: r.nutrition.calories > 0,    required: false },
+    { label: "Health fact", pass: !!(r.health_fact || "").trim(), required: false },
+  ];
+  const passed = checks.filter(c => c.pass).length;
+  const pct = Math.round((passed / checks.length) * 100);
+  const missing = checks.filter(c => c.required && !c.pass).map(c => c.label);
+  const ready = missing.length === 0;
+
   async function onPublish() {
     setErr(null); setBusy(true);
     try {
@@ -102,9 +299,13 @@ function IngredientAdminApp() {
       }
       await window.MFC.adminDb.upsertIngredient(toDb({ ...r, id }));
       setDirty(false); setSavedAgo("just now");
+      setToast(isNew ? "✓ created" : "✓ saved");
       if (isNew) { location.href = `ingredient.html?id=${encodeURIComponent(id)}`; return; }
-    } catch (e) { setErr(e.message || String(e)); }
-    finally { setBusy(false); }
+    } catch (e) {
+      const msg = e.message || String(e);
+      if (msg.includes('23505')) setErr("An ingredient with this id already exists. Choose a different name.");
+      else setErr(msg);
+    } finally { setBusy(false); }
   }
 
   function onDiscard() {
@@ -113,17 +314,16 @@ function IngredientAdminApp() {
     location.reload();
   }
 
-  if (err && !r.name) {
+  if (err && !r.name && !isNew) {
     return (
-      <div className="admin-shell">
+      <div className="admin-shell admin-app-shell">
         <AdminSidebar active="ingredients" />
         <div className="admin-main">
-          <AdminTopbar crumb={[{ label: "Ingredients", href: "ingredients.html" }, { label: "Error" }]} />
-          <div className="admin-page">
-            <div className="form-card" style={{ borderColor: "var(--berry)" }}>
-              <div className="form-card-body" style={{ color: "var(--berry)" }}>
+          <div className="chef-edit">
+            <div className="ce-card" style={{ borderColor: "var(--berry)" }}>
+              <p style={{ color: "var(--berry)", fontFamily: "var(--mono)" }}>
                 {err} · <a href="ingredients.html" style={{ color: "var(--orange)" }}>Back to ingredients</a>
-              </div>
+              </p>
             </div>
           </div>
         </div>
@@ -132,238 +332,299 @@ function IngredientAdminApp() {
   }
 
   return (
-    <div className="admin-shell">
+    <div className="admin-shell admin-app-shell">
       <AdminSidebar active="ingredients" />
       <div className="admin-main">
-        <AdminTopbar
-          crumb={[{ label: "Ingredients", href: "ingredients.html" }, { label: r.name || "Untitled" }]}
-          status="live"
-          savedAgo={savedAgo}
-          isNew={isNew}
-          onPublish={onPublish}
-        />
+        <div className="chef-edit">
+          {/* Breadcrumb */}
+          <div className="ce-breadcrumb">
+            <a href="index.html">Admin</a>
+            <span className="sep">›</span>
+            <a href="ingredients.html">Ingredients</a>
+            <span className="sep">›</span>
+            <span className="current">{r.name || (isNew ? "New" : (editId || "Untitled"))}</span>
+          </div>
 
-        <div className="admin-page">
-          <div className="admin-page-head">
+          {/* Header */}
+          <div className="ce-header">
             <div>
-              <div className="page-eyebrow">{isNew ? "library · new ingredient" : "library · edit ingredient"}</div>
-              <h1>{isNew ? <>New <em>ingredient</em></> : <>Edit <em>ingredient</em></>}</h1>
-              <p className="lede">Library entry — {isNew ? "added once, picked by recipes." : `used by ${usage} recipe${usage === 1 ? "" : "s"}.`} Most fields are auto-filled by AI; you only review and toggle what should surface to users.</p>
-            </div>
-            <div className="admin-page-meta">
-              {!isNew && <span><b>id</b> · {r.id}</span>}
-              {!isNew && <span><b>{usage}</b> recipe{usage === 1 ? "" : "s"}</span>}
-              {r.ai_filled_at && <span style={{ color: "var(--matcha-deep)" }}><b>✦</b> ai-filled {fmtAgo(r.ai_filled_at)}</span>}
+              <div className="ce-eyebrow">{isNew ? "library · new ingredient" : "library · editing"}</div>
+              <h1>{isNew ? <><em>New</em> ingredient</> : <><em>Edit</em> {r.name || editId || "ingredient"}</>}</h1>
             </div>
           </div>
 
+          {/* AI banner if applicable */}
           {r.ai_filled_at && (
-            <div className="ai-banner">
-              <div className="glyph">✦</div>
+            <div className="ce-ai-banner">
+              <span className="glyph">✦</span>
               <div className="copy">
                 <b>Auto-filled by Claude · {fmtAgo(r.ai_filled_at)}</b>
-                <span>Identity, photo, and nutrition were generated. Review the values, toggle which optional fields should appear to users, and publish.</span>
+                <span>Identity, photo, and nutrition were generated. Review the values and toggle which optional fields surface.</span>
               </div>
             </div>
           )}
 
-          <div className="workbench">
-            <div className="workbench-form">
-              <FormCard title="Core" scribble="always shown">
-                <div className="field-grid">
-                  <Field label="Name" required>
-                    <input className="input serif" value={r.name} onChange={(e) => update({ name: e.target.value })} placeholder="e.g. Paneer" />
-                  </Field>
-                  {isNew && r.name && (
-                    <div className="field-hint" style={{ fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 11 }}>
-                      id will be: <span style={{ color: "var(--orange)" }}>{window.slugify(r.name)}</span>
-                    </div>
-                  )}
-                  <div className="field-grid cols-2">
-                    <Field label="Tagline" help="one line">
-                      <input className="input" value={r.tagline} onChange={(e) => update({ tagline: e.target.value })} placeholder="fresh, milky, holds shape under heat" />
-                    </Field>
-                    <Field label="Category">
-                      <select className="select" value={r.category} onChange={(e) => update({ category: e.target.value })}>
-                        <option>Dairy</option><option>Vegetable</option><option>Fruit</option><option>Grain</option><option>Spice</option><option>Herb</option><option>Protein</option><option>Oil & Fat</option><option>Nut & Seed</option><option>Aromatic</option><option>Seasoning</option>
-                      </select>
-                    </Field>
-                  </div>
-                  <Field label="Default unit" hint="Pre-filled when a recipe picks this ingredient.">
-                    <RadioPills value={r.default_unit} options={["g", "ml", "tsp", "tbsp", "cup", "medium", "large", "whole", "pinch"]} onChange={(v) => update({ default_unit: v })} />
-                  </Field>
-                  <Field label="Photo" hint="Path under data/ingredient-photos/.">
-                    <input className="input mono" value={r.photo} onChange={(e) => update({ photo: e.target.value })} placeholder="data/ingredient-photos/paneer.jpg" />
-                  </Field>
+          {/* Publish bar */}
+          <div className="publish-bar">
+            <CompletionRing pct={pct} />
+            <div className="pb-text">
+              <b>{ready ? "Ready to publish" : "Needs a few details"}</b>
+              <div className="pb-meta">
+                {!isNew && <>used by {usage} recipe{usage === 1 ? "" : "s"} · </>}
+                {pct}% complete
+                {savedAgo && <> · <span className="ok">saved {savedAgo}</span></>}
+              </div>
+              {missing.length > 0 && (
+                <div className="warn-list">
+                  {missing.map((m) => <span key={m} className="warn-pill">{m}</span>)}
                 </div>
-              </FormCard>
-
-              <SurfaceCard
-                title="Nutrition" scribble="per 100g"
-                surfaceLabel="recipe & ingredient page"
-                show={r.show.nutrition}
-                onShowChange={(v) => updateShow("nutrition", v)}
-              >
-                <div className="nut-grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-                  <NutCell label="Calories" value={r.nutrition.calories} unit="kcal" onChange={(v) => updateNut("calories", v)} accent />
-                  <NutCell label="Protein"  value={r.nutrition.protein}  unit="g"    onChange={(v) => updateNut("protein", v)} />
-                  <NutCell label="Fat"      value={r.nutrition.fat}      unit="g"    onChange={(v) => updateNut("fat", v)} />
-                  <NutCell label="Carbs"    value={r.nutrition.carbs}    unit="g"    onChange={(v) => updateNut("carbs", v)} />
-                </div>
-              </SurfaceCard>
-
-              <SurfaceCard
-                title="Health fact" scribble="rotates in cooking flow"
-                surfaceLabel="recipe page · health rotator"
-                show={r.show.healthFact}
-                onShowChange={(v) => updateShow("healthFact", v)}
-              >
-                <Field label="One-liner" help="60–110 chars">
-                  <textarea
-                    className="textarea"
-                    rows={2}
-                    value={r.health_fact}
-                    onChange={(e) => update({ health_fact: e.target.value })}
-                  />
-                </Field>
-              </SurfaceCard>
-
-              <SurfaceCard
-                title="Storage tip"
-                surfaceLabel="ingredient page only"
-                show={r.show.storage}
-                onShowChange={(v) => updateShow("storage", v)}
-              >
-                <Field label="Where & how long">
-                  <input className="input" value={r.storage} onChange={(e) => update({ storage: e.target.value })} placeholder="Refrigerated, submerged in water · 7 days" />
-                </Field>
-              </SurfaceCard>
-
-              <SurfaceCard
-                title="Substitutes"
-                surfaceLabel="ingredient page only"
-                show={r.show.substitutes}
-                onShowChange={(v) => updateShow("substitutes", v)}
-              >
-                <Field label="Similar ingredients" hint="Press enter to add">
-                  <ChipInput
-                    color="matcha"
-                    tags={r.substitutes}
-                    onAdd={(t) => update({ substitutes: [...r.substitutes, t] })}
-                    onRemove={(i) => update({ substitutes: r.substitutes.filter((_, k) => k !== i) })}
-                    placeholder="tofu, halloumi…"
-                  />
-                </Field>
-              </SurfaceCard>
+              )}
             </div>
+            <div className="pb-actions">
+              <button className={"btn-sm primary" + (busy ? " disabled" : "")} disabled={busy} onClick={onPublish}>
+                {busy ? "Saving…" : isNew ? "Create →" : "Update →"}
+              </button>
+            </div>
+          </div>
 
-            <div className="workbench-preview">
-              <PreviewFrame url={`/i/${r.id || "<new>"}`}>
-                <IngredientPreview r={r} usage={usage} />
-              </PreviewFrame>
-              <div style={{ display: "flex", gap: 8, alignItems: "center", padding: "0 4px", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
-                <span>↻ Live preview</span>
-                <span>·</span>
-                <span>What users will see</span>
+          {/* HERO CARD — split: photo on left, identity on right */}
+          <div className="ce-card flush ce-ing-hero">
+            <div className="ce-ing-hero-photo">
+              {r.photo
+                ? <img src={r.photo} alt="" onError={(e) => { e.target.style.display = "none"; }} />
+                : (
+                  <div className="ce-ing-hero-empty">
+                    <div className="glyph">🥕</div>
+                    <div className="label">No photo yet</div>
+                  </div>
+                )}
+              <EditPill
+                style={{ position: "absolute", bottom: 12, right: 12, background: "rgba(255,252,243,0.94)" }}
+                onClick={() => setOpenModal("identity")}
+              >{r.photo ? "replace" : "add"} photo</EditPill>
+            </div>
+            <div className="ce-ing-hero-text">
+              <div className="ce-hero-meta">
+                <span>{r.category}</span>
+                <span className="dot">·</span>
+                <span>default <b style={{ color: "var(--ink)" }}>{r.default_unit}</b></span>
+                <EditPill onClick={() => setOpenModal("identity")}>identity</EditPill>
+                {slugTaken && (
+                  <span style={{ color: "var(--berry)", fontFamily: "var(--mono)", fontSize: 10.5 }}>⚠ slug taken</span>
+                )}
+              </div>
+              <input
+                className="ce-hero-title-input"
+                value={r.name}
+                onChange={(e) => update({ name: e.target.value })}
+                placeholder="Ingredient name"
+              />
+              <input
+                className="ce-hero-tag-input"
+                value={r.tagline}
+                onChange={(e) => update({ tagline: e.target.value })}
+                placeholder="One-line description"
+              />
+              <div className="ce-ing-hero-foot">
+                {isNew ? (
+                  <span>// new entry · id will be generated from name</span>
+                ) : (
+                  <span>// id <b style={{ color: "var(--ink)" }}>{r.id}</b>{r.ai_filled_at ? <> · ✦ ai-filled {fmtAgo(r.ai_filled_at)}</> : null}</span>
+                )}
               </div>
             </div>
           </div>
 
-          <SaveBar dirty={dirty} busy={busy} error={err} onDiscard={onDiscard} onPublish={onPublish} isNew={isNew} />
+          {/* MACROS CARD */}
+          <div className="ce-card">
+            <div className="ce-card-head">
+              <div>
+                <div className="ce-eyebrow">macros</div>
+                <h3 className="ce-card-title">per 100g</h3>
+              </div>
+              <SurfaceToggle
+                label="surface on recipe page"
+                value={r.show.nutrition}
+                onChange={(v) => updateShow("nutrition", v)}
+              />
+            </div>
+            <div className="ce-nut-grid">
+              <NutCell label="Calories" value={r.nutrition.calories} unit="kcal" accent
+                onChange={(v) => updateNut("calories", v)} />
+              <NutCell label="Protein" value={r.nutrition.protein} unit="g"
+                onChange={(v) => updateNut("protein", v)} />
+              <NutCell label="Fat" value={r.nutrition.fat} unit="g"
+                onChange={(v) => updateNut("fat", v)} />
+              <NutCell label="Carbs" value={r.nutrition.carbs} unit="g"
+                onChange={(v) => updateNut("carbs", v)} />
+            </div>
+          </div>
+
+          {/* HEALTH FACT CARD */}
+          <div className={"ce-card" + (r.show.healthFact ? "" : " ce-card-dim")}>
+            <div className="ce-card-head">
+              <div>
+                <div className="ce-eyebrow">health fact</div>
+                <h3 className="ce-card-title">cooking flow rotator</h3>
+                <div className="ce-card-sub">60–110 chars · surfaces during guided cook</div>
+              </div>
+              <SurfaceToggle
+                label="surface on recipe page"
+                value={r.show.healthFact}
+                onChange={(v) => updateShow("healthFact", v)}
+              />
+            </div>
+            {r.show.healthFact ? (
+              <textarea
+                className="ce-ing-multiline"
+                rows={2}
+                value={r.health_fact}
+                onChange={(e) => update({ health_fact: e.target.value })}
+                placeholder="Spinach is rich in iron, but its bioavailability improves dramatically with vitamin C."
+              />
+            ) : (
+              <div className="ce-faint">Toggle on to include this on the recipe page rotator.</div>
+            )}
+          </div>
+
+          {/* STORAGE CARD */}
+          <div className={"ce-card" + (r.show.storage ? "" : " ce-card-dim")}>
+            <div className="ce-card-head">
+              <div>
+                <div className="ce-eyebrow">storage</div>
+                <h3 className="ce-card-title">where & how long</h3>
+              </div>
+              <SurfaceToggle
+                label="surface on ingredient page"
+                value={r.show.storage}
+                onChange={(v) => updateShow("storage", v)}
+              />
+            </div>
+            {r.show.storage ? (
+              <input
+                className="ce-ing-line"
+                value={r.storage}
+                onChange={(e) => update({ storage: e.target.value })}
+                placeholder="Refrigerated, submerged in water · 7 days"
+              />
+            ) : (
+              <div className="ce-faint">Toggle on to include a storage tip on the ingredient page.</div>
+            )}
+          </div>
+
+          {/* SUBSTITUTES CARD */}
+          <div className={"ce-card" + (r.show.substitutes ? "" : " ce-card-dim")}>
+            <div className="ce-card-head">
+              <div>
+                <div className="ce-eyebrow">substitutes</div>
+                <h3 className="ce-card-title">similar ingredients</h3>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                {r.show.substitutes && (
+                  <EditPill onClick={() => setOpenModal("subs")}>edit</EditPill>
+                )}
+                <SurfaceToggle
+                  label="surface on ingredient page"
+                  value={r.show.substitutes}
+                  onChange={(v) => updateShow("substitutes", v)}
+                />
+              </div>
+            </div>
+            {r.show.substitutes ? (
+              r.substitutes.length === 0 ? (
+                <div className="ce-empty">No substitutes yet — click "edit" to add.</div>
+              ) : (
+                <div className="ce-tags-row">
+                  {r.substitutes.map((s) => (
+                    <span key={s} className="ce-tag-chip" style={{ background: "rgba(122,156,90,0.18)", color: "var(--matcha-deep)", border: "1px solid transparent" }}>{s}</span>
+                  ))}
+                </div>
+              )
+            ) : (
+              <div className="ce-faint">Toggle on to surface a list of swap-ins on the ingredient page.</div>
+            )}
+          </div>
+
+          {err && (
+            <div className="ce-card" style={{ borderColor: "var(--berry)" }}>
+              <p style={{ color: "var(--berry)", fontFamily: "var(--mono)", fontSize: 12 }}>Error: {err}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Sticky bottom save bar */}
+        <div className="ce-savebar">
+          <div className={"info" + (dirty ? "" : " clean")}>
+            <span className="dot" />
+            <span>
+              {busy ? "Saving…"
+                : err ? <span style={{ color: "var(--berry)" }}>Error · see above</span>
+                : dirty ? "Unsaved changes"
+                : savedAgo ? `All changes saved · ${savedAgo}`
+                : "All changes saved"}
+            </span>
+          </div>
+          <div className="actions">
+            <button className="btn-sm ghost" onClick={onDiscard} disabled={busy || !dirty}>Discard</button>
+            <button className="btn-sm primary" onClick={onPublish} disabled={busy || (!dirty && !isNew)}>
+              {busy ? "Saving…" : isNew ? "Create →" : "Update →"}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Modals */}
+      {openModal === "identity" && (
+        <IdentityModal r={r} update={update} slugTaken={slugTaken} isNew={isNew} onClose={() => setOpenModal(null)} />
+      )}
+      {openModal === "subs" && (
+        <SubstitutesModal subs={r.substitutes} onChange={(s) => update({ substitutes: s })} onClose={() => setOpenModal(null)} />
+      )}
+
+      {toast && <div className="ce-toast">{toast}</div>}
     </div>
   );
 }
 
-function SurfaceCard({ title, scribble, surfaceLabel, show, onShowChange, children }) {
-  return (
-    <section className="form-card" style={!show ? { opacity: 0.6 } : {}}>
-      <div className="form-card-head">
-        <h3>{title}</h3>
-        {scribble && <span className="scribble-note">{scribble}</span>}
-        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: show ? "var(--matcha-deep)" : "var(--ink-faint)" }}>
-            {show ? `↗ ${surfaceLabel}` : "hidden"}
-          </span>
-          <Toggle value={show} onChange={onShowChange} />
-        </div>
-      </div>
-      {show && <div className="form-card-body compact">{children}</div>}
-      {!show && (
-        <div style={{ padding: "14px 24px", background: "var(--cream-soft)", borderTop: "1px dashed var(--rule)", fontSize: 12, color: "var(--ink-muted)", fontStyle: "italic", fontFamily: "var(--serif)" }}>
-          Toggle on to include this in the user-facing output.
-        </div>
-      )}
-    </section>
-  );
-}
-
+// Macro cell — integer input, mono unit suffix, design tokens.
 function NutCell({ label, value, unit, onChange, accent }) {
   return (
-    <div className={"nut-cell" + (accent ? " accent" : "")}>
+    <div className={"ce-nut-cell" + (accent ? " accent" : "")}>
       <div className="lbl">{label}</div>
       <div className="row">
-        <input value={value} onChange={(e) => onChange(parseFloat(e.target.value) || 0)} />
+        <input
+          type="number"
+          inputMode="numeric"
+          step="1"
+          min="0"
+          value={value}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (v === "") { onChange(0); return; }
+            const n = parseInt(v, 10);
+            if (!Number.isFinite(n) || n < 0) return;
+            onChange(n);
+          }}
+        />
         <span className="unit">{unit}</span>
       </div>
     </div>
   );
 }
 
-function IngredientPreview({ r, usage }) {
-  const firstWord = (r.name || "").split(" ")[0];
-  const rest = (r.name || "").split(" ").slice(1).join(" ");
+// Slim toggle + label, used in card heads
+function SurfaceToggle({ label, value, onChange }) {
   return (
-    <div className="pv-ing-card">
-      <div className="pv-ing-photo">
-        <span className="badge">{r.category}</span>
-        <span className="tag">[ {r.photo || "no-photo.jpg"} ]</span>
-      </div>
-      <div className="pv-ing-body">
-        <div className="pv-ing-name">
-          {rest ? <><em>{firstWord}</em> {rest}</> : firstWord || "Untitled"}
-        </div>
-        <div className="pv-ing-tagline">{r.tagline}</div>
-
-        {r.show.nutrition && (
-          <div className="pv-nut-strip">
-            <div className="cell"><div className="v">{r.nutrition.calories}</div><div className="l">kcal</div></div>
-            <div className="cell"><div className="v">{r.nutrition.protein}g</div><div className="l">protein</div></div>
-            <div className="cell"><div className="v">{r.nutrition.fat}g</div><div className="l">fat</div></div>
-            <div className="cell"><div className="v">{r.nutrition.carbs}g</div><div className="l">carbs</div></div>
-          </div>
-        )}
-
-        {r.show.healthFact && r.health_fact && (
-          <div style={{ marginTop: 14, padding: "12px 14px", background: "var(--matcha-soft)", borderRadius: 10, fontSize: 13, color: "var(--matcha-deep)", fontStyle: "italic", fontFamily: "var(--serif)", lineHeight: 1.45 }}>
-            <span style={{ fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--matcha-deep)", display: "block", marginBottom: 4, opacity: 0.7 }}>did you know</span>
-            {r.health_fact}
-          </div>
-        )}
-
-        {r.show.storage && r.storage && (
-          <div style={{ marginTop: 12, fontFamily: "var(--mono)", fontSize: 11, color: "var(--ink-muted)", display: "flex", gap: 8 }}>
-            <span style={{ color: "var(--orange)" }}>storage</span>
-            <span>{r.storage}</span>
-          </div>
-        )}
-
-        {r.show.substitutes && r.substitutes.length > 0 && (
-          <div style={{ marginTop: 12 }}>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--ink-muted)", marginBottom: 6 }}>or use</div>
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-              {r.substitutes.map((s, i) => (
-                <span key={i} style={{ padding: "3px 9px", background: "var(--matcha-soft)", color: "var(--matcha-deep)", borderRadius: 999, fontSize: 11 }}>{s}</span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px dashed var(--rule)", fontFamily: "var(--mono)", fontSize: 10, color: "var(--ink-faint)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          used in {usage} recipe{usage === 1 ? "" : "s"}
-        </div>
-      </div>
+    <div className="ce-surface-toggle">
+      <span className={"ce-surface-label " + (value ? "on" : "off")}>
+        {value ? "↗ " + label : "hidden"}
+      </span>
+      <button
+        type="button"
+        className={"ce-toggle" + (value ? " on" : "")}
+        onClick={() => onChange(!value)}
+        aria-label={value ? "Hide on user-facing surfaces" : "Show on user-facing surfaces"}
+      />
     </div>
   );
 }

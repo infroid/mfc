@@ -606,6 +606,23 @@ CREATE POLICY "user_profiles_owner_all"       ON public.user_profiles
 CREATE POLICY "meal_logs_owner_all"           ON public.meal_logs
   FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
+-- Admin-read access to user-owned data, for the /admin/user.html detail page
+-- (activity counts + read-only food prefs surface). Read-only by design;
+-- mutations remain owner-scoped.
+DROP POLICY IF EXISTS "user_health_markers_admin_read" ON public.user_health_markers;
+DROP POLICY IF EXISTS "saved_recipes_admin_read"       ON public.saved_recipes;
+DROP POLICY IF EXISTS "user_profiles_admin_read"       ON public.user_profiles;
+DROP POLICY IF EXISTS "meal_logs_admin_read"           ON public.meal_logs;
+
+CREATE POLICY "user_health_markers_admin_read" ON public.user_health_markers
+  FOR SELECT USING (public.is_admin());
+CREATE POLICY "saved_recipes_admin_read"       ON public.saved_recipes
+  FOR SELECT USING (public.is_admin());
+CREATE POLICY "user_profiles_admin_read"       ON public.user_profiles
+  FOR SELECT USING (public.is_admin());
+CREATE POLICY "meal_logs_admin_read"           ON public.meal_logs
+  FOR SELECT USING (public.is_admin());
+
 -- Recommendations: owner reads; pipeline (service-role) writes
 ALTER TABLE public.recommendations ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "recommendations_owner_read" ON public.recommendations;

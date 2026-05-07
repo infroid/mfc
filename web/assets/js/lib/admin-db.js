@@ -76,6 +76,42 @@ window.MFC.adminDb = (function () {
     check(error, 'deleteUtensil');
   }
 
+  // Admin-only: fetch one user's profile + activity counts (last 30 days).
+  // Backed by user_profiles_admin_read / saved_recipes_admin_read /
+  // meal_logs_admin_read / user_health_markers_admin_read RLS policies.
+  async function getUserAdminView(userId) {
+    const sinceMs = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const since = new Date(sinceMs).toISOString();
+    const sinceDate = since.slice(0, 10);
+
+    const [profileRes, savesRes, mealsRes, markersRes] = await Promise.all([
+      sb().from('user_profiles')
+        .select('date_of_birth,diet_tags,allergies,goals,units')
+        .eq('user_id', userId).maybeSingle(),
+      sb().from('saved_recipes')
+        .select('user_id', { count: 'exact', head: true })
+        .eq('user_id', userId).gte('saved_at', since),
+      sb().from('meal_logs')
+        .select('user_id', { count: 'exact', head: true })
+        .eq('user_id', userId).gte('logged_at', since),
+      sb().from('user_health_markers')
+        .select('user_id', { count: 'exact', head: true })
+        .eq('user_id', userId).gte('measured_at', sinceDate),
+    ]);
+
+    [profileRes, savesRes, mealsRes, markersRes].forEach((r, i) =>
+      check(r.error, `getUserAdminView.${i}`));
+
+    return {
+      profile: profileRes.data || null,
+      activity: {
+        savedRecipes: savesRes.count ?? 0,
+        mealsLogged:  mealsRes.count ?? 0,
+        markersUpdated: markersRes.count ?? 0,
+      },
+    };
+  }
+
   async function utensilUsageCounts() {
     const { data, error } = await sb()
       .from('recipe_utensils').select('utensil_id');
@@ -83,6 +119,36 @@ window.MFC.adminDb = (function () {
     const counts = {};
     for (const r of data || []) counts[r.utensil_id] = (counts[r.utensil_id] || 0) + 1;
     return counts;
+  }
+
+  async function listUtensilBuyLinks(utensilId) {
+    const { data, error } = await sb()
+      .from('utensil_buy_links')
+      .select('store,url,price,affiliate_tag,sort_order')
+      .eq('utensil_id', utensilId)
+      .order('sort_order', { ascending: true });
+    check(error, 'listUtensilBuyLinks');
+    return data || [];
+  }
+
+  // Replaces all buy_links for a utensil. Deletes existing rows then inserts new.
+  async function saveUtensilBuyLinks(utensilId, links) {
+    const { error: delErr } = await sb()
+      .from('utensil_buy_links').delete().eq('utensil_id', utensilId);
+    check(delErr, 'saveUtensilBuyLinks.delete');
+    const rows = (links || [])
+      .filter((l) => l && (l.url || l.store))
+      .map((l, i) => ({
+        utensil_id: utensilId,
+        sort_order: i,
+        store: l.store || null,
+        url: l.url || null,
+        price: l.price || null,
+        affiliate_tag: l.affiliate_tag || null,
+      }));
+    if (rows.length === 0) return;
+    const { error: insErr } = await sb().from('utensil_buy_links').insert(rows);
+    check(insErr, 'saveUtensilBuyLinks.insert');
   }
 
   // ---------- RECIPES ----------
@@ -286,6 +352,8 @@ window.MFC.adminDb = (function () {
   return {
     listIngredients, getIngredient, upsertIngredient, deleteIngredient, ingredientUsageCounts,
     listUtensils,    getUtensil,    upsertUtensil,    deleteUtensil,    utensilUsageCounts,
+    listUtensilBuyLinks, saveUtensilBuyLinks,
+    getUserAdminView,
     listRecipes,     listOwnedRecipes, getRecipe,     saveRecipe,       createOwnedRecipe, deleteRecipe,
     getDashboardSnapshot,
   };

@@ -20,6 +20,7 @@ from .commands import (
     seed_metrics,
     set_role,
     status,
+    suspend_user,
     sync_images,
     sync_recipes,
 )
@@ -37,6 +38,7 @@ COMMAND_MODULES = [
     sync_recipes,
     sync_images,
     set_role,
+    suspend_user,
     drop_schema,
     reset,
 ]

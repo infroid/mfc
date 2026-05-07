@@ -16,7 +16,7 @@ UV := uv --project automation
 
 .PHONY: help sync status apply-schema seed-metrics \
         sync-recipes sync-images \
-        list-users set-role drop-schema reset serve
+        list-users set-role suspend-user drop-schema reset serve
 
 help: ## list all targets
 	@echo "MyFoodCraving — make targets:"
@@ -73,6 +73,9 @@ list-users: ## list users; optional ROLE=user|chef|admin Q=alice
 
 set-role: ## change role; required USER=<email-or-uuid> ROLE=<user|chef|admin>
 	@$(UV) run mfc set-role --user "$(USER)" --role "$(ROLE)"
+
+suspend-user: ## suspend (ban) a user; required USER=<email-or-uuid>
+	@$(UV) run mfc suspend-user --user "$(USER)"
 
 drop-schema: ## DESTRUCTIVE — drop all public tables (prompts to confirm)
 	@$(UV) run mfc drop-schema

@@ -197,6 +197,40 @@ def list_users(
     return [_user_to_app_user(u) for u in matched[start:end]]
 
 
+def suspend(
+    config: Config,
+    *,
+    target: str,
+    duration: str = "876000h",
+) -> tuple[AppUser, bool]:
+    """Suspend (ban) a user. Sets `banned_until` via Supabase Auth admin and
+    force-signs them out of all sessions.
+
+    `duration` accepts GoTrue's ban_duration string (e.g. "24h", "876000h"
+    for effectively permanent — ~100 years). Returns (user, signed_out).
+
+    Guards:
+      - target must exist
+      - last-admin: refuse to suspend the only remaining admin
+    """
+    client = _service_client(config)
+    user = _resolve_target(client, target)
+    before = _user_to_app_user(user)
+
+    if before.role == "admin" and _count_admins(client) <= 1:
+        raise RoleError(
+            f"refusing to suspend {before.email} — last remaining admin. "
+            f"Promote another user to admin first."
+        )
+
+    client.auth.admin.update_user_by_id(before.id, {"ban_duration": duration})
+    _force_signout(config, before.id)
+
+    resp = client.auth.admin.get_user_by_id(before.id)
+    after_user = resp.user if hasattr(resp, "user") else resp
+    return _user_to_app_user(after_user), True
+
+
 def set_role(
     config: Config,
     *,

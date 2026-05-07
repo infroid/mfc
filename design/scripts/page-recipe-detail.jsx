@@ -1,0 +1,579 @@
+/* global React */
+const { useState, useEffect, useMemo, useRef } = React;
+const { navigate, useUser } = window.MFC_CHROME;
+
+// ---------- Recipe detail data (inline so the prototype is self-contained) ----------
+const RECIPE_DETAILS = {
+  "lemon-ricotta": {
+    id: "lemon-ricotta",
+    name: "Lemon ricotta spaghetti",
+    cuisine: "Italian",
+    difficulty: "Easy",
+    servings: 2,
+    totalMinutes: 22,
+    rating: 4.8,
+    ratingCount: 128,
+    tagline: "Bright lemon, soft ricotta, black pepper — a 22-minute Italian classic.",
+    image: "assets/lemon-ricotta-spaghetti.jpg",
+    nutrition: { calories: 480, protein: 22, carbs: 58, fat: 18, fiber: 4, sodium: 380 },
+    nutriTags: ["high-protein", "vegetarian", "30 min"],
+    healthFacts: [
+      "Ricotta delivers 11g protein per ½ cup — a complete amino acid source.",
+      "Lemon zest is the most aromatic part — it carries 70% of the citrus oils.",
+      "Reserved pasta water is liquid gold: starch + salt = silky, emulsified sauce.",
+      "Black pepper boosts nutrient absorption by 2,000% via piperine.",
+    ],
+    ingredients: [
+      { name: "Spaghetti", amt: "200g", emoji: "🍝", essential: true },
+      { name: "Whole-milk ricotta", amt: "1 cup", emoji: "🧀", essential: true },
+      { name: "Lemon", amt: "2 large", emoji: "🍋", essential: true },
+      { name: "Parmesan, grated", amt: "½ cup", emoji: "🧀", essential: false },
+      { name: "Olive oil", amt: "2 tbsp", emoji: "🫒", essential: false },
+      { name: "Black pepper", amt: "to taste", emoji: "⚫", essential: false },
+      { name: "Fresh basil", amt: "8 leaves", emoji: "🌿", essential: false },
+      { name: "Salt", amt: "to taste", emoji: "🧂", essential: true },
+    ],
+    utensils: [
+      { name: "Pasta pot", emoji: "🥘", essential: true },
+      { name: "Microplane zester", emoji: "🪒", essential: true },
+      { name: "Mixing bowl", emoji: "🥣", essential: false },
+      { name: "Tongs", emoji: "🍴", essential: false },
+      { name: "Fine strainer", emoji: "⚪", essential: false },
+    ],
+    steps: [
+      {
+        title: "Salt the water",
+        detail: "Bring 4 quarts of water to a boil. Salt it generously — it should taste like the sea. This is your only chance to season the pasta itself.",
+        duration: 300,
+        tip: "Use 1 tablespoon of kosher salt per quart. Don't be shy.",
+      },
+      {
+        title: "Whisk the ricotta",
+        detail: "While the water heats, whisk ricotta with the zest of both lemons, ¼ cup parmesan, olive oil, and a generous crack of black pepper. Loosen with a splash of cold water until creamy.",
+        duration: 240,
+        tip: "Whip it for 30 seconds longer than you think — the texture transforms.",
+      },
+      {
+        title: "Cook the pasta",
+        detail: "Drop spaghetti into the boiling water. Cook 1 minute less than the package says — it'll finish in the sauce. Reserve 1 cup of pasta water before draining.",
+        duration: 540,
+        tip: "Stir within the first 30 seconds to prevent sticking.",
+      },
+      {
+        title: "Marry sauce & pasta",
+        detail: "Add hot pasta directly to the ricotta bowl. Squeeze in the juice of half a lemon. Toss vigorously, adding pasta water 2 tbsp at a time until you get a glossy, silky sauce that clings to every strand.",
+        duration: 180,
+        tip: "The heat from the pasta gently cooks the ricotta — don't return to the heat or it'll seize.",
+      },
+      {
+        title: "Plate and finish",
+        detail: "Twist into nests with tongs. Top with torn basil, more parmesan, a drizzle of olive oil, and a final crack of pepper. Serve immediately — this dish waits for no one.",
+        duration: 60,
+        tip: "A few flakes of finishing salt brightens everything.",
+      },
+    ],
+  },
+};
+
+// Build a default recipe detail by extending base recipe data
+function getRecipeDetail(id) {
+  if (RECIPE_DETAILS[id]) return RECIPE_DETAILS[id];
+  const base = window.MFC_DATA.recipeById(id);
+  if (!base) return null;
+  // synthesize a reasonable detail from what we have
+  return {
+    ...base,
+    totalMinutes: base.minutes,
+    rating: 4.7,
+    ratingCount: 96,
+    nutrition: { calories: 420, protein: 18, carbs: 50, fat: 14, fiber: 6, sodium: 320 },
+    nutriTags: base.tags || [],
+    healthFacts: [base.highlight, "Whole foods support stable energy.", "Cooking at home cuts sodium ~30%."],
+    ingredients: [
+      { name: "Pantry staple", amt: "as needed", emoji: "🧂", essential: true },
+    ],
+    utensils: [
+      { name: "Knife", emoji: "🔪", essential: true },
+      { name: "Pan", emoji: "🍳", essential: true },
+    ],
+    steps: Array.from({ length: base.stepCount || 4 }, (_, i) => ({
+      title: `Step ${i + 1}`,
+      detail: "This recipe doesn't have detailed steps in the demo bundle yet — switch to lemon ricotta for the full premium experience.",
+      duration: 240,
+      tip: "Coming soon: full step bundle.",
+    })),
+  };
+}
+
+function fmt(s) {
+  s = Math.max(0, Math.round(s));
+  return `${String(Math.floor(s / 60)).padStart(1, "0")}:${String(s % 60).padStart(2, "0")}`;
+}
+function fmtMin(s) {
+  const m = Math.round(s / 60);
+  return `${m}m`;
+}
+
+// ============================================================
+// HERO — image with overlay + nutrition card
+// ============================================================
+function RecipeHero({ recipe, saved, onToggleSave, user, onRequestSignIn, justSaved }) {
+  const n = recipe.nutrition;
+  const proteinPct = Math.min(100, Math.round((n.protein * 4 / n.calories) * 100));
+  const carbsPct = Math.min(100, Math.round((n.carbs * 4 / n.calories) * 100));
+  const fatPct = Math.min(100, Math.round((n.fat * 9 / n.calories) * 100));
+
+  return (
+    <section className="r-hero">
+      <div className="r-hero-left">
+        <header className="r-hero-header">
+          <div className="r-hero-eyebrow">
+            <span>{recipe.cuisine}</span>
+            <span className="dot">·</span>
+            <span><span className="star">★</span> {recipe.rating} <span style={{ opacity: 0.6 }}>({recipe.ratingCount})</span></span>
+            <span className="dot">·</span>
+            <span>{recipe.difficulty}</span>
+          </div>
+          <h1 className="r-hero-title">
+            <em>{recipe.name.split(" ")[0]}</em> {recipe.name.split(" ").slice(1).join(" ")}
+          </h1>
+          <p className="r-hero-tagline">{recipe.tagline}</p>
+          <div className="r-hero-meta">
+            <span><b>{recipe.totalMinutes}</b>min total</span>
+            <span><b>{recipe.servings}</b>servings</span>
+            <span><b>{recipe.steps.length}</b>steps</span>
+          </div>
+        </header>
+
+        <div className="r-hero-stage">
+          {recipe.image ? (
+            <img src={recipe.image} alt={recipe.name} />
+          ) : (
+            <div style={{ position: "absolute", inset: 0, background: recipe.colorSoft || "var(--cream-deep)" }} />
+          )}
+          <button
+            className={"r-save-icon" + (user && saved ? " saved" : "") + (justSaved ? " just-saved" : "")}
+            onClick={user ? onToggleSave : onRequestSignIn}
+            title={user ? (saved ? "Remove from saved" : "Save recipe") : "Sign in to save"}
+            aria-label={user ? (saved ? "Unsave" : "Save") : "Sign in to save"}
+          >
+            <span className="heart">{user && saved ? "♥" : "♡"}</span>
+          </button>
+        </div>
+      </div>
+
+      <aside className="r-nutri">
+        <div className="r-nutri-head">
+          <h3>nutrition</h3>
+          <span className="eyebrow-comment">per serving</span>
+        </div>
+        <div className="r-nutri-cal">
+          <span className="num">{n.calories}</span>
+          <span className="unit">kcal</span>
+          <span className="per">{Math.round(n.calories / recipe.totalMinutes)} kcal<br/>per minute cooked</span>
+        </div>
+        <div className="r-nutri-grid">
+          <div className="r-macro" style={{ "--ring-c": "var(--matcha)", "--ring-p": proteinPct }}>
+            <div className="ring"><b>P</b></div>
+            <div className="v">{n.protein}<sup>g</sup></div>
+            <div className="l">protein</div>
+          </div>
+          <div className="r-macro" style={{ "--ring-c": "var(--orange)", "--ring-p": carbsPct }}>
+            <div className="ring"><b>C</b></div>
+            <div className="v">{n.carbs}<sup>g</sup></div>
+            <div className="l">carbs</div>
+          </div>
+          <div className="r-macro" style={{ "--ring-c": "var(--butter)", "--ring-p": fatPct }}>
+            <div className="ring"><b>F</b></div>
+            <div className="v">{n.fat}<sup>g</sup></div>
+            <div className="l">fat</div>
+          </div>
+          <div className="r-macro" style={{ "--ring-c": "var(--matcha-deep)", "--ring-p": Math.min(100, n.fiber * 4) }}>
+            <div className="ring"><b>·</b></div>
+            <div className="v">{n.fiber}<sup>g</sup></div>
+            <div className="l">fiber</div>
+          </div>
+          <div className="r-macro" style={{ "--ring-c": "var(--berry)", "--ring-p": Math.min(100, n.sodium / 23) }}>
+            <div className="ring"><b>Na</b></div>
+            <div className="v">{n.sodium}<sup>mg</sup></div>
+            <div className="l">sodium</div>
+          </div>
+          <div className="r-macro" style={{ "--ring-c": "var(--orange-deep)", "--ring-p": Math.round(((n.protein * 4) / n.calories) * 100) }}>
+            <div className="ring"><b>%</b></div>
+            <div className="v">{Math.round(((n.protein * 4) / n.calories) * 100)}<sup>%</sup></div>
+            <div className="l">from protein</div>
+          </div>
+        </div>
+        <div className="r-nutri-tags">
+          {recipe.nutriTags && recipe.nutriTags.map((t, i) => (
+            <span key={i} className={"r-nutri-tag " + (i % 3 === 1 ? "warm" : i % 3 === 2 ? "warm-y" : "")}>{t}</span>
+          ))}
+        </div>
+        <div className="r-nutri-actions">
+          <button className="btn sm">Share</button>
+          <button className="btn sm orange">Cook now</button>
+        </div>
+      </aside>
+    </section>
+  );
+}
+
+// ============================================================
+// STEP CARD (no inline timer — that's in the player now)
+// ============================================================
+function StepCard({ recipe, stepIdx, doneSteps }) {
+  const step = recipe.steps[stepIdx];
+  const total = recipe.steps.length;
+  const minutes = Math.round(step.duration / 60);
+  const cumulativeBefore = recipe.steps.slice(0, stepIdx).reduce((acc, s) => acc + s.duration, 0);
+  const cumulativeAfter = cumulativeBefore + step.duration;
+  const totalSecs = recipe.steps.reduce((acc, s) => acc + s.duration, 0);
+
+  return (
+    <div className="r-step-card">
+      <div className="r-step-head">
+        <span className="r-step-tag">step <b>{String(stepIdx + 1).padStart(2, "0")}</b> / {String(total).padStart(2, "0")}</span>
+        <span className="r-step-divider" />
+        <span className="r-step-pacing">
+          <span className="dot" />
+          {fmtMin(cumulativeBefore)} → {fmtMin(cumulativeAfter)} of {fmtMin(totalSecs)}
+        </span>
+      </div>
+
+      <h2 className="r-step-title">{step.title}</h2>
+      <p className="r-step-detail">{step.detail}</p>
+
+      <figure className="r-step-image">
+        {step.image ? (
+          <img src={step.image} alt={step.title} />
+        ) : (
+          <div className="placeholder">step {stepIdx + 1} reference shot</div>
+        )}
+        <span className="cap">{step.title.toLowerCase()}</span>
+      </figure>
+
+      {step.tip && (
+        <div className="r-step-tip">
+          <span className="label-h">chef's note —</span>
+          <p>{step.tip}</p>
+        </div>
+      )}
+
+      <div className="r-step-foot">
+        <div className="r-step-foot-meta">
+          <span>this step <b>~ {minutes} min</b></span>
+          <span>·</span>
+          <span><b>{doneSteps.size}</b> of {total} steps complete</span>
+        </div>
+        <span className="eyebrow-comment">use the player below to advance</span>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// SIDEBAR — ingredients with thumbnails
+// ============================================================
+function CollapseCard({ title, count, children, defaultOpen = true, footer }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className={"r-card" + (open ? " open" : "")}>
+      <div className="r-card-head" onClick={() => setOpen(o => !o)}>
+        <h4>{title} <span className="count">· {count}</span></h4>
+        <div className="r-chev">▾</div>
+      </div>
+      <div className="r-card-body">
+        <div>
+          <div className="r-card-inner">{children}</div>
+          {footer && <div className="r-card-foot">{footer}</div>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function IngredientsCard({ recipe }) {
+  const [checked, setChecked] = useState(new Set());
+  const [serv, setServ] = useState(recipe.servings);
+
+  function toggle(name) {
+    const n = new Set(checked);
+    if (n.has(name)) n.delete(name); else n.add(name);
+    setChecked(n);
+  }
+  function scaleAmt(amt) {
+    const m = String(amt).match(/^([\d.]+)(.*)$/);
+    if (!m) return amt;
+    const v = parseFloat(m[1]) * (serv / recipe.servings);
+    const out = Number.isInteger(v) ? v : Math.round(v * 10) / 10;
+    return out + m[2];
+  }
+  return (
+    <CollapseCard
+      title="ingredients"
+      count={recipe.ingredients.length}
+      footer={<>
+        <button className="btn sm">Add to list</button>
+        <button className="btn sm primary">Order all →</button>
+      </>}
+    >
+      <div className="r-servings">
+        <span className="lbl">servings</span>
+        <div className="r-serv-stepper">
+          <button className="r-serv-btn" onClick={() => setServ(s => Math.max(1, s - 1))}>−</button>
+          <span className="r-serv-val">{serv}</span>
+          <button className="r-serv-btn" onClick={() => setServ(s => Math.min(12, s + 1))}>+</button>
+        </div>
+      </div>
+      <div className="r-ing-list">
+        {recipe.ingredients.map((ing, i) => (
+          <div
+            key={i}
+            className={"r-ing-row" + (checked.has(ing.name) ? " checked" : "")}
+            onClick={() => toggle(ing.name)}
+          >
+            <div className={"r-thumb" + (ing.essential ? " essential" : "")}>{ing.emoji || "•"}</div>
+            <span className="name">{ing.name}</span>
+            <span className="r-ing-amt">{scaleAmt(ing.amt)}</span>
+          </div>
+        ))}
+      </div>
+    </CollapseCard>
+  );
+}
+
+function UtensilsCard({ recipe }) {
+  return (
+    <CollapseCard title="utensils" count={recipe.utensils.length} defaultOpen={false}>
+      <div className="r-ut-list" style={{ marginTop: 10 }}>
+        {recipe.utensils.map((u, i) => (
+          <div key={i} className="r-ut-row">
+            <div className={"r-thumb" + (u.essential ? " essential" : "")}>{u.emoji || "🛠"}</div>
+            <span className="name">{u.name}</span>
+            <span className={"r-ut-tag" + (u.essential ? " ess" : "")}>{u.essential ? "must" : "nice"}</span>
+          </div>
+        ))}
+      </div>
+    </CollapseCard>
+  );
+}
+
+// ============================================================
+// HEALTH MARQUEE
+// ============================================================
+function HealthMarquee({ facts }) {
+  const display = useMemo(() => [...facts, ...facts], [facts]);
+  return (
+    <div className="r-marquee">
+      <div className="r-marquee-tag"><span className="pulse" /> health note</div>
+      <div className="r-marquee-track">
+        <div className="r-marquee-strip">
+          {display.map((f, i) => <div key={i} className="item">{f}</div>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// PREMIUM PLAYER — segment-per-step timeline w/ live timing
+// ============================================================
+function CookingPlayer({ recipe, stepIdx, setStepIdx, doneSteps, setDoneSteps }) {
+  const total = recipe.steps.length;
+  const step = recipe.steps[stepIdx];
+
+  const [running, setRunning] = useState(false);
+  const [elapsed, setElapsed] = useState(0); // seconds elapsed in current step
+
+  // Reset on step change
+  useEffect(() => { setElapsed(0); }, [stepIdx]);
+
+  // Tick
+  useEffect(() => {
+    if (!running) return;
+    const id = setInterval(() => {
+      setElapsed(e => {
+        if (e + 1 >= step.duration) {
+          // auto-advance
+          clearInterval(id);
+          setDoneSteps(prev => new Set([...prev, stepIdx]));
+          if (stepIdx < total - 1) {
+            setTimeout(() => {
+              setStepIdx(stepIdx + 1);
+            }, 400);
+          } else {
+            setRunning(false);
+          }
+          return step.duration;
+        }
+        return e + 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [running, step.duration, stepIdx, total]);
+
+  function jump(delta) {
+    const next = stepIdx + delta;
+    if (next < 0 || next >= total) return;
+    if (delta > 0) setDoneSteps(prev => new Set([...prev, stepIdx]));
+    setStepIdx(next);
+  }
+
+  function jumpTo(i) {
+    if (i === stepIdx) return;
+    if (i > stepIdx) {
+      const ds = new Set(doneSteps);
+      for (let k = stepIdx; k < i; k++) ds.add(k);
+      setDoneSteps(ds);
+    }
+    setStepIdx(i);
+  }
+
+  const segProgress = (elapsed / step.duration) * 100;
+  const remaining = step.duration - elapsed;
+
+  // Portal to <body> so it sits outside any ancestor with a transform
+  // (e.g. <main className="reveal">), which would otherwise capture
+  // position:fixed and make the player scroll with the page.
+  return ReactDOM.createPortal(
+    <div className={"r-player" + (running ? " playing" : "")}>
+      <div className="r-player-inner">
+        <div className="r-pl-controls">
+          <button className="r-pl-step" onClick={() => jump(-1)} disabled={stepIdx === 0} aria-label="Previous step">
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 1v12M13 1L4 7l9 6V1z" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinejoin="round"/></svg>
+          </button>
+          <button className="r-pl-play" onClick={() => setRunning(r => !r)} aria-label={running ? "Pause" : "Start"}>
+            {running ? (
+              <svg width="12" height="13" viewBox="0 0 12 13"><rect x="1" y="0.5" width="3.4" height="12" rx="1" fill="currentColor"/><rect x="7.6" y="0.5" width="3.4" height="12" rx="1" fill="currentColor"/></svg>
+            ) : (
+              <svg width="12" height="13" viewBox="0 0 12 13"><path d="M2 1.2L11 6.5L2 11.8V1.2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>
+            )}
+          </button>
+          <button className="r-pl-step" onClick={() => jump(1)} disabled={stepIdx === total - 1} aria-label="Next step">
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M11 1v12M1 1l9 6-9 6V1z" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div className="r-pl-now">
+          <div className="r-pl-now-row">
+            <span className="r-pl-counter">{String(stepIdx + 1).padStart(2, "0")}<span className="dim">/{String(total).padStart(2, "0")}</span></span>
+            <span className="r-pl-name" title={step.title}>{step.title}</span>
+          </div>
+          <div className="r-pl-bar" onClick={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+            setElapsed(Math.round(pct * step.duration));
+          }}>
+            <div className="r-pl-bar-fill" style={{ width: `${segProgress}%` }} />
+            <div className="r-pl-bar-knob" style={{ left: `${segProgress}%` }} />
+          </div>
+          <div className="r-pl-meta-row">
+            <span className="r-pl-time">{fmt(elapsed)}</span>
+            <span className="r-pl-status">{running ? "● cooking" : doneSteps.has(stepIdx) ? "✓ done" : "ready"}</span>
+            <span className="r-pl-time end">{fmt(step.duration)}</span>
+          </div>
+        </div>
+
+        <div className="r-pl-dots" role="tablist" aria-label="Steps">
+          {recipe.steps.map((s, i) => {
+            const isDone = doneSteps.has(i);
+            const isNow = i === stepIdx;
+            return (
+              <button
+                key={i}
+                className={"r-pl-dot" + (isDone ? " done" : isNow ? " now" : "")}
+                onClick={() => jumpTo(i)}
+                aria-label={`Step ${i + 1}: ${s.title}`}
+                title={`${i + 1}. ${s.title} · ${fmtMin(s.duration)}`}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+// ============================================================
+// PAGE
+// ============================================================
+function RecipeDetailPage({ recipeId }) {
+  const recipe = useMemo(() => getRecipeDetail(recipeId), [recipeId]);
+  const [stepIdx, setStepIdx] = useState(0);
+  const [doneSteps, setDoneSteps] = useState(new Set());
+  const user = useUser();
+  const [saved, setSaved] = useState(window.MFC_DATA.SAVED.includes(recipeId));
+  const [justSaved, setJustSaved] = useState(false);
+
+  function toggleSave() {
+    setSaved(s => {
+      const ns = !s;
+      if (ns) {
+        setJustSaved(true);
+        setTimeout(() => setJustSaved(false), 500);
+      }
+      return ns;
+    });
+  }
+  function requestSignIn() {
+    window.dispatchEvent(new CustomEvent("mfc:request-signin"));
+  }
+
+  useEffect(() => {
+    document.title = (recipe?.name || "Recipe") + " — MyFoodCraving";
+  }, [recipe?.name]);
+
+  if (!recipe) {
+    return (
+      <div className="wrap" style={{ padding: "120px 0", textAlign: "center" }}>
+        <p className="lede">recipe not found</p>
+        <button className="btn" style={{ marginTop: 16 }} onClick={() => navigate("/recipes")}>← Back to recipes</button>
+      </div>
+    );
+  }
+
+  return (
+    <main className="recipe-page">
+      <div className="wrap">
+        <div className="r-breadcrumb">
+          <a href="#/" onClick={(e) => { e.preventDefault(); navigate("/"); }}>home</a>
+          <span>›</span>
+          <a href="#/recipes" onClick={(e) => { e.preventDefault(); navigate("/recipes"); }}>{recipe.cuisine}</a>
+          <span>›</span>
+          <span className="current">{recipe.name.toLowerCase()}</span>
+        </div>
+
+        <RecipeHero
+          recipe={recipe}
+          saved={saved}
+          onToggleSave={toggleSave}
+          user={user}
+          onRequestSignIn={requestSignIn}
+          justSaved={justSaved}
+        />
+
+        <div className="r-stage">
+          <StepCard recipe={recipe} stepIdx={stepIdx} doneSteps={doneSteps} />
+          <aside className="r-side">
+            <IngredientsCard recipe={recipe} />
+            <UtensilsCard recipe={recipe} />
+          </aside>
+        </div>
+
+        <HealthMarquee facts={recipe.healthFacts} />
+      </div>
+
+      <CookingPlayer
+        recipe={recipe}
+        stepIdx={stepIdx}
+        setStepIdx={setStepIdx}
+        doneSteps={doneSteps}
+        setDoneSteps={setDoneSteps}
+      />
+    </main>
+  );
+}
+
+window.MFC_PAGES = window.MFC_PAGES || {};
+window.MFC_PAGES.RecipeDetailPage = RecipeDetailPage;

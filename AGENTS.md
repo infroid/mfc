@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-Guidance for Claude Code working in this repo.
+Guidance for Codex working in this repo.
 
 ## Style
 
@@ -28,7 +28,6 @@ make sync              # sync the python venv (after editing automation/pyprojec
 make status            # supabase: list public tables + row counts
 make list-users        # supabase: list users; optional ROLE=user|chef|admin Q=alice
 make set-role          # supabase: change role; USER=<email> ROLE=<user|chef|admin>
-make suspend-user      # supabase: ban a user; USER=<email-or-uuid>
 make sync-recipes      # supabase: sync recipes (DB + bundles + images); interactive (or DIRECTION=)
 make sync-images       # supabase: sync images bucket↔local; interactive (or DIRECTION=)
 make reset             # supabase: drop + apply schema + seed metrics + push recipes

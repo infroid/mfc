@@ -26,11 +26,44 @@ You are generating a consistent, accurate, high-end food photography image set f
   - Define one fixed surface, backdrop, lighting direction, camera angle family, lens feel, crop ratio, color temperature, and depth of field.
   - Define the exact recurring cookware and utensils from `utensils[]`.
   - Define the exact recurring bowls, plates, towels, spoons, spice bowls, and small props.
+  - Define premium serviceware and utensils: attractive but plausible glasses,
+    bowls, plates, spoons, ladles, strainers, boards, and serving vessels that
+    match the cuisine and the website's high-end editorial style.
+  - Prefer cut-crystal or hand-blown glassware for drinks, hand-thrown ceramic
+    bowls, hammered brass/copper spice bowls, polished stainless cookware, and
+    warm wood or brass tools where culturally appropriate.
+  - Avoid cheap generic tumblers, disposable cups, dull plastic utensils,
+    cafeteria-style plates, or visually forgettable cookware unless the recipe
+    explicitly requires them.
   - Keep prop count restrained and practical.
   - Reuse the same pan/kadhai/pot/tawa/blender/strainer/serving vessel throughout the relevant steps.
   - If a utensil appears in multiple steps, it must look like the same object each time.
   - If an ingredient appears in multiple steps, it must keep a consistent cut size, color, and visual identity.
   - If the recipe includes a final garnish or finishing ingredient, reserve it for the correct final step and hero unless earlier steps explicitly use it.
+  - Define an explicit scale lock for recurring objects: approximate vessel
+    sizes, glass heights, bowl diameters, mango/vegetable sizes, spoon length,
+    pan diameter, and camera distance. Keep those sizes visually consistent
+    across hero and every step.
+
+- Preferred generation strategy for consistency:
+  - When the image model can produce a high-resolution source large enough for
+    every final crop, generate one master contact-sheet image for the whole
+    recipe instead of separate independent images.
+  - The master image should contain one equal 16:9 panel for the hero and one
+    equal 16:9 panel for every `steps[]` item.
+  - Use a simple grid with no text, no labels, no numbers, no watermarks, and no
+    decorative borders. Thin neutral gutters are allowed only if the crop script
+    can remove them cleanly.
+  - Keep the same camera height, lens feel, object scale, serviceware,
+    countertop, background, lighting direction, and color grade in every panel.
+  - Each panel must still show only its own recipe state; do not merge steps
+    semantically even though they are generated in one master image.
+  - Crop the master with a Python image-processing script into `hero.jpg` and
+    the `step-XX-{slug}.jpg` files. Verify every crop before accepting it.
+  - Use a composite master only when each cropped panel will meet the site
+    quality target. If the generated master is too small or crops look soft,
+    regenerate at higher resolution if available; otherwise generate individual
+    images with the same continuity bible and explicit scale lock.
 
 - Overall visual style:
   - Photorealistic editorial food photography.
@@ -68,6 +101,8 @@ You are generating a consistent, accurate, high-end food photography image set f
   - Generate the images as one series, not as independent food photos.
   - Keep the same visual grammar in every prompt.
   - Keep the same countertop, background, light direction, prop set, and cookware identity.
+  - Keep recurring object sizes consistent: the same glass, bowl, pan, spoon,
+    mango, utensil, and serving vessel must not grow or shrink between images.
   - Keep color grading consistent across hero and steps.
   - Keep serving size visually consistent with `servings`.
   - Keep ingredient quantities visually plausible.
@@ -117,6 +152,8 @@ You are generating a consistent, accurate, high-end food photography image set f
   - `Recipe: {recipe.name}`
   - `Image: {hero|step number and title}`
   - `Continuity bible: {fixed environment, lighting, surface, recurring cookware, recurring props}`
+  - `Serviceware and utensils: {premium recurring glasses, bowls, plates, cookware, spoons, strainers, and serving vessels}`
+  - `Scale lock: {fixed relative sizes for recurring objects and camera distance}`
   - `Subject: {exact visible food state}`
   - `Required visible items: {ingredients and utensils required for this asset}`
   - `Forbidden visible items: {future ingredients, future tools, unrelated props, finished dish if not final}`
@@ -124,9 +161,27 @@ You are generating a consistent, accurate, high-end food photography image set f
   - `Texture/doneness: {raw/cooked/reduced/charred/silky/etc.}`
   - `Negative constraints: {full negative prompt}`
 
+- Prompt structure for a master contact sheet:
+  - `Use case: photorealistic-natural`
+  - `Asset type: MyFoodCraving complete recipe image master, crop source`
+  - `Recipe: {recipe.name}`
+  - `Layout: one {rows}x{cols} contact sheet, equal 16:9 panels, no text or labels`
+  - `Panel map: panel 1 hero; panel 2 step 1; panel 3 step 2; ...`
+  - `Continuity bible: {fixed environment, lighting, surface, recurring cookware, recurring props}`
+  - `Serviceware and utensils: {premium recurring glasses, bowls, plates, cookware, spoons, strainers, and serving vessels}`
+  - `Scale lock: {fixed relative sizes for recurring objects and camera distance}`
+  - `Panel subjects: {one precise subject per panel}`
+  - `Required visible items by panel: {ingredients and utensils required for each crop}`
+  - `Forbidden visible items by panel: {future ingredients, future tools, unrelated props}`
+  - `Composition: each panel is crop-safe, 16:9, with matching camera distance`
+  - `Negative constraints: {full negative prompt}`
+
 - Quality check before accepting images:
   - Every image matches the corresponding recipe step.
   - The same recurring utensils look consistent across the full set.
+  - Premium serviceware and utensils are visible where they improve the image,
+    but they do not add clutter or unsupported recipe items.
+  - Recurring object scale stays stable across all crops.
   - No step shows ingredients or finishing elements too early.
   - No step accidentally looks like the hero unless it is the final serving step.
   - The hero accurately represents the finished recipe.

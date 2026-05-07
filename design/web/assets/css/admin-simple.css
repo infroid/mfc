@@ -1,0 +1,310 @@
+/* Admin v2 — AI-filled, simplified.
+   Adds patterns on top of admin-styles.css */
+
+/* AI banner (top of page) */
+.ai-banner {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 3px 0 var(--matcha);
+  margin-bottom: 22px;
+}
+.ai-banner .glyph {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--matcha);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.ai-banner .copy { flex: 1; min-width: 0; }
+.ai-banner .copy b {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--ink);
+  display: block;
+  letter-spacing: -0.01em;
+}
+.ai-banner .copy span {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.ai-banner .actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* AI-filled field marker */
+.field.ai-filled .field-label::after {
+  content: "✦ ai";
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--matcha-deep);
+  background: var(--matcha-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.field.ai-filled .input,
+.field.ai-filled .textarea,
+.field.ai-filled .select {
+  background:
+    linear-gradient(90deg, transparent 0 calc(100% - 36px), rgba(122, 156, 90, 0.05) 100%),
+    var(--cream-soft);
+  border-color: rgba(122, 156, 90, 0.4);
+}
+.field.ai-filled .input:focus,
+.field.ai-filled .textarea:focus { background: var(--paper); }
+
+/* Library picker */
+.lib-picker {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.lib-search {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--cream-soft);
+}
+.lib-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: var(--sans);
+  padding: 4px 0;
+}
+.lib-search .glass {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.lib-search .ct {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.lib-list {
+  max-height: 320px;
+  overflow-y: auto;
+}
+.lib-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 18px;
+  border-bottom: 1px dashed var(--rule);
+  cursor: pointer;
+  transition: background 160ms;
+}
+.lib-row:hover { background: var(--cream-soft); }
+.lib-row:last-child { border-bottom: none; }
+.lib-thumb {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 109, 46, 0.18) 0 6px, transparent 6px 12px),
+    var(--butter);
+  flex-shrink: 0;
+}
+.lib-thumb.matcha { background: repeating-linear-gradient(135deg, rgba(122, 156, 90, 0.2) 0 6px, transparent 6px 12px), var(--matcha-soft); }
+.lib-thumb.cream { background: repeating-linear-gradient(45deg, rgba(31,26,20,0.06) 0 6px, transparent 6px 12px), var(--cream-deep); }
+.lib-thumb.berry { background: repeating-linear-gradient(45deg, rgba(200,75,90,0.18) 0 6px, transparent 6px 12px), rgba(200,75,90,0.18); }
+.lib-row .name { font-size: 14px; font-weight: 500; color: var(--ink); }
+.lib-row .meta { font-family: var(--mono); font-size: 11px; color: var(--ink-muted); }
+.lib-row .added {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--matcha-soft);
+  color: var(--matcha-deep);
+  font-weight: 600;
+}
+.lib-row .add-btn {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--paper);
+  border: none;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.lib-row .add-btn:hover { background: var(--orange-deep); }
+.lib-row.disabled { opacity: 0.5; cursor: not-allowed; }
+
+.lib-foot {
+  padding: 12px 18px;
+  background: var(--cream-soft);
+  border-top: 1px dashed var(--rule);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lib-foot a { color: var(--orange); text-decoration: underline; }
+
+/* Selected ingredient/utensil row in recipe editor */
+.picked-list { display: flex; flex-direction: column; gap: 6px; }
+.picked-row {
+  display: grid;
+  grid-template-columns: auto 36px 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  transition: all 160ms;
+}
+.picked-row:hover { box-shadow: 2px 2px 0 var(--ink); transform: translate(-1px, -1px); }
+.picked-row .handle { color: var(--ink-faint); cursor: grab; user-select: none; font-size: 14px; }
+.picked-row .name { font-size: 14px; font-weight: 500; }
+.picked-row .lib-thumb { width: 32px; height: 32px; border-radius: 6px; }
+.picked-row .amt-input {
+  width: 80px;
+  background: var(--cream-soft);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--orange);
+  font-weight: 600;
+  outline: none;
+  text-align: right;
+}
+.picked-row .amt-input:focus { border-color: var(--orange); background: var(--paper); }
+.picked-row .ut-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.picked-row .ut-tag.must { background: var(--orange-soft); color: var(--orange-deep); font-weight: 600; }
+.picked-row .ut-tag.nice { background: var(--cream-deep); color: var(--ink-muted); }
+.picked-row .x {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--ink-faint);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+.picked-row .x:hover { background: var(--berry); color: var(--paper); }
+
+/* Field-level toggle (show in recipe / library only) */
+.field-toggle-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+.field-toggle-head .name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+.field-toggle-head .desc { font-size: 12px; color: var(--ink-faint); flex: 1; }
+
+/* Show-advanced toggle */
+.advanced-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 160ms;
+}
+.advanced-toggle:hover { color: var(--orange); border-color: var(--orange); }
+.advanced-toggle .chev { transition: transform 200ms; }
+.advanced-toggle.open .chev { transform: rotate(180deg); }
+
+/* Surface map — visualizes where each field appears */
+.surface-map {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  background: var(--cream-soft);
+  border: 1px dashed var(--rule-strong);
+  border-radius: 10px;
+}
+.surface-map .head {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.surface-map .row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.surface-map .row .where {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--orange-deep);
+  background: var(--orange-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Compact card body for less spacing */
+.form-card-body.compact { padding: 18px 20px; }
+.form-card-body.compact .field-grid { gap: 14px; }
