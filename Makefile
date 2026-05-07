@@ -94,8 +94,8 @@ sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIR
 	  read d && $(UV) run mfc sync-utensil-images --direction $$d; \
 	fi
 
-update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [FORCE=1] [NO_IMAGE=1])
-	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(FORCE),--force) $(if $(NO_IMAGE),--no-image)
+update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [NO_IMAGE=1])
+	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(NO_IMAGE),--no-image)
 
 list-users: ## list users; optional ROLE=user|chef|admin Q=alice
 	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
@@ -126,7 +126,7 @@ serve: ## run the static site at http://localhost:8080 (serves web/)
 .PHONY: routine routine-sync routine-test
 
 routine: ## launch the routine dagster UI on :3000
-	@uv --project routine run dagster dev
+	@uv --project routine run dagster dev -w routine/workspace.yaml
 
 routine-sync: ## sync the routine python venv (after editing routine/pyproject.toml)
 	@uv --project routine sync

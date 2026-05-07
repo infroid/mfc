@@ -222,12 +222,10 @@ def register(subparsers: argparse._SubParsersAction) -> None:
     p.add_argument("url", nargs="?", default=None,
                    help="Amazon product URL or bare 10-char ASIN. Prompted if omitted.")
     p.add_argument("--id", default=None,
-                   help="Utensil slug. Prompted if omitted; must be unique unless --force.")
+                   help="Utensil slug. Prompted if omitted. Existing bundles are overwritten.")
     p.add_argument("--no-image", action="store_true", help="Skip image candidate download")
     p.add_argument("--image-index", type=int, default=None,
                    help="Pre-pick the Nth image (1-indexed); 0 = skip image entirely")
-    p.add_argument("--force", action="store_true",
-                   help="Overwrite an existing local bundle dir")
     p.set_defaults(handler=run)
 
 
@@ -257,17 +255,14 @@ def run(args: argparse.Namespace, config: Config) -> int:
     utensil_id = args.id
     log.info(f"utensil id: {utensil_id}")
 
-    # 3. Collision check (local only — DB is sync-utensils' problem now)
+    # 3. Resolve paths. update-utensil overwrites an existing bundle by design;
+    # use git to recover prior state if needed.
     bundle_dir = files.utensil_bundles_root(config.repo_root) / utensil_id
     bundle_path = files.utensil_bundle_path(config.repo_root, utensil_id)
-    if bundle_path.exists() and not args.force:
-        log.error(
-            f'Utensil id "{utensil_id}" already exists at {bundle_path}.\n'
-            f'  Either re-run with --id <different-slug>, or pass --force to overwrite.'
-        )
-        return 1
-
+    bundle_existed = bundle_path.exists()
     bundle_dir.mkdir(parents=True, exist_ok=True)
+    if bundle_existed:
+        log.info(f"overwriting existing bundle at {bundle_path.relative_to(config.repo_root)}")
 
     # 4. Image flow
     photo_rel: Optional[str] = None
