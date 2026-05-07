@@ -33,7 +33,7 @@ class SyncReport:
         return f"↑ {self.pushed} pushed · ↓ {self.pulled} pulled · - {self.skipped} skipped · ! {len(self.failed)} failed"
 
 
-def _bundle_to_utensil_row(bundle: dict) -> dict:
+def _bundle_to_utensil_row(config: "Config", bundle: dict) -> dict:
     """Translate utensil.json -> public.utensils row payload (excluding child tables)."""
     row = {k: bundle.get(k) for k in _BUNDLE_FIELDS}
     # specs / show default to {} per schema.
@@ -45,6 +45,11 @@ def _bundle_to_utensil_row(bundle: dict) -> dict:
     row["amazon_asin"] = az.get("asin")
     row["amazon_marketplace"] = az.get("marketplace")
     row["amazon_fetched_at"] = az.get("fetched_at")
+    # Normalize legacy 'assets/utensils/.../foo.jpg' to a full Storage URL.
+    from . import utensil_images as utensil_images_ops  # local import to avoid cycle
+    row["photo"] = utensil_images_ops.normalize_image_value(
+        config, utensil_id=bundle["id"], value=row.get("photo")
+    )
     return row
 
 
@@ -82,7 +87,7 @@ def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncRep
 
     log.step(f"sync-utensils · push · {len(valid)} bundle(s)")
 
-    rows = [_bundle_to_utensil_row(b) for b in valid]
+    rows = [_bundle_to_utensil_row(config, b) for b in valid]
     sb.table("utensils").upsert(rows, on_conflict="id").execute()
     log.ok(f"utensils: {len(valid)}")
 

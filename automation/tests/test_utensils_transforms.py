@@ -2,7 +2,14 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from mfc.ops import utensils
+
+
+@dataclass
+class _FakeConfig:
+    supabase_url: str = "https://abc.supabase.co"
 
 
 SAMPLE_BUNDLE = {
@@ -28,7 +35,7 @@ SAMPLE_BUNDLE = {
 
 
 def test_bundle_to_utensil_row_maps_amazon_block():
-    row = utensils._bundle_to_utensil_row(SAMPLE_BUNDLE)
+    row = utensils._bundle_to_utensil_row(_FakeConfig(), SAMPLE_BUNDLE)
     assert row["id"] == "kadhai-cast-iron"
     assert row["amazon_asin"] == "B07JFTSKXW"
     assert row["amazon_marketplace"] == "amazon.com"
@@ -38,7 +45,7 @@ def test_bundle_to_utensil_row_maps_amazon_block():
 
 
 def test_bundle_to_utensil_row_defaults_specs_and_show_to_empty_dict():
-    row = utensils._bundle_to_utensil_row({"id": "x", "name": "X"})
+    row = utensils._bundle_to_utensil_row(_FakeConfig(), {"id": "x", "name": "X"})
     assert row["specs"] == {}
     assert row["show"] == {}
     assert row["amazon_asin"] is None
@@ -95,3 +102,18 @@ def test_db_to_bundle_drops_amazon_block_when_no_asin():
               "amazon_fetched_at": None}
     bundle = utensils._db_to_bundle(db_row, [])
     assert "amazon" not in bundle
+
+
+def test_bundle_to_utensil_row_normalizes_legacy_photo_path():
+    bundle = dict(SAMPLE_BUNDLE)
+    bundle["photo"] = "assets/utensils/kadhai-cast-iron/kadhai-cast-iron.jpg"
+    row = utensils._bundle_to_utensil_row(_FakeConfig(), bundle)
+    assert row["photo"] == \
+        "https://abc.supabase.co/storage/v1/object/public/utensil-images/kadhai-cast-iron/kadhai-cast-iron.jpg"
+
+
+def test_bundle_to_utensil_row_passes_through_full_url():
+    bundle = dict(SAMPLE_BUNDLE)
+    bundle["photo"] = "https://abc.supabase.co/storage/v1/object/public/utensil-images/x/x.jpg"
+    row = utensils._bundle_to_utensil_row(_FakeConfig(), bundle)
+    assert row["photo"] == bundle["photo"]
