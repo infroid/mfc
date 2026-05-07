@@ -23,6 +23,7 @@ from .commands import (
     suspend_user,
     sync_images,
     sync_recipes,
+    sync_utensils,
 )
 from .core import log
 from .core.config import Config, ConfigError
@@ -37,6 +38,7 @@ COMMAND_MODULES = [
     seed_metrics,
     sync_recipes,
     sync_images,
+    sync_utensils,
     set_role,
     suspend_user,
     drop_schema,
