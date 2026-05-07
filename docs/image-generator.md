@@ -8,10 +8,22 @@ You are generating a consistent, accurate, high-end food photography image set f
 
 - Input:
   - Recipe JSON path: `{RECIPE_JSON_PATH}`
-  - Output folder: `data/recipe-bundles/{recipe-id}/`
+  - Output folder: `web/assets/recipes/{recipe-id}/`
   - Required assets:
     - 1 hero image for the finished recipe.
     - 1 image for every item in `steps[]`.
+
+- Agent-mode rule:
+  - Work one recipe at a time.
+  - Generate one large master image for that recipe first.
+  - Crop the master into the final hero and step files with Python.
+  - Update `recipe.json`.
+  - Validate files, JSON metadata, dimensions, and browser rendering.
+  - Move to the next recipe only after the current recipe passes.
+  - Do not generate hero and step images one after another unless the master
+    workflow fails after a targeted retry.
+  - Do not mix assets from different generations for one recipe unless the user
+    explicitly accepts the continuity break.
 
 - Read the recipe JSON before generating anything:
   - Use `id`, `name`, `cuisine`, `tagline`, `ingredients[]`, `utensils[]`, and every object in `steps[]`.
@@ -58,30 +70,115 @@ You are generating a consistent, accurate, high-end food photography image set f
     across hero and every step.
 
 - Preferred generation strategy for consistency:
-  - When the image model can produce a high-resolution source large enough for
-    every final crop, generate one master contact-sheet image for the whole
-    recipe instead of separate independent images.
-  - The master image should contain one square 1:1 panel for the hero and one
-    equal 16:9 panel for every `steps[]` item. Use a layout that keeps every
-    panel large enough for the final asset.
-  - Use a simple grid with no text, no labels, no numbers, no watermarks, and no
-    decorative borders. Thin neutral gutters are allowed only if the crop script
-    can remove them cleanly.
+  - Strongly prefer a single large master contact-sheet image for the whole
+    recipe.
+  - The master-first workflow is the default for agent mode because it gives the
+    model one continuity bible, one lighting setup, one prop set, and one scale
+    lock for the complete recipe.
+  - Avoid independent one-by-one generation. It usually causes cookware,
+    countertop, camera distance, color grade, garnish timing, and object scale
+    drift.
+  - Use one simple, deterministic grid:
+    - Panel 1: hero, finished recipe.
+    - Panel 2: step 1.
+    - Panel 3: step 2.
+    - Continue in `steps[]` order.
+  - Prefer equal-size square panels in the master:
+    - Crop the hero panel as full 1:1.
+    - Crop every step panel as a centered 16:9 landscape crop.
+    - Prompt every step panel to keep the action/result in the center 70% so the
+      16:9 crop is safe.
+  - If the model reliably supports mixed-aspect panels at the requested size,
+    an alternate master may use one square 1:1 hero panel and one 16:9 panel for
+    every step. Keep the panel order identical.
+  - Use no text, labels, numbers, watermarks, decorative borders, or UI chrome.
+  - Thin neutral gutters are allowed only if the crop script can remove them
+    cleanly.
   - Keep the same camera height, lens feel, object scale, serviceware,
     countertop, background, lighting direction, and color grade in every panel.
-  - Each panel must still show only its own recipe state; do not merge steps
-    semantically even though they are generated in one master image.
-  - Crop the master with a Python image-processing script into `hero.jpg` and
-    the `step-XX-{slug}.jpg` files. Verify every crop before accepting it.
-  - Use a composite master only when each cropped panel will meet the site
-    quality target. If the generated master is too small or crops look soft,
-    regenerate at higher resolution if available; otherwise generate individual
-    images with the same continuity bible and explicit scale lock.
+  - Each panel must show only its own recipe state. Do not merge steps
+    semantically even though they are generated together.
+  - Crop the master with a deterministic Python image-processing script into
+    `hero.jpg` and the `step-XX-{slug}.jpg` files.
+  - Verify every crop before accepting it.
+  - Regenerate the full master when continuity, ingredient timing, or panel
+    accuracy is wrong.
+  - Generate an individual replacement only as a fallback when:
+    - The master is otherwise accepted.
+    - One panel is unusable.
+    - The replacement prompt repeats the exact continuity bible and scale lock.
+    - The visual mismatch is acceptable after inspection.
+
+- Crop-script requirements:
+  - Use Python with Pillow or another structured image library.
+  - Do not crop manually with screenshots or image-editor guesswork.
+  - Inputs:
+    - Master image path.
+    - Recipe JSON path.
+    - Output folder.
+    - Panel layout: columns, rows, gutter size, panel order.
+  - Outputs:
+    - `hero.jpg`
+    - `step-01-{short-step-slug}.jpg`
+    - `step-02-{short-step-slug}.jpg`
+    - Continue until every `steps[]` item has a crop.
+  - Convert final files to JPEG.
+  - Use consistent quality, ideally 88-92.
+  - Strip the gutters.
+  - For square-panel masters:
+    - Save hero as the full first square panel.
+    - Save steps from the center 16:9 crop of each step panel.
+  - For mixed-aspect masters:
+    - Save each panel at its native aspect ratio.
+  - Fail closed:
+    - If a panel count does not match `1 + steps.length`, stop.
+    - If the hero is not square, stop.
+    - If any step is not 16:9 after crop, stop.
+    - If any output would be below the minimum dimensions, stop.
+  - Minimum dimensions:
+    - Hero: at least `1024x1024`.
+    - Step images: at least `1280x720`.
+
+- Agent-mode execution workflow:
+  - Read the recipe JSON first.
+  - Read `design/tokens.css`, `design/styles/pages.css`, and
+    `design/styles/recipe.css`.
+  - Build the continuity bible from the JSON.
+  - Build the panel map from `steps[]`.
+  - Generate the master image.
+  - Copy the generated master from the image tool output into a temporary
+    workspace path for cropping.
+  - Built-in image generation usually saves under
+    `$CODEX_HOME/generated_images/...`; copy the selected image from there and
+    leave the original in place.
+  - Do not reference the master image from `recipe.json`.
+  - Run the crop script.
+  - Inspect the master and all crops.
+  - Update `recipe.json`.
+  - Validate with a script:
+    - `media.hero.src` exists.
+    - `media.hero.alt` exists.
+    - `media.hero.caption` exists.
+    - Every `steps[i].media.src` exists.
+    - Every `steps[i].media.alt` exists.
+    - Every `steps[i].media.caption` exists.
+    - Every referenced local image file exists.
+    - Hero dimensions are square.
+    - Step dimensions are 16:9.
+  - Verify in the browser.
+  - If browser detail pages use Supabase metadata for the tested recipe, push
+    only that recipe before browser verification:
+    - `uv --project automation run mfc sync-images --direction push --recipe {recipe-id}`
+    - `uv --project automation run mfc sync-recipes --direction push --recipe {recipe-id}`
+  - Do not run broad all-recipe sync commands during image generation unless
+    the user explicitly asks.
 
 - Overall visual style:
   - Photorealistic editorial food photography.
   - Premium Indian home-kitchen styling, warm and appetizing, never synthetic.
-  - 16:9 landscape composition.
+  - Hero output is square 1:1.
+  - Step output is 16:9 landscape.
+  - Master panels must be safe for those final crops.
   - Three-quarter overhead camera angle unless a step needs a lower angle for clarity.
   - Warm natural window light from the same direction in every image.
   - Realistic steam, gloss, oil separation, browning, texture, and moisture.
@@ -180,9 +277,14 @@ You are generating a consistent, accurate, high-end food photography image set f
     - `steps[i].media.caption`
   - Alt text must describe the visible cooking state, not repeat the title.
   - Captions must be short, concrete, and useful in the UI.
-  - Image `src` values must point into the recipe bundle, for example `data/recipe-bundles/{recipe-id}/hero.jpg`.
+  - Local image `src` values must point into the recipe bundle, for example
+    `assets/recipes/{recipe-id}/hero.jpg`.
+  - Supabase sync normalizes local `assets/...` image values to Storage URLs on
+    push.
 
 - Prompt structure for each generated image:
+  - Use only for fallback individual replacements.
+  - Prefer the master contact-sheet prompt for normal agent-mode work.
   - `Use case: photorealistic-natural`
   - `Asset type: MyFoodCraving recipe {hero|step} image, {square 1:1 hero|16:9 landscape step}`
   - `Recipe: {recipe.name}`
@@ -202,8 +304,9 @@ You are generating a consistent, accurate, high-end food photography image set f
   - `Use case: photorealistic-natural`
   - `Asset type: MyFoodCraving complete recipe image master, crop source`
   - `Recipe: {recipe.name}`
-  - `Layout: one contact sheet with one square 1:1 hero panel and one equal 16:9 panel per step, no text or labels`
+  - `Layout: one large contact sheet with equal-size square panels, no text, labels, numbers, watermarks, or borders`
   - `Panel map: panel 1 hero; panel 2 step 1; panel 3 step 2; ...`
+  - `Crop plan: crop panel 1 full square as hero.jpg; crop panels 2..N as centered 16:9 step images`
   - `Website crop targets for hero: detail 1:1, search card 1:1, dashboard thumb 1:1, saved card 4:3, admin preview 16:9`
   - `Continuity bible: {fixed environment, lighting, surface, recurring cookware, recurring props}`
   - `Serviceware and utensils: {premium recurring glasses, bowls, plates, cookware, spoons, strainers, and serving vessels}`
@@ -211,7 +314,7 @@ You are generating a consistent, accurate, high-end food photography image set f
   - `Panel subjects: {one precise subject per panel}`
   - `Required visible items by panel: {ingredients and utensils required for each crop}`
   - `Forbidden visible items by panel: {future ingredients, future tools, unrelated props}`
-  - `Composition: each panel is crop-safe, 16:9, with matching camera distance`
+  - `Composition: each panel is crop-safe; hero fills a square crop; every step keeps the action/result inside the center 70% for a clean 16:9 crop; matching camera distance`
   - `Negative constraints: {full negative prompt}`
 
 - Quality check before accepting images:
@@ -235,5 +338,5 @@ You are generating a consistent, accurate, high-end food photography image set f
 - Final deliverable:
   - Save `recipe.json`, `hero.jpg`, and all step images in the recipe bundle folder.
   - Update the recipe JSON with the final `src`, `alt`, and `caption` values.
-  - Keep the generic recipe template able to load `data/recipe-bundles/{recipe-id}/recipe.json`.
+  - Keep the generic recipe template able to load `assets/recipes/{recipe-id}/recipe.json` in local preview.
   - Verify in the browser that hero and every step image load correctly.
