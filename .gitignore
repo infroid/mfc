@@ -7,6 +7,8 @@
 # Python tooling (automation/)
 automation/.env
 automation/.venv/
+# Python tooling (routine/)
+routine/.venv/
 __pycache__/
 *.pyc
 
