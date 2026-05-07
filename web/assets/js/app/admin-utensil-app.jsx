@@ -179,9 +179,12 @@ function IdentityModal({ r, update, slugTaken, isNew, onClose }) {
         <input
           value={r.photo}
           onChange={(e) => update({ photo: e.target.value })}
-          placeholder="/assets/img/utensils/kadhai.jpg"
+          placeholder="assets/utensils/kadhai/kadhai.jpg"
           style={{ fontFamily: "var(--mono)", fontSize: 13 }}
         />
+        <div style={{ fontSize: 11, color: "var(--ink-muted)", fontStyle: "italic", fontFamily: "var(--serif)", marginTop: 4 }}>
+          Set automatically by <span style={{ fontFamily: "var(--mono)", fontStyle: "normal" }}>mfc create-utensil</span>; edit only if moving the file.
+        </div>
       </div>
     </CeModal>
   );
