@@ -109,12 +109,17 @@ CREATE TABLE IF NOT EXISTS public.utensils (
   updated_at   timestamptz NOT NULL DEFAULT now()
 );
 
+ALTER TABLE public.utensils
+  ADD COLUMN IF NOT EXISTS amazon_asin        text,
+  ADD COLUMN IF NOT EXISTS amazon_marketplace text,
+  ADD COLUMN IF NOT EXISTS amazon_fetched_at  timestamptz;
+
 COMMENT ON TABLE  public.utensils              IS 'Master library of utensils. Recipes reference these via FK. Edited via admin-utensil.html.';
 COMMENT ON COLUMN public.utensils.id           IS 'Stable URL slug (e.g. "kadhai-cast-iron-9", "chefs-knife-8").';
 COMMENT ON COLUMN public.utensils.name         IS 'Display name (e.g. "Cast-iron kadhai").';
 COMMENT ON COLUMN public.utensils.tagline      IS 'One-line description (e.g. "deep, broad, hot — the workhorse pan").';
 COMMENT ON COLUMN public.utensils.category     IS 'Free text: "Cookware", "Bakeware", "Cutlery", "Small appliance", "Utensil", "Measuring".';
-COMMENT ON COLUMN public.utensils.photo        IS 'Relative path to the utensil photo. Nullable.';
+COMMENT ON COLUMN public.utensils.photo        IS 'Repo-relative path to the utensil photo (e.g. "assets/utensils/<id>/<id>.jpg"). Nullable.';
 COMMENT ON COLUMN public.utensils.care_tip     IS 'One-liner care tip (utensil page only).';
 COMMENT ON COLUMN public.utensils.specs        IS 'Optional specs blob: { material, size, weight }.';
 COMMENT ON COLUMN public.utensils.show         IS 'Per-field visibility toggles { careTip, specs }.';
@@ -122,6 +127,9 @@ COMMENT ON COLUMN public.utensils.ai_filled_at IS 'When the AI auto-fill last ra
 COMMENT ON COLUMN public.utensils.created_by   IS 'FK → auth.users.id of the admin who created this row.';
 COMMENT ON COLUMN public.utensils.created_at   IS 'Row creation timestamp.';
 COMMENT ON COLUMN public.utensils.updated_at   IS 'Auto-updated via touch_updated_at trigger on UPDATE.';
+COMMENT ON COLUMN public.utensils.amazon_asin        IS 'Amazon ASIN (10-char). Stable across price/availability changes; lookup key for future PA-API refresh.';
+COMMENT ON COLUMN public.utensils.amazon_marketplace IS 'Amazon marketplace host (e.g. "amazon.com", "amazon.in"). Pairs with asin.';
+COMMENT ON COLUMN public.utensils.amazon_fetched_at  IS 'When Amazon data (image, price, title) was last refreshed for this row.';
 
 
 CREATE TABLE IF NOT EXISTS public.utensil_buy_links (
