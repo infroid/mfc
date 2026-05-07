@@ -46,3 +46,29 @@ def iter_recipe_bundles(repo_root: Path) -> Iterator[Path]:
 def load_recipe_json(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def utensil_bundles_root(repo_root: Path) -> Path:
+    return repo_root / "web" / "assets" / "utensils"
+
+
+def utensil_bundle_path(repo_root: Path, utensil_id: str) -> Path:
+    return utensil_bundles_root(repo_root) / utensil_id / "utensil.json"
+
+
+def iter_utensil_bundles(repo_root: Path) -> Iterator[Path]:
+    """Yield each `utensil.json` under web/assets/utensils/, sorted by id."""
+    root = utensil_bundles_root(repo_root)
+    if not root.exists():
+        return
+    for child in sorted(root.iterdir()):
+        if not child.is_dir():
+            continue
+        f = child / "utensil.json"
+        if f.exists():
+            yield f
+
+
+def load_utensil_json(path: Path) -> dict:
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
