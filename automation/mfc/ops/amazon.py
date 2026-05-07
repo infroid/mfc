@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
 import httpx
@@ -28,9 +28,7 @@ _HTTP_HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
 }
 _HTTP_TIMEOUT_S = 15.0
-_COLOR_IMAGES_RX = re.compile(
-    r"'colorImages'\s*:\s*\{\s*'initial'\s*:\s*(\[.*?\])\s*\}", re.DOTALL
-)
+_HIRES_RX = re.compile(r'"hiRes"\s*:\s*"(https://[^"]+)"')
 
 
 class AmazonNotFound(Exception):
@@ -50,6 +48,8 @@ class ProductInfo:
     image_urls: list[str]
     breadcrumbs: list[str]
     canonical_url: str
+    bullets: list[str] = field(default_factory=list)
+    details: dict[str, str] = field(default_factory=dict)
 
 
 def parse_url(url: str) -> tuple[str, str]:
@@ -137,6 +137,8 @@ def _parse_product_html(*, html: str, asin: str, marketplace: str, canonical_url
         image_urls=image_urls,
         breadcrumbs=breadcrumbs,
         canonical_url=canonical_url,
+        bullets=_extract_bullets(soup),
+        details=_extract_details(soup),
     )
 
 
@@ -146,37 +148,94 @@ def _is_bot_wall(html: str) -> bool:
 
 
 def _extract_image_urls(html: str, soup: "BeautifulSoup") -> list[str]:
-    """Two-tier extraction: colorImages JSON block, then og:image fallback."""
-    match = _COLOR_IMAGES_RX.search(html)
-    if match:
-        try:
-            entries = _loose_json_array(match.group(1))
-            urls: list[str] = []
-            for entry in entries:
-                if not isinstance(entry, dict):
-                    continue
-                u = entry.get("hiRes") or entry.get("large")
-                if isinstance(u, str) and u and u not in urls:
-                    urls.append(u)
-            if urls:
-                return urls
-        except Exception:
-            pass  # fall through to og:image
-
-    og = soup.select_one('meta[property="og:image"]')
-    if og and og.get("content"):
-        return [og["content"]]
-    return []
-
-
-def _loose_json_array(blob: str) -> list:
-    """Amazon serializes colorImages with single quotes; massage into JSON.
-
-    Replaces only quote-style; does not handle every JS construct. If the
-    structure changes we fall back to og:image. That is the design.
+    """Three-tier extraction:
+       1. All "hiRes":"<url>" occurrences in the raw HTML (catches Amazon's
+          ImageBlockATF JS for both single- and multi-variant products).
+       2. BS4: every <img data-a-dynamic-image="<json>"> — pick the largest
+          URL per element (covers products with no hiRes JS block).
+       3. <meta property="og:image"> as a last resort.
+       Dedupe preserving order across tiers.
     """
-    cleaned = blob.replace("'", '"')
-    return json.loads(cleaned)
+    urls: list[str] = []
+    seen: set[str] = set()
+
+    def add(u):
+        if u and isinstance(u, str) and u not in seen:
+            seen.add(u)
+            urls.append(u)
+
+    for m in _HIRES_RX.findall(html):
+        add(m)
+
+    for img in soup.select("img[data-a-dynamic-image]"):
+        raw = img.get("data-a-dynamic-image") or ""
+        if not raw or raw == "{}":
+            continue
+        try:
+            data = json.loads(raw)
+        except Exception:
+            continue
+        if not isinstance(data, dict) or not data:
+            continue
+        # values are [w, h] lists; pick largest by width
+        try:
+            best = max(data.items(), key=lambda kv: (kv[1][0] if isinstance(kv[1], list) else 0))
+            add(best[0])
+        except Exception:
+            continue
+
+    if not urls:
+        og = soup.select_one('meta[property="og:image"]')
+        if og and og.get("content"):
+            add(og["content"])
+
+    return urls
+
+
+def _extract_bullets(soup: "BeautifulSoup") -> list[str]:
+    """About-this-item bullets, in display order. Skips the aok-hidden ones
+    Amazon uses for accessibility duplicates."""
+    out: list[str] = []
+    container = soup.select_one("#feature-bullets")
+    if not container:
+        return out
+    for li in container.select("li"):
+        if "aok-hidden" in (li.get("class") or []):
+            continue
+        span = li.select_one("span.a-list-item")
+        text = (span or li).get_text(" ", strip=True)
+        if text and text not in out:
+            out.append(text)
+    return out
+
+
+def _extract_details(soup: "BeautifulSoup") -> dict[str, str]:
+    """Flatten every prodDetTable / detailBullets section into a label→value dict.
+    Uses the LAST occurrence on collision so the canonical "Tech specs" table
+    wins over the "Additional info" duplicate.
+    """
+    out: dict[str, str] = {}
+    # Tech-specs / additional-info tables (most products)
+    for table in soup.select("table.prodDetTable, table.a-keyvalue"):
+        for tr in table.select("tr"):
+            th = tr.select_one("th")
+            td = tr.select_one("td")
+            if not th or not td:
+                continue
+            label = th.get_text(" ", strip=True)
+            value = td.get_text(" ", strip=True)
+            if label and value:
+                out[label] = value
+    # detailBullets format: <li><span><span>Label:</span><span>Value</span></span></li>
+    for ul in soup.select("#detailBullets_feature_div ul, .detail-bullet-list"):
+        for li in ul.select("li"):
+            spans = li.select("span > span")
+            if len(spans) >= 2:
+                label = spans[0].get_text(" ", strip=True).rstrip(":").strip()
+                value = spans[1].get_text(" ", strip=True)
+                if label and value:
+                    out[label] = value
+    return out
 
 
 def fetch_product_via_paapi(asin: str, marketplace: str) -> ProductInfo:

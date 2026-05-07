@@ -149,6 +149,32 @@ from ..core.config import Config
 from ..ops import utensils as utensils_ops
 
 
+_DETAIL_KEYS = {
+    "material": ["Material", "Material Type", "Outer Material", "Material Composition"],
+    "size":     ["Size", "Item Dimensions LxWxH", "Product Dimensions",
+                 "Package Dimensions", "Capacity"],
+    "weight":   ["Item Weight", "Weight", "Package Weight"],
+}
+_CARE_KEYS = ["Care Instructions", "Cleaning Instructions"]
+
+
+def _first_present(details: dict, keys: list[str]) -> Optional[str]:
+    for k in keys:
+        v = details.get(k)
+        if v:
+            return v
+    return None
+
+
+def _specs_from_details(details: dict[str, str]) -> dict[str, str]:
+    specs: dict[str, str] = {}
+    for spec_key, candidate_labels in _DETAIL_KEYS.items():
+        v = _first_present(details, candidate_labels)
+        if v:
+            specs[spec_key] = v
+    return specs
+
+
 def _compose_bundle(
     *,
     info: amazon.ProductInfo,
@@ -157,15 +183,19 @@ def _compose_bundle(
     now: datetime,
 ) -> dict:
     iso = now.isoformat()
+    specs = _specs_from_details(info.details)
+    tagline = info.bullets[0] if info.bullets else None
+    care_tip = _first_present(info.details, _CARE_KEYS)
+    show_specs = bool(specs)
     return {
         "id": utensil_id,
         "name": info.title,
-        "tagline": None,
+        "tagline": tagline,
         "category": guess_category(info.breadcrumbs),
         "photo": photo_path,
-        "care_tip": None,
-        "specs": {},
-        "show": {"buyLink": True, "careTip": True, "specs": False},
+        "care_tip": care_tip,
+        "specs": specs,
+        "show": {"buyLink": True, "careTip": True, "specs": show_specs},
         "ai_filled_at": iso,
         "amazon": {
             "asin": info.asin,
