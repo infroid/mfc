@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Schema report — {{ report.generated_at }}</title>
+</head>
+<body>
+  <h1>MyFoodCraving — Supabase schema report</h1>
+  <p>Generated {{ report.generated_at }}</p>
+
+  {% for table in report.tables %}
+  <section>
+    <h2>{{ table.name }}</h2>
+    {% if table.comment %}<p>{{ table.comment }}</p>{% endif %}
+    <p>{{ table.row_count }} rows</p>
+
+    <h3>Columns</h3>
+    <table>
+      <thead><tr><th>name</th><th>type</th><th>nullable</th><th>default</th><th>comment</th></tr></thead>
+      <tbody>
+      {% for c in table.columns %}
+        <tr>
+          <td>{{ c.name }}</td><td>{{ c.type }}</td>
+          <td>{{ "yes" if c.nullable else "no" }}</td>
+          <td>{{ c.default or "" }}</td>
+          <td>{{ c.comment or "" }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    {% if table.primary_key %}<p><strong>PK:</strong> {{ table.primary_key | join(", ") }}</p>{% endif %}
+    {% if table.foreign_keys %}
+      <h3>Foreign keys</h3>
+      <ul>
+      {% for fk in table.foreign_keys %}
+        <li>{{ fk.column }} → {{ fk.references_table }}.{{ fk.references_column }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    {% if table.policies %}
+      <h3>RLS policies</h3>
+      <ul>{% for p in table.policies %}<li>{{ p }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% if table.stats %}
+      <h3>Stats</h3>
+      <ul>{% for s in table.stats %}<li>{{ s.column }} · {{ s.kind }} · {{ s.detail }}</li>{% endfor %}</ul>
+    {% endif %}
+  </section>
+  {% endfor %}
+</body>
+</html>

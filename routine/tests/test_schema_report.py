@@ -94,3 +94,28 @@ def test_collect_schema_returns_structured_report():
     assert t.primary_key == ["id"]
     assert t.foreign_keys == []
     assert any("SELECT" in p for p in t.policies)
+
+
+from routine.jobs.schema_report import render_html
+
+
+def _sample_report() -> SchemaReport:
+    return SchemaReport(
+        generated_at="2026-05-08T00:00:00+00:00",
+        tables=[Table(
+            name="recipes", comment="Recipe catalog",
+            columns=[Column(name="id", type="uuid", nullable=False, default=None, comment="PK")],
+            primary_key=["id"], foreign_keys=[], policies=[],
+            row_count=42, stats=[],
+        )],
+    )
+
+
+def test_render_html_writes_file_with_table_name(tmp_path, monkeypatch):
+    monkeypatch.setattr("routine.lib.paths.repo_root", lambda: tmp_path)
+    ctx = build_op_context()
+    out = render_html(ctx, _sample_report())
+    body = open(out).read()
+    assert "recipes" in body
+    assert "Recipe catalog" in body
+    assert "42" in body

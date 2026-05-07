@@ -8,11 +8,14 @@ render_html and the wired job arrive in Task 10.
 """
 
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
-from dagster import OpExecutionContext, op
+from dagster import OpExecutionContext, job, op
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pydantic import BaseModel
 
+from ..lib.paths import artifact_dir
 from ..resources.supabase import SupabaseResource
 
 
@@ -188,3 +191,23 @@ def _collect_stats(cur, table: str, columns: list[Column]) -> list[AggregateStat
                     detail={"counts": list(cur.fetchall())},
                 ))
     return stats
+
+
+@op
+def render_html(context: OpExecutionContext, report: SchemaReport) -> str:
+    template_dir = Path(__file__).resolve().parent.parent / "templates"
+    env = Environment(
+        loader=FileSystemLoader(str(template_dir)),
+        autoescape=select_autoescape(["html"]),
+    )
+    template = env.get_template("schema_report.html.j2")
+    body = template.render(report=report)
+    dest = artifact_dir(context) / "schema_report.html"
+    dest.write_text(body)
+    context.log.info(f"wrote {dest}")
+    return str(dest)
+
+
+@job
+def schema_report_job() -> None:
+    render_html(collect_schema())
