@@ -42,13 +42,13 @@ def test_compose_bundle_full():
     )
     bundle = cu._compose_bundle(
         info=info, utensil_id="kadhai-cast-iron",
-        photo_path="assets/utensils/kadhai-cast-iron/kadhai-cast-iron.jpg",
+        photo_path="https://abc.supabase.co/storage/v1/object/public/utensil-images/kadhai-cast-iron/kadhai-cast-iron.jpg",
         now=_FROZEN,
     )
     assert bundle["id"] == "kadhai-cast-iron"
     assert bundle["name"] == "Cast-iron Kadhai"
     assert bundle["category"] == "Cookware"
-    assert bundle["photo"] == "assets/utensils/kadhai-cast-iron/kadhai-cast-iron.jpg"
+    assert bundle["photo"] == "https://abc.supabase.co/storage/v1/object/public/utensil-images/kadhai-cast-iron/kadhai-cast-iron.jpg"
     assert bundle["tagline"] == "Deep, broad, hot — the workhorse pan."
     assert bundle["care_tip"] == "Hand-wash, dry on heat, oil lightly."
     assert bundle["specs"] == {

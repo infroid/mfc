@@ -146,7 +146,7 @@ from datetime import datetime, timezone
 
 from ..core import files, log
 from ..core.config import Config
-from ..ops import utensils as utensils_ops
+from ..ops import utensils as utensils_ops, utensil_images as utensil_images_ops
 
 
 _DETAIL_KEYS = {
@@ -288,7 +288,18 @@ def run(args: argparse.Namespace, config: Config) -> int:
             if chosen is not None:
                 final = bundle_dir / f"{utensil_id}.jpg"
                 shutil.copyfile(chosen, final)
-                photo_rel = f"assets/utensils/{utensil_id}/{utensil_id}.jpg"
+                # Upload to Storage so admin/recipe pages can render via a
+                # full URL regardless of the requesting page path.
+                if not args.no_db:
+                    photo_rel = utensil_images_ops.upload_one_for_utensil(
+                        config, utensil_id=utensil_id, local_path=final
+                    )
+                    log.ok(f"uploaded image: {photo_rel}")
+                else:
+                    # --no-db means we also skip the network upload. Bundle
+                    # gets the legacy assets/ path; sync-utensil-images push
+                    # later will rewrite it.
+                    photo_rel = f"assets/utensils/{utensil_id}/{utensil_id}.jpg"
             shutil.rmtree(candidates_dir, ignore_errors=True)
     elif args.no_image:
         log.info("skipping image download (--no-image)")
