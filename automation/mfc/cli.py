@@ -14,6 +14,7 @@ from typing import Sequence
 
 from .commands import (
     apply_schema,
+    create_utensil,
     drop_schema,
     list_users,
     reset,
@@ -39,6 +40,7 @@ COMMAND_MODULES = [
     sync_recipes,
     sync_images,
     sync_utensils,
+    create_utensil,
     set_role,
     suspend_user,
     drop_schema,

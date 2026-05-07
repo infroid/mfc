@@ -183,7 +183,19 @@ def _compose_bundle(
 
 
 def register(subparsers: argparse._SubParsersAction) -> None:
-    raise NotImplementedError("CLI surface lands in Task 12")
+    p = subparsers.add_parser(
+        "create-utensil",
+        help="Create a utensil bundle (and DB row) from an Amazon product URL",
+    )
+    p.add_argument("url", help="Amazon product URL or bare 10-char ASIN")
+    p.add_argument("--id", default=None, help="Override the auto-slug; must be unique")
+    p.add_argument("--no-db", action="store_true", help="Write bundle locally; skip DB push")
+    p.add_argument("--no-image", action="store_true", help="Skip image candidate download")
+    p.add_argument("--image-index", type=int, default=None,
+                   help="Pre-pick the Nth image (1-indexed); 0 = skip image entirely")
+    p.add_argument("--force", action="store_true",
+                   help="Overwrite an existing bundle dir / DB row")
+    p.set_defaults(handler=run)
 
 
 def run(args: argparse.Namespace, config: Config) -> int:
