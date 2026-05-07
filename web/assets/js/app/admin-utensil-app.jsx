@@ -141,6 +141,7 @@ function UtensilAdminApp() {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
+              <div className="page-eyebrow">{isNew ? "library · new utensil" : "library · edit utensil"}</div>
               <h1>{isNew ? <>New <em>utensil</em></> : <>Edit <em>utensil</em></>}</h1>
               <p className="lede">Library entry — {isNew ? "added once, picked by recipes." : `used by ${usage} recipe${usage === 1 ? "" : "s"}.`} AI fills the basics; you decide what surfaces.</p>
             </div>

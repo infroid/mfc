@@ -95,6 +95,15 @@ const DASH_STYLE = `
   font-family: var(--serif); font-style: italic; font-weight: 400;
   color: var(--orange);
 }
+.dash-hero-scribble {
+  font-family: var(--hand, "Caveat", cursive);
+  font-size: 26px; font-weight: 500;
+  color: var(--orange);
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin-left: 14px;
+  vertical-align: 0.25em;
+}
 .dash-hero-sub {
   font-family: var(--serif); font-style: italic;
   font-size: 22px; color: var(--ink-soft);
@@ -796,7 +805,7 @@ function DashboardApp() {
                 <div className="eyebrow-comment" style={{ marginBottom: 10 }}>
                   {timeOfDayGreeting()} · {today}
                 </div>
-                <h1 className="dash-hero-title">Hey, <em>{firstName}</em>.</h1>
+                <h1 className="dash-hero-title">Hey, <em>{firstName}</em>.<span className="dash-hero-scribble">welcome back ↘</span></h1>
                 <p className="dash-hero-sub">{heroSub}</p>
               </div>
               <div className="dash-stats">

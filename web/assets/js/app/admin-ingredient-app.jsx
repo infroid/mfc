@@ -146,6 +146,7 @@ function IngredientAdminApp() {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
+              <div className="page-eyebrow">{isNew ? "library · new ingredient" : "library · edit ingredient"}</div>
               <h1>{isNew ? <>New <em>ingredient</em></> : <>Edit <em>ingredient</em></>}</h1>
               <p className="lede">Library entry — {isNew ? "added once, picked by recipes." : `used by ${usage} recipe${usage === 1 ? "" : "s"}.`} Most fields are auto-filled by AI; you only review and toggle what should surface to users.</p>
             </div>

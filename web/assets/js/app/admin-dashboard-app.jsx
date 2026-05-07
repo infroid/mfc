@@ -291,6 +291,7 @@ function DashboardApp() {
         <div className="dash-page">
           <div className="dash-head">
             <div>
+              <div className="page-eyebrow">admin · pulse</div>
               <h1>The <em>pulse</em></h1>
               <div className="sub">Catalog &amp; library health at a glance — counts, gaps, and recent edits.</div>
             </div>

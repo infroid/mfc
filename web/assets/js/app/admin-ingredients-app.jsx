@@ -61,6 +61,7 @@ function IngredientsListApp() {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
+              <div className="page-eyebrow">library · ingredients</div>
               <h1>Ingredient <em>library</em></h1>
               <p className="lede">Master list of ingredients. Recipes pick from here — they cannot inline-create. Most fields are auto-filled by AI; you review and toggle what surfaces.</p>
             </div>

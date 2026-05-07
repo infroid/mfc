@@ -253,6 +253,7 @@ function ChefRecipeApp({ user }) {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
+              <div className="page-eyebrow">{isNew ? "chef · new recipe" : "chef · edit recipe"}</div>
               <h1>{isNew ? <>New <em>recipe</em></> : <>Edit <em>recipe</em></>}</h1>
               <p className="lede">Author the recipe, attach steps. Ingredients & utensils are picked from the library — they always pre-exist.</p>
             </div>

@@ -98,6 +98,15 @@ const PROFILE_STYLE = `
   font-family: var(--serif); font-style: italic; font-weight: 400;
   color: var(--orange);
 }
+.pf-scribble {
+  font-family: var(--hand, "Caveat", cursive);
+  font-size: 24px; font-weight: 500;
+  color: var(--matcha-deep);
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin-left: 12px;
+  vertical-align: 0.3em;
+}
 .pf-sub {
   margin-top: 14px; font-family: var(--serif); font-style: italic;
   font-size: 19px; color: var(--ink-soft); line-height: 1.45;
@@ -551,7 +560,7 @@ function ProfileApp() {
       <main className="wrap">
         <header className="pf-head">
           <div className="pf-eyebrow"><span>your palate</span></div>
-          <h1 className="pf-title">Tune your <em>palate</em></h1>
+          <h1 className="pf-title">Tune your <em>palate</em><span className="pf-scribble">how you like it ↘</span></h1>
           <p className="pf-sub">
             Tell us what you avoid, what you lean into, and where you're headed.
             We'll soft-filter recipes and sharpen your bloodwork ranges around it.

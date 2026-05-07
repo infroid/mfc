@@ -79,6 +79,7 @@ function UsersListApp() {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
+              <div className="page-eyebrow">admin · users</div>
               <h1>All <em>users</em></h1>
               <p className="lede">Browse signed-up users. Role changes are made from the terminal — open a user to see the exact command.</p>
             </div>

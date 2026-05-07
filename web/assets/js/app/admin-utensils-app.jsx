@@ -61,6 +61,7 @@ function UtensilsListApp() {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
+              <div className="page-eyebrow">library · utensils</div>
               <h1>Utensil <em>library</em></h1>
               <p className="lede">Master list of utensils. Recipes pick from here. AI auto-fills the basics; you review and pick what surfaces (buy link, care tip, specs).</p>
             </div>

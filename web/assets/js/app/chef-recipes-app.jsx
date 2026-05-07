@@ -84,7 +84,8 @@ function ChefRecipesApp({ user }) {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
-              <h1>Recipes</h1>
+              <div className="page-eyebrow">{isAdmin ? "admin · all recipes" : "chef portal"}</div>
+              <h1>{isAdmin ? <>All <em>recipes</em></> : <>Your <em>recipes</em></>}</h1>
               <p className="lede">
                 {isAdmin
                   ? "All recipes. New recipes you create will be marked with you as creator."

@@ -139,7 +139,8 @@ function UserApp() {
         <div className="admin-page">
           <div className="admin-page-head">
             <div>
-              <h1>{user ? user.email : (loading ? "Loading…" : "User")}</h1>
+              <div className="page-eyebrow">admin · user detail</div>
+              <h1>{user ? <>User <em>{user.email.split('@')[0]}</em></> : (loading ? "Loading…" : "User")}</h1>
               {user && <p className="lede">Identity is read-only. Role changes are made from the terminal.</p>}
             </div>
           </div>

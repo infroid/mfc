@@ -51,6 +51,15 @@ const ACCOUNT_STYLE = `
   font-family: var(--serif); font-style: italic; font-weight: 400;
   color: var(--orange);
 }
+.acc-scribble {
+  font-family: var(--hand, "Caveat", cursive);
+  font-size: 24px; font-weight: 500;
+  color: var(--orange);
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin-left: 12px;
+  vertical-align: 0.3em;
+}
 .acc-sub {
   margin-top: 14px; font-family: var(--serif); font-style: italic;
   font-size: 19px; color: var(--ink-soft); line-height: 1.4;
@@ -416,7 +425,7 @@ function AccountApp() {
       <main className="wrap">
         <header className="acc-head">
           <div className="acc-eyebrow"><span>your space</span></div>
-          <h1 className="acc-title">Your <em>account</em></h1>
+          <h1 className="acc-title">Your <em>account</em><span className="acc-scribble">your home base ↘</span></h1>
           <p className="acc-sub">
             The basics live here. Profile editing, connected services, and notification
             preferences are on their way.

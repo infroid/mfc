@@ -305,11 +305,35 @@
   font-weight: 400;
   color: var(--orange);
 }
+.admin-page-head .page-eyebrow,
+.page-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+.admin-page-head .page-eyebrow::before,
+.page-eyebrow::before {
+  content: "// ";
+  color: var(--orange);
+}
 .admin-page-head .lede {
   margin-top: 10px;
   font-size: 15px;
   color: var(--ink-soft);
   max-width: 60ch;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.4;
+}
+.admin-page-head .lede em {
+  color: var(--orange);
+  font-weight: 500;
+  font-style: italic;
 }
 .admin-page-meta {
   display: flex;
