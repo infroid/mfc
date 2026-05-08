@@ -1,0 +1,13 @@
+{
+  "id": "sushi-grade-tuna-steaks",
+  "name": "Sushi-grade tuna steaks",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

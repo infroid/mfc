@@ -1,0 +1,13 @@
+{
+  "id": "ripe-tomatoes",
+  "name": "Ripe tomatoes",
+  "default_unit": "medium",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

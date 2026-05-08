@@ -1,0 +1,13 @@
+{
+  "id": "onion-finely-chopped",
+  "name": "Onion (finely chopped)",
+  "default_unit": "medium",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

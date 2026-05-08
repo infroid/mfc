@@ -1,0 +1,13 @@
+{
+  "id": "whole-spices-bay-cardamom-cinnamon-cloves",
+  "name": "Whole spices (bay, cardamom, cinnamon, cloves)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "red-bell-pepper-diced",
+  "name": "Red bell pepper (diced)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

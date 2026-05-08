@@ -1,0 +1,13 @@
+{
+  "id": "zucchini-shredded",
+  "name": "Zucchini (shredded)",
+  "default_unit": "medium",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

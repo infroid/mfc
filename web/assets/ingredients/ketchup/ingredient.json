@@ -1,0 +1,13 @@
+{
+  "id": "ketchup",
+  "name": "Ketchup",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

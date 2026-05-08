@@ -1,0 +1,13 @@
+{
+  "id": "banana-sliced",
+  "name": "Banana (sliced)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

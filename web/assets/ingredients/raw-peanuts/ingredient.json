@@ -1,0 +1,13 @@
+{
+  "id": "raw-peanuts",
+  "name": "Raw peanuts",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

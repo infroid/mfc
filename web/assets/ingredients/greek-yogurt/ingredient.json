@@ -1,0 +1,13 @@
+{
+  "id": "greek-yogurt",
+  "name": "Greek yogurt",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ripe-mango",
+  "name": "Ripe mango",
+  "default_unit": "large",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

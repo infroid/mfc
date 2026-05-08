@@ -1,0 +1,13 @@
+{
+  "id": "mackerel-cleaned-slit",
+  "name": "Mackerel (cleaned, slit)",
+  "default_unit": "whole",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

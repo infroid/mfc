@@ -1,0 +1,13 @@
+{
+  "id": "romaine-and-butter-lettuce-mix",
+  "name": "Romaine and butter lettuce mix",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "dried-thyme",
+  "name": "Dried thyme",
+  "default_unit": "tsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "sparkling-water-cold",
+  "name": "Sparkling water (cold)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

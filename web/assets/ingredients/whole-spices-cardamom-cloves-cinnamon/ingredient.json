@@ -1,0 +1,13 @@
+{
+  "id": "whole-spices-cardamom-cloves-cinnamon",
+  "name": "Whole spices (cardamom, cloves, cinnamon)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

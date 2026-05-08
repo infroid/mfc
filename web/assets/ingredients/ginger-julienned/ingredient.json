@@ -1,0 +1,13 @@
+{
+  "id": "ginger-julienned",
+  "name": "Ginger (julienned)",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

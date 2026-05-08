@@ -1,0 +1,13 @@
+{
+  "id": "bell-peppers-any-color",
+  "name": "Bell peppers (any color)",
+  "default_unit": "large",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

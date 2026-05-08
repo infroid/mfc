@@ -1,0 +1,13 @@
+{
+  "id": "maida-all-purpose-flour",
+  "name": "Maida (all-purpose flour)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

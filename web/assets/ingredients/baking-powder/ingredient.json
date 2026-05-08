@@ -1,0 +1,13 @@
+{
+  "id": "baking-powder",
+  "name": "Baking powder",
+  "default_unit": "tsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

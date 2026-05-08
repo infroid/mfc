@@ -1,0 +1,13 @@
+{
+  "id": "banana-ripe-frozen-if-possible",
+  "name": "Banana (ripe, frozen if possible)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

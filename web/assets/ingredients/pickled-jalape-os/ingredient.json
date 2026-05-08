@@ -1,0 +1,13 @@
+{
+  "id": "pickled-jalape-os",
+  "name": "Pickled jalapeños",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

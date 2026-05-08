@@ -1,0 +1,13 @@
+{
+  "id": "toasted-sesame-seeds",
+  "name": "Toasted sesame seeds",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ground-lamb",
+  "name": "Ground lamb",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

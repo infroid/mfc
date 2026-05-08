@@ -1,0 +1,13 @@
+{
+  "id": "red-kidney-beans-rajma",
+  "name": "Red kidney beans (rajma)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "tomato-sliced",
+  "name": "Tomato (sliced)",
+  "default_unit": "medium",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "sweet-potato-cubed",
+  "name": "Sweet potato (cubed)",
+  "default_unit": "large",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

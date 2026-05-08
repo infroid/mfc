@@ -1,0 +1,13 @@
+{
+  "id": "cornmeal-makki-ka-atta",
+  "name": "Cornmeal (makki ka atta)",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

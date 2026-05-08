@@ -1,0 +1,13 @@
+{
+  "id": "chicken-bone-in-curry-cut",
+  "name": "Chicken (bone-in, curry cut)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

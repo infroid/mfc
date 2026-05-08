@@ -1,0 +1,13 @@
+{
+  "id": "cauliflower-gobi",
+  "name": "Cauliflower (gobi)",
+  "default_unit": "medium",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "chicken-thighs-sliced",
+  "name": "Chicken thighs (sliced)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

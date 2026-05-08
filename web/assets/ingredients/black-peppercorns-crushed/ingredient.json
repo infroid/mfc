@@ -1,0 +1,13 @@
+{
+  "id": "black-peppercorns-crushed",
+  "name": "Black peppercorns (crushed)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

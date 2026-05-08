@@ -1,0 +1,13 @@
+{
+  "id": "fenugreek-leaves-chopped",
+  "name": "Fenugreek leaves (chopped)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

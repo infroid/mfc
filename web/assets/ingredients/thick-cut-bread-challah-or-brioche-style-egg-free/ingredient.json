@@ -1,0 +1,13 @@
+{
+  "id": "thick-cut-bread-challah-or-brioche-style-egg-free",
+  "name": "Thick-cut bread (challah or brioche-style egg-free)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

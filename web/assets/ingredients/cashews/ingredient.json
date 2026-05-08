@@ -1,0 +1,13 @@
+{
+  "id": "cashews",
+  "name": "Cashews",
+  "default_unit": "whole",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

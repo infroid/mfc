@@ -1,0 +1,13 @@
+{
+  "id": "kala-namak-black-salt",
+  "name": "Kala namak (black salt)",
+  "default_unit": "tsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

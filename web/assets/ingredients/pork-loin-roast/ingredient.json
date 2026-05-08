@@ -1,0 +1,13 @@
+{
+  "id": "pork-loin-roast",
+  "name": "Pork loin roast",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

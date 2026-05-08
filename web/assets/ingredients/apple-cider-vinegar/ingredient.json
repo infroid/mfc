@@ -1,0 +1,13 @@
+{
+  "id": "apple-cider-vinegar",
+  "name": "Apple cider vinegar",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

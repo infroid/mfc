@@ -1,0 +1,13 @@
+{
+  "id": "olive-oil",
+  "name": "Olive oil",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

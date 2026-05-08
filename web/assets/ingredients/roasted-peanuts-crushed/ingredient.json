@@ -1,0 +1,13 @@
+{
+  "id": "roasted-peanuts-crushed",
+  "name": "Roasted peanuts (crushed)",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

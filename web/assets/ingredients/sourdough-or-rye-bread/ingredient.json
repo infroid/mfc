@@ -1,0 +1,13 @@
+{
+  "id": "sourdough-or-rye-bread",
+  "name": "Sourdough or rye bread",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

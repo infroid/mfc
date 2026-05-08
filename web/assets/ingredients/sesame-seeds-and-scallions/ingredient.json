@@ -1,0 +1,13 @@
+{
+  "id": "sesame-seeds-and-scallions",
+  "name": "Sesame seeds and scallions",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "smoked-ham-hock",
+  "name": "Smoked ham hock",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

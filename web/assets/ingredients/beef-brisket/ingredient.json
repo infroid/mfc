@@ -1,0 +1,13 @@
+{
+  "id": "beef-brisket",
+  "name": "Beef brisket",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mint-leaves-chopped",
+  "name": "Mint leaves (chopped)",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

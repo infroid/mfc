@@ -1,0 +1,13 @@
+{
+  "id": "sharp-cheddar-shredded",
+  "name": "Sharp cheddar (shredded)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

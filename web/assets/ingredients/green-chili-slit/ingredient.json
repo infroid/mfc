@@ -1,0 +1,13 @@
+{
+  "id": "green-chili-slit",
+  "name": "Green chili (slit)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

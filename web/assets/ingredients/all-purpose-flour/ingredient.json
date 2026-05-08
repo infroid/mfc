@@ -1,0 +1,13 @@
+{
+  "id": "all-purpose-flour",
+  "name": "All-purpose flour",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

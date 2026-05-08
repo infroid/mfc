@@ -1,0 +1,13 @@
+{
+  "id": "heirloom-tomatoes",
+  "name": "Heirloom tomatoes",
+  "default_unit": "large",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

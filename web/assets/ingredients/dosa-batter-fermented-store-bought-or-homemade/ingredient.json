@@ -1,0 +1,13 @@
+{
+  "id": "dosa-batter-fermented-store-bought-or-homemade",
+  "name": "Dosa batter (fermented, store-bought or homemade)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

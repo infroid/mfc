@@ -1,0 +1,13 @@
+{
+  "id": "bay-leaf",
+  "name": "Bay leaf",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

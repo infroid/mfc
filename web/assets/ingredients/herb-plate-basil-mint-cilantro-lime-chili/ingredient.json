@@ -1,0 +1,13 @@
+{
+  "id": "herb-plate-basil-mint-cilantro-lime-chili",
+  "name": "Herb plate (basil, mint, cilantro, lime, chili)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

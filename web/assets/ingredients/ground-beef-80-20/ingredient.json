@@ -1,0 +1,13 @@
+{
+  "id": "ground-beef-80-20",
+  "name": "Ground beef (80/20)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

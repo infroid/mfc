@@ -1,0 +1,13 @@
+{
+  "id": "onion-halved",
+  "name": "Onion (halved)",
+  "default_unit": "large",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

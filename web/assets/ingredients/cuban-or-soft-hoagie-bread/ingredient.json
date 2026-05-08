@@ -1,0 +1,13 @@
+{
+  "id": "cuban-or-soft-hoagie-bread",
+  "name": "Cuban or soft hoagie bread",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "kidney-beans-rajma-dried",
+  "name": "Kidney beans (rajma, dried)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "yogurt-thick",
+  "name": "Yogurt (thick)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

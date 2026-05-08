@@ -1,0 +1,13 @@
+{
+  "id": "salmon-fillet-skin-on",
+  "name": "Salmon fillet (skin-on)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

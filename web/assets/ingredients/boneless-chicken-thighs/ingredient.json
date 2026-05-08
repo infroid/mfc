@@ -1,0 +1,13 @@
+{
+  "id": "boneless-chicken-thighs",
+  "name": "Boneless chicken thighs",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

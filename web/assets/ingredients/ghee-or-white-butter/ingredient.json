@@ -1,0 +1,13 @@
+{
+  "id": "ghee-or-white-butter",
+  "name": "Ghee or white butter",
+  "default_unit": "tbsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

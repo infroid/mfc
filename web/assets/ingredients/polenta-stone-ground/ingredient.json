@@ -1,0 +1,13 @@
+{
+  "id": "polenta-stone-ground",
+  "name": "Polenta (stone-ground)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ghee-or-butter",
+  "name": "Ghee or butter",
+  "default_unit": "tsp",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

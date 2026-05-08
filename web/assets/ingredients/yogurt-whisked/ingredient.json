@@ -1,0 +1,13 @@
+{
+  "id": "yogurt-whisked",
+  "name": "Yogurt (whisked)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

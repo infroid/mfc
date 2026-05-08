@@ -1,0 +1,13 @@
+{
+  "id": "warm-pita",
+  "name": "Warm pita",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

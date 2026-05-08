@@ -1,0 +1,13 @@
+{
+  "id": "lamb-shoulder-cubed",
+  "name": "Lamb shoulder (cubed)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

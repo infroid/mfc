@@ -1,0 +1,13 @@
+{
+  "id": "whole-trout-cleaned",
+  "name": "Whole trout (cleaned)",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

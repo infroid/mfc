@@ -1,0 +1,13 @@
+{
+  "id": "onion-finely-sliced",
+  "name": "Onion (finely sliced)",
+  "default_unit": "medium",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

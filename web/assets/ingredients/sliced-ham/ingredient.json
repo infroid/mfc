@@ -1,0 +1,13 @@
+{
+  "id": "sliced-ham",
+  "name": "Sliced ham",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

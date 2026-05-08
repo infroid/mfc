@@ -1,0 +1,13 @@
+{
+  "id": "fresh-coriander",
+  "name": "Fresh coriander",
+  "default_unit": "g",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

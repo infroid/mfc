@@ -1,0 +1,13 @@
+{
+  "id": "heavy-cream-warm",
+  "name": "Heavy cream (warm)",
+  "default_unit": "cup",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}

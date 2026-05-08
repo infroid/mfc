@@ -1,0 +1,13 @@
+{
+  "id": "leeks-white-and-pale-green",
+  "name": "Leeks (white and pale green)",
+  "default_unit": "large",
+  "substitutes": [],
+  "show": {
+    "storage": false,
+    "nutrition": true,
+    "healthFact": true,
+    "substitutes": false
+  },
+  "nutrition": {}
+}
