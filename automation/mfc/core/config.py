@@ -38,6 +38,8 @@ class Config:
     supabase_url: Optional[str]
     supabase_secret_key: Optional[str]
     supabase_publishable_key: Optional[str]
+    fdc_api_key: Optional[str]
+    anthropic_api_key: Optional[str]
     repo_root: Path
 
     @classmethod
@@ -51,6 +53,8 @@ class Config:
             supabase_url=os.environ.get("SUPABASE_URL") or None,
             supabase_secret_key=os.environ.get("SUPABASE_SECRET_KEY") or None,
             supabase_publishable_key=os.environ.get("SUPABASE_PUBLISHABLE_KEY") or None,
+            fdc_api_key=os.environ.get("FDC_API_KEY") or None,
+            anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY") or None,
             repo_root=REPO_ROOT,
         )
 
@@ -74,6 +78,23 @@ class Config:
                 "Set them in .env."
             )
         return self.supabase_url, self.supabase_secret_key  # type: ignore[return-value]
+
+    def require_fdc(self) -> str:
+        if not self.fdc_api_key:
+            raise ConfigError(
+                "FDC_API_KEY is required for this command. "
+                "Free key from https://fdc.nal.usda.gov/api-key-signup.html — "
+                "set it in automation/.env."
+            )
+        return self.fdc_api_key
+
+    def require_anthropic(self) -> str:
+        if not self.anthropic_api_key:
+            raise ConfigError(
+                "ANTHROPIC_API_KEY is required when --ai-fallback is set. "
+                "Set it in automation/.env."
+            )
+        return self.anthropic_api_key
 
 
 class ConfigError(RuntimeError):
