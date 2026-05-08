@@ -15,6 +15,23 @@ function ingNormalizeUnit(u) {
   return ING_UNIT_ALIASES[u] || ING_UNITS[0];
 }
 
+// Macro key shim. Pre-USDA rows used { calories, protein, fat, carbs };
+// post-migration rows use USDA-aligned keys. Reads fall back to legacy;
+// writes always target the new keys, so editing converges old rows to
+// the new shape without losing extra USDA fields (vitamins, amino acids,
+// etc.) that may already be present from `mfc fetch-ingredient-nutrition`.
+const MACRO_NEW_KEY = {
+  calories: "energy_kcal",
+  protein:  "protein_g",
+  fat:      "total_fat_g",
+  carbs:    "carbohydrate_g",
+};
+function readMacro(n, legacyKey) {
+  const newKey = MACRO_NEW_KEY[legacyKey];
+  if (n && n[newKey] != null) return n[newKey];
+  return (n && n[legacyKey]) || 0;
+}
+
 const BLANK = {
   id: "",
   name: "",
@@ -23,7 +40,7 @@ const BLANK = {
   default_unit: "g",
   photo: "",
   show: { nutrition: true, healthFact: true, storage: false, substitutes: false },
-  nutrition: { calories: 0, protein: 0, fat: 0, carbs: 0 },
+  nutrition: { energy_kcal: 0, protein_g: 0, total_fat_g: 0, carbohydrate_g: 0 },
   health_fact: "",
   storage: "",
   substitutes: [],
@@ -273,7 +290,8 @@ function IngredientAdminApp() {
 
   const update = (patch) => { setR((p) => ({ ...p, ...patch })); setDirty(true); };
   const updateShow = (k, v) => update({ show: { ...r.show, [k]: v } });
-  const updateNut = (k, v) => update({ nutrition: { ...r.nutrition, [k]: v } });
+  const updateNut = (k, v) =>
+    update({ nutrition: { ...r.nutrition, [MACRO_NEW_KEY[k] || k]: v } });
 
   // Completion checks
   const checks = [
@@ -281,7 +299,7 @@ function IngredientAdminApp() {
     { label: "Tagline",   pass: !!(r.tagline || "").trim(),  required: true },
     { label: "Category",  pass: !!(r.category || "").trim(), required: true },
     { label: "Photo",     pass: !!(r.photo || "").trim(),    required: false },
-    { label: "Nutrition", pass: r.nutrition.calories > 0,    required: false },
+    { label: "Nutrition", pass: readMacro(r.nutrition, "calories") > 0, required: false },
     { label: "Health fact", pass: !!(r.health_fact || "").trim(), required: false },
   ];
   const passed = checks.filter(c => c.pass).length;
@@ -449,13 +467,13 @@ function IngredientAdminApp() {
               />
             </div>
             <div className="ce-nut-grid">
-              <NutCell label="Calories" value={r.nutrition.calories} unit="kcal" accent
+              <NutCell label="Calories" value={readMacro(r.nutrition, "calories")} unit="kcal" accent
                 onChange={(v) => updateNut("calories", v)} />
-              <NutCell label="Protein" value={r.nutrition.protein} unit="g"
+              <NutCell label="Protein" value={readMacro(r.nutrition, "protein")} unit="g"
                 onChange={(v) => updateNut("protein", v)} />
-              <NutCell label="Fat" value={r.nutrition.fat} unit="g"
+              <NutCell label="Fat" value={readMacro(r.nutrition, "fat")} unit="g"
                 onChange={(v) => updateNut("fat", v)} />
-              <NutCell label="Carbs" value={r.nutrition.carbs} unit="g"
+              <NutCell label="Carbs" value={readMacro(r.nutrition, "carbs")} unit="g"
                 onChange={(v) => updateNut("carbs", v)} />
             </div>
           </div>
