@@ -13,7 +13,7 @@ class OcrConfig(Config):
     image_path: str
 
 
-@op
+@op(name="ocr_image_extract")
 def extract(context: OpExecutionContext, config: OcrConfig) -> str:
     src = Path(config.image_path)
     if not src.exists():

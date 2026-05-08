@@ -30,7 +30,7 @@ def _ocr_extract(path: Path) -> str:
     return "\n".join(pytesseract.image_to_string(p) for p in pages).strip()
 
 
-@op
+@op(name="pdf_text_extract")
 def extract(context: OpExecutionContext, config: PdfConfig) -> str:
     src = Path(config.pdf_path)
     if not src.exists():
