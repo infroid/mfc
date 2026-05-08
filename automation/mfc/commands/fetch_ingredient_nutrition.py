@@ -1,5 +1,5 @@
 """`mfc fetch-ingredient-nutrition[s]` — populate USDA FDC nutrition into
-ingredient bundle JSONs. AI fallback wired in next task."""
+ingredient bundle JSONs. AI fallback available via --ai-fallback flag."""
 
 from __future__ import annotations
 
