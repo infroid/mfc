@@ -40,7 +40,7 @@ const BLANK = {
   default_unit: "g",
   photo: "",
   show: { nutrition: true, healthFact: true, storage: false, substitutes: false },
-  nutrition: { energy_kcal: 0, protein_g: 0, total_fat_g: 0, carbohydrate_g: 0 },
+  nutrition: {},
   health_fact: "",
   storage: "",
   substitutes: [],
