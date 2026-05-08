@@ -76,14 +76,26 @@ CREATE TABLE IF NOT EXISTS public.ingredients (
   updated_at   timestamptz NOT NULL DEFAULT now()
 );
 
+ALTER TABLE public.ingredients
+  ADD COLUMN IF NOT EXISTS emoji            TEXT,
+  ADD COLUMN IF NOT EXISTS nutrition_source TEXT,
+  ADD COLUMN IF NOT EXISTS fdc_id           INTEGER;
+
+CREATE INDEX IF NOT EXISTS ingredients_nutrition_source_idx
+  ON public.ingredients (nutrition_source);
+
+COMMENT ON COLUMN public.ingredients.emoji            IS 'Single grapheme used on ingredient cards (e.g. "🧀"). Nullable.';
+COMMENT ON COLUMN public.ingredients.nutrition_source IS '"fdc" | "ai" | "manual" | NULL. Powers "what still needs review" filters.';
+COMMENT ON COLUMN public.ingredients.fdc_id           IS 'USDA FoodData Central food id (when nutrition_source = ''fdc''). Lets re-pulls hit the same record without re-searching.';
+
 COMMENT ON TABLE  public.ingredients              IS 'Master library of ingredients. Recipes reference these via FK — inline ingredient names are not supported. Edited via admin-ingredient.html.';
 COMMENT ON COLUMN public.ingredients.id           IS 'Stable URL slug (e.g. "paneer", "kasuri-methi"). Referenced by recipe_ingredients.ingredient_id.';
 COMMENT ON COLUMN public.ingredients.name         IS 'Display name (e.g. "Paneer", "Ginger-garlic paste").';
 COMMENT ON COLUMN public.ingredients.tagline      IS 'One-line description shown on the ingredient card (e.g. "fresh, milky, holds shape under heat").';
 COMMENT ON COLUMN public.ingredients.category     IS 'Free text: "Dairy", "Vegetable", "Spice", "Herb", "Protein", "Oil & Fat", "Nut & Seed", "Aromatic", "Seasoning", etc.';
 COMMENT ON COLUMN public.ingredients.default_unit IS 'Default unit pre-filled when a recipe picks this ingredient (g, ml, tsp, tbsp, cup, medium, large, whole, pinch).';
-COMMENT ON COLUMN public.ingredients.photo        IS 'Relative path to the ingredient photo (e.g. "data/ingredient-photos/paneer.jpg"). Nullable.';
-COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g macros: { calories, protein, fat, carbs }. Numbers; the four macros surface in the UI.';
+COMMENT ON COLUMN public.ingredients.photo        IS 'Full Supabase Storage URL of the ingredient image (https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/<id>/image.png). Bytes also live at web/assets/ingredients/<id>/image.png in the repo. Nullable.';
+COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g USDA FoodData Central nutrient profile. JSONB { source, fdcId, filledAt, aiFilledAt, per:"100g", energy_kcal, protein_g, total_fat_g, ... }. All nutrient fields optional; missing renders as "—". See docs/superpowers/specs/2026-05-07-thiings-ingredient-images-design.md for full key list.';
 COMMENT ON COLUMN public.ingredients.health_fact  IS 'One-liner surfaced in the recipe page health-fact rotator (60–110 chars).';
 COMMENT ON COLUMN public.ingredients.storage      IS 'Storage tip shown on the ingredient page only.';
 COMMENT ON COLUMN public.ingredients.substitutes  IS 'Free-text substitute names (e.g. {"tofu (firm)","halloumi"}).';
@@ -848,6 +860,39 @@ CREATE POLICY "utensil_images_admin_update"
 CREATE POLICY "utensil_images_admin_delete"
   ON storage.objects FOR DELETE
   USING (bucket_id = 'utensil-images' AND public.is_admin());
+
+
+-- ────────────────────────────────────────────────────────────────────────
+-- 9c. STORAGE — ingredient-images bucket + RLS
+-- Public read; admin-only writes (no chef-write tier — ingredients are
+-- admin-managed). Mirrors 9b for utensils.
+-- ────────────────────────────────────────────────────────────────────────
+
+INSERT INTO storage.buckets (id, name, public)
+  VALUES ('ingredient-images', 'ingredient-images', true)
+  ON CONFLICT (id) DO NOTHING;
+
+DROP POLICY IF EXISTS "ingredient_images_public_read"  ON storage.objects;
+DROP POLICY IF EXISTS "ingredient_images_admin_write"  ON storage.objects;
+DROP POLICY IF EXISTS "ingredient_images_admin_update" ON storage.objects;
+DROP POLICY IF EXISTS "ingredient_images_admin_delete" ON storage.objects;
+
+CREATE POLICY "ingredient_images_public_read"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'ingredient-images');
+
+CREATE POLICY "ingredient_images_admin_write"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'ingredient-images' AND public.is_admin());
+
+CREATE POLICY "ingredient_images_admin_update"
+  ON storage.objects FOR UPDATE
+  USING      (bucket_id = 'ingredient-images' AND public.is_admin())
+  WITH CHECK (bucket_id = 'ingredient-images' AND public.is_admin());
+
+CREATE POLICY "ingredient_images_admin_delete"
+  ON storage.objects FOR DELETE
+  USING (bucket_id = 'ingredient-images' AND public.is_admin());
 
 
 -- =============================================================================
