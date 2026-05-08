@@ -83,10 +83,6 @@ def _local_files_for(config: Config, utensil_id: str) -> dict[str, dict]:
     return out
 
 
-# Alias for backward-compat with tests that call ui._decide directly.
-_decide = _storage_sync.decide
-
-
 def _storage_files_for(client, utensil_id: str) -> dict[str, dict]:
     out: dict[str, dict] = {}
     try:

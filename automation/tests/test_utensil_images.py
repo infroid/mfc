@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from mfc.ops import utensil_images as ui
+from mfc.ops._storage_sync import decide
 
 
 @dataclass
@@ -56,25 +57,25 @@ def test_normalize_passes_none_and_empty(tmp_path):
 
 
 def test_decide_local_only_pushes_only_on_push():
-    assert ui._decide(local={"mtime": 1.0}, remote=None, direction="push") == "upload"
-    assert ui._decide(local={"mtime": 1.0}, remote=None, direction="both") == "upload"
-    assert ui._decide(local={"mtime": 1.0}, remote=None, direction="pull") == "skip"
+    assert decide(local={"mtime": 1.0}, remote=None, direction="push") == "upload"
+    assert decide(local={"mtime": 1.0}, remote=None, direction="both") == "upload"
+    assert decide(local={"mtime": 1.0}, remote=None, direction="pull") == "skip"
 
 
 def test_decide_remote_only_downloads_only_on_pull():
-    assert ui._decide(local=None, remote={"updated_at_ts": 1.0}, direction="pull") == "download"
-    assert ui._decide(local=None, remote={"updated_at_ts": 1.0}, direction="push") == "skip"
-    assert ui._decide(local=None, remote={"updated_at_ts": 1.0}, direction="both") == "download"
+    assert decide(local=None, remote={"updated_at_ts": 1.0}, direction="pull") == "download"
+    assert decide(local=None, remote={"updated_at_ts": 1.0}, direction="push") == "skip"
+    assert decide(local=None, remote={"updated_at_ts": 1.0}, direction="both") == "download"
 
 
 def test_decide_clock_skew_tolerance():
     # Within 1 s of each other -> skip.
-    assert ui._decide(local={"mtime": 100.0}, remote={"updated_at_ts": 100.5}, direction="both") == "skip"
+    assert decide(local={"mtime": 100.0}, remote={"updated_at_ts": 100.5}, direction="both") == "skip"
 
 
 def test_decide_local_newer_pushes_on_both():
-    assert ui._decide(local={"mtime": 200.0}, remote={"updated_at_ts": 100.0}, direction="both") == "upload"
+    assert decide(local={"mtime": 200.0}, remote={"updated_at_ts": 100.0}, direction="both") == "upload"
 
 
 def test_decide_remote_newer_pulls_on_both():
-    assert ui._decide(local={"mtime": 100.0}, remote={"updated_at_ts": 200.0}, direction="both") == "download"
+    assert decide(local={"mtime": 100.0}, remote={"updated_at_ts": 200.0}, direction="both") == "download"
