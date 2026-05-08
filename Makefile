@@ -14,7 +14,7 @@ UV := uv --project automation
 
 .DEFAULT_GOAL := help
 
-.PHONY: help sync status apply-schema seed-metrics \
+.PHONY: help sync status apply-schema seed-metrics migrate-ingredient-nutrition \
         sync-recipes sync-images sync-utensils sync-utensil-images update-utensil \
         list-users set-role suspend-user drop-schema reset serve
 
@@ -42,6 +42,9 @@ apply-schema: ## run automation/db/schema.sql
 
 seed-metrics: ## run automation/db/seed_metrics.sql (54-marker catalog)
 	@$(UV) run mfc seed-metrics
+
+migrate-ingredient-nutrition: ## one-shot: reshape legacy nutrition jsonb to USDA schema (idempotent)
+	@$(UV) run mfc migrate-ingredient-nutrition
 
 sync-recipes: ## sync recipe metadata DB↔local; chains sync-images in same direction
 	@if [ -n "$(DIRECTION)" ]; then \
