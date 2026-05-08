@@ -196,11 +196,11 @@ function IdentityModal({ r, update, slugTaken, isNew, onClose }) {
         </select>
       </div>
       <div className="field-row">
-        <label>Photo path</label>
+        <label>Photo URL</label>
         <input
           value={r.photo}
           onChange={(e) => update({ photo: e.target.value })}
-          placeholder="/assets/img/ingredients/paneer.jpg"
+          placeholder="https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/paneer/image.png"
           style={{ fontFamily: "var(--mono)", fontSize: 13 }}
         />
       </div>
