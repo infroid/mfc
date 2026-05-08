@@ -68,7 +68,7 @@ def _normalize_photo(config: Config, ingredient_id: str, value) -> Optional[str]
     if not base:
         raise RuntimeError("SUPABASE_URL not set")
     if value.startswith(_LEGACY_PATH_PREFIX) or value.startswith("/" + _LEGACY_PATH_PREFIX):
-        return f"{base}/storage/v1/object/public/{BUCKET}/{ingredient_id}/image.png"
+        return f"{base}/storage/v1/object/public/{BUCKET}/{ingredient_id}/{Path(value).name}"
     return value
 
 
@@ -109,7 +109,7 @@ def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncRep
     for b in bundles:
         if not b.get("id") or not b.get("name"):
             log.warn(f"skipping bundle missing id/name: {b.get('id') or '<no-id>'}")
-            report.failed.append(f"{b.get('id') or '<no-id>'}: missing id or name")
+            report.skipped += 1
             continue
         valid.append(b)
 
