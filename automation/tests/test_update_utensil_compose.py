@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import argparse
+import json
 from datetime import datetime, timezone
 
 from mfc.commands import update_utensil as cu
+from mfc.core.config import Config
 from mfc.ops.amazon import ProductInfo
 
 
@@ -91,3 +94,50 @@ def test_compose_bundle_partial_specs():
     assert bundle["specs"] == {"material": "Stainless steel", "size": "5 L"}
     assert "weight" not in bundle["specs"]
     assert bundle["show"]["specs"] is True
+
+
+def test_run_preserves_existing_id_and_name_when_updating_bundle(tmp_path, monkeypatch):
+    bundle_dir = tmp_path / "web" / "assets" / "utensils" / "kadhai-cast-iron"
+    bundle_dir.mkdir(parents=True)
+    bundle_path = bundle_dir / "utensil.json"
+    bundle_path.write_text(
+        json.dumps({
+            "id": "kadhai-cast-iron",
+            "name": "Cast iron kadhai",
+            "tagline": "old tagline",
+            "specs": {"material": "old"},
+            "show": {"specs": False},
+            "buy_links": [],
+        }) + "\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        cu.amazon,
+        "fetch_product",
+        lambda _url: _info(
+            title="Amazon SEO Product Title",
+            bullets=["Fresh Amazon tagline"],
+            details={"Material": "Cast iron", "Capacity": "5 L"},
+        ),
+    )
+    config = Config(
+        db_url=None,
+        supabase_url=None,
+        supabase_secret_key=None,
+        supabase_publishable_key=None,
+        repo_root=tmp_path,
+    )
+    args = argparse.Namespace(
+        url="https://www.amazon.com/dp/B07JFTSKXW",
+        id="kadhai-cast-iron",
+        no_image=True,
+        image_index=None,
+    )
+
+    assert cu.run(args, config) == 0
+
+    bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+    assert bundle["id"] == "kadhai-cast-iron"
+    assert bundle["name"] == "Cast iron kadhai"
+    assert bundle["tagline"] == "Fresh Amazon tagline"
+    assert bundle["specs"] == {"material": "Cast iron", "size": "5 L"}

@@ -261,6 +261,7 @@ def run(args: argparse.Namespace, config: Config) -> int:
     bundle_path = files.utensil_bundle_path(config.repo_root, utensil_id)
     bundle_existed = bundle_path.exists()
     bundle_dir.mkdir(parents=True, exist_ok=True)
+    existing_bundle = files.load_utensil_json(bundle_path) if bundle_existed else None
     if bundle_existed:
         log.info(f"overwriting existing bundle at {bundle_path.relative_to(config.repo_root)}")
 
@@ -300,6 +301,8 @@ def run(args: argparse.Namespace, config: Config) -> int:
     # 5. Compose + write bundle
     now = datetime.now(timezone.utc)
     bundle = _compose_bundle(info=info, utensil_id=utensil_id, photo_path=photo_rel, now=now)
+    if existing_bundle and existing_bundle.get("name"):
+        bundle["name"] = existing_bundle["name"]
     bundle_path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
     log.ok(f"wrote {bundle_path.relative_to(config.repo_root)}")
 
