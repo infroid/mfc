@@ -16,7 +16,7 @@ UV := uv --project automation
 
 .PHONY: help sync status apply-schema seed-metrics migrate-ingredient-nutrition \
         sync-recipes sync-images sync-utensils sync-utensil-images update-utensil \
-        fetch-ingredient-images \
+        fetch-ingredient-images fetch-ingredient-nutrition \
         list-users set-role suspend-user drop-schema reset serve
 
 help: ## list all targets
@@ -101,6 +101,13 @@ sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIR
 fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
 	@$(UV) run mfc fetch-ingredient-images \
 	  $(if $(FORCE),--force) \
+	  $(if $(LIMIT),--limit $(LIMIT)) \
+	  $(if $(IDS),--ids $(IDS))
+
+fetch-ingredient-nutrition: ## fetch USDA FDC nutrition into bundle JSONs; FORCE=1 LIMIT=N IDS=a,b AI=1
+	@$(UV) run mfc fetch-ingredient-nutrition \
+	  $(if $(FORCE),--force) \
+	  $(if $(AI),--ai-fallback) \
 	  $(if $(LIMIT),--limit $(LIMIT)) \
 	  $(if $(IDS),--ids $(IDS))
 
