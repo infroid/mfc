@@ -79,7 +79,7 @@ def _local_files_for(config: Config, ingredient_id: str) -> dict[str, dict]:
     if not d.exists():
         return out
     for p in d.iterdir():
-        if p.is_file() and p.suffix.lower() in _storage_sync.IMAGE_EXTS:
+        if p.is_file() and p.name == FILENAME:
             out[p.name] = {"mtime": p.stat().st_mtime}
     return out
 
@@ -94,7 +94,7 @@ def _storage_files_for(client, ingredient_id: str) -> dict[str, dict]:
         name = o.get("name") if isinstance(o, dict) else getattr(o, "name", None)
         if not name:
             continue
-        if Path(name).suffix.lower() not in _storage_sync.IMAGE_EXTS:
+        if name != FILENAME:
             continue
         ts_iso = (
             o.get("updated_at") if isinstance(o, dict) else getattr(o, "updated_at", None)
