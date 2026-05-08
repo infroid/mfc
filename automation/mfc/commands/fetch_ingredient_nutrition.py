@@ -12,7 +12,7 @@ from pathlib import Path
 from ..clients import sb as sb_client
 from ..core import log
 from ..core.config import Config
-from ..ops import fdc
+from ..ops import aifill, fdc
 
 
 REL_DIR = "assets/ingredients"
@@ -64,6 +64,7 @@ def _process_one(
     no_write: bool,
     fdc_id_pin: int | None,
     report: RunReport,
+    args_namespace,
 ) -> None:
     iid = row["id"]
     existing_block = (row.get("nutrition") or {}) if isinstance(row.get("nutrition"), dict) else {}
@@ -78,8 +79,15 @@ def _process_one(
         else:
             block = fdc.fetch_for_name(row["name"], api_key=api_key)
     except fdc.FdcNotFound:
-        report.misses.append((iid, "fdc-no-match"))
-        return
+        if not getattr(args_namespace, "ai_fallback", False):
+            report.misses.append((iid, "fdc-no-match"))
+            return
+        try:
+            ai_key = config.require_anthropic()
+            block = aifill.suggest_nutrition(row["name"], category=row.get("category"), api_key=ai_key)
+        except aifill.AiFillError as exc:
+            report.misses.append((iid, f"ai-fallback-failed: {exc}"))
+            return
     except fdc.FdcError as exc:
         report.failed.append((iid, f"fdc-error: {exc}"))
         return
@@ -91,8 +99,9 @@ def _process_one(
 
         sb.table("ingredients").update({
             "nutrition": block,
-            "nutrition_source": "fdc",
-            "fdc_id": block["fdcId"],
+            "nutrition_source": block["source"],
+            "fdc_id": block.get("fdcId"),
+            "ai_filled_at": block.get("aiFilledAt"),
         }).eq("id", iid).execute()
 
     report.fetched.append(iid)
@@ -111,6 +120,7 @@ def _run_single(args: argparse.Namespace, config: Config) -> int:
         no_write=args.no_write,
         fdc_id_pin=args.fdc_id,
         report=report,
+        args_namespace=args,
     )
     report.print()
     return 0 if not report.failed else 1
@@ -134,6 +144,7 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
             no_write=args.no_write,
             fdc_id_pin=None,
             report=report,
+            args_namespace=args,
         )
         if i < len(rows) - 1:
             time.sleep(SLEEP_BETWEEN_REQUESTS_S)
@@ -154,7 +165,7 @@ def register(subparsers: argparse._SubParsersAction) -> None:
     p.add_argument("--fdc-id", type=int, default=None,
                    help="(single only) skip search; pull this FDC food id directly")
     p.add_argument("--ai-fallback", action="store_true",
-                   help="(wired in a later commit) try Anthropic AI when FDC misses")
+                   help="try Anthropic AI when FDC misses (requires ANTHROPIC_API_KEY)")
     p.add_argument("--limit", type=int, default=None,
                    help="(bulk only) cap to first N rows after --ids filter")
     p.add_argument("--ids", default=None,
