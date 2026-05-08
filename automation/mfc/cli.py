@@ -15,6 +15,7 @@ from typing import Sequence
 from .commands import (
     apply_schema,
     drop_schema,
+    fetch_ingredient_images,
     list_users,
     migrate_ingredient_nutrition,
     reset,
@@ -44,6 +45,7 @@ COMMAND_MODULES = [
     sync_images,
     sync_utensils,
     sync_utensil_images,
+    fetch_ingredient_images,
     update_utensil,
     set_role,
     suspend_user,
@@ -70,6 +72,9 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="cmd", required=True)
     for mod in COMMAND_MODULES:
         mod.register(sub)
+        register_bulk = getattr(mod, "register_bulk", None)
+        if register_bulk is not None:
+            register_bulk(sub)
     return parser
 
 

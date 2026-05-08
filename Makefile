@@ -16,6 +16,7 @@ UV := uv --project automation
 
 .PHONY: help sync status apply-schema seed-metrics migrate-ingredient-nutrition \
         sync-recipes sync-images sync-utensils sync-utensil-images update-utensil \
+        fetch-ingredient-images \
         list-users set-role suspend-user drop-schema reset serve
 
 help: ## list all targets
@@ -96,6 +97,12 @@ sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIR
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-utensil-images --direction $$d; \
 	fi
+
+fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
+	@$(UV) run mfc fetch-ingredient-images \
+	  $(if $(FORCE),--force) \
+	  $(if $(LIMIT),--limit $(LIMIT)) \
+	  $(if $(IDS),--ids $(IDS))
 
 update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [NO_IMAGE=1])
 	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(NO_IMAGE),--no-image)
