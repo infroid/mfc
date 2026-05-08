@@ -38,14 +38,10 @@ class ThiingsNotFound(ThiingsError):
 
 
 def _get(url: str) -> bytes:
+    """Raises HTTPError, URLError, or TimeoutError. Caller wraps with slug context."""
     req = Request(url, headers={"User-Agent": USER_AGENT})
-    try:
-        with urlopen(req, timeout=TIMEOUT_S) as resp:
-            return resp.read(MAX_BYTES + 1)
-    except HTTPError:
-        raise
-    except (URLError, TimeoutError) as exc:
-        raise ThiingsError(url, f"network: {exc}") from exc
+    with urlopen(req, timeout=TIMEOUT_S) as resp:
+        return resp.read(MAX_BYTES + 1)
 
 
 def _extract_blob_url(html: bytes) -> str | None:
@@ -74,6 +70,8 @@ def fetch_image(slug: str) -> bytes:
         if exc.code == 404:
             raise ThiingsNotFound(slug, "page-404") from exc
         raise ThiingsError(slug, f"page-http-{exc.code}") from exc
+    except (URLError, TimeoutError) as exc:
+        raise ThiingsError(slug, f"page-network: {exc}") from exc
 
     blob_url = _extract_blob_url(html)
     if blob_url is None:
@@ -83,6 +81,8 @@ def fetch_image(slug: str) -> bytes:
         data = _get(blob_url)
     except HTTPError as exc:
         raise ThiingsError(slug, f"blob-http-{exc.code}") from exc
+    except (URLError, TimeoutError) as exc:
+        raise ThiingsError(slug, f"blob-network: {exc}") from exc
 
     if len(data) > MAX_BYTES:
         raise ThiingsError(slug, "oversize")

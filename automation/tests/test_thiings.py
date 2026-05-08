@@ -71,3 +71,18 @@ def test_html_without_blob_url_raises_not_found():
         with pytest.raises(thiings.ThiingsNotFound) as ex:
             thiings.fetch_image("aamchur")
     assert ex.value.reason == "no-image-in-html"
+
+
+def test_network_error_on_page_raises_thiings_error_with_slug():
+    from mfc.ops import thiings
+    from urllib.error import URLError
+
+    def fail(req, timeout=None):
+        raise URLError("connection refused")
+
+    with patch("mfc.ops.thiings.urlopen", new=fail):
+        with pytest.raises(thiings.ThiingsError) as ex:
+            thiings.fetch_image("spinach")
+    # Critical: slug attribute is the actual slug, not a URL
+    assert ex.value.slug == "spinach"
+    assert "page-network" in ex.value.reason
