@@ -870,7 +870,7 @@ CREATE POLICY "utensil_images_admin_delete"
 
 INSERT INTO storage.buckets (id, name, public)
   VALUES ('ingredient-images', 'ingredient-images', true)
-  ON CONFLICT (id) DO NOTHING;
+  ON CONFLICT (id) DO UPDATE SET public = excluded.public;
 
 DROP POLICY IF EXISTS "ingredient_images_public_read"  ON storage.objects;
 DROP POLICY IF EXISTS "ingredient_images_admin_write"  ON storage.objects;
