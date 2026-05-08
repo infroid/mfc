@@ -8,22 +8,17 @@ that holds the full Storage URL post-migration; the local file is the cache.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
-from typing import Iterable, Literal, Optional
+from typing import Literal, Optional
 
-import httpx
-
-from ..clients import sb as sb_client
 from ..core import files, log
 from ..core.config import Config
+from ..core.utils import parse_iso_to_ts
+from . import _storage_sync
 
 
 BUCKET = "utensil-images"
-IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp")
 LEGACY_PATH_PREFIX = "assets/utensils/"
-
-_HTTP_TIMEOUT_SECONDS = 60.0
 
 
 @dataclass
@@ -41,19 +36,6 @@ class SyncReport:
             f"- {self.skipped} skipped · "
             f"! {self.conflicts} conflicts"
         )
-
-
-def _service_client(config: Config):
-    client = sb_client.service_client(config)
-    try:
-        client.auth.admin._http_client.timeout = httpx.Timeout(_HTTP_TIMEOUT_SECONDS)
-    except Exception:
-        pass
-    try:
-        client.storage._client.timeout = httpx.Timeout(_HTTP_TIMEOUT_SECONDS)
-    except Exception:
-        pass
-    return client
 
 
 def storage_url(config: Config, *, utensil_id: str, filename: str) -> str:
@@ -96,9 +78,13 @@ def _local_files_for(config: Config, utensil_id: str) -> dict[str, dict]:
     if not d.exists():
         return out
     for p in d.iterdir():
-        if p.is_file() and p.suffix.lower() in IMAGE_EXTS:
+        if p.is_file() and p.suffix.lower() in _storage_sync.IMAGE_EXTS:
             out[p.name] = {"mtime": p.stat().st_mtime}
     return out
+
+
+# Alias for backward-compat with tests that call ui._decide directly.
+_decide = _storage_sync.decide
 
 
 def _storage_files_for(client, utensil_id: str) -> dict[str, dict]:
@@ -111,46 +97,14 @@ def _storage_files_for(client, utensil_id: str) -> dict[str, dict]:
         name = o.get("name") if isinstance(o, dict) else getattr(o, "name", None)
         if not name:
             continue
-        if Path(name).suffix.lower() not in IMAGE_EXTS:
+        if Path(name).suffix.lower() not in _storage_sync.IMAGE_EXTS:
             continue
         ts_iso = (
             o.get("updated_at") if isinstance(o, dict) else getattr(o, "updated_at", None)
         )
-        ts = _parse_iso_to_ts(ts_iso) if ts_iso else 0.0
+        ts = parse_iso_to_ts(ts_iso) if ts_iso else 0.0
         out[name] = {"updated_at_ts": ts}
     return out
-
-
-def _parse_iso_to_ts(iso: str) -> float:
-    if iso.endswith("Z"):
-        iso = iso[:-1] + "+00:00"
-    try:
-        return datetime.fromisoformat(iso).timestamp()
-    except Exception:
-        return 0.0
-
-
-CLOCK_SKEW_TOLERANCE_S = 1.0
-
-
-def _decide(
-    *,
-    local: Optional[dict],
-    remote: Optional[dict],
-    direction: str,
-) -> Literal["upload", "download", "skip"]:
-    if not local and not remote:
-        return "skip"
-    if local and not remote:
-        return "upload" if direction in ("push", "both") else "skip"
-    if remote and not local:
-        return "download" if direction in ("pull", "both") else "skip"
-    delta = local["mtime"] - remote["updated_at_ts"]
-    if abs(delta) <= CLOCK_SKEW_TOLERANCE_S:
-        return "skip"
-    if delta > 0:
-        return "upload" if direction in ("push", "both") else "skip"
-    return "download" if direction in ("pull", "both") else "skip"
 
 
 def sync_files(
@@ -162,7 +116,7 @@ def sync_files(
     if direction not in ("pull", "push", "both"):
         raise ValueError(f"invalid direction: {direction!r}")
 
-    client = _service_client(config)
+    client = _storage_sync.service_client(config)
     report = SyncReport()
 
     if only:
@@ -187,7 +141,7 @@ def sync_files(
         for name in all_names:
             l = local_files.get(name)
             r = remote_files.get(name)
-            action = _decide(local=l, remote=r, direction=direction)
+            action = _storage_sync.decide(local=l, remote=r, direction=direction)
 
             if action == "skip":
                 report.skipped += 1
@@ -218,7 +172,7 @@ def _upload_one(client, config: Config, utensil_id: str, filename: str) -> None:
     p = _utensils_dir(config) / utensil_id / filename
     data = p.read_bytes()
     path = f"{utensil_id}/{filename}"
-    content_type = _content_type_for(filename)
+    content_type = _storage_sync.content_type_for(filename)
     client.storage.from_(BUCKET).upload(
         path,
         data,
@@ -232,30 +186,3 @@ def _download_one(client, config: Config, utensil_id: str, filename: str) -> Non
     p = _utensils_dir(config) / utensil_id / filename
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_bytes(data)
-
-
-def _content_type_for(filename: str) -> str:
-    ext = Path(filename).suffix.lower()
-    return {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".webp": "image/webp",
-    }.get(ext, "application/octet-stream")
-
-
-def upload_one_for_utensil(
-    config: Config, *, utensil_id: str, local_path: Path
-) -> str:
-    """One-shot upload helper used by `mfc create-utensil`. Returns the full
-    Storage URL of the uploaded object."""
-    client = _service_client(config)
-    filename = local_path.name
-    path = f"{utensil_id}/{filename}"
-    data = local_path.read_bytes()
-    client.storage.from_(BUCKET).upload(
-        path,
-        data,
-        file_options={"content-type": _content_type_for(filename), "upsert": "true"},
-    )
-    return storage_url(config, utensil_id=utensil_id, filename=filename)

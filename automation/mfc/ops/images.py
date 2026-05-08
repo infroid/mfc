@@ -8,23 +8,17 @@ by mfc.ops.recipes.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable, Literal, Optional
+from typing import Literal, Optional
 
-import httpx
-
-from ..clients import sb as sb_client
 from ..core import log
 from ..core.config import Config
+from ..core.utils import parse_iso_to_ts
+from . import _storage_sync
 
 
 BUCKET = "recipe-images"
-IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp")
 LEGACY_PATH_PREFIX = "assets/"
-
-# httpx default (5s) is tight for the Auth/Storage admin API in distant regions.
-_HTTP_TIMEOUT_SECONDS = 60.0
 
 
 @dataclass
@@ -47,20 +41,6 @@ class SyncReport:
 # ─────────────────────────────────────────────────────────────────────────
 # Service-client + URL helper
 # ─────────────────────────────────────────────────────────────────────────
-
-def _service_client(config: Config):
-    """Wrap sb_client.service_client and bump the storage httpx timeout."""
-    client = sb_client.service_client(config)
-    try:
-        client.auth.admin._http_client.timeout = httpx.Timeout(_HTTP_TIMEOUT_SECONDS)
-    except Exception:
-        pass
-    try:
-        client.storage._client.timeout = httpx.Timeout(_HTTP_TIMEOUT_SECONDS)
-    except Exception:
-        pass
-    return client
-
 
 def storage_url(config: Config, *, recipe_id: str, filename: str) -> str:
     """Returns the canonical public URL for a path inside the bucket."""
@@ -106,7 +86,7 @@ def _local_files_for(config: Config, recipe_id: str) -> dict[str, dict]:
     if not d.exists():
         return out
     for p in d.iterdir():
-        if p.is_file() and p.suffix.lower() in IMAGE_EXTS:
+        if p.is_file() and p.suffix.lower() in _storage_sync.IMAGE_EXTS:
             out[p.name] = {"mtime": p.stat().st_mtime}
     return out
 
@@ -126,50 +106,19 @@ def _storage_files_for(client, recipe_id: str) -> dict[str, dict]:
         name = o.get("name") if isinstance(o, dict) else getattr(o, "name", None)
         if not name:
             continue
-        if Path(name).suffix.lower() not in IMAGE_EXTS:
+        if Path(name).suffix.lower() not in _storage_sync.IMAGE_EXTS:
             continue
         ts_iso = (
             o.get("updated_at") if isinstance(o, dict) else getattr(o, "updated_at", None)
         )
-        ts = _parse_iso_to_ts(ts_iso) if ts_iso else 0.0
+        ts = parse_iso_to_ts(ts_iso) if ts_iso else 0.0
         out[name] = {"updated_at_ts": ts}
     return out
-
-
-def _parse_iso_to_ts(iso: str) -> float:
-    if iso.endswith("Z"):
-        iso = iso[:-1] + "+00:00"
-    try:
-        return datetime.fromisoformat(iso).timestamp()
-    except Exception:
-        return 0.0
 
 
 # ─────────────────────────────────────────────────────────────────────────
 # Per-file decision rule
 # ─────────────────────────────────────────────────────────────────────────
-
-CLOCK_SKEW_TOLERANCE_S = 1.0
-
-
-def _decide(
-    *,
-    local: Optional[dict],
-    remote: Optional[dict],
-    direction: str,
-) -> Literal["upload", "download", "skip"]:
-    if not local and not remote:
-        return "skip"
-    if local and not remote:
-        return "upload" if direction in ("push", "both") else "skip"
-    if remote and not local:
-        return "download" if direction in ("pull", "both") else "skip"
-    delta = local["mtime"] - remote["updated_at_ts"]
-    if abs(delta) <= CLOCK_SKEW_TOLERANCE_S:
-        return "skip"
-    if delta > 0:
-        return "upload" if direction in ("push", "both") else "skip"
-    return "download" if direction in ("pull", "both") else "skip"
 
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -186,7 +135,7 @@ def sync_files(
     if direction not in ("pull", "push", "both"):
         raise ValueError(f"invalid direction: {direction!r}")
 
-    client = _service_client(config)
+    client = _storage_sync.service_client(config)
     report = SyncReport()
 
     if only:
@@ -211,7 +160,7 @@ def sync_files(
         for name in all_names:
             l = local_files.get(name)
             r = remote_files.get(name)
-            action = _decide(local=l, remote=r, direction=direction)
+            action = _storage_sync.decide(local=l, remote=r, direction=direction)
 
             if action == "skip":
                 report.skipped += 1
@@ -242,7 +191,7 @@ def _upload_one(client, config: Config, recipe_id: str, filename: str) -> None:
     p = _recipes_dir(config) / recipe_id / filename
     data = p.read_bytes()
     path = f"{recipe_id}/{filename}"
-    content_type = _content_type_for(filename)
+    content_type = _storage_sync.content_type_for(filename)
     client.storage.from_(BUCKET).upload(
         path,
         data,
@@ -256,13 +205,3 @@ def _download_one(client, config: Config, recipe_id: str, filename: str) -> None
     p = _recipes_dir(config) / recipe_id / filename
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_bytes(data)
-
-
-def _content_type_for(filename: str) -> str:
-    ext = Path(filename).suffix.lower()
-    return {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".webp": "image/webp",
-    }.get(ext, "application/octet-stream")

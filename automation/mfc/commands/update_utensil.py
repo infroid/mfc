@@ -6,17 +6,23 @@ by `mfc sync-utensils push` (DB rows) and `mfc sync-utensil-images push` (bytes)
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import subprocess
 import sys
 import unicodedata
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
 import httpx
 
+from ..core import files, log
+from ..core.config import Config
 from ..ops import amazon
+from ..ops import image_processing as image_ops
+from ..ops import utensil_images as utensil_images_ops
 
 
 AFFILIATE_TAG = "mfc-20"
@@ -142,14 +148,6 @@ def _choose_candidate(
         print(f"  out of range — must be 0..{n}")
 
 
-import json
-from datetime import datetime, timezone
-
-from ..core import files, log
-from ..core.config import Config
-from ..ops import image_processing as image_ops
-
-
 _DETAIL_KEYS = {
     "material": ["Material", "Material Type", "Outer Material", "Material Composition"],
     "size":     ["Size", "Item Dimensions LxWxH", "Product Dimensions",
@@ -243,26 +241,22 @@ def run(args: argparse.Namespace, config: Config) -> int:
         if not url:
             log.error("URL is required.")
             return 1
-    args.id = utensil_id_arg  # keep downstream code unchanged
-    args.url = url
-
     # 1. Parse + scrape
-    log.step(f"update-utensil · {args.url}")
-    info = amazon.fetch_product(args.url)
+    log.step(f"update-utensil · {url}")
+    info = amazon.fetch_product(url)
     log.ok(f"scraped: {info.title} (asin={info.asin}, market={info.marketplace})")
 
     # 2. Resolve id (always provided post-prompt)
-    utensil_id = args.id
+    utensil_id = utensil_id_arg
     log.info(f"utensil id: {utensil_id}")
 
     # 3. Resolve paths. update-utensil overwrites an existing bundle by design;
     # use git to recover prior state if needed.
     bundle_dir = files.utensil_bundles_root(config.repo_root) / utensil_id
     bundle_path = files.utensil_bundle_path(config.repo_root, utensil_id)
-    bundle_existed = bundle_path.exists()
     bundle_dir.mkdir(parents=True, exist_ok=True)
-    existing_bundle = files.load_utensil_json(bundle_path) if bundle_existed else None
-    if bundle_existed:
+    existing_bundle = files.load_utensil_json(bundle_path) if bundle_path.exists() else None
+    if existing_bundle is not None:
         log.info(f"overwriting existing bundle at {bundle_path.relative_to(config.repo_root)}")
 
     # 4. Image flow
@@ -293,7 +287,7 @@ def run(args: argparse.Namespace, config: Config) -> int:
                 final = bundle_dir / f"{utensil_id}.jpg"
                 image_ops.square_pad(chosen, final)
                 log.ok(f"squared image: {final.relative_to(config.repo_root)}")
-                photo_rel = f"assets/utensils/{utensil_id}/{utensil_id}.jpg"
+                photo_rel = f"{utensil_images_ops.LEGACY_PATH_PREFIX}{utensil_id}/{utensil_id}.jpg"
             shutil.rmtree(candidates_dir, ignore_errors=True)
     elif args.no_image:
         log.info("skipping image download (--no-image)")

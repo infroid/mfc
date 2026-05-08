@@ -22,13 +22,13 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Optional
 
 from ..clients import sb as sb_client
 from ..core import files, log
 from ..core.config import Config
+from ..core.utils import parse_iso_to_ts
 from . import images as images_ops
 
 
@@ -488,7 +488,7 @@ def sync(config: Config, *, direction: str, only: Optional[list[str]] = None) ->
             push_ids.append(rid)
             continue
         local_mtime = local_path.stat().st_mtime
-        db_ts = _parse_iso_to_ts(db_row.get("updated_at") or "")
+        db_ts = parse_iso_to_ts(db_row.get("updated_at") or "")
         delta = local_mtime - db_ts
         if abs(delta) <= 1.0:
             continue
@@ -508,16 +508,5 @@ def sync(config: Config, *, direction: str, only: Optional[list[str]] = None) ->
         report.failed.extend(sub.failed)
     log.ok(report.line())
     return report
-
-
-def _parse_iso_to_ts(iso: str) -> float:
-    if not iso:
-        return 0.0
-    if iso.endswith("Z"):
-        iso = iso[:-1] + "+00:00"
-    try:
-        return datetime.fromisoformat(iso).timestamp()
-    except Exception:
-        return 0.0
 
 
