@@ -16,6 +16,7 @@ UV := uv --project automation
 
 .PHONY: help sync status apply-schema seed-metrics migrate-ingredient-nutrition \
         sync-recipes sync-images sync-utensils sync-utensil-images update-utensil \
+        sync-ingredients sync-ingredient-images \
         fetch-ingredient-images fetch-ingredient-nutrition \
         list-users set-role suspend-user drop-schema reset serve
 
@@ -96,6 +97,27 @@ sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIR
 	  printf "  both — pull then push. Last-modified wins per file.\n"; \
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-utensil-images --direction $$d; \
+	fi
+
+sync-ingredients: ## sync ingredient metadata DB↔local; chains sync-ingredient-images in same direction
+	@if [ -n "$(DIRECTION)" ]; then \
+	  $(UV) run mfc sync-ingredients        --direction $(DIRECTION) && \
+	  $(UV) run mfc sync-ingredient-images  --direction $(DIRECTION); \
+	else \
+	  printf "\nPick sync direction:\n"; \
+	  printf "  pull — DB+Storage → local. ingredient rows become ingredient.json files; bytes pulled into web/assets/ingredients/.\n"; \
+	  printf "  push — local → DB+Storage. Bundle JSONs upserted into DB; local images pushed to Storage.\n"; \
+	  printf "  both — pull then push. Last-modified wins per ingredient and per image.\n"; \
+	  printf "\nDirection [pull/push/both]: "; \
+	  read d && $(UV) run mfc sync-ingredients --direction $$d && $(UV) run mfc sync-ingredient-images --direction $$d; \
+	fi
+
+sync-ingredient-images: ## sync ingredient images bucket↔local; prompts (or DIRECTION=pull|push|both)
+	@if [ -n "$(DIRECTION)" ]; then \
+	  $(UV) run mfc sync-ingredient-images --direction $(DIRECTION); \
+	else \
+	  printf "\nDirection [pull/push/both]: "; \
+	  read d && $(UV) run mfc sync-ingredient-images --direction $$d; \
 	fi
 
 fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
