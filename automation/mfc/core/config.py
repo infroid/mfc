@@ -38,9 +38,9 @@ class Config:
     supabase_url: Optional[str]
     supabase_secret_key: Optional[str]
     supabase_publishable_key: Optional[str]
-    fdc_api_key: Optional[str]
-    anthropic_api_key: Optional[str]
-    repo_root: Path
+    fdc_api_key: Optional[str] = None
+    anthropic_api_key: Optional[str] = None
+    repo_root: Path = REPO_ROOT
 
     @classmethod
     def load(cls, env_file: Optional[str] = None) -> "Config":
