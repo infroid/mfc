@@ -42,3 +42,14 @@ def test_empty_or_null_returned_unchanged(inp, expected):
     from mfc.ops.nutrition_migration import reshape_legacy
 
     assert reshape_legacy(inp) == expected
+
+
+def test_idempotent_double_reshape():
+    """reshape_legacy(reshape_legacy(x)) == reshape_legacy(x) — guards
+    against a future refactor that breaks the 'source' sentinel guard."""
+    from mfc.ops.nutrition_migration import reshape_legacy
+
+    legacy = {"calories": 321, "protein": 18.3, "fat": 25.0, "carbs": 3.5}
+    once = reshape_legacy(legacy)
+    twice = reshape_legacy(once)
+    assert twice == once
