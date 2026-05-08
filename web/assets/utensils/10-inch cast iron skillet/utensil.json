@@ -1,0 +1,31 @@
+{
+  "id": "10-inch cast iron skillet",
+  "name": "The Indus Valley Preseasoned Cast Iron Fry Pan/Skillet with Glass Lid | Medium, 20.3Cm/8Inch, 0.9Ltr, 1.6Kg | Induction Friendly | Nonstick Fry Pan, 100% Pure & Toxin Free, No Chemical Coating, Black",
+  "tagline": "🌿 Toxin free cookware: Made from 100% Natural cast iron cookware, this cast iron fry pan is a 100% Healthy cookware, food safe without chemicals, coatings or toxins",
+  "category": "Cookware",
+  "photo": "assets/utensils/10-inch cast iron skillet/10-inch cast iron skillet.jpg",
+  "care_tip": null,
+  "specs": {
+    "weight": "2.43 Kilograms"
+  },
+  "show": {
+    "buyLink": true,
+    "careTip": true,
+    "specs": true
+  },
+  "ai_filled_at": "2026-05-08T00:17:42.710528+00:00",
+  "amazon": {
+    "asin": "B0C94H85TH",
+    "marketplace": "amazon.in",
+    "fetched_at": "2026-05-08T00:17:42.710528+00:00"
+  },
+  "buy_links": [
+    {
+      "sort_order": 0,
+      "store": "Amazon",
+      "url": "https://www.amazon.in/dp/B0C94H85TH?tag=mfc-20",
+      "price": "₹1,025.00",
+      "affiliate_tag": "mfc-20"
+    }
+  ]
+}
