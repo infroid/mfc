@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote, urlencode
+from urllib.parse import quote, urlencode, urlsplit
 from urllib.request import Request, urlopen
 
 from .fdc_nutrient_map import NUTRIENT_MAP
@@ -45,7 +45,9 @@ def _get_json(url: str) -> dict:
         with urlopen(req, timeout=TIMEOUT_S) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except HTTPError as exc:
-        raise FdcError(f"HTTP {exc.code} for {url}") from exc
+        # Strip query string to avoid leaking api_key into error logs.
+        safe_url = urlsplit(url)._replace(query="").geturl()
+        raise FdcError(f"HTTP {exc.code} for {safe_url}") from exc
     except (URLError, TimeoutError) as exc:
         raise FdcError(f"network: {exc}") from exc
 

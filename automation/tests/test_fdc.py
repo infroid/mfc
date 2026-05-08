@@ -97,3 +97,18 @@ def test_foundation_beats_branded_even_when_branded_first():
     with patch("mfc.ops.fdc.urlopen", new=_urlopen_factory([SEARCH, FOOD_DETAIL_SPINACH])):
         block = fdc.fetch_for_name("spinach", api_key="KEY")
     assert block["fdcId"] == 173436
+
+
+def test_http_error_does_not_leak_api_key():
+    """Regression: api_key was previously embedded in exception message."""
+    from urllib.error import HTTPError
+    from mfc.ops import fdc
+
+    def fail(req, timeout=None):
+        raise HTTPError(url=req.full_url, code=500, msg="boom", hdrs=None, fp=None)
+
+    with patch("mfc.ops.fdc.urlopen", new=fail):
+        with pytest.raises(fdc.FdcError) as ex:
+            fdc.fetch_for_id(123, api_key="SECRET-KEY-XYZ")
+
+    assert "SECRET-KEY-XYZ" not in str(ex.value)
