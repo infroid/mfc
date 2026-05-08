@@ -9,5 +9,6 @@
     "healthFact": true,
     "substitutes": false
   },
-  "nutrition": {}
+  "nutrition": {},
+  "photo": "assets/ingredients/black-pepper/image.png"
 }

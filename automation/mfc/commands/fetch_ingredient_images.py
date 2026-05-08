@@ -9,6 +9,7 @@ sync-ingredients handle that downstream.
 from __future__ import annotations
 
 import argparse
+import json
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -49,6 +50,32 @@ def _output_path(config: Config, ingredient_id: str) -> Path:
     return config.repo_root / "web" / REL_DIR / ingredient_id / "image.png"
 
 
+def _bundle_path(config: Config, ingredient_id: str) -> Path:
+    return config.repo_root / "web" / REL_DIR / ingredient_id / "ingredient.json"
+
+
+def _ensure_bundle_photo(config: Config, ingredient_id: str) -> bool:
+    """Set bundle.photo to the legacy repo-relative path if not already set.
+
+    Returns True if a write happened.
+    """
+    p = _bundle_path(config, ingredient_id)
+    expected = f"{REL_DIR}/{ingredient_id}/image.png"
+    bundle: dict = {}
+    if p.exists():
+        try:
+            bundle = json.loads(p.read_text())
+        except Exception:
+            bundle = {}
+    if bundle.get("photo") == expected:
+        return False
+    bundle.setdefault("id", ingredient_id)
+    bundle["photo"] = expected
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
+    return True
+
+
 def _process_one(
     config: Config,
     ingredient_id: str,
@@ -73,6 +100,7 @@ def _process_one(
     if not no_write:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(data)
+        _ensure_bundle_photo(config, ingredient_id)
     report.fetched.append(ingredient_id)
 
 
