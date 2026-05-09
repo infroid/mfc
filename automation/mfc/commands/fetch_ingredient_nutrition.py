@@ -77,18 +77,33 @@ def _process_one(
     block = None
     miss_reason = None
 
-    try:
-        if fdc_id_pin is not None:
+    if fdc_id_pin is not None:
+        # Manual override: skip the search + alias dance.
+        try:
             block = fdc.fetch_for_id(fdc_id_pin, api_key=api_key)
-        else:
-            block = fdc.fetch_for_name(row["name"], api_key=api_key)
-    except fdc.FdcNotFound:
-        miss_reason = "fdc-no-match"
-    except fdc.FdcError as exc:
-        # Transient errors (network, 5xx) are NOT persisted — user can retry
-        # without --force once connectivity is restored.
-        report.failed.append((iid, f"fdc-error: {exc}"))
-        return
+        except fdc.FdcNotFound:
+            miss_reason = "fdc-no-match"
+        except fdc.FdcError as exc:
+            report.failed.append((iid, f"fdc-error: {exc}"))
+            return
+    else:
+        # Try the main name first, then each alias verbatim, in order.
+        names_to_try: list[str] = [row["name"]]
+        for alias in (row.get("aliases") or []):
+            if alias and alias not in names_to_try:
+                names_to_try.append(alias)
+        for i, name_attempt in enumerate(names_to_try):
+            try:
+                block = fdc.fetch_for_name(name_attempt, api_key=api_key)
+                if i > 0:
+                    log.info(f"  ↳ {iid}: matched alias {name_attempt!r}")
+                break
+            except fdc.FdcNotFound:
+                miss_reason = f"fdc-no-match (tried: {' / '.join(names_to_try[:i + 1])})"
+                continue
+            except fdc.FdcError as exc:
+                report.failed.append((iid, f"fdc-error on {name_attempt!r}: {exc}"))
+                return
 
     # FDC missed — try AI fallback if opted in and key is configured.
     if block is None and getattr(args_namespace, "ai_fallback", False):
@@ -133,7 +148,7 @@ def _process_one(
 
 def _run_single(args: argparse.Namespace, config: Config) -> int:
     sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id, name, category, nutrition, nutrition_source").eq("id", args.id).execute().data or []
+    rows = sb.table("ingredients").select("id, name, category, aliases, nutrition, nutrition_source").eq("id", args.id).execute().data or []
     if not rows:
         log.error(f"ingredient '{args.id}' not found")
         return 2
@@ -152,7 +167,7 @@ def _run_single(args: argparse.Namespace, config: Config) -> int:
 
 def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id, name, category, nutrition, nutrition_source").order("id").execute().data or []
+    rows = sb.table("ingredients").select("id, name, category, aliases, nutrition, nutrition_source").order("id").execute().data or []
     if args.ids:
         wanted = {s.strip() for s in args.ids.split(",")}
         rows = [r for r in rows if r["id"] in wanted]

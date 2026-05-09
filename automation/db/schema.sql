@@ -79,14 +79,16 @@ CREATE TABLE IF NOT EXISTS public.ingredients (
 ALTER TABLE public.ingredients
   ADD COLUMN IF NOT EXISTS emoji            TEXT,
   ADD COLUMN IF NOT EXISTS nutrition_source TEXT,
-  ADD COLUMN IF NOT EXISTS fdc_id           INTEGER;
+  ADD COLUMN IF NOT EXISTS fdc_id           INTEGER,
+  ADD COLUMN IF NOT EXISTS aliases          TEXT[] NOT NULL DEFAULT '{}';
 
 CREATE INDEX IF NOT EXISTS ingredients_nutrition_source_idx
   ON public.ingredients (nutrition_source);
 
 COMMENT ON COLUMN public.ingredients.emoji            IS 'Single grapheme used on ingredient cards (e.g. "🧀"). Nullable.';
-COMMENT ON COLUMN public.ingredients.nutrition_source IS '"fdc" | "ai" | "manual" | NULL. Powers "what still needs review" filters.';
+COMMENT ON COLUMN public.ingredients.nutrition_source IS '"fdc" | "ai" | "manual" | "fdc-miss" | NULL. Set by mfc fetch-ingredient-nutrition; powers skip-on-rerun and "what still needs review" filters.';
 COMMENT ON COLUMN public.ingredients.fdc_id           IS 'USDA FoodData Central food id (when nutrition_source = ''fdc''). Lets re-pulls hit the same record without re-searching.';
+COMMENT ON COLUMN public.ingredients.aliases          IS 'Search-fallback names tried by mfc fetch-ingredient-images (slugified, against thiings.co/things/<slug>) and mfc fetch-ingredient-nutrition (verbatim, against the USDA FDC search) when the main name returns no match. Free-text array, e.g. {"quinoa","white rice"} on an ingredient named "Quinoa, rinsed". Distinct from `substitutes`, which is for runtime ingredient swaps in recipes.';
 
 COMMENT ON TABLE  public.ingredients              IS 'Master library of ingredients. Recipes reference these via FK — inline ingredient names are not supported. Edited via admin-ingredient.html.';
 COMMENT ON COLUMN public.ingredients.id           IS 'Stable URL slug (e.g. "paneer", "kasuri-methi"). Referenced by recipe_ingredients.ingredient_id.';

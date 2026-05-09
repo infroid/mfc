@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -22,6 +23,11 @@ from ..ops import thiings
 
 REL_DIR = "assets/ingredients"
 SLEEP_BETWEEN_REQUESTS_S = 0.5
+_SLUG_RX = re.compile(r"[^a-z0-9]+")
+
+
+def _slugify(s: str) -> str:
+    return _SLUG_RX.sub("-", (s or "").lower()).strip("-")
 
 
 @dataclass
@@ -76,9 +82,23 @@ def _ensure_bundle_photo(config: Config, ingredient_id: str) -> bool:
     return True
 
 
+def _candidate_slugs(ingredient_id: str, aliases: list[str] | None) -> list[str]:
+    """Slugs to try in order: the id itself, then each alias slugified.
+    Duplicates and empty values are dropped, order preserved."""
+    seen: set[str] = set()
+    out: list[str] = []
+    for raw in (ingredient_id, *(aliases or [])):
+        s = _slugify(raw)
+        if s and s not in seen:
+            seen.add(s)
+            out.append(s)
+    return out
+
+
 def _process_one(
     config: Config,
     ingredient_id: str,
+    aliases: list[str] | None,
     *,
     force: bool,
     no_write: bool,
@@ -88,13 +108,26 @@ def _process_one(
     if out.exists() and not force:
         report.skipped.append(ingredient_id)
         return
-    try:
-        data = thiings.fetch_image(ingredient_id)
-    except thiings.ThiingsNotFound as exc:
-        report.misses.append((ingredient_id, exc.reason))
-        return
-    except thiings.ThiingsError as exc:
-        report.failed.append((ingredient_id, exc.reason))
+
+    slugs = _candidate_slugs(ingredient_id, aliases)
+    data: bytes | None = None
+    last_miss_reason: str | None = None
+    for i, slug in enumerate(slugs):
+        try:
+            data = thiings.fetch_image(slug)
+            if i > 0:
+                log.info(f"  ↳ {ingredient_id}: matched alias {slug!r}")
+            break
+        except thiings.ThiingsNotFound as exc:
+            last_miss_reason = exc.reason
+            continue
+        except thiings.ThiingsError as exc:
+            report.failed.append((ingredient_id, f"{slug}: {exc.reason}"))
+            return
+
+    if data is None:
+        tried = "/".join(slugs) if slugs else ingredient_id
+        report.misses.append((ingredient_id, f"{last_miss_reason or 'no-slugs'} (tried: {tried})"))
         return
 
     if not no_write:
@@ -106,19 +139,22 @@ def _process_one(
 
 def _run_single(args: argparse.Namespace, config: Config) -> int:
     sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id").eq("id", args.id).execute().data or []
+    rows = sb.table("ingredients").select("id, aliases").eq("id", args.id).execute().data or []
     if not rows:
         log.error(f"ingredient '{args.id}' not found in public.ingredients")
         return 2
     report = RunReport()
-    _process_one(config, rows[0]["id"], force=args.force, no_write=args.no_write, report=report)
+    _process_one(
+        config, rows[0]["id"], rows[0].get("aliases"),
+        force=args.force, no_write=args.no_write, report=report,
+    )
     report.print()
     return 0 if not report.failed else 1
 
 
 def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id").order("id").execute().data or []
+    rows = sb.table("ingredients").select("id, aliases").order("id").execute().data or []
     if args.ids:
         wanted = {s.strip() for s in args.ids.split(",")}
         rows = [r for r in rows if r["id"] in wanted]
@@ -128,8 +164,12 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     log.step(f"fetch-ingredient-images · {len(rows)} ingredient(s)")
     report = RunReport()
     for i, row in enumerate(rows):
-        _process_one(config, row["id"], force=args.force, no_write=args.no_write, report=report)
-        if i < len(rows) - 1:
+        will_skip = _output_path(config, row["id"]).exists() and not args.force
+        _process_one(
+            config, row["id"], row.get("aliases"),
+            force=args.force, no_write=args.no_write, report=report,
+        )
+        if not will_skip and i < len(rows) - 1:
             time.sleep(SLEEP_BETWEEN_REQUESTS_S)
     report.print()
 

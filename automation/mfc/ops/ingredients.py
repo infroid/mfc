@@ -20,7 +20,7 @@ _LEGACY_PATH_PREFIX = "assets/ingredients/"
 
 _BUNDLE_FIELDS = (
     "id", "name", "tagline", "category", "default_unit", "photo", "emoji",
-    "health_fact", "storage", "substitutes", "show", "nutrition",
+    "health_fact", "storage", "substitutes", "aliases", "show", "nutrition",
     "ai_filled_at", "nutrition_source", "fdc_id",
 )
 
