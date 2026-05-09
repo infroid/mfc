@@ -82,9 +82,13 @@ def _process_one(
         if not getattr(args_namespace, "ai_fallback", False):
             report.misses.append((iid, "fdc-no-match"))
             return
+        if not config.anthropic_api_key:
+            # AI fallback opted in but no key configured — skip silently
+            # so the FDC-only enrichment elsewhere in the run still proceeds.
+            report.misses.append((iid, "ai-fallback-skipped-no-key"))
+            return
         try:
-            ai_key = config.require_anthropic()
-            block = aifill.suggest_nutrition(row["name"], category=row.get("category"), api_key=ai_key)
+            block = aifill.suggest_nutrition(row["name"], category=row.get("category"), api_key=config.anthropic_api_key)
         except aifill.AiFillError as exc:
             report.misses.append((iid, f"ai-fallback-failed: {exc}"))
             return
