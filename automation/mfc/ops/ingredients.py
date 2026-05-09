@@ -76,6 +76,17 @@ def _bundle_to_row(config: Config, bundle: dict) -> dict:
     """Translate ingredient.json -> public.ingredients row payload."""
     row = {k: bundle.get(k) for k in _BUNDLE_FIELDS}
     row["photo"] = _normalize_photo(config, ingredient_id=bundle["id"], value=row.get("photo"))
+    # NOT NULL columns with DB defaults — coerce None → schema default so a
+    # bundle that omits the key (or carries an explicit null) doesn't violate
+    # the constraint on UPSERT.
+    if row.get("substitutes") is None:
+        row["substitutes"] = []
+    if row.get("aliases") is None:
+        row["aliases"] = []
+    if row.get("show") is None:
+        row["show"] = {}
+    if row.get("nutrition") is None:
+        row["nutrition"] = {}
     return row
 
 
