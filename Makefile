@@ -8,24 +8,42 @@
 #   cp .env.sample .env  # then fill in keys
 #   make sync
 #
-# Run `make` (or `make help`) to see all targets.
+# Run `make` (or `make help`) to see all targets, grouped by purpose.
+# For per-flag help on any underlying CLI subcommand:
+#   uv --project automation run mfc <subcommand> --help
 
 UV := uv --project automation
 
 .DEFAULT_GOAL := help
 
-.PHONY: help sync status apply-schema seed-metrics migrate-ingredient-nutrition \
-        sync-recipes sync-images sync-utensils sync-utensil-images update-utensil \
+.PHONY: help \
+        sync apply-schema seed-metrics \
+        status list-users set-role suspend-user \
+        sync-recipes sync-images \
+        sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
+        update-utensil \
         fetch-ingredient-images fetch-ingredient-nutrition \
-        list-users set-role suspend-user drop-schema reset serve
+        migrate-ingredient-nutrition \
+        drop-schema reset \
+        serve \
+        routine routine-sync routine-test
 
-help: ## list all targets
-	@echo "MyFoodCraving — make targets:"
-	@grep -E '^[a-zA-Z][a-zA-Z0-9_-]*:.*?## .*$$' $(MAKEFILE_LIST) | \
-	  awk -F':.*?## ' '{ printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2 }'
+help: ## list all targets, grouped by purpose
+	@printf "\033[1mMyFoodCraving — make targets\033[0m\n"
+	@awk 'BEGIN { FS = ":.*?## " } \
+	     /^##@ / { printf "\n\033[1;33m%s\033[0m\n", substr($$0, 5); next } \
+	     /^[a-zA-Z][a-zA-Z0-9_-]+:.*?## / { printf "  \033[36m%-30s\033[0m %s\n", $$1, $$2 }' \
+	     $(MAKEFILE_LIST)
+	@printf "\n\033[1;33mFlag-level help\033[0m\n"
+	@printf "  Most targets above wrap an mfc subcommand; the description shows\n"
+	@printf "  the env-var knobs (e.g. FORCE=1 LIMIT=10 IDS=a,b). For the full\n"
+	@printf "  flag list of any subcommand:\n"
+	@printf "    \033[36m%s\033[0m\n" "$(UV) run mfc --help                  # list every subcommand"
+	@printf "    \033[36m%s\033[0m\n" "$(UV) run mfc <subcommand> --help     # full flags + dev-only options"
+	@printf "\n"
 
-# ───── Python tooling (mfc CLI in automation/) ────────────────────────────
+##@ Setup
 
 sync: ## sync the python venv (reinstalls all packages — safe across layout moves)
 	@$(UV) sync --reinstall
@@ -36,17 +54,27 @@ sync: ## sync the python venv (reinstalls all packages — safe across layout mo
 	@# of ~/Documents (set UV_PROJECT_ENVIRONMENT).
 	@chflags -R nohidden automation/.venv 2>/dev/null || true
 
-status: ## list public tables and row counts
-	@$(UV) run mfc status
-
 apply-schema: ## run automation/db/schema.sql
 	@$(UV) run mfc apply-schema
 
 seed-metrics: ## run automation/db/seed_metrics.sql (54-marker catalog)
 	@$(UV) run mfc seed-metrics
 
-migrate-ingredient-nutrition: ## one-shot: reshape legacy nutrition jsonb to USDA schema (idempotent)
-	@$(UV) run mfc migrate-ingredient-nutrition
+##@ Status & users
+
+status: ## list public tables and row counts
+	@$(UV) run mfc status
+
+list-users: ## list users; optional ROLE=user|chef|admin Q=alice
+	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
+
+set-role: ## change role; required USER=<email-or-uuid> ROLE=<user|chef|admin>
+	@$(UV) run mfc set-role --user "$(USER)" --role "$(ROLE)"
+
+suspend-user: ## suspend (ban) a user; required USER=<email-or-uuid>
+	@$(UV) run mfc suspend-user --user "$(USER)"
+
+##@ Sync — DB ↔ local bundles + Storage  (DIRECTION=pull|push|both, or interactive)
 
 sync-recipes: ## sync recipe metadata DB↔local; chains sync-images in same direction
 	@if [ -n "$(DIRECTION)" ]; then \
@@ -120,6 +148,11 @@ sync-ingredient-images: ## sync ingredient images bucket↔local; prompts (or DI
 	  read d && $(UV) run mfc sync-ingredient-images --direction $$d; \
 	fi
 
+##@ Authoring & enrichment — local-first; sync uploads later
+
+update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [NO_IMAGE=1])
+	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(NO_IMAGE),--no-image)
+
 fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
 	@$(UV) run mfc fetch-ingredient-images \
 	  $(if $(FORCE),--force) \
@@ -133,17 +166,10 @@ fetch-ingredient-nutrition: ## fetch USDA FDC nutrition into bundle JSONs; FORCE
 	  $(if $(LIMIT),--limit $(LIMIT)) \
 	  $(if $(IDS),--ids $(IDS))
 
-update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [NO_IMAGE=1])
-	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(NO_IMAGE),--no-image)
+migrate-ingredient-nutrition: ## one-shot: reshape legacy nutrition jsonb to USDA schema (idempotent)
+	@$(UV) run mfc migrate-ingredient-nutrition
 
-list-users: ## list users; optional ROLE=user|chef|admin Q=alice
-	@$(UV) run mfc list-users $(if $(ROLE),--role $(ROLE)) $(if $(Q),--q $(Q))
-
-set-role: ## change role; required USER=<email-or-uuid> ROLE=<user|chef|admin>
-	@$(UV) run mfc set-role --user "$(USER)" --role "$(ROLE)"
-
-suspend-user: ## suspend (ban) a user; required USER=<email-or-uuid>
-	@$(UV) run mfc suspend-user --user "$(USER)"
+##@ Destructive — confirm twice
 
 drop-schema: ## DESTRUCTIVE — drop all public tables (prompts to confirm)
 	@$(UV) run mfc drop-schema
@@ -155,14 +181,12 @@ reset: ## DESTRUCTIVE — rebuild venv + drop + apply + seed + import (one-shot 
 	@$(UV) sync
 	@$(UV) run mfc reset
 
-# ───── Local dev server ───────────────────────────────────────────────────
+##@ Local dev server
 
 serve: ## run the static site at http://localhost:8080 (serves web/)
 	@cd web && python3 -m http.server 8080
 
-# ───── Routine Dagster pipelines ──────────────────────────────────────────
-
-.PHONY: routine routine-sync routine-test
+##@ Routine (Dagster pipelines)
 
 routine: ## launch the routine dagster UI on :3000
 	@uv --project routine run dagster dev -w routine/workspace.yaml
