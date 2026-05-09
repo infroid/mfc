@@ -105,9 +105,12 @@ def _process_one(
                 report.failed.append((iid, f"fdc-error on {name_attempt!r}: {exc}"))
                 return
 
-    # FDC missed — try AI fallback if opted in and key is configured.
+    # FDC missed — try AI fallback if opted in, key is configured, and we
+    # haven't already disabled AI mid-run after an unrecoverable error.
     if block is None and getattr(args_namespace, "ai_fallback", False):
-        if not config.anthropic_api_key:
+        if getattr(args_namespace, "_ai_disabled_mid_run", False):
+            miss_reason = "ai-fallback-disabled-after-auth-error"
+        elif not config.anthropic_api_key:
             miss_reason = "ai-fallback-skipped-no-key"
         else:
             try:
@@ -119,6 +122,17 @@ def _process_one(
                 miss_reason = None
             except aifill.AiFillError as exc:
                 miss_reason = f"ai-fallback-failed: {exc}"
+                # Auth / permission errors won't recover mid-run.
+                # Disable AI for the rest so we don't repeat the same
+                # error 393 times.
+                msg = str(exc)
+                if (
+                    "AuthenticationError" in msg
+                    or "PermissionDeniedError" in msg
+                    or "invalid x-api-key" in msg
+                ):
+                    args_namespace._ai_disabled_mid_run = True
+                    log.warn(f"AI fallback disabled for rest of run: {exc}")
 
     if block is None:
         # Persist the miss marker so subsequent runs skip this row and we
@@ -182,19 +196,24 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     if pending > 950:
         log.warn(f"about to attempt {pending} FDC requests — close to the 1000/hr limit; consider LIMIT=900")
     report = RunReport()
-    for i, row in enumerate(rows):
-        will_skip = bool(row.get("nutrition_source")) and not args.force
-        _process_one(
-            sb, config, row,
-            force=args.force,
-            no_write=args.no_write,
-            fdc_id_pin=None,
-            report=report,
-            args_namespace=args,
-        )
-        if not will_skip and i < len(rows) - 1:
-            time.sleep(SLEEP_BETWEEN_REQUESTS_S)
-    report.print()
+    try:
+        for i, row in enumerate(rows):
+            will_skip = bool(row.get("nutrition_source")) and not args.force
+            _process_one(
+                sb, config, row,
+                force=args.force,
+                no_write=args.no_write,
+                fdc_id_pin=None,
+                report=report,
+                args_namespace=args,
+            )
+            if not will_skip and i < len(rows) - 1:
+                time.sleep(SLEEP_BETWEEN_REQUESTS_S)
+    finally:
+        # Always print the report so partial progress + miss reasons
+        # are visible even when the loop is interrupted (Ctrl-C,
+        # unexpected exception, etc.).
+        report.print()
     if rows and not (report.fetched or report.skipped or report.misses):
         return 1
     return 0

@@ -59,3 +59,21 @@ def test_legacy_or_unknown_keys_raise_aifill_error():
     with patch("mfc.ops.aifill._client", return_value=client):
         with pytest.raises(aifill.AiFillError):
             aifill.suggest_nutrition("xyz", category="Herb", api_key="K")
+
+
+def test_sdk_exception_wrapped_as_aifill_error():
+    """Regression: any SDK error (auth, rate limit, network) must be
+    converted to AiFillError so the orchestrator records it as a miss
+    instead of dying mid-bulk-run."""
+    from mfc.ops import aifill
+
+    class _FakeAuthError(Exception):
+        pass
+
+    client = MagicMock()
+    client.messages.create.side_effect = _FakeAuthError("invalid x-api-key")
+    with patch("mfc.ops.aifill._client", return_value=client):
+        with pytest.raises(aifill.AiFillError) as ex:
+            aifill.suggest_nutrition("xyz", category="Herb", api_key="K")
+    assert "_FakeAuthError" in str(ex.value)
+    assert "invalid x-api-key" in str(ex.value)

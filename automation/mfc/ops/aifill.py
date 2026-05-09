@@ -62,14 +62,22 @@ def suggest_nutrition(name: str, *, category: str | None, api_key: str) -> dict:
     if category:
         user_msg += f"\nCategory: {category}"
     client = _client(api_key)
-    msg = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1024,
-        system=_SYSTEM,
-        tools=[_TOOL],
-        tool_choice={"type": "tool", "name": "report_nutrition"},
-        messages=[{"role": "user", "content": user_msg}],
-    )
+    try:
+        msg = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1024,
+            system=_SYSTEM,
+            tools=[_TOOL],
+            tool_choice={"type": "tool", "name": "report_nutrition"},
+            messages=[{"role": "user", "content": user_msg}],
+        )
+    except AiFillError:
+        raise
+    except Exception as exc:
+        # Convert any SDK error (AuthenticationError, RateLimitError,
+        # APIConnectionError, etc.) into AiFillError so the orchestrator
+        # records it as a miss instead of dying mid-bulk-run.
+        raise AiFillError(f"{type(exc).__name__}: {exc}") from exc
 
     payload: dict | None = None
     for block in msg.content:
