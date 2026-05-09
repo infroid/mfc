@@ -1,5 +1,20 @@
 """`mfc fetch-ingredient-nutrition[s]` — populate USDA FDC nutrition into
-ingredient bundle JSONs. AI fallback available via --ai-fallback flag."""
+ingredient bundle JSONs. AI fallback available via --ai-fallback flag.
+
+State model (read from `nutrition.source` in the bundle JSONB):
+  - unset       → never attempted; will try FDC (and AI if --ai-fallback).
+  - "fdc"       → FDC succeeded; skip unless --force.
+  - "ai"        → AI fallback filled; skip unless --force.
+  - "manual"    → hand-filled; skip unless --force.
+  - "fdc-miss"  → FDC missed, AI not actually invoked. Skip unless --force,
+                  EXCEPT when --ai-fallback is now set: retry AI only (FDC
+                  is known to miss for this name; no point re-asking).
+  - "ai-miss"   → both FDC and AI tried, both failed. Skip unless --force.
+
+The miss block written to the JSONB is { source, filledAt, per:"100g" } so
+sync-ingredients pull/push round-trips it cleanly and the bundle file is
+self-describing about the row's state.
+"""
 
 from __future__ import annotations
 
@@ -7,6 +22,7 @@ import argparse
 import json
 import time
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 
 from ..clients import sb as sb_client
@@ -17,6 +33,23 @@ from ..ops import aifill, fdc
 
 REL_DIR = "assets/ingredients"
 SLEEP_BETWEEN_REQUESTS_S = 0.5
+_TERMINAL_SOURCES = {"fdc", "ai", "manual", "ai-miss"}
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _row_state(row: dict) -> str | None:
+    """Return the row's nutrition state, preferring the JSONB `source`
+    field (the canonical surface) and falling back to the
+    `nutrition_source` column for rows written by older code paths."""
+    nutrition = row.get("nutrition") or {}
+    if isinstance(nutrition, dict):
+        src = nutrition.get("source")
+        if src:
+            return src
+    return row.get("nutrition_source")
 
 
 @dataclass
@@ -55,6 +88,24 @@ def _write_bundle(config: Config, ingredient_id: str, bundle: dict) -> None:
     p.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
 
 
+def _persist_miss(
+    sb, config: Config, iid: str, name: str, marker: str, *, no_write: bool,
+) -> None:
+    """Write the miss block to both the bundle JSONB and the column so
+    subsequent runs skip this row (and the bundle on disk is
+    self-describing)."""
+    if no_write:
+        return
+    miss_block = {"source": marker, "filledAt": _now_iso(), "per": "100g"}
+    bundle = _load_or_init_bundle(config, iid, name)
+    bundle["nutrition"] = miss_block
+    _write_bundle(config, iid, bundle)
+    sb.table("ingredients").update({
+        "nutrition": miss_block,
+        "nutrition_source": marker,
+    }).eq("id", iid).execute()
+
+
 def _process_one(
     sb,
     config: Config,
@@ -67,17 +118,33 @@ def _process_one(
     args_namespace,
 ) -> None:
     iid = row["id"]
-    # Skip rows we've already attempted (success or persisted miss). --force
-    # bypasses the skip so the user can deliberately re-run.
-    if row.get("nutrition_source") and not force:
-        report.skipped.append(iid)
-        return
+    state = _row_state(row)
+    ai_requested = bool(getattr(args_namespace, "ai_fallback", False))
+
+    # Decide which sub-steps to run based on existing state. --force bypasses
+    # everything (re-do FDC and re-do AI if requested). --fdc-id pin is also
+    # an explicit user action; treat like --force for skip purposes.
+    do_fdc = True
+    do_ai = ai_requested
+    if not force and fdc_id_pin is None:
+        if state in _TERMINAL_SOURCES:
+            report.skipped.append(iid)
+            return
+        if state == "fdc-miss":
+            if ai_requested:
+                # FDC already tried + missed for this row's name/aliases.
+                # Don't re-burn FDC quota; just retry AI.
+                do_fdc = False
+            else:
+                report.skipped.append(iid)
+                return
+        # state is None → process normally (do_fdc=True, do_ai=ai_requested)
 
     api_key = config.require_fdc()
     block = None
     miss_reason = None
 
-    if fdc_id_pin is not None:
+    if do_fdc and fdc_id_pin is not None:
         # Manual override: skip the search + alias dance.
         try:
             block = fdc.fetch_for_id(fdc_id_pin, api_key=api_key)
@@ -86,7 +153,7 @@ def _process_one(
         except fdc.FdcError as exc:
             report.failed.append((iid, f"fdc-error: {exc}"))
             return
-    else:
+    elif do_fdc:
         # Try the main name first, then each alias verbatim, in order.
         names_to_try: list[str] = [row["name"]]
         for alias in (row.get("aliases") or []):
@@ -104,16 +171,20 @@ def _process_one(
             except fdc.FdcError as exc:
                 report.failed.append((iid, f"fdc-error on {name_attempt!r}: {exc}"))
                 return
+    elif state == "fdc-miss":
+        # Skipping FDC because we already know it misses for this row.
+        miss_reason = "fdc-no-match (cached)"
 
-    # FDC missed — try AI fallback if opted in, key is configured, and we
-    # haven't already disabled AI mid-run after an unrecoverable error.
-    if block is None and getattr(args_namespace, "ai_fallback", False):
+    # AI fallback: opted in, key configured, not disabled mid-run.
+    ai_was_called = False
+    if block is None and do_ai:
         if getattr(args_namespace, "_ai_disabled_mid_run", False):
             miss_reason = "ai-fallback-disabled-after-auth-error"
         elif not config.anthropic_api_key:
             miss_reason = "ai-fallback-skipped-no-key"
         else:
             try:
+                ai_was_called = True
                 block = aifill.suggest_nutrition(
                     row["name"],
                     category=row.get("category"),
@@ -122,9 +193,10 @@ def _process_one(
                 miss_reason = None
             except aifill.AiFillError as exc:
                 miss_reason = f"ai-fallback-failed: {exc}"
-                # Auth / permission errors won't recover mid-run.
-                # Disable AI for the rest so we don't repeat the same
-                # error 393 times.
+                # Auth / permission errors won't recover mid-run; disable
+                # AI for the rest so we don't repeat the same error 393
+                # times. Rate-limit and network errors are NOT auto-
+                # disabling — those can recover within a run.
                 msg = str(exc)
                 if (
                     "AuthenticationError" in msg
@@ -135,14 +207,17 @@ def _process_one(
                     log.warn(f"AI fallback disabled for rest of run: {exc}")
 
     if block is None:
-        # Persist the miss marker so subsequent runs skip this row and we
-        # don't burn FDC quota re-asking. Reason is preserved in the
-        # in-memory report; the DB column stores a stable sentinel value.
+        # Marker semantics:
+        #   "ai-miss"  — AI was actually invoked this run (success path
+        #                taken or AiFillError raised) and FDC was either
+        #                tried-and-missed this run or known-missed before.
+        #   "fdc-miss" — FDC missed; AI was NOT actually invoked (not
+        #                requested, no key, disabled mid-run). Subsequent
+        #                runs with --ai-fallback can retry AI without
+        #                re-burning FDC quota.
+        marker = "ai-miss" if ai_was_called else "fdc-miss"
         report.misses.append((iid, miss_reason or "fdc-no-match"))
-        if not no_write:
-            sb.table("ingredients").update({
-                "nutrition_source": "fdc-miss",
-            }).eq("id", iid).execute()
+        _persist_miss(sb, config, iid, row["name"], marker, no_write=no_write)
         return
 
     if not no_write:
@@ -188,7 +263,19 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     if args.limit:
         rows = rows[: args.limit]
 
-    pending = sum(1 for r in rows if not r.get("nutrition_source") or args.force)
+    ai_requested = bool(args.ai_fallback)
+
+    def _is_pending(r: dict) -> bool:
+        if args.force:
+            return True
+        st = _row_state(r)
+        if st in _TERMINAL_SOURCES:
+            return False
+        if st == "fdc-miss" and not ai_requested:
+            return False
+        return True
+
+    pending = sum(1 for r in rows if _is_pending(r))
     log.step(
         f"fetch-ingredient-nutrition · {len(rows)} ingredient(s) "
         f"({pending} pending; FDC rate limit ~1000/hr)"
@@ -198,7 +285,7 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     report = RunReport()
     try:
         for i, row in enumerate(rows):
-            will_skip = bool(row.get("nutrition_source")) and not args.force
+            will_skip = not _is_pending(row)
             _process_one(
                 sb, config, row,
                 force=args.force,

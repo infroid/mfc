@@ -86,7 +86,7 @@ CREATE INDEX IF NOT EXISTS ingredients_nutrition_source_idx
   ON public.ingredients (nutrition_source);
 
 COMMENT ON COLUMN public.ingredients.emoji            IS 'Single grapheme used on ingredient cards (e.g. "🧀"). Nullable.';
-COMMENT ON COLUMN public.ingredients.nutrition_source IS '"fdc" | "ai" | "manual" | "fdc-miss" | NULL. Set by mfc fetch-ingredient-nutrition; powers skip-on-rerun and "what still needs review" filters.';
+COMMENT ON COLUMN public.ingredients.nutrition_source IS 'Mirrors nutrition.source in the JSONB. Values: "fdc" | "ai" | "manual" | "fdc-miss" | "ai-miss" | NULL. fdc-miss = FDC tried + missed, AI not actually invoked (so a follow-up run with --ai-fallback can retry AI without re-burning FDC quota). ai-miss = both FDC and AI tried, both failed; only --force retries. Powers skip-on-rerun and "what still needs review" filters.';
 COMMENT ON COLUMN public.ingredients.fdc_id           IS 'USDA FoodData Central food id (when nutrition_source = ''fdc''). Lets re-pulls hit the same record without re-searching.';
 COMMENT ON COLUMN public.ingredients.aliases          IS 'Search-fallback names tried by mfc fetch-ingredient-images (slugified, against thiings.co/things/<slug>) and mfc fetch-ingredient-nutrition (verbatim, against the USDA FDC search) when the main name returns no match. Free-text array, e.g. {"quinoa","white rice"} on an ingredient named "Quinoa, rinsed". Distinct from `substitutes`, which is for runtime ingredient swaps in recipes.';
 
