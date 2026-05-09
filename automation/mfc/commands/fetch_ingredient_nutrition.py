@@ -67,33 +67,53 @@ def _process_one(
     args_namespace,
 ) -> None:
     iid = row["id"]
-    existing_block = (row.get("nutrition") or {}) if isinstance(row.get("nutrition"), dict) else {}
-    if existing_block.get("source") and not force:
+    # Skip rows we've already attempted (success or persisted miss). --force
+    # bypasses the skip so the user can deliberately re-run.
+    if row.get("nutrition_source") and not force:
         report.skipped.append(iid)
         return
 
     api_key = config.require_fdc()
+    block = None
+    miss_reason = None
+
     try:
         if fdc_id_pin is not None:
             block = fdc.fetch_for_id(fdc_id_pin, api_key=api_key)
         else:
             block = fdc.fetch_for_name(row["name"], api_key=api_key)
     except fdc.FdcNotFound:
-        if not getattr(args_namespace, "ai_fallback", False):
-            report.misses.append((iid, "fdc-no-match"))
-            return
-        if not config.anthropic_api_key:
-            # AI fallback opted in but no key configured — skip silently
-            # so the FDC-only enrichment elsewhere in the run still proceeds.
-            report.misses.append((iid, "ai-fallback-skipped-no-key"))
-            return
-        try:
-            block = aifill.suggest_nutrition(row["name"], category=row.get("category"), api_key=config.anthropic_api_key)
-        except aifill.AiFillError as exc:
-            report.misses.append((iid, f"ai-fallback-failed: {exc}"))
-            return
+        miss_reason = "fdc-no-match"
     except fdc.FdcError as exc:
+        # Transient errors (network, 5xx) are NOT persisted — user can retry
+        # without --force once connectivity is restored.
         report.failed.append((iid, f"fdc-error: {exc}"))
+        return
+
+    # FDC missed — try AI fallback if opted in and key is configured.
+    if block is None and getattr(args_namespace, "ai_fallback", False):
+        if not config.anthropic_api_key:
+            miss_reason = "ai-fallback-skipped-no-key"
+        else:
+            try:
+                block = aifill.suggest_nutrition(
+                    row["name"],
+                    category=row.get("category"),
+                    api_key=config.anthropic_api_key,
+                )
+                miss_reason = None
+            except aifill.AiFillError as exc:
+                miss_reason = f"ai-fallback-failed: {exc}"
+
+    if block is None:
+        # Persist the miss marker so subsequent runs skip this row and we
+        # don't burn FDC quota re-asking. Reason is preserved in the
+        # in-memory report; the DB column stores a stable sentinel value.
+        report.misses.append((iid, miss_reason or "fdc-no-match"))
+        if not no_write:
+            sb.table("ingredients").update({
+                "nutrition_source": "fdc-miss",
+            }).eq("id", iid).execute()
         return
 
     if not no_write:
@@ -113,7 +133,7 @@ def _process_one(
 
 def _run_single(args: argparse.Namespace, config: Config) -> int:
     sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id, name, category, nutrition").eq("id", args.id).execute().data or []
+    rows = sb.table("ingredients").select("id, name, category, nutrition, nutrition_source").eq("id", args.id).execute().data or []
     if not rows:
         log.error(f"ingredient '{args.id}' not found")
         return 2
@@ -132,16 +152,23 @@ def _run_single(args: argparse.Namespace, config: Config) -> int:
 
 def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id, name, category, nutrition").order("id").execute().data or []
+    rows = sb.table("ingredients").select("id, name, category, nutrition, nutrition_source").order("id").execute().data or []
     if args.ids:
         wanted = {s.strip() for s in args.ids.split(",")}
         rows = [r for r in rows if r["id"] in wanted]
     if args.limit:
         rows = rows[: args.limit]
 
-    log.step(f"fetch-ingredient-nutrition · {len(rows)} ingredient(s)")
+    pending = sum(1 for r in rows if not r.get("nutrition_source") or args.force)
+    log.step(
+        f"fetch-ingredient-nutrition · {len(rows)} ingredient(s) "
+        f"({pending} pending; FDC rate limit ~1000/hr)"
+    )
+    if pending > 950:
+        log.warn(f"about to attempt {pending} FDC requests — close to the 1000/hr limit; consider LIMIT=900")
     report = RunReport()
     for i, row in enumerate(rows):
+        will_skip = bool(row.get("nutrition_source")) and not args.force
         _process_one(
             sb, config, row,
             force=args.force,
@@ -150,7 +177,7 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
             report=report,
             args_namespace=args,
         )
-        if i < len(rows) - 1:
+        if not will_skip and i < len(rows) - 1:
             time.sleep(SLEEP_BETWEEN_REQUESTS_S)
     report.print()
     if rows and not (report.fetched or report.skipped or report.misses):
