@@ -195,14 +195,19 @@ def _build_child_rows(config: Config, bundles: list[dict]) -> dict[str, list[dic
             ord_u += 1
 
         for i, fact in enumerate(detail.get("healthFacts") or []):
-            health_facts.append({"recipe_id": rid, "sort_order": i, "fact": fact})
+            health_facts.append({
+                "category": "recipe",
+                "target_id": rid,
+                "sort_order": i,
+                "fact": fact,
+            })
 
     return {
         "recipe_tags":         tags,
         "recipe_ingredients":  ingredients,
         "recipe_steps":        steps,
         "recipe_utensils":     utensils,
-        "recipe_health_facts": health_facts,
+        "health_facts":        health_facts,
     }
 
 
@@ -280,9 +285,14 @@ def push_bundles(config: Config, *, only: Optional[list[str]] = None) -> SyncRep
     log.step("child tables (delete-then-insert per table)")
     children = _build_child_rows(config, valid)
     recipe_ids = [d["id"] for d in valid]
-    for table in ("recipe_tags", "recipe_ingredients", "recipe_steps",
-                  "recipe_utensils", "recipe_health_facts"):
+    for table in ("recipe_tags", "recipe_ingredients", "recipe_steps", "recipe_utensils"):
         _bulk_replace_children(sb, table, children[table], recipe_ids)
+
+    # health_facts is polymorphic — delete by composite key, then insert.
+    sb.table("health_facts").delete().eq("category", "recipe").in_("target_id", recipe_ids).execute()
+    if children["health_facts"]:
+        sb.table("health_facts").insert(children["health_facts"]).execute()
+    log.ok(f"health_facts(recipe): {len(children['health_facts'])} row(s)")
 
     # Reconcile recipe_owners. Trigger handles the INSERT path (new rows);
     # this upsert handles UPDATE-path bundles where the trigger doesn't fire.
@@ -349,9 +359,10 @@ def _build_bundle(sb, recipe_row: dict) -> dict:
         or []
     )
     fact_rows = (
-        sb.table("recipe_health_facts")
+        sb.table("health_facts")
         .select("sort_order, fact")
-        .eq("recipe_id", rid)
+        .eq("category", "recipe")
+        .eq("target_id", rid)
         .order("sort_order")
         .execute()
         .data
