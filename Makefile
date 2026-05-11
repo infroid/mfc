@@ -17,7 +17,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help \
-        sync apply-schema seed-metrics \
+        sync apply-schema init-catalog seed-metrics \
         status list-users set-role suspend-user \
         sync-recipes sync-images \
         sync-utensils sync-utensil-images \
@@ -152,6 +152,9 @@ sync-ingredient-images: ## sync ingredient images bucket↔local; prompts (or DI
 
 update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [NO_IMAGE=1])
 	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(NO_IMAGE),--no-image)
+
+init-catalog: ## create automation/db.sqlite from sqlite_schema.sql; FORCE=1 to drop+recreate
+	@$(UV) run mfc init-catalog $(if $(FORCE),--force)
 
 fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
 	@$(UV) run mfc fetch-ingredient-images \
