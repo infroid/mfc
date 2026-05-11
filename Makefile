@@ -23,7 +23,7 @@ UV := uv --project automation
         sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
         update-utensil \
-        import-bundles import-usda \
+        import-bundles import-ingredient import-usda \
         fetch-ingredient-images fetch-ingredient-nutrition \
         migrate-ingredient-nutrition \
         drop-schema reset \
@@ -159,6 +159,9 @@ init-catalog: ## create automation/db.sqlite from sqlite_schema.sql; FORCE=1 to 
 
 import-bundles: ## one-shot: read web/assets/ingredients/*/ingredient.json into automation/db.sqlite; FORCE=1 overwrites
 	@$(UV) run mfc import-bundles $(if $(FORCE),--force)
+
+import-ingredient: ## import one ingredient JSON; required FILE=<path>
+	@$(UV) run mfc import-ingredient "$(FILE)"
 
 import-usda: ## import data/usda/*.csv foundation foods into automation/db.sqlite; LIMIT=N for debug
 	@$(UV) run mfc import-usda $(if $(LIMIT),--limit $(LIMIT))

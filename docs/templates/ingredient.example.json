@@ -1,0 +1,32 @@
+{
+  "id": "paneer",
+  "name": "Paneer",
+  "aliases": ["panir", "indian cottage cheese"],
+  "category": "Dairy",
+  "tagline": "fresh, milky, holds shape under heat",
+  "photo": "https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/paneer/image.png",
+  "emoji": "🧀",
+  "default_unit": "g",
+  "source": "manual",
+  "fdc_id": null,
+  "show": { "healthFact": true, "nutrition": true, "storage": true, "substitutes": true },
+
+  "details": {
+    "storage": "Submerge in cold water; refrigerate; change water daily.",
+    "substitutes": ["tofu firm", "halloumi"],
+    "nutrition_per": "100g",
+    "nutrition_filled_at": "2026-05-11T00:00:00Z",
+    "calories": 321,
+    "protein": 18.3,
+    "total_fat": 25.0,
+    "carbohydrate": 3.5,
+    "calcium": 208,
+    "iron": 0.16,
+    "sodium": 22
+  },
+
+  "health_facts": [
+    "Paneer is a non-melting cheese — high protein, ~25% fat, slow digestion.",
+    "Lacto-fermented variants improve calcium bioavailability."
+  ]
+}
