@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 from datetime import datetime, timezone
 
 from mfc.commands import update_utensil as cu
@@ -96,21 +95,7 @@ def test_compose_bundle_partial_specs():
     assert bundle["show"]["specs"] is True
 
 
-def test_run_preserves_existing_id_and_name_when_updating_bundle(tmp_path, monkeypatch):
-    bundle_dir = tmp_path / "web" / "assets" / "utensils" / "kadhai-cast-iron"
-    bundle_dir.mkdir(parents=True)
-    bundle_path = bundle_dir / "utensil.json"
-    bundle_path.write_text(
-        json.dumps({
-            "id": "kadhai-cast-iron",
-            "name": "Cast iron kadhai",
-            "tagline": "old tagline",
-            "specs": {"material": "old"},
-            "show": {"specs": False},
-            "buy_links": [],
-        }) + "\n",
-        encoding="utf-8",
-    )
+def test_run_writes_utensil_to_sqlite(tmp_path, monkeypatch):
     monkeypatch.setattr(
         cu.amazon,
         "fetch_product",
@@ -136,8 +121,20 @@ def test_run_preserves_existing_id_and_name_when_updating_bundle(tmp_path, monke
 
     assert cu.run(args, config) == 0
 
-    bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
-    assert bundle["id"] == "kadhai-cast-iron"
-    assert bundle["name"] == "Cast iron kadhai"
-    assert bundle["tagline"] == "Fresh Amazon tagline"
-    assert bundle["specs"] == {"material": "Cast iron", "size": "5 L"}
+    db_path = tmp_path / "automation" / "db.sqlite"
+    assert db_path.exists()
+
+    import sqlite3
+    conn = sqlite3.connect(str(db_path))
+    conn.row_factory = sqlite3.Row
+    row = conn.execute("SELECT * FROM utensils WHERE id='kadhai-cast-iron'").fetchone()
+    assert row is not None
+    assert row["id"] == "kadhai-cast-iron"
+    assert row["name"] == "Amazon SEO Product Title"
+    assert row["tagline"] == "Fresh Amazon tagline"
+    link = conn.execute(
+        "SELECT * FROM utensil_buy_links WHERE utensil_id='kadhai-cast-iron'"
+    ).fetchone()
+    assert link is not None
+    assert link["store"] == "Amazon"
+    conn.close()

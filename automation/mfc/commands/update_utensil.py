@@ -1,12 +1,12 @@
-"""`mfc update-utensil` — scrape an Amazon product page, write a utensil
-bundle (JSON + square image) to disk. Cloud propagation is handled separately
+"""`mfc update-utensil` — scrape an Amazon product page, write utensil +
+buy_links to automation/db.sqlite and a 1500×1500 JPG to
+web/assets/utensils/<id>/<id>.jpg. Cloud propagation is handled separately
 by `mfc sync-utensils push` (DB rows) and `mfc sync-utensil-images push` (bytes).
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import shutil
 import subprocess
@@ -18,11 +18,13 @@ from typing import Optional
 
 import httpx
 
-from ..core import files, log
+from ..core import log
 from ..core.config import Config
 from ..ops import amazon
 from ..ops import image_processing as image_ops
 from ..ops import utensil_images as utensil_images_ops
+from ..ops.bundle_decompose_utensil import decompose
+from ..ops.catalog import Catalog
 
 
 AFFILIATE_TAG = "mfc-20"
@@ -214,8 +216,9 @@ def _compose_bundle(
 def register(subparsers: argparse._SubParsersAction) -> None:
     p = subparsers.add_parser(
         "update-utensil",
-        help="Update a utensil bundle locally from an Amazon product URL "
-             "(JSON + square image). Use `mfc sync-utensils push` to propagate to Supabase.",
+        help="Scrape an Amazon product URL and write utensil + buy_links to "
+             "automation/db.sqlite + 1500×1500 JPG to web/assets/utensils/<id>/<id>.jpg. "
+             "Use `mfc sync-utensils push` to propagate to Supabase.",
     )
     p.add_argument("url", nargs="?", default=None,
                    help="Amazon product URL or bare 10-char ASIN. Prompted if omitted.")
@@ -250,19 +253,16 @@ def run(args: argparse.Namespace, config: Config) -> int:
     utensil_id = utensil_id_arg
     log.info(f"utensil id: {utensil_id}")
 
-    # 3. Resolve paths. update-utensil overwrites an existing bundle by design;
-    # use git to recover prior state if needed.
-    bundle_dir = files.utensil_bundles_root(config.repo_root) / utensil_id
-    bundle_path = files.utensil_bundle_path(config.repo_root, utensil_id)
-    bundle_dir.mkdir(parents=True, exist_ok=True)
-    existing_bundle = files.load_utensil_json(bundle_path) if bundle_path.exists() else None
-    if existing_bundle is not None:
-        log.info(f"overwriting existing bundle at {bundle_path.relative_to(config.repo_root)}")
+    # 3. Image output dir
+    utensil_dir = (
+        config.repo_root / "web" / "assets" / "utensils" / utensil_id
+    )
+    utensil_dir.mkdir(parents=True, exist_ok=True)
 
     # 4. Image flow
     photo_rel: Optional[str] = None
     if not args.no_image and info.image_urls:
-        candidates_dir = bundle_dir / "_candidates"
+        candidates_dir = utensil_dir / "_candidates"
         candidates_dir.mkdir(exist_ok=True)
         candidate_paths: list[Path] = []
         for i, url in enumerate(info.image_urls, start=1):
@@ -284,7 +284,7 @@ def run(args: argparse.Namespace, config: Config) -> int:
                 preview_html=preview,
             )
             if chosen is not None:
-                final = bundle_dir / f"{utensil_id}.jpg"
+                final = utensil_dir / f"{utensil_id}.jpg"
                 image_ops.square_pad(chosen, final)
                 log.ok(f"squared image: {final.relative_to(config.repo_root)}")
                 photo_rel = f"{utensil_images_ops.LEGACY_PATH_PREFIX}{utensil_id}/{utensil_id}.jpg"
@@ -292,14 +292,20 @@ def run(args: argparse.Namespace, config: Config) -> int:
     elif args.no_image:
         log.info("skipping image download (--no-image)")
 
-    # 5. Compose + write bundle
+    # 5. Compose bundle dict + write to SQLite
     now = datetime.now(timezone.utc)
     bundle = _compose_bundle(info=info, utensil_id=utensil_id, photo_path=photo_rel, now=now)
-    if existing_bundle and existing_bundle.get("name"):
-        bundle["name"] = existing_bundle["name"]
-    bundle_path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
-    log.ok(f"wrote {bundle_path.relative_to(config.repo_root)}")
+    utensil_row, buy_links = decompose(bundle)
+    db_path = config.repo_root / "automation" / "db.sqlite"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    cat = Catalog(db_path)
+    cat.init()
+    cat.upsert_utensil(utensil_row)
+    if buy_links:
+        cat.set_utensil_buy_links(utensil_row["id"], buy_links)
+    cat.close()
+    log.ok(f"wrote utensil to automation/db.sqlite: {utensil_row['id']}")
 
     # (no DB push here — run `mfc sync-utensils --direction push` to propagate)
-    log.info(f"Run `make sync-utensils DIRECTION=push` to propagate to Supabase.")
+    log.info("Run `make sync-utensils DIRECTION=push` to propagate to Supabase.")
     return 0
