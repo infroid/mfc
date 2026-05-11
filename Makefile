@@ -17,7 +17,7 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help \
-        sync apply-schema init-catalog seed-metrics \
+        sync apply-schema init-catalog import-bundles import-usda import-ingredient gen-nutrition-doc seed-metrics \
         status list-users set-role suspend-user \
         sync-recipes sync-images \
         sync-utensils sync-utensil-images \
@@ -161,6 +161,9 @@ import-ingredient: ## import one ingredient JSON; required FILE=<path>
 
 import-usda: ## import data/usda/*.csv foundation foods into automation/db.sqlite; LIMIT=N for debug
 	@$(UV) run mfc import-usda $(if $(LIMIT),--limit $(LIMIT))
+
+gen-nutrition-doc: ## regenerate docs/NUTRITION_FIELDS.md from the USDA nutrient map
+	@$(UV) run mfc gen-nutrition-doc
 
 ##@ Authoring & enrichment — local-first; sync uploads later
 
