@@ -132,3 +132,73 @@ def test_utensil_buy_links_cascade_delete(catalog):
     catalog.conn.commit()
     cur = catalog.conn.execute("SELECT COUNT(*) FROM utensil_buy_links WHERE utensil_id='fork'")
     assert cur.fetchone()[0] == 0
+
+
+def test_upsert_recipe_serializes_media_and_meal_types(catalog):
+    catalog.upsert_recipe({
+        "id": "x", "name": "X",
+        "cuisine": "Indian", "difficulty": "Easy",
+        "servings": 4, "total_minutes": 30,
+        "media": {"hero": {"src": "https://example.com/x.jpg"}},
+        "meal_types": ["lunch", "dinner"],
+    })
+    cur = catalog.conn.execute("SELECT media, meal_types FROM recipes WHERE id='x'")
+    media_json, meal_json = cur.fetchone()
+    assert json.loads(media_json)["hero"]["src"] == "https://example.com/x.jpg"
+    assert json.loads(meal_json) == ["lunch", "dinner"]
+
+
+def test_set_recipe_ingredients_replaces_all(catalog):
+    catalog.upsert_ingredient({"id": "spinach", "name": "Spinach"})
+    catalog.upsert_ingredient({"id": "salt", "name": "Salt"})
+    catalog.upsert_recipe({
+        "id": "r1", "name": "R", "cuisine": "X", "difficulty": "Easy",
+        "servings": 1, "total_minutes": 10,
+    })
+    catalog.set_recipe_ingredients("r1", [
+        {"sort_order": 0, "ingredient_id": "spinach", "amount": "100g", "unit": "g"},
+        {"sort_order": 1, "ingredient_id": "salt", "amount": "pinch", "unit": None},
+    ])
+    cur = catalog.conn.execute("SELECT ingredient_id FROM recipe_ingredients WHERE recipe_id='r1' ORDER BY sort_order")
+    assert [r[0] for r in cur.fetchall()] == ["spinach", "salt"]
+    # Re-set replaces (count stays at 1, not 3)
+    catalog.set_recipe_ingredients("r1", [{"sort_order": 0, "ingredient_id": "spinach", "amount": "200g", "unit": "g"}])
+    cur = catalog.conn.execute("SELECT COUNT(*) FROM recipe_ingredients WHERE recipe_id='r1'")
+    assert cur.fetchone()[0] == 1
+
+
+def test_set_recipe_steps_and_utensils_and_tags(catalog):
+    catalog.upsert_utensil({"id": "kadhai", "name": "Kadhai"})
+    catalog.upsert_recipe({
+        "id": "r2", "name": "R2", "cuisine": "X", "difficulty": "Easy",
+        "servings": 1, "total_minutes": 10,
+    })
+    catalog.set_recipe_steps("r2", [
+        {"sort_order": 1, "title": "Boil", "detail": "Boil water", "duration_seconds": 300},
+    ])
+    catalog.set_recipe_utensils("r2", [
+        {"sort_order": 0, "utensil_id": "kadhai", "essential": True},
+    ])
+    catalog.set_recipe_tags("r2", ["vegan", "quick"])
+    cur = catalog.conn.execute("SELECT title FROM recipe_steps WHERE recipe_id='r2'")
+    assert cur.fetchone()[0] == "Boil"
+    cur = catalog.conn.execute("SELECT essential FROM recipe_utensils WHERE recipe_id='r2'")
+    assert cur.fetchone()[0] == 1
+    cur = catalog.conn.execute("SELECT tag FROM recipe_tags WHERE recipe_id='r2' ORDER BY tag")
+    assert [r[0] for r in cur.fetchall()] == ["quick", "vegan"]
+
+
+def test_recipe_child_tables_cascade_delete(catalog):
+    catalog.upsert_ingredient({"id": "x", "name": "X"})
+    catalog.upsert_recipe({
+        "id": "r3", "name": "R3", "cuisine": "X", "difficulty": "Easy",
+        "servings": 1, "total_minutes": 10,
+    })
+    catalog.set_recipe_ingredients("r3", [{"sort_order": 0, "ingredient_id": "x", "amount": "1", "unit": "g"}])
+    catalog.set_recipe_tags("r3", ["a", "b"])
+    catalog.conn.execute("DELETE FROM recipes WHERE id='r3'")
+    catalog.conn.commit()
+    cur = catalog.conn.execute("SELECT COUNT(*) FROM recipe_ingredients WHERE recipe_id='r3'")
+    assert cur.fetchone()[0] == 0
+    cur = catalog.conn.execute("SELECT COUNT(*) FROM recipe_tags WHERE recipe_id='r3'")
+    assert cur.fetchone()[0] == 0

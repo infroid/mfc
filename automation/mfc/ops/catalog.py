@@ -129,3 +129,95 @@ class Catalog:
     def iter_utensils(self) -> Iterator[sqlite3.Row]:
         cur = self.conn.execute("SELECT * FROM utensils ORDER BY id")
         yield from cur
+
+    def upsert_recipe(self, row: dict[str, Any]) -> None:
+        """Upsert a recipe row. JSON-encodes `media` and `meal_types`."""
+        data = dict(row)
+        for k in ("media", "meal_types"):
+            if k in data and not isinstance(data[k], str):
+                data[k] = json.dumps(data[k])
+        cols = list(data.keys())
+        placeholders = ",".join(f":{c}" for c in cols)
+        col_list = ",".join(cols)
+        updates = ",".join(f"{c}=excluded.{c}" for c in cols if c != "id")
+        sql = (
+            f"INSERT INTO recipes ({col_list}) VALUES ({placeholders}) "
+            f"ON CONFLICT(id) DO UPDATE SET {updates}"
+        )
+        self.conn.execute(sql, data)
+        self.conn.commit()
+
+    def set_recipe_ingredients(self, recipe_id: str, rows: list[dict]) -> None:
+        """Replace ALL recipe_ingredients rows for recipe_id atomically.
+        Each row: {sort_order, ingredient_id, group_name, amount, unit}."""
+        with self.conn:
+            self.conn.execute("DELETE FROM recipe_ingredients WHERE recipe_id=?", (recipe_id,))
+            for r in rows:
+                self.conn.execute(
+                    "INSERT INTO recipe_ingredients "
+                    "(recipe_id, sort_order, ingredient_id, group_name, amount, unit) "
+                    "VALUES (?, ?, ?, ?, ?, ?)",
+                    (
+                        recipe_id,
+                        r.get("sort_order"),
+                        r.get("ingredient_id"),
+                        r.get("group_name"),
+                        r.get("amount"),
+                        r.get("unit"),
+                    ),
+                )
+
+    def set_recipe_steps(self, recipe_id: str, rows: list[dict]) -> None:
+        """Replace ALL recipe_steps rows for recipe_id atomically.
+        Each row: {sort_order, title, detail, duration_seconds, tip, media_caption, media_src}."""
+        with self.conn:
+            self.conn.execute("DELETE FROM recipe_steps WHERE recipe_id=?", (recipe_id,))
+            for r in rows:
+                self.conn.execute(
+                    "INSERT INTO recipe_steps "
+                    "(recipe_id, sort_order, title, detail, duration_seconds, tip, media_caption, media_src) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        recipe_id,
+                        r.get("sort_order"),
+                        r.get("title"),
+                        r.get("detail"),
+                        r.get("duration_seconds"),
+                        r.get("tip"),
+                        r.get("media_caption"),
+                        r.get("media_src"),
+                    ),
+                )
+
+    def set_recipe_utensils(self, recipe_id: str, rows: list[dict]) -> None:
+        """Replace ALL recipe_utensils rows for recipe_id atomically.
+        Each row: {sort_order, utensil_id, essential}."""
+        with self.conn:
+            self.conn.execute("DELETE FROM recipe_utensils WHERE recipe_id=?", (recipe_id,))
+            for r in rows:
+                self.conn.execute(
+                    "INSERT INTO recipe_utensils (recipe_id, sort_order, utensil_id, essential) "
+                    "VALUES (?, ?, ?, ?)",
+                    (
+                        recipe_id,
+                        r.get("sort_order"),
+                        r.get("utensil_id"),
+                        1 if r.get("essential") else 0,
+                    ),
+                )
+
+    def set_recipe_tags(self, recipe_id: str, tags: list[str]) -> None:
+        """Replace ALL recipe_tags rows for recipe_id atomically."""
+        with self.conn:
+            self.conn.execute("DELETE FROM recipe_tags WHERE recipe_id=?", (recipe_id,))
+            for t in tags:
+                if not t:
+                    continue
+                self.conn.execute(
+                    "INSERT OR IGNORE INTO recipe_tags (recipe_id, tag) VALUES (?, ?)",
+                    (recipe_id, t),
+                )
+
+    def iter_recipes(self) -> Iterator[sqlite3.Row]:
+        cur = self.conn.execute("SELECT * FROM recipes ORDER BY id")
+        yield from cur
