@@ -86,7 +86,8 @@ Other hosting options (Cloudflare Pages, Netlify) are documented in
 
 ## Recipe admin
 
-Edit recipes via Supabase Studio's table editor. Six normalized tables back each
+Edit recipes via Supabase Studio's table editor. Five normalized tables back each
 recipe (`recipes` + `recipe_ingredients` / `recipe_steps` / `recipe_utensils` /
-`recipe_tags` / `recipe_health_facts`). Column descriptions are visible in Studio
+`recipe_tags`); health facts are in the shared `health_facts` table
+(`category='recipe'`). Column descriptions are visible in Studio
 (from `COMMENT ON COLUMN` statements in the schema).

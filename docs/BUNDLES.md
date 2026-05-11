@@ -16,13 +16,14 @@ covers the JSON shape on disk and how it maps back and forth.
 |---|---|---|---|---|
 | Recipe | `web/assets/recipes/<id>/recipe.json` | `recipes` + 5 child tables | `make sync-recipes` | `recipe-images` |
 | Utensil | `web/assets/utensils/<id>/utensil.json` | `utensils` + `utensil_buy_links` | `make sync-utensils` | `utensil-images` |
-| Ingredient | *not implemented* | `ingredients` (DB-only today) | — | — |
+| Ingredient | `automation/db.sqlite` (SQLite catalog) | `ingredients` + `ingredient_details` + `health_facts` | `make sync-ingredients` | `ingredient-images` |
 
-Ingredient bundles are spec'd at
-[`docs/superpowers/specs/2026-05-07-thiings-ingredient-images-design.md`](superpowers/specs/2026-05-07-thiings-ingredient-images-design.md)
-and planned at
-[`docs/superpowers/plans/2026-05-07-ingredient-bundles-and-nutrition.md`](superpowers/plans/2026-05-07-ingredient-bundles-and-nutrition.md).
-Today, ingredients live as DB rows only — no per-ingredient bundle on disk.
+Ingredients use a different model — not per-id JSON files. The canonical store
+is `automation/db.sqlite` (committed to git). Image PNG bytes live at
+`web/assets/ingredients/<id>/image.png`. See
+[`docs/superpowers/specs/2026-05-11-sqlite-catalog-and-usda-import-design.md`](superpowers/specs/2026-05-11-sqlite-catalog-and-usda-import-design.md)
+for the full design. Utensils (Project B) and recipes (Project C) remain
+bundle-JSON-based.
 
 ## How sync works
 
@@ -144,7 +145,7 @@ Plus image bytes: `web/assets/recipes/<id>/hero.jpg`,
 | `steps[]` | `recipe_steps` rows | optional | sort_order = `id` field on the step |
 | `utensils[]` | `recipe_utensils` rows | optional | sort_order = array index after dedup |
 | `tags[]` | `recipe_tags` rows | optional | one row per tag |
-| `healthFacts[]` | `recipe_health_facts` rows | optional | sort_order = array index |
+| `healthFacts[]` | `health_facts` rows (`category='recipe'`) | optional | sort_order = array index |
 
 `steps[].media.src` and `media.hero.src` accept either a full Storage URL
 or a legacy `assets/...` path; the `push` path normalizes them.

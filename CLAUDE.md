@@ -22,16 +22,29 @@ The static site has no build system. Backend tooling is a Python CLI in
 `automation/` driven by a root `Makefile`.
 
 ```
-make                   # list every Make target
-make serve             # http.server on :8080
-make sync              # sync the python venv (after editing automation/pyproject.toml)
-make status            # supabase: list public tables + row counts
-make list-users        # supabase: list users; optional ROLE=user|chef|admin Q=alice
-make set-role          # supabase: change role; USER=<email> ROLE=<user|chef|admin>
-make suspend-user      # supabase: ban a user; USER=<email-or-uuid>
-make sync-recipes      # supabase: sync recipes (DB + bundles + images); interactive (or DIRECTION=)
-make sync-images       # supabase: sync images bucket↔local; interactive (or DIRECTION=)
-make reset             # supabase: drop + apply schema + seed metrics + push recipes
+make                        # list every Make target
+make serve                  # http.server on :8080
+make sync                   # sync the python venv (after editing automation/pyproject.toml)
+make status                 # supabase: list public tables + row counts
+make list-users             # supabase: list users; optional ROLE=user|chef|admin Q=alice
+make set-role               # supabase: change role; USER=<email> ROLE=<user|chef|admin>
+make suspend-user           # supabase: ban a user; USER=<email-or-uuid>
+make sync-recipes           # supabase: sync recipes (DB + bundles + images); interactive (or DIRECTION=)
+make sync-images            # supabase: sync images bucket↔local; interactive (or DIRECTION=)
+make sync-ingredients       # SQLite ↔ Supabase; DIRECTION={pull,push,both}
+make sync-ingredient-images # ingredient image bytes ↔ Storage bucket
+make sync-utensils          # supabase: sync utensil bundles + images
+make sync-utensil-images    # supabase: sync utensil image bytes
+make reset                  # supabase: drop + apply schema + seed metrics + push recipes
+```
+
+Ingredient catalog commands:
+
+```
+make init-catalog           # create automation/db.sqlite from sqlite_schema.sql
+make import-usda            # read data/usda/*.csv, upsert Foundation Foods into SQLite
+make import-ingredient      # read one JSON template into SQLite; PATH=<path>
+make gen-nutrition-doc      # regenerate docs/NUTRITION_FIELDS.md
 ```
 
 If port 8080 is in use:
@@ -88,6 +101,18 @@ make serve
 - **Bundle JSON formats** are documented at [docs/BUNDLES.md](docs/BUNDLES.md).
   That's the canonical reference for recipe + utensil bundle shape, field
   semantics, and round-trip behavior.
+- **Ingredients** use a different model — not bundle JSON. Canonical store is
+  `automation/db.sqlite` (committed to git, ~959 rows). Schema:
+  `automation/db/sqlite_schema.sql`. Four tables:
+  - `ingredients` — list-page fields
+  - `ingredient_details` — 1:1, ~140 flat nutrient columns
+  - `health_facts` — polymorphic (`category ∈ {ingredient, utensil, recipe}`,
+    `target_id`, `sort_order`, `fact`); shared across entity types
+  - `metric_definitions` — reference data
+  Image PNG bytes live in `web/assets/ingredients/<id>/image.png` (committed to
+  git). `make sync-ingredients DIRECTION={pull,push,both}` syncs SQLite ↔
+  Supabase. `make sync-ingredient-images` syncs image bytes ↔ Storage. Utensils
+  (Project B) and recipes (Project C) remain bundle-JSON-based for now.
 - [web/assets/recipes/{id}/recipe.json](web/assets/recipes/) is the **bundle
   seed** for `make sync-recipes` (the Python CLI in `automation/`); not
   fetched by the browser. Each bundle is self-contained (listing fields +
@@ -113,9 +138,12 @@ make serve
 
 ## Schema
 
-- [automation/db/schema.sql](automation/db/schema.sql) — 16 tables, RLS, triggers. Every
+- [automation/db/schema.sql](automation/db/schema.sql) — Postgres schema, RLS, triggers. Every
   table and column has a `COMMENT ON` description that surfaces in Supabase
   Studio. Idempotent: safe to re-apply.
+- [automation/db/sqlite_schema.sql](automation/db/sqlite_schema.sql) — SQLite schema for the
+  ingredient catalog (`ingredients`, `ingredient_details`, `health_facts`,
+  `metric_definitions`). Applied via `make init-catalog`.
 - [automation/db/seed_metrics.sql](automation/db/seed_metrics.sql) — 54-marker catalog
   (`metric_definitions`) across 10 categories: lipid, metabolic, iron-panel,
   inflammation, liver, kidney, vitamin, mineral, thyroid, other. Sex-specific
@@ -128,7 +156,7 @@ Schema layers:
 - **Catalog** — `recipes` (with `created_by` audit FK to auth.users,
   NOT NULL after sub-project #2), `recipe_ingredients`, `recipe_steps`
   (with `media_src` for the full Supabase Storage URL of the step
-  image), `recipe_utensils`, `recipe_tags`, `recipe_health_facts`.
+  image), `recipe_utensils`, `recipe_tags`.
   Public read, admin writes via secret key or signed-in admin user
   (RLS via `public.is_admin()`); chef writes via
   `public.recipe_owned_by_caller()` checking `recipe_owners`.
@@ -136,13 +164,19 @@ Schema layers:
   table is the single source of truth for who-can-edit. Trigger
   `recipes_after_insert_set_owners` adds (id, creator) and
   (id, first-admin) on every recipes INSERT.
-- **Library** — `ingredients`, `utensils`, `utensil_buy_links`. Master tables
-  that recipes pick from. `recipe_ingredients.ingredient_id` and
-  `recipe_utensils.utensil_id` FK into these with `ON DELETE RESTRICT` — a
+- **Library** — `ingredients`, `ingredient_details`, `utensils`,
+  `utensil_buy_links`. `ingredients` + `ingredient_details` mirror
+  the SQLite catalog; synced via `make sync-ingredients`. `recipe_ingredients.ingredient_id`
+  and `recipe_utensils.utensil_id` FK into these with `ON DELETE RESTRICT` — a
   library row cannot be deleted while any recipe references it. The admin UI
   pre-checks usage and disables delete when `usage > 0`; the FK is defence in
   depth. `utensil_buy_links` is a one-to-many child of `utensils`
   (`utensil_id, sort_order` PK).
+- **Health facts** — `health_facts` (polymorphic: `category ∈ {ingredient,
+  utensil, recipe}`, `target_id`, `sort_order`, `fact`). Replaces the former
+  `recipe_health_facts` table and extends coverage to ingredients and utensils.
+  Cascade-delete triggers maintain referential integrity per category.
+  Frontend joins require two queries (no auto FK on `target_id`).
 - **Health markers** — `metric_definitions` (reference catalog) +
   `user_health_markers` (per-user values, history-preserving via
   `(user_id, metric_id, measured_at)` PK).
