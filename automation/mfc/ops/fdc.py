@@ -16,7 +16,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode, urlsplit
 from urllib.request import Request, urlopen
 
-from .fdc_nutrient_map import NUTRIENT_MAP
+from .usda_nutrient_map import NUTRIENT_MAP
 
 
 SEARCH_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
@@ -92,12 +92,11 @@ def _build_block(food: dict) -> dict:
         amount = nutrient_entry.get("amount")
         if nid is None or amount is None:
             continue
-        mapped = NUTRIENT_MAP.get(int(nid))
-        if mapped is None:
+        key = NUTRIENT_MAP.get(int(nid))
+        if key is None:
             continue
-        key, _unit = mapped
         # Last write wins when multiple FDC ids map to the same key
-        # (e.g. 1008 vs 2047 both → energy_kcal). Foundation reports come
+        # (e.g. 1008 vs 2047 both → calories). Foundation reports come
         # back in id order, so the more specific Atwater id ends up
         # winning, which is the desired behavior.
         block[key] = amount

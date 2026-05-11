@@ -10,16 +10,16 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from .fdc_nutrient_map import NUTRIENT_MAP
+from .usda_nutrient_map import NUTRIENT_MAP
 
 
 class AiFillError(RuntimeError):
     pass
 
 
-# Allowed nutrient keys = anything in the FDC mapping (which defines the
+# Allowed nutrient keys = anything in the USDA mapping (which defines the
 # bundle vocabulary).
-ALLOWED_KEYS = {key for key, _u in NUTRIENT_MAP.values()}
+ALLOWED_KEYS = set(NUTRIENT_MAP.values())
 
 
 def _now_iso() -> str:
@@ -45,8 +45,8 @@ _SYSTEM = (
     "best per-100g estimate of standard food nutrients via the report_nutrition "
     "tool. Use Indian/regional reference values where applicable. Omit any "
     "nutrient you are not confident estimating — never invent placeholder "
-    "values. Values must be non-negative numbers in the units encoded by the "
-    "key suffixes (_g, _mg, _ug, _kcal, _kj)."
+    "values. Values must be non-negative numbers (calories in kcal, weights "
+    "in the units implied by each field in the schema)."
 )
 
 

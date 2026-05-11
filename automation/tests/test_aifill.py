@@ -13,11 +13,11 @@ def _good_tool_use_response():
     block.type = "tool_use"
     block.name = "report_nutrition"
     block.input = {
-        "energy_kcal": 572,
-        "protein_g":   25.5,
-        "total_fat_g": 50.0,
-        "carbohydrate_g": 21.7,
-        "calcium_mg":  140,
+        "calories":    572,
+        "protein":     25.5,
+        "total_fat":   50.0,
+        "carbohydrate": 21.7,
+        "calcium":     140,
     }
     msg = MagicMock()
     msg.content = [block]
@@ -25,11 +25,11 @@ def _good_tool_use_response():
 
 
 def _bad_tool_use_response():
-    """Tool returns legacy keys not in the allowed USDA vocabulary."""
+    """Tool returns legacy suffixed keys not in the allowed USDA vocabulary."""
     block = MagicMock()
     block.type = "tool_use"
     block.name = "report_nutrition"
-    block.input = {"calories": 572, "protein": 25.5}
+    block.input = {"energy_kcal": 572, "protein_g": 25.5}
     msg = MagicMock()
     msg.content = [block]
     return msg
@@ -45,7 +45,7 @@ def test_returns_block_with_source_ai():
 
     assert block["source"] == "ai"
     assert block["per"] == "100g"
-    assert block["energy_kcal"] == 572
+    assert block["calories"] == 572
     assert "filledAt" in block
     assert "aiFilledAt" in block
     assert block["aiFilledAt"] is not None

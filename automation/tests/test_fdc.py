@@ -58,11 +58,11 @@ def test_search_then_fetch_then_map():
     assert block["source"] == "fdc"
     assert block["fdcId"] == 173436
     assert block["per"] == "100g"
-    assert block["energy_kcal"] == 23
-    assert block["protein_g"] == 2.86
-    assert block["calcium_mg"] == 99
-    assert block["vitamin_a_rae_ug"] == 469
-    assert block["leucine_g"] == 0.223
+    assert block["calories"] == 23
+    assert block["protein"] == 2.86
+    assert block["calcium"] == 99
+    assert block["vitamin_a"] == 469
+    assert block["leucine"] == 0.223
     assert 9999999 not in block
 
 
@@ -81,7 +81,7 @@ def test_pinned_id_skips_search():
         block = fdc.fetch_for_id(173436, api_key="KEY")
 
     assert block["fdcId"] == 173436
-    assert block["protein_g"] == 2.86
+    assert block["protein"] == 2.86
 
 
 def test_foundation_beats_branded_even_when_branded_first():
