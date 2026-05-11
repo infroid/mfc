@@ -1,24 +1,26 @@
 """`mfc fetch-ingredient-image[s]` — download illustrated PNGs from
-thiings.co/things/<slug> into ingredient bundle dirs.
+thiings.co/things/<slug> into web/assets/ingredients/<id>/image.png.
 
-Idempotent on disk: files that already exist are skipped unless --force.
-DB rows are NOT updated by this command — sync-ingredient-images +
-sync-ingredients handle that downstream.
+Reads ingredient state (id + aliases + current photo) from
+automation/db.sqlite. On success, updates ingredients.photo to the
+legacy local path; `mfc sync-ingredients push` normalizes to a full
+Supabase Storage URL.
+
+Idempotent on disk: existing files are skipped unless --force.
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..clients import sb as sb_client
 from ..core import log
 from ..core.config import Config
 from ..ops import thiings
+from ..ops.catalog import Catalog
 
 
 REL_DIR = "assets/ingredients"
@@ -56,38 +58,24 @@ def _output_path(config: Config, ingredient_id: str) -> Path:
     return config.repo_root / "web" / REL_DIR / ingredient_id / "image.png"
 
 
-def _bundle_path(config: Config, ingredient_id: str) -> Path:
-    return config.repo_root / "web" / REL_DIR / ingredient_id / "ingredient.json"
-
-
-def _ensure_bundle_photo(config: Config, ingredient_id: str) -> bool:
-    """Set bundle.photo to the legacy repo-relative path if not already set.
-
-    Returns True if a write happened.
-    """
-    p = _bundle_path(config, ingredient_id)
-    expected = f"{REL_DIR}/{ingredient_id}/image.png"
-    bundle: dict = {}
-    if p.exists():
+def _candidate_slugs(ingredient_id: str, aliases_raw) -> list[str]:
+    """id first, then aliases slugified. Aliases may be a JSON string
+    (SQLite) or a list (already-parsed)."""
+    import json as _json
+    aliases: list[str] = []
+    if isinstance(aliases_raw, str):
         try:
-            bundle = json.loads(p.read_text())
+            parsed = _json.loads(aliases_raw)
+            if isinstance(parsed, list):
+                aliases = parsed
         except Exception:
-            bundle = {}
-    if bundle.get("photo") == expected:
-        return False
-    bundle.setdefault("id", ingredient_id)
-    bundle["photo"] = expected
-    p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
-    return True
+            pass
+    elif isinstance(aliases_raw, list):
+        aliases = aliases_raw
 
-
-def _candidate_slugs(ingredient_id: str, aliases: list[str] | None) -> list[str]:
-    """Slugs to try in order: the id itself, then each alias slugified.
-    Duplicates and empty values are dropped, order preserved."""
     seen: set[str] = set()
     out: list[str] = []
-    for raw in (ingredient_id, *(aliases or [])):
+    for raw in (ingredient_id, *aliases):
         s = _slugify(raw)
         if s and s not in seen:
             seen.add(s)
@@ -96,9 +84,10 @@ def _candidate_slugs(ingredient_id: str, aliases: list[str] | None) -> list[str]
 
 
 def _process_one(
+    catalog: Catalog,
     config: Config,
     ingredient_id: str,
-    aliases: list[str] | None,
+    aliases_raw,
     *,
     force: bool,
     no_write: bool,
@@ -109,7 +98,7 @@ def _process_one(
         report.skipped.append(ingredient_id)
         return
 
-    slugs = _candidate_slugs(ingredient_id, aliases)
+    slugs = _candidate_slugs(ingredient_id, aliases_raw)
     data: bytes | None = None
     last_miss_reason: str | None = None
     for i, slug in enumerate(slugs):
@@ -133,28 +122,36 @@ def _process_one(
     if not no_write:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(data)
-        _ensure_bundle_photo(config, ingredient_id)
+        # Update SQLite ingredients.photo to legacy local path.
+        # sync-ingredients push will normalize to the full Storage URL.
+        local_path = f"{REL_DIR}/{ingredient_id}/image.png"
+        catalog.upsert_ingredient({"id": ingredient_id, "photo": local_path})
+
     report.fetched.append(ingredient_id)
 
 
 def _run_single(args: argparse.Namespace, config: Config) -> int:
-    sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id, aliases").eq("id", args.id).execute().data or []
-    if not rows:
-        log.error(f"ingredient '{args.id}' not found in public.ingredients")
+    catalog = Catalog(config.repo_root / "automation" / "db.sqlite")
+    cur = catalog.conn.execute("SELECT id, aliases FROM ingredients WHERE id=?", (args.id,))
+    row = cur.fetchone()
+    if not row:
+        log.error(f"ingredient '{args.id}' not found in automation/db.sqlite")
+        catalog.close()
         return 2
     report = RunReport()
     _process_one(
-        config, rows[0]["id"], rows[0].get("aliases"),
+        catalog, config, row["id"], row["aliases"],
         force=args.force, no_write=args.no_write, report=report,
     )
+    catalog.close()
     report.print()
     return 0 if not report.failed else 1
 
 
 def _run_bulk(args: argparse.Namespace, config: Config) -> int:
-    sb = sb_client.service_client(config)
-    rows = sb.table("ingredients").select("id, aliases").order("id").execute().data or []
+    catalog = Catalog(config.repo_root / "automation" / "db.sqlite")
+    cur = catalog.conn.execute("SELECT id, aliases FROM ingredients ORDER BY id")
+    rows = list(cur.fetchall())
     if args.ids:
         wanted = {s.strip() for s in args.ids.split(",")}
         rows = [r for r in rows if r["id"] in wanted]
@@ -166,11 +163,12 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
     for i, row in enumerate(rows):
         will_skip = _output_path(config, row["id"]).exists() and not args.force
         _process_one(
-            config, row["id"], row.get("aliases"),
+            catalog, config, row["id"], row["aliases"],
             force=args.force, no_write=args.no_write, report=report,
         )
         if not will_skip and i < len(rows) - 1:
             time.sleep(SLEEP_BETWEEN_REQUESTS_S)
+    catalog.close()
     report.print()
 
     if rows and not (report.fetched or report.skipped or report.misses):
@@ -181,7 +179,7 @@ def _run_bulk(args: argparse.Namespace, config: Config) -> int:
 def register(subparsers: argparse._SubParsersAction) -> None:
     p = subparsers.add_parser(
         "fetch-ingredient-image",
-        help="Fetch one ingredient image from thiings.co",
+        help="Fetch one ingredient image from thiings.co (writes SQLite + disk)",
     )
     p.add_argument("id", help="ingredient id (used as the thiings slug)")
     p.add_argument("--force", action="store_true")
