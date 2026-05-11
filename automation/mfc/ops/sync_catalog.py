@@ -35,6 +35,14 @@ _UTENSIL_PG_COLS = (
     "created_by", "created_at", "updated_at",
 )
 
+_RECIPES_JSON_FIELDS = ("media", "meal_types")
+_RECIPE_PG_COLS = (
+    "id", "name", "tagline", "short_tagline",
+    "cuisine", "difficulty", "servings", "total_minutes",
+    "media", "color", "color_soft", "meal_types",
+    "created_by", "created_at", "updated_at",
+)
+
 
 @dataclass
 class SyncReport:
@@ -283,5 +291,217 @@ def sync_utensils(config: Config, *, direction: str) -> UtensilSyncReport:
         rep2 = pull_utensils(config)
         rep.pulled_utensils = rep2.pulled_utensils
         rep.pulled_buy_links = rep2.pulled_buy_links
+        return rep
+    raise ValueError(f"invalid direction: {direction!r}")
+
+
+@dataclass
+class RecipeSyncReport:
+    pushed_recipes: int = 0
+    pulled_recipes: int = 0
+    pushed_children: int = 0
+    pulled_children: int = 0
+    pushed_facts: int = 0
+    pulled_facts: int = 0
+    failed: list[str] = field(default_factory=list)
+
+    def line(self) -> str:
+        return (
+            f"recipes ↑{self.pushed_recipes} ↓{self.pulled_recipes} · "
+            f"children ↑{self.pushed_children} ↓{self.pulled_children} · "
+            f"facts ↑{self.pushed_facts} ↓{self.pulled_facts} · "
+            f"failed {len(self.failed)}"
+        )
+
+
+def push_recipes(config: Config) -> RecipeSyncReport:
+    sb = sb_client.service_client(config)
+    cat = Catalog(config.repo_root / "automation" / "db.sqlite")
+    rep = RecipeSyncReport()
+
+    # recipes
+    r_rows: list[dict] = []
+    cur = cat.conn.execute("SELECT * FROM recipes ORDER BY id")
+    for r in cur:
+        decoded = _decode_json_fields(r, _RECIPES_JSON_FIELDS)
+        r_rows.append(_filter_cols(decoded, _RECIPE_PG_COLS))
+    if r_rows:
+        BATCH = 100
+        for i in range(0, len(r_rows), BATCH):
+            sb.table("recipes").upsert(r_rows[i:i+BATCH], on_conflict="id").execute()
+        rep.pushed_recipes = len(r_rows)
+
+    # Child tables — delete-then-insert per recipe (atomicity is per-batch).
+    recipe_ids = [r["id"] for r in r_rows]
+    child_total = 0
+
+    if recipe_ids:
+        # recipe_ingredients
+        sb.table("recipe_ingredients").delete().in_("recipe_id", recipe_ids).execute()
+        ing_rows: list[dict] = []
+        cur = cat.conn.execute("SELECT * FROM recipe_ingredients ORDER BY recipe_id, sort_order")
+        for r in cur:
+            ing_rows.append({k: r[k] for k in r.keys() if r[k] is not None})
+        if ing_rows:
+            BATCH = 500
+            for i in range(0, len(ing_rows), BATCH):
+                sb.table("recipe_ingredients").insert(ing_rows[i:i+BATCH]).execute()
+            child_total += len(ing_rows)
+
+        # recipe_steps
+        sb.table("recipe_steps").delete().in_("recipe_id", recipe_ids).execute()
+        step_rows: list[dict] = []
+        cur = cat.conn.execute("SELECT * FROM recipe_steps ORDER BY recipe_id, sort_order")
+        for r in cur:
+            step_rows.append({k: r[k] for k in r.keys() if r[k] is not None})
+        if step_rows:
+            BATCH = 500
+            for i in range(0, len(step_rows), BATCH):
+                sb.table("recipe_steps").insert(step_rows[i:i+BATCH]).execute()
+            child_total += len(step_rows)
+
+        # recipe_utensils — note `essential` is INTEGER 0/1 in SQLite, BOOLEAN in Postgres
+        sb.table("recipe_utensils").delete().in_("recipe_id", recipe_ids).execute()
+        util_rows: list[dict] = []
+        cur = cat.conn.execute("SELECT * FROM recipe_utensils ORDER BY recipe_id, sort_order")
+        for r in cur:
+            d = {k: r[k] for k in r.keys() if r[k] is not None}
+            if "essential" in d:
+                d["essential"] = bool(d["essential"])
+            util_rows.append(d)
+        if util_rows:
+            BATCH = 500
+            for i in range(0, len(util_rows), BATCH):
+                sb.table("recipe_utensils").insert(util_rows[i:i+BATCH]).execute()
+            child_total += len(util_rows)
+
+        # recipe_tags
+        sb.table("recipe_tags").delete().in_("recipe_id", recipe_ids).execute()
+        tag_rows: list[dict] = []
+        cur = cat.conn.execute("SELECT recipe_id, tag FROM recipe_tags ORDER BY recipe_id, tag")
+        for r in cur:
+            tag_rows.append(dict(r))
+        if tag_rows:
+            BATCH = 500
+            for i in range(0, len(tag_rows), BATCH):
+                sb.table("recipe_tags").insert(tag_rows[i:i+BATCH]).execute()
+            child_total += len(tag_rows)
+
+    rep.pushed_children = child_total
+
+    # health_facts(category='recipe') — delete-then-insert
+    fact_rows: list[dict] = []
+    cur = cat.conn.execute(
+        "SELECT * FROM health_facts WHERE category='recipe' ORDER BY target_id, sort_order"
+    )
+    for r in cur:
+        fact_rows.append(dict(r))
+    targets = sorted({r["target_id"] for r in fact_rows})
+    if targets:
+        BATCH = 200
+        for i in range(0, len(targets), BATCH):
+            sb.table("health_facts").delete().eq("category", "recipe").in_("target_id", targets[i:i+BATCH]).execute()
+    if fact_rows:
+        BATCH = 500
+        for i in range(0, len(fact_rows), BATCH):
+            sb.table("health_facts").insert(fact_rows[i:i+BATCH]).execute()
+        rep.pushed_facts = len(fact_rows)
+
+    cat.close()
+    log.ok(rep.line())
+    return rep
+
+
+def pull_recipes(config: Config) -> RecipeSyncReport:
+    sb = sb_client.service_client(config)
+    cat = Catalog(config.repo_root / "automation" / "db.sqlite")
+    rep = RecipeSyncReport()
+
+    r_rows = sb.table("recipes").select("*").order("id").execute().data or []
+    ing_rows = sb.table("recipe_ingredients").select("*").order("recipe_id").order("sort_order").execute().data or []
+    step_rows = sb.table("recipe_steps").select("*").order("recipe_id").order("sort_order").execute().data or []
+    util_rows = sb.table("recipe_utensils").select("*").order("recipe_id").order("sort_order").execute().data or []
+    tag_rows = sb.table("recipe_tags").select("recipe_id, tag").order("recipe_id").order("tag").execute().data or []
+    fact_rows = (
+        sb.table("health_facts").select("*")
+          .eq("category", "recipe").order("target_id").order("sort_order")
+          .execute().data
+        or []
+    )
+
+    with cat.conn:
+        cat.conn.execute("DELETE FROM recipe_ingredients")
+        cat.conn.execute("DELETE FROM recipe_steps")
+        cat.conn.execute("DELETE FROM recipe_utensils")
+        cat.conn.execute("DELETE FROM recipe_tags")
+        cat.conn.execute("DELETE FROM health_facts WHERE category='recipe'")
+        cat.conn.execute("DELETE FROM recipes")
+        for r in r_rows:
+            cat.upsert_recipe(r)
+        # group child rows by recipe and replace-all atomically
+        by_recipe_ing: dict[str, list[dict]] = {}
+        for r in ing_rows:
+            by_recipe_ing.setdefault(r["recipe_id"], []).append({
+                "sort_order": r.get("sort_order"),
+                "ingredient_id": r.get("ingredient_id"),
+                "group_name": r.get("group_name"),
+                "amount": r.get("amount"),
+                "unit": r.get("unit"),
+            })
+        by_recipe_step: dict[str, list[dict]] = {}
+        for r in step_rows:
+            by_recipe_step.setdefault(r["recipe_id"], []).append({
+                "sort_order": r.get("sort_order"),
+                "title": r.get("title"),
+                "detail": r.get("detail"),
+                "duration_seconds": r.get("duration_seconds"),
+                "tip": r.get("tip"),
+                "media_caption": r.get("media_caption"),
+                "media_src": r.get("media_src"),
+            })
+        by_recipe_util: dict[str, list[dict]] = {}
+        for r in util_rows:
+            by_recipe_util.setdefault(r["recipe_id"], []).append({
+                "sort_order": r.get("sort_order"),
+                "utensil_id": r.get("utensil_id"),
+                "essential":  bool(r.get("essential")),
+            })
+        by_recipe_tag: dict[str, list[str]] = {}
+        for r in tag_rows:
+            by_recipe_tag.setdefault(r["recipe_id"], []).append(r["tag"])
+        by_recipe_facts: dict[str, list[str]] = {}
+        for r in fact_rows:
+            by_recipe_facts.setdefault(r["target_id"], []).append(r["fact"])
+
+    for rid, rows in by_recipe_ing.items():
+        cat.set_recipe_ingredients(rid, rows)
+    for rid, rows in by_recipe_step.items():
+        cat.set_recipe_steps(rid, rows)
+    for rid, rows in by_recipe_util.items():
+        cat.set_recipe_utensils(rid, rows)
+    for rid, tags in by_recipe_tag.items():
+        cat.set_recipe_tags(rid, tags)
+    for rid, facts in by_recipe_facts.items():
+        cat.set_health_facts("recipe", rid, facts)
+
+    rep.pulled_recipes = len(r_rows)
+    rep.pulled_children = len(ing_rows) + len(step_rows) + len(util_rows) + len(tag_rows)
+    rep.pulled_facts = len(fact_rows)
+    cat.close()
+    log.ok(rep.line())
+    return rep
+
+
+def sync_recipes(config: Config, *, direction: str) -> RecipeSyncReport:
+    if direction == "push":
+        return push_recipes(config)
+    if direction == "pull":
+        return pull_recipes(config)
+    if direction == "both":
+        rep = push_recipes(config)
+        rep2 = pull_recipes(config)
+        rep.pulled_recipes = rep2.pulled_recipes
+        rep.pulled_children = rep2.pulled_children
+        rep.pulled_facts = rep2.pulled_facts
         return rep
     raise ValueError(f"invalid direction: {direction!r}")

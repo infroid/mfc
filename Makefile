@@ -76,15 +76,15 @@ suspend-user: ## suspend (ban) a user; required USER=<email-or-uuid>
 
 ##@ Sync — DB ↔ local bundles + Storage  (DIRECTION=pull|push|both, or interactive)
 
-sync-recipes: ## sync recipe metadata DB↔local; chains sync-images in same direction
+sync-recipes: ## sync recipe catalog automation/db.sqlite ↔ Supabase; chains sync-images in same direction
 	@if [ -n "$(DIRECTION)" ]; then \
 	  $(UV) run mfc sync-recipes --direction $(DIRECTION) && \
 	  $(UV) run mfc sync-images  --direction $(DIRECTION); \
 	else \
 	  printf "\nPick sync direction:\n"; \
-	  printf "  pull — DB+Storage → local. Recipe rows become recipe.json files; bytes pulled into web/assets/recipes/.\n"; \
-	  printf "  push — local → DB+Storage. Bundle JSONs upserted into DB; local images pushed to Storage.\n"; \
-	  printf "  both — pull then push. Last-modified wins per recipe and per image.\n"; \
+	  printf "  pull — Supabase → automation/db.sqlite. Overwrites SQLite from Supabase; bytes pulled into web/assets/recipes/.\n"; \
+	  printf "  push — automation/db.sqlite → Supabase. Upserts recipes + child tables + health_facts(recipe); local images pushed to Storage.\n"; \
+	  printf "  both — push then pull. SQLite is canonical for local edits.\n"; \
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-recipes --direction $$d && $(UV) run mfc sync-images --direction $$d; \
 	fi
