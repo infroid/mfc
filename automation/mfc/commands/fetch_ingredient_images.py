@@ -124,8 +124,14 @@ def _process_one(
         out.write_bytes(data)
         # Update SQLite ingredients.photo to legacy local path.
         # sync-ingredients push will normalize to the full Storage URL.
+        # Direct UPDATE (not upsert) — row exists; INSERT path would
+        # hit NOT NULL on `name` before the ON CONFLICT clause runs.
         local_path = f"{REL_DIR}/{ingredient_id}/image.png"
-        catalog.upsert_ingredient({"id": ingredient_id, "photo": local_path})
+        catalog.conn.execute(
+            "UPDATE ingredients SET photo = ? WHERE id = ?",
+            (local_path, ingredient_id),
+        )
+        catalog.conn.commit()
 
     report.fetched.append(ingredient_id)
 

@@ -75,20 +75,31 @@ def _is_pending(row: dict, *, force: bool, ai_requested: bool) -> bool:
 
 
 def _persist_miss(catalog: Catalog, iid: str, marker: str) -> None:
-    catalog.upsert_ingredient({"id": iid, "source": marker})
+    # Row is guaranteed to exist (we just SELECT'd it). Use a direct UPDATE
+    # so the SQLite NOT NULL check on `name` doesn't fire on an INSERT
+    # attempt before the ON CONFLICT clause kicks in.
+    catalog.conn.execute("UPDATE ingredients SET source = ? WHERE id = ?", (marker, iid))
+    catalog.conn.commit()
 
 
 def _write_success(catalog: Catalog, iid: str, block: dict) -> None:
-    """Write block (success path) to ingredients + ingredient_details."""
-    ing: dict = {
-        "id": iid,
-        "source": block["source"],
-    }
+    """Write block (success path) to ingredients + ingredient_details.
+
+    Direct UPDATE on ingredients (not upsert) — the row already exists; an
+    INSERT path would hit SQLite's NOT NULL check on `name` before the
+    ON CONFLICT clause runs.
+    """
+    updates: dict = {"source": block["source"]}
     if block.get("fdcId") is not None:
-        ing["fdc_id"] = int(block["fdcId"])
+        updates["fdc_id"] = int(block["fdcId"])
     if block.get("aiFilledAt"):
-        ing["ai_filled_at"] = block["aiFilledAt"]
-    catalog.upsert_ingredient(ing)
+        updates["ai_filled_at"] = block["aiFilledAt"]
+    set_clause = ", ".join(f"{k} = ?" for k in updates)
+    catalog.conn.execute(
+        f"UPDATE ingredients SET {set_clause} WHERE id = ?",
+        (*updates.values(), iid),
+    )
+    catalog.conn.commit()
 
     det: dict = {"id": iid, "nutrition_per": block.get("per", "100g")}
     if block.get("filledAt"):
