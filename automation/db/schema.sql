@@ -65,10 +65,7 @@ CREATE TABLE IF NOT EXISTS public.ingredients (
   category     text,
   default_unit text NOT NULL DEFAULT 'g',
   photo        text,
-  nutrition    jsonb NOT NULL DEFAULT '{}'::jsonb,
-  health_fact  text,
-  storage      text,
-  substitutes  text[] NOT NULL DEFAULT '{}',
+  nutrition    jsonb NOT NULL DEFAULT '{}'::jsonb,  -- to be dropped in Task 18
   show         jsonb NOT NULL DEFAULT '{"nutrition":true,"healthFact":true,"storage":false,"substitutes":false}'::jsonb,
   ai_filled_at timestamptz,
   created_by   uuid REFERENCES auth.users(id),
@@ -77,18 +74,18 @@ CREATE TABLE IF NOT EXISTS public.ingredients (
 );
 
 ALTER TABLE public.ingredients
-  ADD COLUMN IF NOT EXISTS emoji            TEXT,
-  ADD COLUMN IF NOT EXISTS nutrition_source TEXT,
-  ADD COLUMN IF NOT EXISTS fdc_id           INTEGER,
-  ADD COLUMN IF NOT EXISTS aliases          TEXT[] NOT NULL DEFAULT '{}';
+  ADD COLUMN IF NOT EXISTS emoji   TEXT,
+  ADD COLUMN IF NOT EXISTS source  TEXT,
+  ADD COLUMN IF NOT EXISTS fdc_id  INTEGER,
+  ADD COLUMN IF NOT EXISTS aliases TEXT[] NOT NULL DEFAULT '{}';
 
-CREATE INDEX IF NOT EXISTS ingredients_nutrition_source_idx
-  ON public.ingredients (nutrition_source);
+DROP INDEX IF EXISTS public.ingredients_nutrition_source_idx;
+CREATE INDEX IF NOT EXISTS ingredients_source_idx ON public.ingredients (source);
 
-COMMENT ON COLUMN public.ingredients.emoji            IS 'Single grapheme used on ingredient cards (e.g. "🧀"). Nullable.';
-COMMENT ON COLUMN public.ingredients.nutrition_source IS 'Mirrors nutrition.source in the JSONB. Values: "fdc" | "ai" | "manual" | "fdc-miss" | "ai-miss" | NULL. fdc-miss = FDC tried + missed, AI not actually invoked (so a follow-up run with --ai-fallback can retry AI without re-burning FDC quota). ai-miss = both FDC and AI tried, both failed; only --force retries. Powers skip-on-rerun and "what still needs review" filters.';
-COMMENT ON COLUMN public.ingredients.fdc_id           IS 'USDA FoodData Central food id (when nutrition_source = ''fdc''). Lets re-pulls hit the same record without re-searching.';
-COMMENT ON COLUMN public.ingredients.aliases          IS 'Search-fallback names tried by mfc fetch-ingredient-images (slugified, against thiings.co/things/<slug>) and mfc fetch-ingredient-nutrition (verbatim, against the USDA FDC search) when the main name returns no match. Free-text array, e.g. {"quinoa","white rice"} on an ingredient named "Quinoa, rinsed". Distinct from `substitutes`, which is for runtime ingredient swaps in recipes.';
+COMMENT ON COLUMN public.ingredients.emoji   IS 'Single grapheme used on ingredient cards (e.g. "🧀"). Nullable.';
+COMMENT ON COLUMN public.ingredients.source  IS 'Nutrition data provenance. Values: "fdc" | "ai" | "manual" | "fdc-miss" | "ai-miss" | NULL. fdc-miss = FDC tried + missed, AI not actually invoked (so a follow-up run with --ai-fallback can retry AI without re-burning FDC quota). ai-miss = both FDC and AI tried, both failed; only --force retries. Powers skip-on-rerun and "what still needs review" filters.';
+COMMENT ON COLUMN public.ingredients.fdc_id  IS 'USDA FoodData Central food id (when source = ''fdc''). Lets re-pulls hit the same record without re-searching.';
+COMMENT ON COLUMN public.ingredients.aliases IS 'Search-fallback names tried by mfc fetch-ingredient-images (slugified, against thiings.co/things/<slug>) and mfc fetch-ingredient-nutrition (verbatim, against the USDA FDC search) when the main name returns no match. Free-text array, e.g. {"quinoa","white rice"} on an ingredient named "Quinoa, rinsed". Distinct from substitutes in ingredient_details, which is for runtime ingredient swaps in recipes.';
 
 COMMENT ON TABLE  public.ingredients              IS 'Master library of ingredients. Recipes reference these via FK — inline ingredient names are not supported. Edited via admin-ingredient.html.';
 COMMENT ON COLUMN public.ingredients.id           IS 'Stable URL slug (e.g. "paneer", "kasuri-methi"). Referenced by recipe_ingredients.ingredient_id.';
@@ -97,15 +94,128 @@ COMMENT ON COLUMN public.ingredients.tagline      IS 'One-line description shown
 COMMENT ON COLUMN public.ingredients.category     IS 'Free text: "Dairy", "Vegetable", "Spice", "Herb", "Protein", "Oil & Fat", "Nut & Seed", "Aromatic", "Seasoning", etc.';
 COMMENT ON COLUMN public.ingredients.default_unit IS 'Default unit pre-filled when a recipe picks this ingredient (g, ml, tsp, tbsp, cup, medium, large, whole, pinch).';
 COMMENT ON COLUMN public.ingredients.photo        IS 'Full Supabase Storage URL of the ingredient image (https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/<id>/image.png). Bytes also live at web/assets/ingredients/<id>/image.png in the repo. Nullable.';
-COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g USDA FoodData Central nutrient profile. JSONB { source, fdcId, filledAt, aiFilledAt, per:"100g", energy_kcal, protein_g, total_fat_g, ... }. All nutrient fields optional; missing renders as "—". See docs/superpowers/specs/2026-05-07-thiings-ingredient-images-design.md for full key list.';
-COMMENT ON COLUMN public.ingredients.health_fact  IS 'One-liner surfaced in the recipe page health-fact rotator (60–110 chars).';
-COMMENT ON COLUMN public.ingredients.storage      IS 'Storage tip shown on the ingredient page only.';
-COMMENT ON COLUMN public.ingredients.substitutes  IS 'Free-text substitute names (e.g. {"tofu (firm)","halloumi"}).';
+COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g USDA FoodData Central nutrient profile. JSONB { source, fdcId, filledAt, aiFilledAt, per:"100g", energy_kcal, protein_g, total_fat_g, ... }. All nutrient fields optional; missing renders as "—". To be dropped in Task 18 after flat columns in ingredient_details are fully adopted.';
 COMMENT ON COLUMN public.ingredients.show         IS 'Per-field visibility toggles { nutrition, healthFact, storage, substitutes }.';
 COMMENT ON COLUMN public.ingredients.ai_filled_at IS 'When the AI auto-fill last ran. NULL if entered manually.';
 COMMENT ON COLUMN public.ingredients.created_by   IS 'FK → auth.users.id of the admin who created this row.';
 COMMENT ON COLUMN public.ingredients.created_at   IS 'Row creation timestamp.';
 COMMENT ON COLUMN public.ingredients.updated_at   IS 'Auto-updated via touch_updated_at trigger on UPDATE.';
+
+
+-- =============================================================================
+-- INGREDIENT DETAILS (1:1 with ingredients; flat nutrient columns)
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS public.ingredient_details (
+  id                   text PRIMARY KEY REFERENCES public.ingredients(id) ON DELETE CASCADE,
+  storage              text,
+  substitutes          text[] NOT NULL DEFAULT '{}',
+  nutrition_per        text NOT NULL DEFAULT '100g',
+  nutrition_filled_at  timestamptz,
+
+  calories             real,  energy_kj  real,  water  real,  ash  real,  alcohol  real,  nitrogen  real,
+  protein              real,  total_fat  real,  carbohydrate  real,
+  fiber                real,  fiber_soluble  real,  fiber_insoluble  real,
+  sugars               real,  sugars_added  real,  starch  real,
+  glucose              real,  fructose  real,  sucrose  real,  lactose  real,  maltose  real,  galactose  real,
+  saturated_fat        real,  mono_fat  real,  poly_fat  real,  trans_fat  real,  cholesterol  real,
+  sfa_4_0 real, sfa_6_0 real, sfa_8_0 real, sfa_10_0 real,
+  sfa_12_0 real, sfa_14_0 real, sfa_15_0 real, sfa_16_0 real,
+  sfa_17_0 real, sfa_18_0 real, sfa_20_0 real, sfa_22_0 real, sfa_24_0 real,
+  mufa_14_1 real, mufa_15_1 real, mufa_16_1 real, mufa_17_1 real,
+  mufa_18_1 real, mufa_20_1 real, mufa_22_1 real, mufa_24_1 real,
+  pufa_18_2_n6_la real, pufa_18_3_n3_ala real, pufa_18_3_n6_gla real,
+  pufa_18_4 real, pufa_20_2_n6 real, pufa_20_3_n6 real, pufa_20_3_n3 real,
+  pufa_20_4_n6_aa real, pufa_20_5_n3_epa real, pufa_21_5 real,
+  pufa_22_2 real, pufa_22_5_n3_dpa real, pufa_22_6_n3_dha real,
+  calcium real, iron real, magnesium real, phosphorus real, potassium real,
+  sodium real, zinc real, copper real, manganese real,
+  selenium real, fluoride real, iodine real,
+  vitamin_a real, vitamin_a_iu real, retinol real,
+  carotene_alpha real, carotene_beta real, cryptoxanthin_beta real,
+  lycopene real, lutein_zeaxanthin real,
+  vitamin_d real, vitamin_d2 real, vitamin_d3 real,
+  vitamin_e real, tocopherol_beta real, tocopherol_gamma real, tocopherol_delta real,
+  vitamin_k real,
+  thiamin real, riboflavin real, niacin real, pantothenic_acid real,
+  vitamin_b6 real, biotin real, folate real, folate_dfe real,
+  vitamin_b12 real, choline real, vitamin_c real,
+  tryptophan real, threonine real, isoleucine real, leucine real,
+  lysine real, methionine real, cystine real, phenylalanine real,
+  tyrosine real, valine real, arginine real, histidine real,
+  alanine real, aspartic_acid real, glutamic_acid real,
+  glycine real, proline real, serine real, hydroxyproline real,
+  caffeine real, theobromine real
+);
+
+COMMENT ON TABLE public.ingredient_details IS '1:1 with ingredients. ~140 flat nutrient columns plus storage/substitutes. Authored locally in automation/db.sqlite and synced via mfc sync-ingredients.';
+COMMENT ON COLUMN public.ingredient_details.nutrition_per IS 'Per-100g by USDA convention; field present for clarity.';
+COMMENT ON COLUMN public.ingredient_details.calories IS 'kcal per 100g. USDA nutrient ids 1008/2047/2048; latest Atwater factor wins.';
+COMMENT ON COLUMN public.ingredient_details.protein IS 'g per 100g. USDA nutrient id 1003.';
+
+-- RLS: public read; admin write (mirrors public.ingredients).
+ALTER TABLE public.ingredient_details ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "ingredient_details_public_read" ON public.ingredient_details;
+DROP POLICY IF EXISTS "ingredient_details_admin_write" ON public.ingredient_details;
+CREATE POLICY "ingredient_details_public_read" ON public.ingredient_details
+  FOR SELECT USING (true);
+CREATE POLICY "ingredient_details_admin_write" ON public.ingredient_details
+  FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
+
+
+-- =============================================================================
+-- HEALTH FACTS (polymorphic across ingredient / utensil / recipe)
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS public.health_facts (
+  category    text    NOT NULL CHECK (category IN ('ingredient', 'utensil', 'recipe')),
+  target_id   text    NOT NULL,
+  sort_order  integer NOT NULL,
+  fact        text    NOT NULL,
+  PRIMARY KEY (category, target_id, sort_order)
+);
+
+CREATE INDEX IF NOT EXISTS health_facts_target_idx ON public.health_facts (category, target_id);
+
+COMMENT ON TABLE public.health_facts IS
+  'Polymorphic: target_id references ingredients.id | utensils.id | recipes.id depending on category. No FK enforcement (the column targets three tables); the sync layer + per-category triggers maintain consistency.';
+
+CREATE OR REPLACE FUNCTION public.delete_orphan_health_facts() RETURNS trigger AS $$
+BEGIN
+  IF TG_TABLE_NAME = 'ingredients' THEN
+    DELETE FROM public.health_facts WHERE category = 'ingredient' AND target_id = OLD.id;
+  ELSIF TG_TABLE_NAME = 'utensils' THEN
+    DELETE FROM public.health_facts WHERE category = 'utensil' AND target_id = OLD.id;
+  ELSIF TG_TABLE_NAME = 'recipes' THEN
+    DELETE FROM public.health_facts WHERE category = 'recipe' AND target_id = OLD.id;
+  END IF;
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS health_facts_cleanup_ingredient ON public.ingredients;
+CREATE TRIGGER health_facts_cleanup_ingredient
+  AFTER DELETE ON public.ingredients
+  FOR EACH ROW EXECUTE FUNCTION public.delete_orphan_health_facts();
+
+DROP TRIGGER IF EXISTS health_facts_cleanup_utensil ON public.utensils;
+CREATE TRIGGER health_facts_cleanup_utensil
+  AFTER DELETE ON public.utensils
+  FOR EACH ROW EXECUTE FUNCTION public.delete_orphan_health_facts();
+
+DROP TRIGGER IF EXISTS health_facts_cleanup_recipe ON public.recipes;
+CREATE TRIGGER health_facts_cleanup_recipe
+  AFTER DELETE ON public.recipes
+  FOR EACH ROW EXECUTE FUNCTION public.delete_orphan_health_facts();
+
+-- RLS: public read; admin write (matches existing ingredient/utensil policies).
+ALTER TABLE public.health_facts ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "health_facts_public_read"  ON public.health_facts;
+DROP POLICY IF EXISTS "health_facts_admin_write"  ON public.health_facts;
+CREATE POLICY "health_facts_public_read" ON public.health_facts
+  FOR SELECT USING (true);
+CREATE POLICY "health_facts_admin_write" ON public.health_facts
+  FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 
 
 CREATE TABLE IF NOT EXISTS public.utensils (
@@ -924,3 +1034,47 @@ UPDATE public.recipes
    SET media = media - 'image'
  WHERE media ? 'image'
    AND (media->'hero'->>'src') IS NOT NULL;
+
+-- Migrate recipe_health_facts rows → health_facts(category='recipe', ...).
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables
+              WHERE table_schema='public' AND table_name='recipe_health_facts') THEN
+    INSERT INTO public.health_facts (category, target_id, sort_order, fact)
+    SELECT 'recipe', recipe_id, sort_order, fact
+      FROM public.recipe_health_facts
+     ON CONFLICT (category, target_id, sort_order) DO NOTHING;
+  END IF;
+END $$;
+
+-- Migrate ingredients.health_fact (single string) → health_facts(category='ingredient').
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns
+              WHERE table_schema='public' AND table_name='ingredients' AND column_name='health_fact') THEN
+    INSERT INTO public.health_facts (category, target_id, sort_order, fact)
+    SELECT 'ingredient', id, 0, health_fact
+      FROM public.ingredients
+     WHERE health_fact IS NOT NULL AND health_fact <> ''
+     ON CONFLICT (category, target_id, sort_order) DO NOTHING;
+  END IF;
+END $$;
+
+-- Rename ingredients.nutrition_source → ingredients.source (idempotent guard).
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns
+              WHERE table_schema='public' AND table_name='ingredients' AND column_name='nutrition_source')
+     AND NOT EXISTS (SELECT 1 FROM information_schema.columns
+                      WHERE table_schema='public' AND table_name='ingredients' AND column_name='source') THEN
+    ALTER TABLE public.ingredients RENAME COLUMN nutrition_source TO source;
+  END IF;
+END $$;
+
+-- Drop the now-migrated columns from ingredients (one-way; data already moved above).
+ALTER TABLE public.ingredients DROP COLUMN IF EXISTS health_fact;
+ALTER TABLE public.ingredients DROP COLUMN IF EXISTS storage;
+ALTER TABLE public.ingredients DROP COLUMN IF EXISTS substitutes;
+-- ingredients.nutrition jsonb stays for now; Task 18 drops it after all readers are updated.
+
+-- recipe_health_facts data is now in health_facts; Task 16 drops the table after readers update.
