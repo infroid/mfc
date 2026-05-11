@@ -23,7 +23,7 @@ UV := uv --project automation
         sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
         update-utensil \
-        init-catalog import-usda import-ingredient gen-nutrition-doc \
+        init-catalog import-usda import-ingredient import-utensils gen-nutrition-doc \
         fetch-ingredient-images fetch-ingredient-nutrition \
         drop-schema reset \
         serve \
@@ -158,6 +158,9 @@ import-ingredient: ## import one ingredient JSON; required FILE=<path>
 
 import-usda: ## import data/usda/*.csv foundation foods into automation/db.sqlite; LIMIT=N for debug
 	@$(UV) run mfc import-usda $(if $(LIMIT),--limit $(LIMIT))
+
+import-utensils: ## one-shot: read web/assets/utensils/*/utensil.json into automation/db.sqlite; FORCE=1 overwrites
+	@$(UV) run mfc import-utensils $(if $(FORCE),--force)
 
 gen-nutrition-doc: ## regenerate docs/NUTRITION_FIELDS.md from the USDA nutrient map
 	@$(UV) run mfc gen-nutrition-doc
