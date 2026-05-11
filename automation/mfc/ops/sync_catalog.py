@@ -27,6 +27,14 @@ _INGREDIENT_PG_COLS = (
 )
 _DETAILS_PG_COLS_DEFER = ()  # all known cols flow through
 
+_UTENSILS_JSON_FIELDS = ("specs", "show")
+_UTENSIL_PG_COLS = (
+    "id", "name", "tagline", "category", "photo", "care_tip",
+    "specs", "show", "ai_filled_at",
+    "amazon_asin", "amazon_marketplace", "amazon_fetched_at",
+    "created_by", "created_at", "updated_at",
+)
+
 
 @dataclass
 class SyncReport:
@@ -169,5 +177,111 @@ def sync(config: Config, *, direction: str) -> SyncReport:
         rep.pulled_ingredients = rep2.pulled_ingredients
         rep.pulled_details = rep2.pulled_details
         rep.pulled_facts = rep2.pulled_facts
+        return rep
+    raise ValueError(f"invalid direction: {direction!r}")
+
+
+@dataclass
+class UtensilSyncReport:
+    pushed_utensils: int = 0
+    pulled_utensils: int = 0
+    pushed_buy_links: int = 0
+    pulled_buy_links: int = 0
+    failed: list[str] = field(default_factory=list)
+
+    def line(self) -> str:
+        return (
+            f"utensils ↑{self.pushed_utensils} ↓{self.pulled_utensils} · "
+            f"buy_links ↑{self.pushed_buy_links} ↓{self.pulled_buy_links} · "
+            f"failed {len(self.failed)}"
+        )
+
+
+def push_utensils(config: Config) -> UtensilSyncReport:
+    sb = sb_client.service_client(config)
+    cat = Catalog(config.repo_root / "automation" / "db.sqlite")
+    rep = UtensilSyncReport()
+
+    # utensils
+    ut_rows: list[dict] = []
+    for r in cat.iter_utensils():
+        decoded = _decode_json_fields(r, _UTENSILS_JSON_FIELDS)
+        ut_rows.append(_filter_cols(decoded, _UTENSIL_PG_COLS))
+    if ut_rows:
+        BATCH = 200
+        for i in range(0, len(ut_rows), BATCH):
+            sb.table("utensils").upsert(ut_rows[i:i+BATCH], on_conflict="id").execute()
+        rep.pushed_utensils = len(ut_rows)
+
+    # utensil_buy_links — delete-then-insert per utensil
+    cur = cat.conn.execute("SELECT * FROM utensil_buy_links ORDER BY utensil_id, sort_order")
+    bl_rows = [dict(r) for r in cur]
+    utensil_ids = sorted({r["utensil_id"] for r in bl_rows})
+    if utensil_ids:
+        BATCH = 200
+        for i in range(0, len(utensil_ids), BATCH):
+            sb.table("utensil_buy_links").delete().in_("utensil_id", utensil_ids[i:i+BATCH]).execute()
+    if bl_rows:
+        BATCH = 500
+        for i in range(0, len(bl_rows), BATCH):
+            sb.table("utensil_buy_links").insert(bl_rows[i:i+BATCH]).execute()
+        rep.pushed_buy_links = len(bl_rows)
+
+    cat.close()
+    log.ok(rep.line())
+    return rep
+
+
+def pull_utensils(config: Config) -> UtensilSyncReport:
+    sb = sb_client.service_client(config)
+    cat = Catalog(config.repo_root / "automation" / "db.sqlite")
+    rep = UtensilSyncReport()
+
+    ut_rows = sb.table("utensils").select("*").order("id").execute().data or []
+    bl_rows = (
+        sb.table("utensil_buy_links")
+          .select("*")
+          .order("utensil_id")
+          .order("sort_order")
+          .execute()
+          .data
+        or []
+    )
+
+    with cat.conn:
+        cat.conn.execute("DELETE FROM utensil_buy_links")
+        cat.conn.execute("DELETE FROM utensils")
+        for r in ut_rows:
+            cat.upsert_utensil(r)
+        # group buy_links by utensil_id and replace-all
+        by_utensil: dict[str, list[dict]] = {}
+        for r in bl_rows:
+            by_utensil.setdefault(r["utensil_id"], []).append({
+                "sort_order":    r.get("sort_order"),
+                "store":         r.get("store"),
+                "url":           r.get("url"),
+                "price":         r.get("price"),
+                "affiliate_tag": r.get("affiliate_tag"),
+            })
+    for utensil_id, links in by_utensil.items():
+        cat.set_utensil_buy_links(utensil_id, links)
+
+    rep.pulled_utensils = len(ut_rows)
+    rep.pulled_buy_links = len(bl_rows)
+    cat.close()
+    log.ok(rep.line())
+    return rep
+
+
+def sync_utensils(config: Config, *, direction: str) -> UtensilSyncReport:
+    if direction == "push":
+        return push_utensils(config)
+    if direction == "pull":
+        return pull_utensils(config)
+    if direction == "both":
+        rep = push_utensils(config)
+        rep2 = pull_utensils(config)
+        rep.pulled_utensils = rep2.pulled_utensils
+        rep.pulled_buy_links = rep2.pulled_buy_links
         return rep
     raise ValueError(f"invalid direction: {direction!r}")

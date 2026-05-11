@@ -101,15 +101,15 @@ sync-images: ## sync recipe images bucket↔local; prompts (or DIRECTION=pull|pu
 	  read d && $(UV) run mfc sync-images --direction $$d; \
 	fi
 
-sync-utensils: ## sync utensils DB↔local; chains sync-utensil-images same direction
+sync-utensils: ## sync utensil catalog automation/db.sqlite ↔ Supabase; chains sync-utensil-images in same direction
 	@if [ -n "$(DIRECTION)" ]; then \
 	  $(UV) run mfc sync-utensils --direction $(DIRECTION) && \
 	  $(UV) run mfc sync-utensil-images --direction $(DIRECTION); \
 	else \
 	  printf "\nPick sync direction:\n"; \
-	  printf "  pull — DB+Storage → local. Rebuilds utensil.json bundles + image bytes from cloud.\n"; \
-	  printf "  push — local → DB+Storage. Uploads bundles + image bytes.\n"; \
-	  printf "  both — pull then push. Last-modified wins per utensil and per image.\n"; \
+	  printf "  pull — Supabase → automation/db.sqlite. Overwrites SQLite from Supabase; bytes pulled into web/assets/utensils/.\n"; \
+	  printf "  push — automation/db.sqlite → Supabase. Upserts utensils + utensil_buy_links; local images pushed to Storage.\n"; \
+	  printf "  both — push then pull. SQLite is canonical for local edits.\n"; \
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-utensils --direction $$d && \
 	    $(UV) run mfc sync-utensil-images --direction $$d; \

@@ -1,12 +1,11 @@
-"""`mfc sync-utensils` — reconcile utensil metadata between DB and local
-utensil.json bundles. Mirrors ops/recipes.py's three-mode sync."""
+"""`mfc sync-utensils` — SQLite ↔ Supabase utensil catalog sync."""
 
 from __future__ import annotations
 
 import argparse
 
 from ..core.config import Config
-from ..ops import utensils as utensils_ops
+from ..ops import sync_catalog
 
 
 DIRECTIONS = ("pull", "push", "both")
@@ -15,26 +14,12 @@ DIRECTIONS = ("pull", "push", "both")
 def register(subparsers: argparse._SubParsersAction) -> None:
     p = subparsers.add_parser(
         "sync-utensils",
-        help="Sync utensil library DB↔local bundles (pull|push|both)",
+        help="Sync utensils + utensil_buy_links SQLite↔Supabase",
     )
-    p.add_argument(
-        "--direction",
-        required=True,
-        choices=DIRECTIONS,
-        help="pull = DB→local; push = local→DB; both = last-modified wins per utensil",
-    )
-    p.add_argument(
-        "--utensil",
-        action="append",
-        default=None,
-        help="Limit to one or more utensil ids (repeatable)",
-    )
+    p.add_argument("--direction", required=True, choices=DIRECTIONS)
     p.set_defaults(handler=run)
 
 
 def run(args: argparse.Namespace, config: Config) -> int:
-    only = args.utensil or None
-    report = utensils_ops.sync(config, direction=args.direction, only=only)
-    if report.failed:
-        return 1
-    return 0
+    report = sync_catalog.sync_utensils(config, direction=args.direction)
+    return 1 if report.failed else 0
