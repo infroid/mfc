@@ -23,7 +23,7 @@ UV := uv --project automation
         sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
         update-utensil \
-        init-catalog import-usda import-ingredient import-recipe import-recipes import-utensil gen-nutrition-doc \
+        init-catalog import-usda import-ingredient import-recipe import-utensil gen-nutrition-doc \
         fetch-ingredient-images fetch-ingredient-nutrition \
         drop-schema reset \
         serve \
@@ -158,9 +158,6 @@ import-ingredient: ## import one ingredient JSON; required FILE=<path>
 
 import-recipe: ## import one recipe JSON; required FILE=<path>
 	@$(UV) run mfc import-recipe "$(FILE)"
-
-import-recipes: ## one-shot: read web/assets/recipes/*/recipe.json into automation/db.sqlite; FORCE=1 overwrites
-	@$(UV) run mfc import-recipes $(if $(FORCE),--force)
 
 import-utensil: ## import one utensil JSON; required FILE=<path>
 	@$(UV) run mfc import-utensil "$(FILE)"
