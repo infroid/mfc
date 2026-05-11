@@ -132,3 +132,38 @@ CREATE TABLE IF NOT EXISTS metric_definitions (
     description    TEXT,
     sort_order     INTEGER NOT NULL DEFAULT 999
 );
+
+-- --------------------------------------------------------------------
+-- utensils — list-page-friendly utensil library
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS utensils (
+    id                  TEXT PRIMARY KEY,
+    name                TEXT NOT NULL,
+    tagline             TEXT,
+    category            TEXT,
+    photo               TEXT,
+    care_tip            TEXT,
+    specs               TEXT NOT NULL DEFAULT '{}',
+    show                TEXT NOT NULL DEFAULT '{"careTip":true,"specs":false}',
+    ai_filled_at        TEXT,
+    amazon_asin         TEXT,
+    amazon_marketplace  TEXT,
+    amazon_fetched_at   TEXT,
+    created_by          TEXT,
+    created_at          TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at          TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS utensils_category_idx ON utensils (category);
+
+-- --------------------------------------------------------------------
+-- utensil_buy_links — 0..N retailer links per utensil (Amazon, etc.)
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS utensil_buy_links (
+    utensil_id     TEXT NOT NULL REFERENCES utensils(id) ON DELETE CASCADE,
+    sort_order     INTEGER NOT NULL,
+    store          TEXT,
+    url            TEXT,
+    price          TEXT,
+    affiliate_tag  TEXT,
+    PRIMARY KEY (utensil_id, sort_order)
+);
