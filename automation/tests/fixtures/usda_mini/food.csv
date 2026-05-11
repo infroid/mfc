@@ -1,0 +1,6 @@
+"fdc_id","data_type","description","food_category_id","publication_date"
+"100","foundation_food","Spinach, raw","11","2020-01-01"
+"101","foundation_food","Spinach, raw","11","2024-01-01"
+"200","foundation_food","Cheese, cheddar","1","2024-01-01"
+"300","sample_food","unrelated subsample","1","2020-01-01"
+"400","foundation_food","Almonds","12","2024-01-01"
