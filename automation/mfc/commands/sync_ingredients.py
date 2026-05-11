@@ -1,11 +1,11 @@
-"""`mfc sync-ingredients` — bundle↔DB metadata sync. Mirror of sync-utensils."""
+"""`mfc sync-ingredients` — SQLite ↔ Supabase catalog sync."""
 
 from __future__ import annotations
 
 import argparse
 
 from ..core.config import Config
-from ..ops import ingredients as ingredients_ops
+from ..ops import sync_catalog
 
 
 DIRECTIONS = ("pull", "push", "both")
@@ -14,26 +14,12 @@ DIRECTIONS = ("pull", "push", "both")
 def register(subparsers: argparse._SubParsersAction) -> None:
     p = subparsers.add_parser(
         "sync-ingredients",
-        help="Sync ingredient library DB↔local bundles (pull|push|both)",
+        help="Sync ingredients + ingredient_details + health_facts(category=ingredient) SQLite↔Supabase",
     )
-    p.add_argument(
-        "--direction",
-        required=True,
-        choices=DIRECTIONS,
-        help="pull = DB→local; push = local→DB; both = last-modified wins per ingredient",
-    )
-    p.add_argument(
-        "--ingredient",
-        action="append",
-        default=None,
-        help="Limit to one or more ingredient ids (repeatable)",
-    )
+    p.add_argument("--direction", required=True, choices=DIRECTIONS)
     p.set_defaults(handler=run)
 
 
 def run(args: argparse.Namespace, config: Config) -> int:
-    only = args.ingredient or None
-    report = ingredients_ops.sync(config, direction=args.direction, only=only)
-    if report.failed:
-        return 1
-    return 0
+    report = sync_catalog.sync(config, direction=args.direction)
+    return 1 if report.failed else 0
