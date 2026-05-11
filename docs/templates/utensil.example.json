@@ -1,0 +1,31 @@
+{
+  "id": "kadhai-cast-iron",
+  "name": "Cast-iron kadhai",
+  "tagline": "Deep, broad, hot — the workhorse pan",
+  "category": "Cookware",
+  "photo": "assets/utensils/kadhai-cast-iron/kadhai-cast-iron.jpg",
+  "care_tip": "Hand-wash, dry on heat, oil lightly. Re-season once a year.",
+  "specs": {
+    "material": "Cast iron",
+    "size": "10 x 10 x 4 inches",
+    "weight": "2.4 Kilograms"
+  },
+  "show": {
+    "careTip": true,
+    "specs": true
+  },
+  "amazon": {
+    "asin": "B07JFTSKXW",
+    "marketplace": "amazon.com",
+    "fetched_at": "2026-05-11T00:00:00Z"
+  },
+  "buy_links": [
+    {
+      "sort_order": 0,
+      "store": "Amazon",
+      "url": "https://www.amazon.com/dp/B07JFTSKXW",
+      "price": "$49.95",
+      "affiliate_tag": "mfc-20"
+    }
+  ]
+}
