@@ -15,7 +15,7 @@ window.MFC.adminDb = (function () {
   async function listIngredients() {
     const { data, error } = await sb()
       .from('ingredients')
-      .select('id,name,tagline,category,default_unit,photo,health_fact,show,ai_filled_at,updated_at,ingredient_details(calories,protein,total_fat,carbohydrate)')
+      .select('id,name,tagline,category,default_unit,photo,show,ai_filled_at,updated_at,ingredient_details(calories,protein,total_fat,carbohydrate)')
       .order('name', { ascending: true });
     check(error, 'listIngredients');
     return (data || []).map(row => ({
@@ -31,15 +31,84 @@ window.MFC.adminDb = (function () {
   }
 
   async function getIngredient(id) {
-    const { data, error } = await sb()
-      .from('ingredients').select('*').eq('id', id).maybeSingle();
+    const { data: row, error } = await sb()
+      .from('ingredients')
+      .select('*, ingredient_details(*)')
+      .eq('id', id)
+      .maybeSingle();
     check(error, 'getIngredient');
-    return data;
+    if (!row) return null;
+
+    const { data: factRows, error: factErr } = await sb()
+      .from('health_facts')
+      .select('sort_order, fact')
+      .eq('category', 'ingredient')
+      .eq('target_id', id)
+      .order('sort_order');
+    check(factErr, 'getIngredient.healthFacts');
+
+    const d = row.ingredient_details || {};
+    const facts = (factRows || []).map(f => f.fact);
+    return {
+      ...row,
+      ingredient_details: undefined,
+      nutrition: {
+        calories: d.calories ?? 0,
+        protein: d.protein ?? 0,
+        total_fat: d.total_fat ?? 0,
+        carbohydrate: d.carbohydrate ?? 0,
+      },
+      storage: d.storage || '',
+      substitutes: d.substitutes || [],
+      health_fact: facts.length ? facts.join(' • ') : '',
+    };
   }
 
   async function upsertIngredient(row) {
-    const { data, error } = await sb().from('ingredients').upsert(row).select().single();
+    const id = row.id;
+    if (!id) throw new Error('upsertIngredient: missing id');
+
+    const ingRow = { ...row };
+    const nut = ingRow.nutrition || {};
+    const storage = ingRow.storage;
+    const substitutes = ingRow.substitutes;
+    const healthFact = (ingRow.health_fact || '').trim();
+    delete ingRow.nutrition;
+    delete ingRow.storage;
+    delete ingRow.substitutes;
+    delete ingRow.health_fact;
+    delete ingRow.ingredient_details;
+
+    const { data, error } = await sb().from('ingredients').upsert(ingRow).select().single();
     check(error, 'upsertIngredient');
+
+    const detPayload = {
+      id,
+      storage: storage || null,
+      substitutes: substitutes || [],
+      calories: nut.calories ?? null,
+      protein: nut.protein ?? null,
+      total_fat: nut.total_fat ?? null,
+      carbohydrate: nut.carbohydrate ?? null,
+    };
+    const { error: detErr } = await sb()
+      .from('ingredient_details')
+      .upsert(detPayload, { onConflict: 'id' });
+    check(detErr, 'upsertIngredient.details');
+
+    const { error: delErr } = await sb()
+      .from('health_facts')
+      .delete()
+      .eq('category', 'ingredient')
+      .eq('target_id', id);
+    check(delErr, 'upsertIngredient.healthFactsDelete');
+    if (healthFact) {
+      const { error: insErr } = await sb()
+        .from('health_facts')
+        .insert({ category: 'ingredient', target_id: id, sort_order: 0, fact: healthFact });
+      check(insErr, 'upsertIngredient.healthFactsInsert');
+    }
+
     return data;
   }
 
@@ -333,7 +402,7 @@ window.MFC.adminDb = (function () {
         'id,name,cuisine,difficulty,total_minutes,meal_types,media,created_by,created_at,updated_at,' +
         'recipe_steps(count),recipe_ingredients(count),recipe_utensils(count),recipe_tags(count)'
       ).order('updated_at', { ascending: false }),
-      sb().from('ingredients').select('id,name,category,photo,health_fact,ai_filled_at,created_at,updated_at,ingredient_details(calories,protein,total_fat,carbohydrate)'),
+      sb().from('ingredients').select('id,name,category,photo,ai_filled_at,created_at,updated_at,ingredient_details(calories,protein,total_fat,carbohydrate)'),
       sb().from('utensils').select('id,name,category,photo,care_tip,ai_filled_at,created_at,updated_at'),
       sb().from('recipe_ingredients').select('ingredient_id'),
       sb().from('recipe_utensils').select('utensil_id'),
