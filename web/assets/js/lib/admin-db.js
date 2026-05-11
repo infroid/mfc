@@ -15,10 +15,19 @@ window.MFC.adminDb = (function () {
   async function listIngredients() {
     const { data, error } = await sb()
       .from('ingredients')
-      .select('id,name,tagline,category,default_unit,photo,nutrition,health_fact,storage,substitutes,show,ai_filled_at,updated_at')
+      .select('id,name,tagline,category,default_unit,photo,health_fact,show,ai_filled_at,updated_at,ingredient_details(calories,protein,total_fat,carbohydrate)')
       .order('name', { ascending: true });
     check(error, 'listIngredients');
-    return data || [];
+    return (data || []).map(row => ({
+      ...row,
+      nutrition: row.ingredient_details ? {
+        calories: row.ingredient_details.calories,
+        protein: row.ingredient_details.protein,
+        total_fat: row.ingredient_details.total_fat,
+        carbohydrate: row.ingredient_details.carbohydrate,
+      } : {},
+      ingredient_details: undefined,
+    }));
   }
 
   async function getIngredient(id) {
@@ -324,7 +333,7 @@ window.MFC.adminDb = (function () {
         'id,name,cuisine,difficulty,total_minutes,meal_types,media,created_by,created_at,updated_at,' +
         'recipe_steps(count),recipe_ingredients(count),recipe_utensils(count),recipe_tags(count)'
       ).order('updated_at', { ascending: false }),
-      sb().from('ingredients').select('id,name,category,photo,nutrition,health_fact,ai_filled_at,created_at,updated_at'),
+      sb().from('ingredients').select('id,name,category,photo,health_fact,ai_filled_at,created_at,updated_at,ingredient_details(calories,protein,total_fat,carbohydrate)'),
       sb().from('utensils').select('id,name,category,photo,care_tip,ai_filled_at,created_at,updated_at'),
       sb().from('recipe_ingredients').select('ingredient_id'),
       sb().from('recipe_utensils').select('utensil_id'),
@@ -348,7 +357,16 @@ window.MFC.adminDb = (function () {
 
     return {
       recipes,
-      ingredients: ingredientsRes.data || [],
+      ingredients: (ingredientsRes.data || []).map(row => ({
+        ...row,
+        nutrition: row.ingredient_details ? {
+          calories: row.ingredient_details.calories,
+          protein: row.ingredient_details.protein,
+          total_fat: row.ingredient_details.total_fat,
+          carbohydrate: row.ingredient_details.carbohydrate,
+        } : {},
+        ingredient_details: undefined,
+      })),
       utensils:    utensilsRes.data || [],
       ingredientUsage: tally(ingUsageRes.data || [], 'ingredient_id'),
       utensilUsage:    tally(utUsageRes.data || [], 'utensil_id'),

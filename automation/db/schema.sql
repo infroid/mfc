@@ -65,7 +65,6 @@ CREATE TABLE IF NOT EXISTS public.ingredients (
   category     text,
   default_unit text NOT NULL DEFAULT 'g',
   photo        text,
-  nutrition    jsonb NOT NULL DEFAULT '{}'::jsonb,  -- to be dropped in Task 18
   show         jsonb NOT NULL DEFAULT '{"nutrition":true,"healthFact":true,"storage":false,"substitutes":false}'::jsonb,
   ai_filled_at timestamptz,
   created_by   uuid REFERENCES auth.users(id),
@@ -94,7 +93,6 @@ COMMENT ON COLUMN public.ingredients.tagline      IS 'One-line description shown
 COMMENT ON COLUMN public.ingredients.category     IS 'Free text: "Dairy", "Vegetable", "Spice", "Herb", "Protein", "Oil & Fat", "Nut & Seed", "Aromatic", "Seasoning", etc.';
 COMMENT ON COLUMN public.ingredients.default_unit IS 'Default unit pre-filled when a recipe picks this ingredient (g, ml, tsp, tbsp, cup, medium, large, whole, pinch).';
 COMMENT ON COLUMN public.ingredients.photo        IS 'Full Supabase Storage URL of the ingredient image (https://<ref>.supabase.co/storage/v1/object/public/ingredient-images/<id>/image.png). Bytes also live at web/assets/ingredients/<id>/image.png in the repo. Nullable.';
-COMMENT ON COLUMN public.ingredients.nutrition    IS 'Per-100g USDA FoodData Central nutrient profile. JSONB { source, fdcId, filledAt, aiFilledAt, per:"100g", energy_kcal, protein_g, total_fat_g, ... }. All nutrient fields optional; missing renders as "—". To be dropped in Task 18 after flat columns in ingredient_details are fully adopted.';
 COMMENT ON COLUMN public.ingredients.show         IS 'Per-field visibility toggles { nutrition, healthFact, storage, substitutes }.';
 COMMENT ON COLUMN public.ingredients.ai_filled_at IS 'When the AI auto-fill last ran. NULL if entered manually.';
 COMMENT ON COLUMN public.ingredients.created_by   IS 'FK → auth.users.id of the admin who created this row.';
@@ -1052,7 +1050,8 @@ END $$;
 ALTER TABLE public.ingredients DROP COLUMN IF EXISTS health_fact;
 ALTER TABLE public.ingredients DROP COLUMN IF EXISTS storage;
 ALTER TABLE public.ingredients DROP COLUMN IF EXISTS substitutes;
--- ingredients.nutrition jsonb stays for now; Task 18 drops it after all readers are updated.
+-- ingredients.nutrition jsonb has been replaced by flat columns on ingredient_details.
+ALTER TABLE public.ingredients DROP COLUMN IF EXISTS nutrition;
 
 -- recipe_health_facts data is now in health_facts; Task 16 drops the table after readers update.
 DROP TABLE IF EXISTS public.recipe_health_facts CASCADE;
