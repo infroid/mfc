@@ -393,17 +393,6 @@ COMMENT ON COLUMN public.recipe_tags.recipe_id IS 'FK → recipes.id.';
 COMMENT ON COLUMN public.recipe_tags.tag       IS 'Tag string. Lowercase by convention.';
 
 
-CREATE TABLE IF NOT EXISTS public.recipe_health_facts (
-  recipe_id  text NOT NULL REFERENCES public.recipes(id) ON DELETE CASCADE,
-  sort_order int  NOT NULL,
-  fact       text NOT NULL,
-  PRIMARY KEY (recipe_id, sort_order)
-);
-
-COMMENT ON TABLE  public.recipe_health_facts            IS 'Ordered list of nutrition/health facts displayed in the marquee on the recipe page.';
-COMMENT ON COLUMN public.recipe_health_facts.recipe_id  IS 'FK → recipes.id.';
-COMMENT ON COLUMN public.recipe_health_facts.sort_order IS 'Display order (0-based).';
-COMMENT ON COLUMN public.recipe_health_facts.fact       IS 'One sentence of nutrition/health context.';
 
 
 -- ── recipe_owners — permission ledger (sub-project #2) ────────────────
@@ -689,7 +678,6 @@ ALTER TABLE public.recipe_ingredients ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.recipe_steps       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.recipe_utensils    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.recipe_tags        ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.recipe_health_facts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.metric_definitions  ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "ingredients_public_read"         ON public.ingredients;
@@ -700,7 +688,6 @@ DROP POLICY IF EXISTS "recipe_ingredients_public_read"  ON public.recipe_ingredi
 DROP POLICY IF EXISTS "recipe_steps_public_read"        ON public.recipe_steps;
 DROP POLICY IF EXISTS "recipe_utensils_public_read"     ON public.recipe_utensils;
 DROP POLICY IF EXISTS "recipe_tags_public_read"         ON public.recipe_tags;
-DROP POLICY IF EXISTS "recipe_health_facts_public_read" ON public.recipe_health_facts;
 DROP POLICY IF EXISTS "metric_definitions_public_read"  ON public.metric_definitions;
 
 CREATE POLICY "ingredients_public_read"         ON public.ingredients         FOR SELECT USING (true);
@@ -711,7 +698,6 @@ CREATE POLICY "recipe_ingredients_public_read"  ON public.recipe_ingredients  FO
 CREATE POLICY "recipe_steps_public_read"        ON public.recipe_steps        FOR SELECT USING (true);
 CREATE POLICY "recipe_utensils_public_read"     ON public.recipe_utensils     FOR SELECT USING (true);
 CREATE POLICY "recipe_tags_public_read"         ON public.recipe_tags         FOR SELECT USING (true);
-CREATE POLICY "recipe_health_facts_public_read" ON public.recipe_health_facts FOR SELECT USING (true);
 CREATE POLICY "metric_definitions_public_read"  ON public.metric_definitions  FOR SELECT USING (true);
 
 -- User-owned tables: owner has full CRUD
@@ -833,8 +819,6 @@ DROP POLICY IF EXISTS "recipe_ingredients_admin_write"  ON public.recipe_ingredi
 DROP POLICY IF EXISTS "recipe_steps_admin_write"        ON public.recipe_steps;
 DROP POLICY IF EXISTS "recipe_utensils_admin_write"     ON public.recipe_utensils;
 DROP POLICY IF EXISTS "recipe_tags_admin_write"         ON public.recipe_tags;
-DROP POLICY IF EXISTS "recipe_health_facts_admin_write" ON public.recipe_health_facts;
-
 CREATE POLICY "ingredients_admin_write"         ON public.ingredients         FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 CREATE POLICY "utensils_admin_write"            ON public.utensils            FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 CREATE POLICY "utensil_buy_links_admin_write"   ON public.utensil_buy_links   FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
@@ -843,8 +827,6 @@ CREATE POLICY "recipe_ingredients_admin_write"  ON public.recipe_ingredients  FO
 CREATE POLICY "recipe_steps_admin_write"        ON public.recipe_steps        FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 CREATE POLICY "recipe_utensils_admin_write"     ON public.recipe_utensils     FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
 CREATE POLICY "recipe_tags_admin_write"         ON public.recipe_tags         FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
-CREATE POLICY "recipe_health_facts_admin_write" ON public.recipe_health_facts FOR ALL USING (public.is_admin()) WITH CHECK (public.is_admin());
-
 
 -- ── chef-write helpers + policies (sub-project #2) ────────────────────
 CREATE OR REPLACE FUNCTION public.recipe_owned_by_caller(p_recipe_id text)
@@ -863,7 +845,6 @@ DROP POLICY IF EXISTS "recipe_ingredients_chef_write"     ON public.recipe_ingre
 DROP POLICY IF EXISTS "recipe_steps_chef_write"           ON public.recipe_steps;
 DROP POLICY IF EXISTS "recipe_utensils_chef_write"        ON public.recipe_utensils;
 DROP POLICY IF EXISTS "recipe_tags_chef_write"            ON public.recipe_tags;
-DROP POLICY IF EXISTS "recipe_health_facts_chef_write"    ON public.recipe_health_facts;
 
 CREATE POLICY "recipes_chef_write" ON public.recipes FOR ALL
   USING      (public.is_chef() AND public.recipe_owned_by_caller(id))
@@ -885,10 +866,6 @@ CREATE POLICY "recipe_utensils_chef_write"     ON public.recipe_utensils     FOR
   WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
 
 CREATE POLICY "recipe_tags_chef_write"         ON public.recipe_tags         FOR ALL
-  USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
-  WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
-
-CREATE POLICY "recipe_health_facts_chef_write" ON public.recipe_health_facts FOR ALL
   USING      (public.is_chef() AND public.recipe_owned_by_caller(recipe_id))
   WITH CHECK (public.is_chef() AND public.recipe_owned_by_caller(recipe_id));
 
@@ -1078,3 +1055,4 @@ ALTER TABLE public.ingredients DROP COLUMN IF EXISTS substitutes;
 -- ingredients.nutrition jsonb stays for now; Task 18 drops it after all readers are updated.
 
 -- recipe_health_facts data is now in health_facts; Task 16 drops the table after readers update.
+DROP TABLE IF EXISTS public.recipe_health_facts CASCADE;
