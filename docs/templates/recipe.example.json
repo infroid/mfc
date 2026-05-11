@@ -1,0 +1,56 @@
+{
+  "id": "aam-panna",
+  "name": "Aam Panna",
+  "tagline": "Raw mango cooler with cumin and mint — heat-stroke remedy",
+  "shortTagline": "raw mango · electrolyte · 30 min",
+  "cuisine": "North Indian",
+  "difficulty": "Easy",
+  "servings": 4,
+  "totalMinutes": 30,
+  "media": {
+    "hero": {
+      "alt": "Murky-green raw mango drink in a tall glass with mint leaves",
+      "src": "https://<ref>.supabase.co/storage/v1/object/public/recipe-images/aam-panna/hero.jpg",
+      "caption": "aam panna — green mango, mint, cumin",
+      "palette": ["#A4C268", "#7A9C5A", "#E9C46A"]
+    },
+    "emoji": "🥭"
+  },
+  "color": "#A4C268",
+  "colorSoft": "rgba(164,194,104,0.18)",
+  "mealTypes": ["snack"],
+  "createdBy": null,
+  "ingredients": [
+    { "name": "Raw green mango (large)", "amt": "2", "group": "main" },
+    { "name": "Jaggery (grated)",         "amt": "½ cup", "group": "sweetener" },
+    { "name": "Roasted cumin powder",     "amt": "1 tsp", "group": "spice" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Boil the raw mango",
+      "detail": "Pressure cook the whole raw mangoes with 1 cup water for 3 whistles. Cool, peel, and squeeze the pulp off the seed.",
+      "duration": 1200,
+      "tip": "Roasting gives a smokier aam panna; boiling keeps it bright.",
+      "media": {
+        "src": "https://<ref>.supabase.co/storage/v1/object/public/recipe-images/aam-panna/step-01.jpg",
+        "caption": "Softened mango and pulp"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Blend with seasonings",
+      "detail": "Blend the pulp with jaggery, roasted cumin, black salt, and 1 cup water until smooth.",
+      "duration": 180
+    }
+  ],
+  "utensils": [
+    { "name": "Pressure cooker", "essential": true },
+    { "name": "Blender",         "essential": true }
+  ],
+  "tags": ["drink", "electrolyte", "vegan", "summer"],
+  "healthFacts": [
+    "Raw mango is exceptionally high in vitamin C — supports immunity and iron absorption.",
+    "Roasted cumin adds digestive enzymes; useful post-meal."
+  ]
+}
