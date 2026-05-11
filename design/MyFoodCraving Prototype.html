@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="prototype/css/system.css" />
+<link rel="stylesheet" href="prototype/css/recipe-detail.css" />
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23FF6D2E'/><text x='50%25' y='62%25' text-anchor='middle' fill='%23FFFCF3' font-family='Georgia,serif' font-style='italic' font-weight='400' font-size='22'>m</text></svg>" />
 </head>
@@ -23,18 +24,21 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script src="prototype/js/data.js"></script>
+<script src="prototype/js/data-recipe-detail.js"></script>
 <script type="text/babel" src="prototype/js/shell.jsx"></script>
 <script type="text/babel" src="prototype/js/page-recipe-search.jsx"></script>
 <script type="text/babel" src="prototype/js/page-chef.jsx"></script>
 <script type="text/babel" src="prototype/js/page-utensils.jsx"></script>
 <script type="text/babel" src="prototype/js/page-ingredients.jsx"></script>
 <script type="text/babel" src="prototype/js/page-admin.jsx"></script>
+<script type="text/babel" src="prototype/js/page-recipe-detail.jsx"></script>
 
 <script type="text/babel">
 const { useState, useEffect } = React;
 
 const PAGES = [
   { id: "recipe-search",    label: "Recipe search",    group: "Public",  Page: () => <RecipeSearchPage /> },
+  { id: "recipe-detail",    label: "Recipe detail",    group: "Public",  Page: () => <RecipeDetailPage /> },
   { id: "dashboard",        label: "Dashboard",        group: "User",    Page: () => <DashboardPage /> },
   { id: "account",          label: "Account",          group: "User",    Page: () => <AccountPage /> },
   { id: "profile",          label: "Profile",          group: "User",    Page: () => <ProfilePage /> },
@@ -51,7 +55,6 @@ const PAGES = [
 
 const LOCKED = [
   { id: "index",  label: "index.html"  },
-  { id: "recipe", label: "recipe.html" },
 ];
 
 function ProtoBar({ active, onChange }) {
