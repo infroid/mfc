@@ -56,13 +56,18 @@ window.MFC.db = (function () {
           ingredient:ingredients ( id, name, photo ) ),
         recipe_steps ( sort_order, title, detail, duration_seconds, tip, media_caption ),
         recipe_utensils ( sort_order, essential,
-          utensil:utensils ( id, name, photo ) ),
-        recipe_health_facts ( sort_order, fact )
+          utensil:utensils ( id, name, photo ) )
       `)
       .eq('id', id)
       .maybeSingle();
     if (error) { console.warn('[db.getRecipe]', error); return local; }
     if (!data) return local;
+    const { data: factRows } = await sb
+      .from('health_facts')
+      .select('sort_order, fact')
+      .eq('category', 'recipe')
+      .eq('target_id', id)
+      .order('sort_order');
 
     const ingredients = (data.recipe_ingredients || [])
       .sort((a, b) => a.sort_order - b.sort_order)
@@ -91,9 +96,7 @@ window.MFC.db = (function () {
       .sort((a, b) => a.sort_order - b.sort_order)
       .map((u) => ({ name: u.utensil?.name, essential: !!u.essential }));
 
-    const healthFacts = (data.recipe_health_facts || [])
-      .sort((a, b) => a.sort_order - b.sort_order)
-      .map((h) => h.fact);
+    const healthFacts = (factRows || []).map((h) => h.fact);
 
     return {
       id: data.id,

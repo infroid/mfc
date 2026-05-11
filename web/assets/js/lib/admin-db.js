@@ -192,12 +192,19 @@ window.MFC.adminDb = (function () {
         recipe_ingredients ( sort_order, group_name, ingredient_id, amount, unit ),
         recipe_steps       ( sort_order, title, detail, duration_seconds, tip, media_caption, media_src ),
         recipe_utensils    ( sort_order, utensil_id, essential ),
-        recipe_tags        ( tag ),
-        recipe_health_facts ( sort_order, fact )
+        recipe_tags        ( tag )
       `)
       .eq('id', id).maybeSingle();
     check(error, 'getRecipe');
-    return data;
+    if (!data) return data;
+    const { data: factRows, error: fErr } = await sb()
+      .from('health_facts')
+      .select('sort_order, fact')
+      .eq('category', 'recipe')
+      .eq('target_id', id)
+      .order('sort_order');
+    check(fErr, 'getRecipe.health_facts');
+    return { ...data, recipe_health_facts: factRows || [] };
   }
 
   // Saves the whole recipe atomically (delete-and-insert children).
@@ -266,12 +273,18 @@ window.MFC.adminDb = (function () {
       check(error, 'saveRecipe.recipe_tags');
     }
 
-    await wipe('recipe_health_facts');
+    {
+      const { error } = await sb().from('health_facts').delete()
+        .eq('category', 'recipe').eq('target_id', id);
+      check(error, 'saveRecipe.wipe.health_facts');
+    }
     if (health?.length) {
-      const rows = health.filter(Boolean).map((fact, i) => ({ recipe_id: id, sort_order: i, fact }));
+      const rows = health.filter(Boolean).map((fact, i) => ({
+        category: 'recipe', target_id: id, sort_order: i, fact,
+      }));
       if (rows.length) {
-        const { error } = await sb().from('recipe_health_facts').insert(rows);
-        check(error, 'saveRecipe.recipe_health_facts');
+        const { error } = await sb().from('health_facts').insert(rows);
+        check(error, 'saveRecipe.health_facts');
       }
     }
   }
@@ -309,27 +322,28 @@ window.MFC.adminDb = (function () {
     ] = await Promise.all([
       sb().from('recipes').select(
         'id,name,cuisine,difficulty,total_minutes,meal_types,media,created_by,created_at,updated_at,' +
-        'recipe_steps(count),recipe_ingredients(count),recipe_utensils(count),recipe_tags(count),recipe_health_facts(count)'
+        'recipe_steps(count),recipe_ingredients(count),recipe_utensils(count),recipe_tags(count)'
       ).order('updated_at', { ascending: false }),
       sb().from('ingredients').select('id,name,category,photo,nutrition,health_fact,ai_filled_at,created_at,updated_at'),
       sb().from('utensils').select('id,name,category,photo,care_tip,ai_filled_at,created_at,updated_at'),
       sb().from('recipe_ingredients').select('ingredient_id'),
       sb().from('recipe_utensils').select('utensil_id'),
       sb().from('recipe_tags').select('tag,recipe_id'),
-      sb().from('recipe_health_facts').select('recipe_id'),
+      sb().from('health_facts').select('target_id').eq('category', 'recipe'),
       sb().from('utensil_buy_links').select('utensil_id'),
     ]);
 
     [recipesRes, ingredientsRes, utensilsRes, ingUsageRes, utUsageRes, tagsRes, healthRes, utLinksRes]
       .forEach((r, i) => check(r.error, `dashboard.${i}`));
 
+    const healthTally = tally(healthRes.data || [], 'target_id');
     const recipes = (recipesRes.data || []).map((r) => ({
       ...r,
       stepCount: r.recipe_steps?.[0]?.count ?? 0,
       ingCount:  r.recipe_ingredients?.[0]?.count ?? 0,
       utCount:   r.recipe_utensils?.[0]?.count ?? 0,
       tagCount:  r.recipe_tags?.[0]?.count ?? 0,
-      healthCount: r.recipe_health_facts?.[0]?.count ?? 0,
+      healthCount: healthTally[r.id] ?? 0,
     }));
 
     return {
