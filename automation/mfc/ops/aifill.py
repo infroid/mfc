@@ -1,9 +1,10 @@
 """Anthropic Claude fallback for ingredient nutrition.
 
-Used only when FDC has no match for an ingredient. Returns a bundle
-nutrition block with source="ai". Strict schema check: all returned keys
-must be in the allowed nutrition vocabulary; values must be non-negative
-numbers.
+Used only when FDC has no match for an ingredient. Returns a nutrition
+dict with source="ai", shape matching ingredient_details columns. Strict
+schema check: all returned keys must be in the allowed nutrition
+vocabulary (mfc.ops.usda_nutrient_map.NUTRIENT_MAP.values()); values
+must be non-negative numbers.
 """
 
 from __future__ import annotations
@@ -17,8 +18,8 @@ class AiFillError(RuntimeError):
     pass
 
 
-# Allowed nutrient keys = anything in the USDA mapping (which defines the
-# bundle vocabulary).
+# Allowed nutrient keys = anything in the USDA nutrient map. These are
+# the exact column names on ingredient_details.
 ALLOWED_KEYS = set(NUTRIENT_MAP.values())
 
 

@@ -17,13 +17,13 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help \
-        sync apply-schema init-catalog import-bundles import-usda import-ingredient gen-nutrition-doc seed-metrics \
+        sync apply-schema init-catalog import-usda import-ingredient gen-nutrition-doc seed-metrics \
         status list-users set-role suspend-user \
         sync-recipes sync-images \
         sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
         update-utensil \
-        import-bundles import-ingredient import-usda \
+        import-ingredient import-usda \
         fetch-ingredient-images fetch-ingredient-nutrition \
         drop-schema reset \
         serve \
@@ -153,9 +153,6 @@ sync-ingredient-images: ## sync ingredient images bucket↔local; prompts (or DI
 init-catalog: ## create automation/db.sqlite from sqlite_schema.sql; FORCE=1 to drop+recreate
 	@$(UV) run mfc init-catalog $(if $(FORCE),--force)
 
-import-bundles: ## one-shot: read web/assets/ingredients/*/ingredient.json into automation/db.sqlite; FORCE=1 overwrites
-	@$(UV) run mfc import-bundles $(if $(FORCE),--force)
-
 import-ingredient: ## import one ingredient JSON; required FILE=<path>
 	@$(UV) run mfc import-ingredient "$(FILE)"
 
@@ -170,13 +167,13 @@ gen-nutrition-doc: ## regenerate docs/NUTRITION_FIELDS.md from the USDA nutrient
 update-utensil: ## update utensil bundle locally from amazon url; prompts (or pass URL=<amazon-url> [ID=<slug>] [NO_IMAGE=1])
 	@$(UV) run mfc update-utensil $(if $(URL),"$(URL)") $(if $(ID),--id "$(ID)") $(if $(NO_IMAGE),--no-image)
 
-fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
+fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co → web/assets/ingredients/<id>/image.png + SQLite; FORCE=1 LIMIT=N IDS=a,b
 	@$(UV) run mfc fetch-ingredient-images \
 	  $(if $(FORCE),--force) \
 	  $(if $(LIMIT),--limit $(LIMIT)) \
 	  $(if $(IDS),--ids $(IDS))
 
-fetch-ingredient-nutrition: ## fetch USDA FDC nutrition into bundle JSONs; FORCE=1 LIMIT=N IDS=a,b AI=1
+fetch-ingredient-nutrition: ## fetch USDA FDC nutrition → automation/db.sqlite ingredient_details; FORCE=1 LIMIT=N IDS=a,b AI=1 (Anthropic fallback)
 	@$(UV) run mfc fetch-ingredient-nutrition \
 	  $(if $(FORCE),--force) \
 	  $(if $(AI),--ai-fallback) \

@@ -2,7 +2,7 @@
 
 Two flows:
   fetch_for_name(name, api_key) — search by name → pick best match → pull
-                                  nutrients → map to bundle nutrition block.
+                                  nutrients → map to nutrition dict.
   fetch_for_id(fdc_id, api_key) — skip search; pull + map directly.
 
 Pure I/O. No DB, no filesystem.
