@@ -23,6 +23,7 @@ UV := uv --project automation
         sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
         update-utensil \
+        import-bundles \
         fetch-ingredient-images fetch-ingredient-nutrition \
         migrate-ingredient-nutrition \
         drop-schema reset \
@@ -155,6 +156,9 @@ update-utensil: ## update utensil bundle locally from amazon url; prompts (or pa
 
 init-catalog: ## create automation/db.sqlite from sqlite_schema.sql; FORCE=1 to drop+recreate
 	@$(UV) run mfc init-catalog $(if $(FORCE),--force)
+
+import-bundles: ## one-shot: read web/assets/ingredients/*/ingredient.json into automation/db.sqlite; FORCE=1 overwrites
+	@$(UV) run mfc import-bundles $(if $(FORCE),--force)
 
 fetch-ingredient-images: ## fetch ingredient PNGs from thiings.co into bundle dirs; FORCE=1 LIMIT=N IDS=a,b
 	@$(UV) run mfc fetch-ingredient-images \
