@@ -17,13 +17,13 @@ UV := uv --project automation
 .DEFAULT_GOAL := help
 
 .PHONY: help \
-        sync apply-schema init-catalog import-usda import-ingredient gen-nutrition-doc seed-metrics \
+        sync apply-schema seed-metrics \
         status list-users set-role suspend-user \
         sync-recipes sync-images \
         sync-utensils sync-utensil-images \
         sync-ingredients sync-ingredient-images \
         update-utensil \
-        import-ingredient import-usda \
+        init-catalog import-usda import-ingredient gen-nutrition-doc \
         fetch-ingredient-images fetch-ingredient-nutrition \
         drop-schema reset \
         serve \
@@ -127,15 +127,15 @@ sync-utensil-images: ## sync utensil image bytes bucket↔local; prompts (or DIR
 	  read d && $(UV) run mfc sync-utensil-images --direction $$d; \
 	fi
 
-sync-ingredients: ## sync ingredient metadata DB↔local; chains sync-ingredient-images in same direction
+sync-ingredients: ## sync ingredient catalog automation/db.sqlite ↔ Supabase; chains sync-ingredient-images in same direction
 	@if [ -n "$(DIRECTION)" ]; then \
 	  $(UV) run mfc sync-ingredients        --direction $(DIRECTION) && \
 	  $(UV) run mfc sync-ingredient-images  --direction $(DIRECTION); \
 	else \
 	  printf "\nPick sync direction:\n"; \
-	  printf "  pull — DB+Storage → local. ingredient rows become ingredient.json files; bytes pulled into web/assets/ingredients/.\n"; \
-	  printf "  push — local → DB+Storage. Bundle JSONs upserted into DB; local images pushed to Storage.\n"; \
-	  printf "  both — pull then push. Last-modified wins per ingredient and per image.\n"; \
+	  printf "  pull — Supabase → automation/db.sqlite. Overwrites SQLite from Supabase; bytes pulled into web/assets/ingredients/.\n"; \
+	  printf "  push — automation/db.sqlite → Supabase. Upserts ingredients + ingredient_details + health_facts; local images pushed to Storage.\n"; \
+	  printf "  both — push then pull. SQLite is canonical for local edits; pull captures Supabase-side admin UI edits.\n"; \
 	  printf "\nDirection [pull/push/both]: "; \
 	  read d && $(UV) run mfc sync-ingredients --direction $$d && $(UV) run mfc sync-ingredient-images --direction $$d; \
 	fi
