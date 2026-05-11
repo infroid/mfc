@@ -167,3 +167,74 @@ CREATE TABLE IF NOT EXISTS utensil_buy_links (
     affiliate_tag  TEXT,
     PRIMARY KEY (utensil_id, sort_order)
 );
+
+-- --------------------------------------------------------------------
+-- recipes — recipe catalog (chef portal authors; admin curates)
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS recipes (
+    id              TEXT PRIMARY KEY,
+    name            TEXT NOT NULL,
+    tagline         TEXT,
+    short_tagline   TEXT,
+    cuisine         TEXT NOT NULL,
+    difficulty      TEXT NOT NULL,
+    servings        INTEGER NOT NULL,
+    total_minutes   INTEGER NOT NULL,
+    media           TEXT NOT NULL DEFAULT '{}',
+    color           TEXT,
+    color_soft      TEXT,
+    meal_types      TEXT NOT NULL DEFAULT '[]',
+    created_by      TEXT,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS recipes_cuisine_idx     ON recipes (cuisine);
+CREATE INDEX IF NOT EXISTS recipes_difficulty_idx  ON recipes (difficulty);
+
+-- --------------------------------------------------------------------
+-- recipe_ingredients — ordered ingredient list per recipe
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS recipe_ingredients (
+    recipe_id      TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+    sort_order     INTEGER NOT NULL,
+    ingredient_id  TEXT NOT NULL REFERENCES ingredients(id) ON DELETE RESTRICT,
+    group_name     TEXT,
+    amount         TEXT,
+    unit           TEXT,
+    PRIMARY KEY (recipe_id, sort_order)
+);
+
+-- --------------------------------------------------------------------
+-- recipe_steps — ordered cooking steps per recipe
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS recipe_steps (
+    recipe_id          TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+    sort_order         INTEGER NOT NULL,
+    title              TEXT NOT NULL,
+    detail             TEXT NOT NULL,
+    duration_seconds   INTEGER,
+    tip                TEXT,
+    media_caption      TEXT,
+    media_src          TEXT,
+    PRIMARY KEY (recipe_id, sort_order)
+);
+
+-- --------------------------------------------------------------------
+-- recipe_utensils — ordered utensil list per recipe
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS recipe_utensils (
+    recipe_id   TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+    sort_order  INTEGER NOT NULL,
+    utensil_id  TEXT NOT NULL REFERENCES utensils(id) ON DELETE RESTRICT,
+    essential   INTEGER NOT NULL DEFAULT 1,
+    PRIMARY KEY (recipe_id, sort_order)
+);
+
+-- --------------------------------------------------------------------
+-- recipe_tags — free-form labels per recipe (vegan / gluten-free / etc.)
+-- --------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS recipe_tags (
+    recipe_id  TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+    tag        TEXT NOT NULL,
+    PRIMARY KEY (recipe_id, tag)
+);
