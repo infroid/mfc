@@ -25,7 +25,6 @@ UV := uv --project automation
         update-utensil \
         import-bundles import-ingredient import-usda \
         fetch-ingredient-images fetch-ingredient-nutrition \
-        migrate-ingredient-nutrition \
         drop-schema reset \
         serve \
         routine routine-sync routine-test
@@ -178,9 +177,6 @@ fetch-ingredient-nutrition: ## fetch USDA FDC nutrition into bundle JSONs; FORCE
 	  $(if $(AI),--ai-fallback) \
 	  $(if $(LIMIT),--limit $(LIMIT)) \
 	  $(if $(IDS),--ids $(IDS))
-
-migrate-ingredient-nutrition: ## one-shot: reshape legacy nutrition jsonb to USDA schema (idempotent)
-	@$(UV) run mfc migrate-ingredient-nutrition
 
 ##@ Destructive — confirm twice
 
