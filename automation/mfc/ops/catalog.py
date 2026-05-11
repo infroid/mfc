@@ -88,3 +88,44 @@ class Catalog:
     def iter_ingredients(self) -> Iterator[sqlite3.Row]:
         cur = self.conn.execute("SELECT * FROM ingredients ORDER BY id")
         yield from cur
+
+    def upsert_utensil(self, row: dict[str, Any]) -> None:
+        """Upsert a utensil row. JSON-encodes `specs` and `show` on the way in."""
+        data = dict(row)
+        for k in ("specs", "show"):
+            if k in data and not isinstance(data[k], str):
+                data[k] = json.dumps(data[k])
+        cols = list(data.keys())
+        placeholders = ",".join(f":{c}" for c in cols)
+        col_list = ",".join(cols)
+        updates = ",".join(f"{c}=excluded.{c}" for c in cols if c != "id")
+        sql = (
+            f"INSERT INTO utensils ({col_list}) VALUES ({placeholders}) "
+            f"ON CONFLICT(id) DO UPDATE SET {updates}"
+        )
+        self.conn.execute(sql, data)
+        self.conn.commit()
+
+    def set_utensil_buy_links(self, utensil_id: str, buy_links: list[dict]) -> None:
+        """Replace ALL buy_links for utensil_id atomically. Each link is
+        {sort_order, store, url, price, affiliate_tag}."""
+        with self.conn:
+            self.conn.execute("DELETE FROM utensil_buy_links WHERE utensil_id=?", (utensil_id,))
+            for link in buy_links:
+                self.conn.execute(
+                    "INSERT INTO utensil_buy_links "
+                    "(utensil_id, sort_order, store, url, price, affiliate_tag) "
+                    "VALUES (?, ?, ?, ?, ?, ?)",
+                    (
+                        utensil_id,
+                        link.get("sort_order"),
+                        link.get("store"),
+                        link.get("url"),
+                        link.get("price"),
+                        link.get("affiliate_tag"),
+                    ),
+                )
+
+    def iter_utensils(self) -> Iterator[sqlite3.Row]:
+        cur = self.conn.execute("SELECT * FROM utensils ORDER BY id")
+        yield from cur
