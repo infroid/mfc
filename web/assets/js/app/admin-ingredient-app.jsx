@@ -745,8 +745,12 @@ function IngredientAdminApp() {
             </div>
           </div>
 
-          {/* HERO CARD — photo on left, identity on right */}
-          <div className="ce-card flush ing-hero">
+          {/* ONE UNIFIED CARD — hero + macros + full nutrition + facts + storage + subs,
+              separated by inset dividers (mirrors the utensil editor). */}
+          <div className="ce-card flush ing-shell">
+
+            {/* HERO section — photo + identity */}
+            <div className="ing-hero">
             <div className="ing-hero-photo">
               {r.photo
                 ? <img src={r.photo} alt="" onError={(e) => { e.target.style.display = "none"; }} />
@@ -805,163 +809,165 @@ function IngredientAdminApp() {
             </div>
           </div>
 
-          {/* MACROS CARD — donut + grid */}
-          <div className={"ce-card" + (r.show.nutrition ? "" : " ce-card-dim")}>
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">macros at a glance</div>
-                <h3 className="ce-card-title">per {r.details.nutrition_per || "100g"}</h3>
-                <div className="ce-card-sub">%DV based on a 2,000 kcal diet</div>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <EditPill onClick={() => setOpenModal("macros")}>edit values</EditPill>
-                <SurfaceToggle label="surface on recipe page"
-                  value={r.show.nutrition} onChange={(v) => updateShow("nutrition", v)} />
-              </div>
-            </div>
-
-            <div className="macro-card-body">
-              <div className="macro-donut-wrap">
-                <MacroDonut details={r.details} />
-                <div className="macro-legend">
-                  <span className="legend-item"><span className="sw" style={{ background: "#7A9C5A" }} />Protein</span>
-                  <span className="legend-item"><span className="sw" style={{ background: "#FF6D2E" }} />Fat</span>
-                  <span className="legend-item"><span className="sw" style={{ background: "#F4D67A" }} />Carbs</span>
+            {/* MACROS section — donut + grid */}
+            <div className={"card-section" + (r.show.nutrition ? "" : " dim")}>
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">macros at a glance</div>
+                  <h3 className="ce-card-title">per {r.details.nutrition_per || "100g"}</h3>
+                  <div className="ce-card-sub">%DV based on a 2,000 kcal diet</div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <EditPill onClick={() => setOpenModal("macros")}>edit values</EditPill>
+                  <SurfaceToggle label="surface on recipe page"
+                    value={r.show.nutrition} onChange={(v) => updateShow("nutrition", v)} />
                 </div>
               </div>
-              <div className="macro-cells">
-                <MacroEssential label="Protein"   col="protein"       value={r.details.protein}      unit="g" />
-                <MacroEssential label="Fat"       col="total_fat"     value={r.details.total_fat}    unit="g" />
-                <MacroEssential label="Carbs"     col="carbohydrate"  value={r.details.carbohydrate} unit="g" />
-                <MacroEssential label="Fiber"     col="fiber"         value={r.details.fiber}        unit="g" />
-                <MacroEssential label="Sugars"    col="sugars"        value={r.details.sugars}       unit="g" />
-                <MacroEssential label="Water"     col="water"         value={r.details.water}        unit="g" />
-              </div>
-            </div>
-          </div>
 
-          {/* FULL NUTRITION CARD — tabbed */}
-          <div className="ce-card">
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">full nutrition</div>
-                <h3 className="ce-card-title">FDC complete</h3>
-                <div className="ce-card-sub">{filledCount} of {totalCount} columns filled · empty rows shown for completeness</div>
-              </div>
-              <div className="ce-card-head-side">
-                <span className="src-mini">{r.source === "fdc" && r.fdc_id ? `fdc ${r.fdc_id}` : (r.source || "—")}</span>
-              </div>
-            </div>
-
-            <div className="nut-tabs">
-              {tabs.map(t => {
-                let count = null;
-                if (t.key !== "all") {
-                  const g = NUT_GROUPS.find(gg => gg.key === t.key);
-                  count = g.rows.filter(([col]) => r.details[col] != null && r.details[col] !== "" && Number(r.details[col]) !== 0).length;
-                }
-                return (
-                  <button key={t.key}
-                    className={"nut-tab" + (t.key === nutTab ? " active" : "")}
-                    onClick={() => setNutTab(t.key)}>
-                    {t.name}
-                    {count != null && <span className="nut-tab-count">{count}</span>}
-                  </button>
-                );
-              })}
-            </div>
-
-            {visibleGroups.map(g => (
-              <NutritionGroup key={g.key} group={g} details={r.details} hasData={groupHasData(g)} />
-            ))}
-          </div>
-
-          {/* HEALTH FACTS CARD — multi-row */}
-          <div className={"ce-card" + (r.show.healthFact ? "" : " ce-card-dim")}>
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">health facts</div>
-                <h3 className="ce-card-title">cooking-flow rotator</h3>
-                <div className="ce-card-sub">Each fact surfaces in turn during guided cook · keep ~60–110 chars each</div>
-              </div>
-              <SurfaceToggle label="surface on recipe page"
-                value={r.show.healthFact} onChange={(v) => updateShow("healthFact", v)} />
-            </div>
-
-            {r.show.healthFact ? (
-              <div className="fact-list">
-                {r.health_facts.length === 0 && (
-                  <div className="fact-empty">
-                    <span className="ink">No facts yet.</span>
-                    <span className="mono">Add one observation per row · iron-rich, K-vitamin source, etc.</span>
+              <div className="macro-card-body">
+                <div className="macro-donut-wrap">
+                  <MacroDonut details={r.details} />
+                  <div className="macro-legend">
+                    <span className="legend-item"><span className="sw" style={{ background: "#7A9C5A" }} />Protein</span>
+                    <span className="legend-item"><span className="sw" style={{ background: "#FF6D2E" }} />Fat</span>
+                    <span className="legend-item"><span className="sw" style={{ background: "#F4D67A" }} />Carbs</span>
                   </div>
-                )}
-                {r.health_facts.map((f, i) => (
-                  <FactRow
-                    key={i}
-                    idx={i}
-                    value={f}
-                    first={i === 0}
-                    last={i === r.health_facts.length - 1}
-                    onChange={(v) => factsSet(i, v)}
-                    onRemove={() => factsDel(i)}
-                    onMoveUp={() => factsMove(i, -1)}
-                    onMoveDown={() => factsMove(i, +1)}
-                  />
-                ))}
-                <button type="button" className="fact-add" onClick={factsAdd}>
-                  <span className="plus">+</span> add another fact
-                </button>
-              </div>
-            ) : (
-              <div className="ce-faint">Toggle on to surface the rotator during guided cook.</div>
-            )}
-          </div>
-
-          {/* STORAGE CARD */}
-          <div className={"ce-card" + (r.show.storage ? "" : " ce-card-dim")}>
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">storage</div>
-                <h3 className="ce-card-title">where &amp; how long</h3>
-              </div>
-              <SurfaceToggle label="surface on ingredient page"
-                value={r.show.storage} onChange={(v) => updateShow("storage", v)} />
-            </div>
-            {r.show.storage ? (
-              <input className="ce-ing-line"
-                value={r.storage} onChange={(e) => update({ storage: e.target.value })}
-                placeholder="Refrigerated, submerged in water · 7 days" />
-            ) : (
-              <div className="ce-faint">Toggle on to include a storage tip on the ingredient page.</div>
-            )}
-          </div>
-
-          {/* SUBSTITUTES CARD */}
-          <div className={"ce-card" + (r.show.substitutes ? "" : " ce-card-dim")}>
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">substitutes</div>
-                <h3 className="ce-card-title">similar ingredients</h3>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                {r.show.substitutes && <EditPill onClick={() => setOpenModal("subs")}>edit</EditPill>}
-                <SurfaceToggle label="surface on ingredient page"
-                  value={r.show.substitutes} onChange={(v) => updateShow("substitutes", v)} />
-              </div>
-            </div>
-            {r.show.substitutes ? (
-              r.substitutes.length === 0 ? (
-                <div className="ce-empty">No substitutes yet — click "edit" to add.</div>
-              ) : (
-                <div className="ce-tags-row">
-                  {r.substitutes.map((s) => <span key={s} className="ce-tag-chip veg">{s}</span>)}
                 </div>
-              )
-            ) : (
-              <div className="ce-faint">Toggle on to surface a list of swap-ins on the ingredient page.</div>
-            )}
-          </div>
+                <div className="macro-cells">
+                  <MacroEssential label="Protein"   col="protein"       value={r.details.protein}      unit="g" />
+                  <MacroEssential label="Fat"       col="total_fat"     value={r.details.total_fat}    unit="g" />
+                  <MacroEssential label="Carbs"     col="carbohydrate"  value={r.details.carbohydrate} unit="g" />
+                  <MacroEssential label="Fiber"     col="fiber"         value={r.details.fiber}        unit="g" />
+                  <MacroEssential label="Sugars"    col="sugars"        value={r.details.sugars}       unit="g" />
+                  <MacroEssential label="Water"     col="water"         value={r.details.water}        unit="g" />
+                </div>
+              </div>
+            </div>
+
+            {/* FULL NUTRITION section — tabbed */}
+            <div className="card-section tinted">
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">full nutrition</div>
+                  <h3 className="ce-card-title">FDC complete</h3>
+                  <div className="ce-card-sub">{filledCount} of {totalCount} columns filled · empty rows shown for completeness</div>
+                </div>
+                <div className="ce-card-head-side">
+                  <span className="src-mini">{r.source === "fdc" && r.fdc_id ? `fdc ${r.fdc_id}` : (r.source || "—")}</span>
+                </div>
+              </div>
+
+              <div className="nut-tabs">
+                {tabs.map(t => {
+                  let count = null;
+                  if (t.key !== "all") {
+                    const g = NUT_GROUPS.find(gg => gg.key === t.key);
+                    count = g.rows.filter(([col]) => r.details[col] != null && r.details[col] !== "" && Number(r.details[col]) !== 0).length;
+                  }
+                  return (
+                    <button key={t.key}
+                      className={"nut-tab" + (t.key === nutTab ? " active" : "")}
+                      onClick={() => setNutTab(t.key)}>
+                      {t.name}
+                      {count != null && <span className="nut-tab-count">{count}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {visibleGroups.map(g => (
+                <NutritionGroup key={g.key} group={g} details={r.details} hasData={groupHasData(g)} />
+              ))}
+            </div>
+
+            {/* HEALTH FACTS section — multi-row */}
+            <div className={"card-section" + (r.show.healthFact ? "" : " dim")}>
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">health facts</div>
+                  <h3 className="ce-card-title">cooking-flow rotator</h3>
+                  <div className="ce-card-sub">Each fact surfaces in turn during guided cook · keep ~60–110 chars each</div>
+                </div>
+                <SurfaceToggle label="surface on recipe page"
+                  value={r.show.healthFact} onChange={(v) => updateShow("healthFact", v)} />
+              </div>
+
+              {r.show.healthFact ? (
+                <div className="fact-list">
+                  {r.health_facts.length === 0 && (
+                    <div className="fact-empty">
+                      <span className="ink">No facts yet.</span>
+                      <span className="mono">Add one observation per row · iron-rich, K-vitamin source, etc.</span>
+                    </div>
+                  )}
+                  {r.health_facts.map((f, i) => (
+                    <FactRow
+                      key={i}
+                      idx={i}
+                      value={f}
+                      first={i === 0}
+                      last={i === r.health_facts.length - 1}
+                      onChange={(v) => factsSet(i, v)}
+                      onRemove={() => factsDel(i)}
+                      onMoveUp={() => factsMove(i, -1)}
+                      onMoveDown={() => factsMove(i, +1)}
+                    />
+                  ))}
+                  <button type="button" className="fact-add" onClick={factsAdd}>
+                    <span className="plus">+</span> add another fact
+                  </button>
+                </div>
+              ) : (
+                <div className="ce-faint">Toggle on to surface the rotator during guided cook.</div>
+              )}
+            </div>
+
+            {/* STORAGE section */}
+            <div className={"card-section" + (r.show.storage ? "" : " dim")}>
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">storage</div>
+                  <h3 className="ce-card-title">where &amp; how long</h3>
+                </div>
+                <SurfaceToggle label="surface on ingredient page"
+                  value={r.show.storage} onChange={(v) => updateShow("storage", v)} />
+              </div>
+              {r.show.storage ? (
+                <input className="ce-ing-line"
+                  value={r.storage} onChange={(e) => update({ storage: e.target.value })}
+                  placeholder="Refrigerated, submerged in water · 7 days" />
+              ) : (
+                <div className="ce-faint">Toggle on to include a storage tip on the ingredient page.</div>
+              )}
+            </div>
+
+            {/* SUBSTITUTES section */}
+            <div className={"card-section" + (r.show.substitutes ? "" : " dim")}>
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">substitutes</div>
+                  <h3 className="ce-card-title">similar ingredients</h3>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  {r.show.substitutes && <EditPill onClick={() => setOpenModal("subs")}>edit</EditPill>}
+                  <SurfaceToggle label="surface on ingredient page"
+                    value={r.show.substitutes} onChange={(v) => updateShow("substitutes", v)} />
+                </div>
+              </div>
+              {r.show.substitutes ? (
+                r.substitutes.length === 0 ? (
+                  <div className="ce-empty">No substitutes yet — click "edit" to add.</div>
+                ) : (
+                  <div className="ce-tags-row">
+                    {r.substitutes.map((s) => <span key={s} className="ce-tag-chip veg">{s}</span>)}
+                  </div>
+                )
+              ) : (
+                <div className="ce-faint">Toggle on to surface a list of swap-ins on the ingredient page.</div>
+              )}
+            </div>
+
+          </div>{/* /.ing-shell */}
 
           {err && (
             <div className="ce-card" style={{ borderColor: "var(--berry)" }}>

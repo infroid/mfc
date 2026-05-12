@@ -1,10 +1,26 @@
-// Utensil editor — WYSIWYG. Hero card with photo + identity + spec rows,
-// Care tip block, Buy links retailer list. Loads ?id=<slug> for edit, none
-// for new. App-shell layout for mobile parity.
+/* Utensil editor — editorial WYSIWYG.
+ *
+ * Mirrors design/prototype/js/page-utensils.jsx. Hero with split photo +
+ * identity, italic-serif care quote, polymorphic health-facts list,
+ * cream-soft "where to buy" card with paper retailer chips, Amazon
+ * provenance pill driven by `mfc update-utensil` (amazon_asin /
+ * amazon_marketplace / amazon_fetched_at).
+ */
 const { useState, useEffect, useRef } = React;
 
 const UT_CATEGORIES = ["Cookware", "Bakeware", "Cutlery", "Small appliance", "Utensil", "Measuring"];
 const STORES = ["Amazon", "Target", "Williams-Sonoma", "Lodge", "iHerb", "Other"];
+
+// Glyph that previews next to the photo-empty placeholder, by category.
+function categoryGlyph(cat) {
+  const c = (cat || "").toLowerCase();
+  if (c.includes("bakeware"))  return "🍰";
+  if (c.includes("cutlery"))   return "🔪";
+  if (c.includes("appliance")) return "⚙︎";
+  if (c.includes("measur"))    return "🥄";
+  if (c.includes("utensil"))   return "🥢";
+  return "🍳";
+}
 
 const BLANK = {
   id: "",
@@ -14,8 +30,12 @@ const BLANK = {
   photo: "",
   care_tip: "",
   specs: { material: "", size: "", weight: "" },
-  show: { careTip: true, specs: false },
+  show: { careTip: true, specs: false, healthFact: false },
   ai_filled_at: null,
+  amazon_asin: null,
+  amazon_marketplace: null,
+  amazon_fetched_at: null,
+  health_facts: [],
   buy_links: [],
 };
 
@@ -31,6 +51,10 @@ function fromDb(row, buyLinks) {
     specs: { ...BLANK.specs, ...(row.specs || {}) },
     show: { ...BLANK.show, ...(row.show || {}) },
     ai_filled_at: row.ai_filled_at || null,
+    amazon_asin: row.amazon_asin || null,
+    amazon_marketplace: row.amazon_marketplace || null,
+    amazon_fetched_at: row.amazon_fetched_at || null,
+    health_facts: Array.isArray(row.health_facts) ? row.health_facts : [],
     buy_links: (buyLinks || []).map((b) => ({
       store: b.store || "",
       url: b.url || "",
@@ -50,6 +74,7 @@ function toDb(r) {
     care_tip: r.care_tip || null,
     specs: r.specs,
     show: r.show,
+    health_facts: (r.health_facts || []).map((s) => (s || "").trim()).filter(Boolean),
   };
 }
 
@@ -62,6 +87,27 @@ function fmtAgo(iso) {
   const h = Math.round(m / 60);
   if (h < 24) return `${h}h ago`;
   return `${Math.round(h / 24)}d ago`;
+}
+
+// Derive a price range string from a list of price strings ("$45", "$80",
+// "₹2,499", etc.). Returns "$45–$80", or the single string if only one
+// is set, or null when none parse.
+function priceRange(links) {
+  const nums = [];
+  const labels = [];
+  for (const b of links || []) {
+    if (!b || !b.price) continue;
+    labels.push(b.price);
+    const m = String(b.price).match(/[\d,.]+/);
+    if (m) nums.push(parseFloat(m[0].replace(/,/g, "")));
+  }
+  if (labels.length === 0) return null;
+  if (labels.length === 1) return labels[0];
+  if (nums.length < 2) return labels[0];
+  const lo = Math.min(...nums), hi = Math.max(...nums);
+  const sym = (labels[0].match(/^[^\d]+/) || [""])[0] || "$";
+  if (lo === hi) return labels[0];
+  return `${sym}${lo}–${sym}${hi}`;
 }
 
 // ============================================================
@@ -86,12 +132,9 @@ function CompletionRing({ pct = 0, size = 56, stroke = 6 }) {
   );
 }
 
-function EditPill({ children = "Edit", onClick, required = false, empty = false, danger = false, style }) {
-  let cls = "edit-pill";
-  if (required && empty) cls += " required-empty";
-  if (danger) cls += " danger";
+function EditPill({ children = "Edit", onClick, danger = false, style }) {
   return (
-    <button type="button" className={cls} onClick={onClick} style={style}>
+    <button type="button" className={"edit-pill" + (danger ? " danger" : "")} onClick={onClick} style={style}>
       <span className="pencil">✎</span>{children}
     </button>
   );
@@ -143,6 +186,30 @@ function SurfaceToggle({ label, value, onChange }) {
   );
 }
 
+// Provenance badge — Amazon scrape state when ASIN known, otherwise
+// AI-filled state, otherwise "// authored manually".
+function ProvenancePill({ amazonAsin, amazonMarket, amazonAt, aiAt }) {
+  if (amazonAsin) {
+    return (
+      <span className="src-pill amazon">
+        <b>Amazon</b>
+        <em>· {amazonAsin}</em>
+        {amazonMarket ? <em className="market">{amazonMarket}</em> : null}
+        {amazonAt ? <em>· {fmtAgo(amazonAt)}</em> : null}
+      </span>
+    );
+  }
+  if (aiAt) {
+    return (
+      <span className="src-pill ai">
+        <b>✦ Claude</b>
+        <em>· {fmtAgo(aiAt)}</em>
+      </span>
+    );
+  }
+  return <span className="src-pill manual"><b>manual</b></span>;
+}
+
 // ============================================================
 // MODALS
 // ============================================================
@@ -183,10 +250,32 @@ function IdentityModal({ r, update, slugTaken, isNew, onClose }) {
           style={{ fontFamily: "var(--mono)", fontSize: 13 }}
         />
         <div style={{ fontSize: 11, color: "var(--ink-muted)", fontStyle: "italic", fontFamily: "var(--serif)", marginTop: 4 }}>
-          Set automatically by <span style={{ fontFamily: "var(--mono)", fontStyle: "normal" }}>mfc create-utensil</span>; edit only if moving the file.
+          Set automatically by <span style={{ fontFamily: "var(--mono)", fontStyle: "normal" }}>mfc update-utensil</span>; edit only if moving the file.
         </div>
       </div>
     </CeModal>
+  );
+}
+
+// ============================================================
+// FactRow — health fact card (shared shape with ingredient editor)
+// ============================================================
+function FactRow({ value, onChange, onRemove, onMoveUp, onMoveDown, first, last, idx }) {
+  return (
+    <div className="fact-row">
+      <span className="fact-bullet">{String(idx + 1).padStart(2, "0")}</span>
+      <textarea
+        rows={2}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="One observation. Surfaces on the utensil page when this card is enabled."
+      />
+      <div className="fact-tools">
+        <button type="button" className="fact-tool" disabled={first} onClick={onMoveUp} title="Move up">↑</button>
+        <button type="button" className="fact-tool" disabled={last} onClick={onMoveDown} title="Move down">↓</button>
+        <button type="button" className="fact-tool danger" onClick={onRemove} title="Remove">×</button>
+      </div>
+    </div>
   );
 }
 
@@ -238,26 +327,42 @@ function UtensilAdminApp() {
     })();
   }, [editId, isNew]);
 
-  const update = (patch) => { setR((p) => ({ ...p, ...patch })); setDirty(true); };
-  const updateShow = (k, v) => update({ show: { ...r.show, [k]: v } });
-  const updateSpec = (k, v) => update({ specs: { ...r.specs, [k]: v } });
-  const updateLink = (i, patch) => update({ buy_links: r.buy_links.map((l, k) => k === i ? { ...l, ...patch } : l) });
-  const removeLink = (i) => update({ buy_links: r.buy_links.filter((_, k) => k !== i) });
-  const addLink = () => update({ buy_links: [...r.buy_links, { store: "Amazon", url: "", price: "" }] });
+  const update      = (patch) => { setR((p) => ({ ...p, ...patch })); setDirty(true); };
+  const updateShow  = (k, v) => update({ show: { ...r.show, [k]: v } });
+  const updateSpec  = (k, v) => update({ specs: { ...r.specs, [k]: v } });
+  const updateLink  = (i, patch) => update({ buy_links: r.buy_links.map((l, k) => k === i ? { ...l, ...patch } : l) });
+  const removeLink  = (i) => update({ buy_links: r.buy_links.filter((_, k) => k !== i) });
+  const addLink     = () => update({ buy_links: [...r.buy_links, { store: "Amazon", url: "", price: "" }] });
+
+  // Health-facts list editing (same pattern as ingredient editor)
+  const factsSet = (i, v) => update({ health_facts: r.health_facts.map((x, k) => k === i ? v : x) });
+  const factsAdd = ()      => update({ health_facts: [...r.health_facts, ""] });
+  const factsDel = (i)     => update({ health_facts: r.health_facts.filter((_, k) => k !== i) });
+  const factsMove = (i, dir) => {
+    const arr = [...r.health_facts];
+    const j = i + dir;
+    if (j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    update({ health_facts: arr });
+  };
 
   // Completion checks
+  const factsTrimmed = (r.health_facts || []).map(x => (x || "").trim()).filter(Boolean);
   const checks = [
-    { label: "Name",      pass: !!(r.name || "").trim(),     required: true },
-    { label: "Tagline",   pass: !!(r.tagline || "").trim(),  required: true },
-    { label: "Category",  pass: !!(r.category || "").trim(), required: true },
-    { label: "Photo",     pass: !!(r.photo || "").trim(),    required: false },
-    { label: "Care tip",  pass: !!(r.care_tip || "").trim(), required: false },
-    { label: "Buy link",  pass: r.buy_links.some((b) => b.url),     required: false },
+    { label: "Name",     pass: !!(r.name || "").trim(),     required: true },
+    { label: "Tagline",  pass: !!(r.tagline || "").trim(),  required: true },
+    { label: "Category", pass: !!(r.category || "").trim(), required: true },
+    { label: "Photo",    pass: !!(r.photo || "").trim(),    required: false },
+    { label: "Care tip", pass: !!(r.care_tip || "").trim(), required: false },
+    { label: "Buy link", pass: r.buy_links.some((b) => b.url), required: false },
+    { label: "Specs",    pass: Object.values(r.specs).some((v) => (v || "").trim()), required: false },
+    { label: "Health fact", pass: factsTrimmed.length > 0,  required: false },
   ];
   const passed = checks.filter(c => c.pass).length;
   const pct = Math.round((passed / checks.length) * 100);
   const missing = checks.filter(c => c.required && !c.pass).map(c => c.label);
   const ready = missing.length === 0;
+  const pRange = priceRange(r.buy_links);
 
   async function onPublish() {
     setErr(null); setBusy(true);
@@ -306,7 +411,8 @@ function UtensilAdminApp() {
     <div className="admin-shell admin-app-shell">
       <AdminSidebar active="utensils" />
       <div className="admin-main">
-        <div className="chef-edit">
+        <div className="chef-edit ut-edit">
+
           {/* Breadcrumb */}
           <div className="ce-breadcrumb">
             <a href="index.html">Admin</a>
@@ -319,13 +425,26 @@ function UtensilAdminApp() {
           {/* Header */}
           <div className="ce-header">
             <div>
-              <div className="ce-eyebrow">{isNew ? "library · new utensil" : "library · editing"}</div>
-              <h1>{isNew ? <><em>New</em> utensil</> : <><em>Edit</em> {r.name || editId || "utensil"}</>}</h1>
+              <div className="ce-eyebrow">{isNew ? "library · new utensil" : "library · editing — wysiwyg"}</div>
+              <h1>
+                {isNew ? <><em>New</em> utensil</> : (
+                  r.name ? <><em>{r.name.split(/[,\s]/)[0]}</em>{r.name.replace(/^[^,\s]+/, "")}</>
+                         : <><em>Edit</em> {editId || "utensil"}</>
+                )}
+              </h1>
+            </div>
+            <div className="ce-header-side">
+              <ProvenancePill
+                amazonAsin={r.amazon_asin}
+                amazonMarket={r.amazon_marketplace}
+                amazonAt={r.amazon_fetched_at}
+                aiAt={r.ai_filled_at}
+              />
             </div>
           </div>
 
-          {/* AI banner if applicable */}
-          {r.ai_filled_at && (
+          {/* AI banner */}
+          {r.ai_filled_at && !r.amazon_asin && (
             <div className="ce-ai-banner">
               <span className="glyph">✦</span>
               <div className="copy">
@@ -343,6 +462,7 @@ function UtensilAdminApp() {
               <div className="pb-meta">
                 {!isNew && <>used by {usage} recipe{usage === 1 ? "" : "s"} · </>}
                 {pct}% complete
+                {pRange && <> · price <span className="ok">{pRange}</span></>}
                 {savedAgo && <> · <span className="ok">saved {savedAgo}</span></>}
               </div>
               {missing.length > 0 && (
@@ -358,137 +478,201 @@ function UtensilAdminApp() {
             </div>
           </div>
 
-          {/* HERO CARD — split: square photo (left) + identity (right) */}
-          <div className="ce-card flush ce-ut-hero-card">
-            <div className="ce-ut-hero-photo">
-              {r.photo
-                ? <img src={r.photo} alt="" onError={(e) => { e.target.style.display = "none"; }} />
-                : (
-                  <div className="ce-ut-hero-empty">
-                    <div className="glyph">🍳</div>
-                    <div className="label">No photo yet</div>
-                  </div>
-                )}
-              <EditPill
-                style={{ position: "absolute", bottom: 12, right: 12, background: "rgba(255,252,243,0.94)" }}
-                onClick={() => setOpenModal("identity")}
-              >{r.photo ? "replace" : "add"} photo</EditPill>
+          {/* ONE UNIFIED CARD — hero + care + health-facts + buy-links,
+              separated by inset dividers per design/prototype/js/page-utensils.jsx */}
+          <div className="ce-card flush ut-shell">
+
+            {/* HERO section — photo + identity */}
+            <div className="ut-hero">
+              <div className="ut-hero-photo">
+                {r.photo
+                  ? <img src={r.photo} alt="" onError={(e) => { e.target.style.display = "none"; }} />
+                  : (
+                    <div className="ut-hero-empty">
+                      <div className="glyph">{categoryGlyph(r.category)}</div>
+                      <div className="label">no photo</div>
+                    </div>
+                  )}
+                <EditPill style={{ position: "absolute", top: 12, right: 12, background: "rgba(255,252,243,0.94)" }}
+                  onClick={() => setOpenModal("identity")}>
+                  {r.photo ? "replace" : "add"} photo
+                </EditPill>
+              </div>
+
+              <div className="ut-hero-text">
+                <div className="ut-hero-eyebrow">
+                  <span>{r.category || "uncategorized"}</span>
+                  <span className="dot">·</span>
+                  <span>for the kitchen</span>
+                  <EditPill onClick={() => setOpenModal("identity")}>identity</EditPill>
+                  {slugTaken && <span className="ut-hero-warn">⚠ slug taken</span>}
+                </div>
+
+                <input
+                  className="ce-hero-title-input"
+                  value={r.name}
+                  onChange={(e) => update({ name: e.target.value })}
+                  placeholder="Utensil name"
+                />
+                <input
+                  className="ce-hero-tag-input"
+                  value={r.tagline}
+                  onChange={(e) => update({ tagline: e.target.value })}
+                  placeholder="One-line description"
+                />
+
+                {/* Spec rows — styled label/value pairs */}
+                <div className="ut-spec-list">
+                  <SpecRow label="Material" value={r.specs.material} onChange={(v) => updateSpec("material", v)} placeholder="Pre-seasoned cast iron" />
+                  <SpecRow label="Size"     value={r.specs.size}     onChange={(v) => updateSpec("size", v)}     placeholder="12 in / 30 cm" />
+                  <SpecRow label="Weight"   value={r.specs.weight}   onChange={(v) => updateSpec("weight", v)}   placeholder="5.6 lbs" />
+                  {pRange && (
+                    <div className="ut-spec-row readonly">
+                      <span className="ut-spec-label">Price range</span>
+                      <span className="ut-spec-derived">{pRange}</span>
+                      <span className="ut-spec-derived-tag">derived</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="ut-hero-foot">
+                  <span>
+                    {isNew
+                      ? <>// new entry · id will be generated from name</>
+                      : <>// id <b>{r.id}</b>{r.amazon_asin ? <> · amazon <b>{r.amazon_asin}</b></> : null}</>
+                    }
+                  </span>
+                  <SurfaceToggle
+                    label="show specs on utensil page"
+                    value={r.show.specs}
+                    onChange={(v) => updateShow("specs", v)}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="ce-ut-hero-text">
-              <div className="ce-hero-meta">
-                <span>{r.category}</span>
-                <span className="dot">·</span>
-                <span>for the kitchen</span>
-                <EditPill onClick={() => setOpenModal("identity")}>identity</EditPill>
-                {slugTaken && (
-                  <span style={{ color: "var(--berry)", fontFamily: "var(--mono)", fontSize: 10.5 }}>⚠ slug taken</span>
-                )}
-              </div>
-              <input
-                className="ce-hero-title-input"
-                value={r.name}
-                onChange={(e) => update({ name: e.target.value })}
-                placeholder="Utensil name"
-              />
-              <input
-                className="ce-hero-tag-input"
-                value={r.tagline}
-                onChange={(e) => update({ tagline: e.target.value })}
-                placeholder="One-line description"
-              />
 
-              {/* Spec rows — inline-editable */}
-              <div className="ce-ut-specs-edit">
-                <SpecRow label="Material" value={r.specs.material} onChange={(v) => updateSpec("material", v)} placeholder="Pre-seasoned cast iron" />
-                <SpecRow label="Size"     value={r.specs.size}     onChange={(v) => updateSpec("size", v)}     placeholder="12 in / 30 cm" />
-                <SpecRow label="Weight"   value={r.specs.weight}   onChange={(v) => updateSpec("weight", v)}   placeholder="5.6 lbs" />
-              </div>
-
-              <div className="ce-ut-hero-foot">
-                <span>
-                  {isNew
-                    ? <>// new entry · id will be generated from name</>
-                    : <>// id <b style={{ color: "var(--ink)" }}>{r.id}</b>{r.ai_filled_at ? <> · ✦ ai-filled {fmtAgo(r.ai_filled_at)}</> : null}</>
-                  }
-                </span>
+            {/* CARE section — italic-serif blockquote */}
+            <div className={"card-section" + (r.show.careTip ? "" : " dim")}>
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">care notes</div>
+                  <h3 className="ce-card-title">how to keep it</h3>
+                </div>
                 <SurfaceToggle
-                  label="show specs on utensil page"
-                  value={r.show.specs}
-                  onChange={(v) => updateShow("specs", v)}
+                  label="surface on utensil page"
+                  value={r.show.careTip}
+                  onChange={(v) => updateShow("careTip", v)}
                 />
               </div>
+              {r.show.careTip ? (
+                <div className="ut-care-quote">
+                  <span className="ut-care-mark left">“</span>
+                  <textarea
+                    className="ut-care-input"
+                    rows={2}
+                    value={r.care_tip}
+                    onChange={(e) => update({ care_tip: e.target.value })}
+                    placeholder="Hand wash, dry on the stove, wipe with a thin film of neutral oil."
+                  />
+                  <span className="ut-care-mark right">”</span>
+                </div>
+              ) : (
+                <div className="ce-faint">Toggle on to surface a care one-liner on the utensil page.</div>
+              )}
             </div>
-          </div>
 
-          {/* CARE TIP CARD */}
-          <div className={"ce-card" + (r.show.careTip ? "" : " ce-card-dim")}>
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">care notes</div>
-                <h3 className="ce-card-title">how to keep it</h3>
+            {/* HEALTH FACTS section — multi-row */}
+            <div className={"card-section" + (r.show.healthFact ? "" : " dim")}>
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">health facts</div>
+                  <h3 className="ce-card-title">material &amp; safety notes</h3>
+                  <div className="ce-card-sub">e.g. "cast iron leaches a small amount of dietary iron into food"</div>
+                </div>
+                <SurfaceToggle
+                  label="surface on utensil page"
+                  value={r.show.healthFact}
+                  onChange={(v) => updateShow("healthFact", v)}
+                />
               </div>
-              <SurfaceToggle
-                label="surface on utensil page"
-                value={r.show.careTip}
-                onChange={(v) => updateShow("careTip", v)}
-              />
+              {r.show.healthFact ? (
+                <div className="fact-list">
+                  {r.health_facts.length === 0 && (
+                    <div className="fact-empty">
+                      <span className="ink">No facts yet.</span>
+                      <span className="mono">Add one observation per row · material safety, leaching, heat behaviour</span>
+                    </div>
+                  )}
+                  {r.health_facts.map((f, i) => (
+                    <FactRow
+                      key={i}
+                      idx={i}
+                      value={f}
+                      first={i === 0}
+                      last={i === r.health_facts.length - 1}
+                      onChange={(v) => factsSet(i, v)}
+                      onRemove={() => factsDel(i)}
+                      onMoveUp={() => factsMove(i, -1)}
+                      onMoveDown={() => factsMove(i, +1)}
+                    />
+                  ))}
+                  <button type="button" className="fact-add" onClick={factsAdd}>
+                    <span className="plus">+</span> add another fact
+                  </button>
+                </div>
+              ) : (
+                <div className="ce-faint">Toggle on to surface a list of safety / material observations.</div>
+              )}
             </div>
-            {r.show.careTip ? (
-              <textarea
-                className="ce-ut-care-input"
-                rows={2}
-                value={r.care_tip}
-                onChange={(e) => update({ care_tip: e.target.value })}
-                placeholder="Hand wash, dry on the stove, wipe with a thin film of neutral oil."
-              />
-            ) : (
-              <div className="ce-faint">Toggle on to surface a care one-liner on the utensil page.</div>
-            )}
-          </div>
 
-          {/* BUY LINKS CARD */}
-          <div className="ce-card ce-ut-buy-card">
-            <div className="ce-card-head">
-              <div>
-                <div className="ce-eyebrow">where to buy</div>
-                <h3 className="ce-card-title">{r.buy_links.length} {r.buy_links.length === 1 ? "retailer" : "retailers"}</h3>
-                <div className="ce-card-sub">Affiliate tags appended at render time.</div>
+            {/* BUY LINKS section — cream-soft tint */}
+            <div className="card-section tinted">
+              <div className="card-section-head">
+                <div>
+                  <div className="ce-eyebrow">where to buy</div>
+                  <h3 className="ce-card-title">
+                    {r.buy_links.length === 0
+                      ? "no retailers yet"
+                      : `${r.buy_links.length} ${r.buy_links.length === 1 ? "retailer" : "retailers"}`}
+                  </h3>
+                  <div className="ce-card-sub">Affiliate tags appended at render time.</div>
+                </div>
+                <EditPill onClick={addLink}>+ add retailer</EditPill>
               </div>
-              <EditPill onClick={addLink}>+ add</EditPill>
+              {r.buy_links.length === 0 ? (
+                <div className="ce-empty">No retailers yet — click "+ add retailer" to link one.</div>
+              ) : (
+                <div className="ut-buy-list">
+                  {r.buy_links.map((b, i) => (
+                    <div key={i} className="ut-buy-card-row">
+                      <select
+                        value={STORES.includes(b.store) ? b.store : (b.store || "Amazon")}
+                        onChange={(e) => updateLink(i, { store: e.target.value })}
+                        className="ut-buy-store"
+                      >
+                        {STORES.map((s) => <option key={s}>{s}</option>)}
+                        {b.store && !STORES.includes(b.store) && (
+                          <option value={b.store}>{b.store}</option>
+                        )}
+                      </select>
+                      <input
+                        className="ut-buy-url"
+                        value={b.url}
+                        onChange={(e) => updateLink(i, { url: e.target.value })}
+                        placeholder="https://amazon.com/dp/B07JFTSKXW"
+                      />
+                      <input
+                        className="ut-buy-price"
+                        value={b.price || ""}
+                        onChange={(e) => updateLink(i, { price: e.target.value })}
+                        placeholder="$49.95"
+                      />
+                      <button className="ut-buy-del" onClick={() => removeLink(i)} title="Remove">×</button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            {r.buy_links.length === 0 ? (
-              <div className="ce-empty">No retailers yet — click "+ add" to link one.</div>
-            ) : (
-              <div className="ce-ut-buy-list">
-                {r.buy_links.map((b, i) => (
-                  <div key={i} className="ce-ut-buy-row">
-                    <select
-                      value={STORES.includes(b.store) ? b.store : (b.store || "Amazon")}
-                      onChange={(e) => updateLink(i, { store: e.target.value })}
-                      className="ce-ut-buy-store"
-                    >
-                      {STORES.map((s) => <option key={s}>{s}</option>)}
-                      {b.store && !STORES.includes(b.store) && (
-                        <option value={b.store}>{b.store}</option>
-                      )}
-                    </select>
-                    <input
-                      className="ce-ut-buy-url"
-                      value={b.url}
-                      onChange={(e) => updateLink(i, { url: e.target.value })}
-                      placeholder="https://amazon.com/dp/B07JFTSKXW"
-                    />
-                    <input
-                      className="ce-ut-buy-price"
-                      value={b.price || ""}
-                      onChange={(e) => updateLink(i, { price: e.target.value })}
-                      placeholder="$49.95"
-                    />
-                    <button className="ce-step-icon-btn danger" onClick={() => removeLink(i)} title="Remove">×</button>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {err && (
@@ -519,7 +703,6 @@ function UtensilAdminApp() {
         </div>
       </div>
 
-      {/* Modals */}
       {openModal === "identity" && (
         <IdentityModal r={r} update={update} slugTaken={slugTaken} isNew={isNew} onClose={() => setOpenModal(null)} />
       )}
@@ -529,13 +712,13 @@ function UtensilAdminApp() {
   );
 }
 
-// Spec row — label + inline-editable value styled as text
+// Spec row — mono label, serif italic value input
 function SpecRow({ label, value, onChange, placeholder }) {
   return (
-    <div className="ce-ut-spec-row">
-      <span className="ce-ut-spec-label">{label}</span>
+    <div className="ut-spec-row">
+      <span className="ut-spec-label">{label}</span>
       <input
-        className="ce-ut-spec-input"
+        className="ut-spec-input"
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}

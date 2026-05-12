@@ -151,12 +151,38 @@ window.MFC.adminDb = (function () {
     const { data, error } = await sb()
       .from('utensils').select('*').eq('id', id).maybeSingle();
     check(error, 'getUtensil');
-    return data;
+    if (!data) return null;
+    const { data: factRows, error: factErr } = await sb()
+      .from('health_facts')
+      .select('sort_order, fact')
+      .eq('category', 'utensil')
+      .eq('target_id', id)
+      .order('sort_order');
+    check(factErr, 'getUtensil.healthFacts');
+    return { ...data, health_facts: (factRows || []).map(f => f.fact) };
   }
 
   async function upsertUtensil(row) {
-    const { data, error } = await sb().from('utensils').upsert(row).select().single();
+    const ingRow = { ...row };
+    const healthFacts = Array.isArray(ingRow.health_facts) ? ingRow.health_facts : null;
+    delete ingRow.health_facts;
+    const { data, error } = await sb().from('utensils').upsert(ingRow).select().single();
     check(error, 'upsertUtensil');
+    if (healthFacts !== null) {
+      const id = data.id;
+      const { error: delErr } = await sb()
+        .from('health_facts').delete()
+        .eq('category', 'utensil').eq('target_id', id);
+      check(delErr, 'upsertUtensil.healthFactsDelete');
+      const insertRows = healthFacts
+        .map((f) => (f || '').trim())
+        .filter(Boolean)
+        .map((fact, i) => ({ category: 'utensil', target_id: id, sort_order: i, fact }));
+      if (insertRows.length) {
+        const { error: insErr } = await sb().from('health_facts').insert(insertRows);
+        check(insErr, 'upsertUtensil.healthFactsInsert');
+      }
+    }
     return data;
   }
 
