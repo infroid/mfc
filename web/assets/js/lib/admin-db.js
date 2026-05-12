@@ -48,10 +48,12 @@ window.MFC.adminDb = (function () {
     check(factErr, 'getIngredient.healthFacts');
 
     const d = row.ingredient_details || {};
-    const facts = (factRows || []).map(f => f.fact);
     return {
       ...row,
       ingredient_details: undefined,
+      // Full nutrient block (all ~140 columns) for the deep editor
+      details: d,
+      // Convenience macro view kept for legacy list-page code paths
       nutrition: {
         calories: d.calories ?? 0,
         protein: d.protein ?? 0,
@@ -60,7 +62,7 @@ window.MFC.adminDb = (function () {
       },
       storage: d.storage || '',
       substitutes: d.substitutes || [],
-      health_fact: facts.length ? facts.join(' • ') : '',
+      health_facts: (factRows || []).map(f => f.fact),
     };
   }
 
@@ -69,28 +71,35 @@ window.MFC.adminDb = (function () {
     if (!id) throw new Error('upsertIngredient: missing id');
 
     const ingRow = { ...row };
-    const nut = ingRow.nutrition || {};
-    const storage = ingRow.storage;
+    const details   = ingRow.details || null;
+    const nut       = ingRow.nutrition || {};
+    const storage   = ingRow.storage;
     const substitutes = ingRow.substitutes;
-    const healthFact = (ingRow.health_fact || '').trim();
+    const healthFacts = Array.isArray(ingRow.health_facts) ? ingRow.health_facts : [];
+    delete ingRow.details;
     delete ingRow.nutrition;
     delete ingRow.storage;
     delete ingRow.substitutes;
+    delete ingRow.health_facts;
     delete ingRow.health_fact;
     delete ingRow.ingredient_details;
 
     const { data, error } = await sb().from('ingredients').upsert(ingRow).select().single();
     check(error, 'upsertIngredient');
 
-    const detPayload = {
-      id,
-      storage: storage || null,
-      substitutes: substitutes || [],
-      calories: nut.calories ?? null,
-      protein: nut.protein ?? null,
-      total_fat: nut.total_fat ?? null,
-      carbohydrate: nut.carbohydrate ?? null,
-    };
+    // Pass through every nutrient column when `details` provided; fall back
+    // to the legacy 4-macro payload when only `nutrition` was supplied.
+    const detPayload = details
+      ? { ...details, id, storage: storage || null, substitutes: substitutes || [] }
+      : {
+          id,
+          storage: storage || null,
+          substitutes: substitutes || [],
+          calories: nut.calories ?? null,
+          protein: nut.protein ?? null,
+          total_fat: nut.total_fat ?? null,
+          carbohydrate: nut.carbohydrate ?? null,
+        };
     const { error: detErr } = await sb()
       .from('ingredient_details')
       .upsert(detPayload, { onConflict: 'id' });
@@ -102,10 +111,12 @@ window.MFC.adminDb = (function () {
       .eq('category', 'ingredient')
       .eq('target_id', id);
     check(delErr, 'upsertIngredient.healthFactsDelete');
-    if (healthFact) {
-      const { error: insErr } = await sb()
-        .from('health_facts')
-        .insert({ category: 'ingredient', target_id: id, sort_order: 0, fact: healthFact });
+    const insertRows = healthFacts
+      .map((f) => (f || '').trim())
+      .filter(Boolean)
+      .map((fact, i) => ({ category: 'ingredient', target_id: id, sort_order: i, fact }));
+    if (insertRows.length) {
+      const { error: insErr } = await sb().from('health_facts').insert(insertRows);
       check(insErr, 'upsertIngredient.healthFactsInsert');
     }
 
